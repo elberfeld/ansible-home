@@ -1,0 +1,6 @@
+
+storage 	ansible_ssh_host=10.5.0.100
+server 		ansible_ssh_host=10.5.0.101
+vpnserver	ansible_ssh_host=10.5.0.104
+fhem		ansible_ssh_host=10.5.0.252
+
