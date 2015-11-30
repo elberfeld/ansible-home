@@ -5,8 +5,6 @@ SECRET_KEY = 'docker'
 
 TIME_ZONE = 'Europe/Berlin'
 
-URL_PREFIX= '/graphite'
-
 GRAPHITE_ROOT = '/var/lib/graphite/'
 CONF_DIR = '/var/lib/graphite/conf/'
 STORAGE_DIR = '/var/lib/graphite/'
