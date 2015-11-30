@@ -1,5 +1,10 @@
 
+[master]
 master 		ansible_ssh_host=10.5.0.101
+
+[vpnserver]
 vpnserver	ansible_ssh_host=10.5.0.104
+
+[fhem]
 fhem		ansible_ssh_host=10.5.0.252
 

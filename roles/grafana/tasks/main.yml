@@ -1,0 +1,34 @@
+---
+
+- name: add docker repo key
+  apt_key:
+    keyserver=hkp://p80.pool.sks-keyservers.net:80
+    id=58118E89F3A912897C070ADBF76221572C52609D
+
+- name: install packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - docker-engine
+    - python 
+    - python-docker
+
+- name: build docker image 
+  docker: 
+    name: grafana
+    image: grafana/grafana:2.0.2 
+    state: reloaded
+    restart_policy: always
+    ports:
+      - 0.0.0.0:3000:3000
+    volumes:
+      - /mnt/data/grafana/:/var/lib/grafana
+    env:
+      GF_USERS_ALLOW_SIGN_UP=false
+      GF_USERS_ALLOW_ORG_CREATE=false
+      GF_AUTH_ANONYMOUS_ENABLED=true
+      GF_SESSION_PROVIDER=memory
+      GF_ANALYTICS_REPORTING_ENABLED=false
+ 

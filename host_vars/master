@@ -8,5 +8,7 @@ debian_sources:
   - "deb http://ftp.de.debian.org/debian/ testing-updates main"
   - "deb http://ftp.halifax.rwth-aachen.de/debian/ jessie-updates main contrib non-free"
   - "deb http://ftp.halifax.rwth-aachen.de/debian/ jessie-backports main contrib non-free"
+  - "deb http://apt.dockerproject.org/repo debian-jessie main"
+  - "deb http://apt.dockerproject.org/repo debian-stretch main"
 
 
