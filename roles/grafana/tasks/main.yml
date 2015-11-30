@@ -15,7 +15,7 @@
     - python 
     - python-docker
 
-- name: build docker image 
+- name: start docker image 
   docker: 
     name: grafana
     image: grafana/grafana:2.0.2 
