@@ -7,7 +7,7 @@
   apt_repository:
     repo: "{{ item }}"
     state: present
-  with_items: "debian_sources"
+  with_items: "{{debian_sources}}"
 
 
 - name: install common packages
