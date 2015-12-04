@@ -10,6 +10,7 @@
     - gcc
     - make
     - cmake
+    - pkg-config
 
     
 - name: create build dir
