@@ -1,0 +1,7 @@
+---
+
+- hosts: vpnserver 
+  remote_user: root
+  roles: 
+    - libuecc
+

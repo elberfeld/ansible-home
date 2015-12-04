@@ -1,0 +1,31 @@
+---
+# Set Hostname fron hostname in inventory 
+
+- name: install packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - gcc
+    - make
+    - cmake
+
+    
+- name: create build dir
+  file: state=directory path=/opt/libuecc
+
+  
+- name: checkout git repo 
+  git: repo=git://git.universe-factory.net/libuecc
+       dest=/opt/libuecc
+       version=v6
+  register: gitclone
+
+
+- name: build and install 
+  shell: "cmake ./ && make install" 
+  args: 
+    chdir: /opt/libuecc 
+  when: gitclone.changed
+
