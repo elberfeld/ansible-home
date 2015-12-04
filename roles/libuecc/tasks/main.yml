@@ -25,7 +25,7 @@
 
 
 - name: build and install 
-  shell: "cmake ./ && make install" 
+  shell: "cmake ./ && make install && ldconfig" 
   args: 
     chdir: /opt/libuecc 
   when: gitclone.changed
