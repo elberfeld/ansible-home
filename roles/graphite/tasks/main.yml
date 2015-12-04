@@ -24,7 +24,7 @@
 - name: copy image files 
   copy: src={{ item }} dest=/var/lib/docker/build/graphite 
   with_fileglob:
-    - *
+    - ./*
         
 - name: build docker image 
   docker_image: 
@@ -44,4 +44,5 @@
       - 0.0.0.0:2004:2004
     volumes:
       - /mnt/data/graphite:/var/lib/graphite/storage 
+      - /mnt/data/graphite/whisper:/var/lib/graphite/storage/whisper
  

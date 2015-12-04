@@ -4,7 +4,7 @@
 # Zielserver für Graphite Daten 
 graphite_data_target:
   # IP Adresse
-  host: 10.43.0.12
+  host: 10.5.0.101
   # Port des Carbon-Dienstes 
   port: 2003  
   
