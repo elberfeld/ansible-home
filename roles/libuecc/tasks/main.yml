@@ -20,6 +20,7 @@
   git: repo=git://git.universe-factory.net/libuecc
        dest=/opt/libuecc
        version=v6
+       accept_hostkey=yes
   register: gitclone
 
 
