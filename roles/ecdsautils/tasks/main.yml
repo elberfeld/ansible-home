@@ -1,0 +1,32 @@
+---
+# Set Hostname fron hostname in inventory 
+
+- name: install packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - gcc
+    - make
+    - cmake
+
+    
+- name: create build dir
+  file: state=directory path=/opt/ecdsautils
+
+  
+- name: checkout git repo 
+  git: repo=https://github.com/tcatm/ecdsautils.git
+       dest=/opt/ecdsautils
+       version=1ecdf742906bb93373536fba8a6e4e1aa7336085
+       accept_hostkey=yes
+  register: gitclone
+
+
+- name: build and install 
+  shell: "mkdir build && cd build && cmake .. && make && make install" 
+  args: 
+    chdir: /opt/ecdsautils 
+  when: gitclone.changed
+
