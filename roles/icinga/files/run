@@ -70,6 +70,7 @@ else
    sleep 5
    (
       echo "GRANT ALL PRIVILEGES ON *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '${DEBIAN_SYS_MAINT_PASSWORD}';"
+      echo "FLUSH PRIVILEGES;"
       echo "quit"
    ) |
    mysql
@@ -94,6 +95,7 @@ sed -i 's/database =\ \".*\"/database =\ \"icinga2idomysql\"/g' /etc/icinga2/fea
 (
     echo "CREATE DATABASE IF NOT EXISTS icinga2idomysql;"
     echo "GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icinga2idomysql.* TO 'icinga2-ido-mysq'@'localhost' IDENTIFIED BY '${IDO_PASSWORD}';"
+    echo "FLUSH PRIVILEGES;"
     echo "quit"
 ) |
 mysql
@@ -103,6 +105,7 @@ mysql -f icinga2idomysql < /usr/share/dbconfig-common/data/icinga2-ido-mysql/ins
 (
     echo "CREATE DATABASE IF NOT EXISTS icingaweb2;"
     echo "GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icingaweb2.* TO 'icingaweb2'@'localhost' IDENTIFIED BY '${ICINGAWEB2_PASSWORD}';"
+    echo "FLUSH PRIVILEGES;"
     echo "quit"
 ) |
 mysql
@@ -111,6 +114,7 @@ ICINGAADMIN_PASSWORD=`openssl passwd -1 "icinga"`
 (
     echo "USE icingaweb2;"
     echo "INSERT IGNORE INTO icingaweb_user (name, active, password_hash) VALUES ('icingaadmin', 1, '${ICINGAADMIN_PASSWORD}');"
+    echo "FLUSH PRIVILEGES;"
     echo "quit"
 ) |
 mysql
