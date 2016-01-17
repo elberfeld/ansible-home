@@ -2,26 +2,44 @@
 
 - name: create data directory
   file: dest=/mnt/data/icinga state=directory
-
+  tags:
+    - docker 
+    - icinga
+    
 - name: create data directory
   file: dest=/mnt/data/icinga/status state=directory
+  tags:
+    - docker 
+    - icinga
 
 - name: create data directory
   file: dest=/mnt/data/icinga/mysql state=directory
+  tags:
+    - docker 
+    - icinga
 
 - name: create build directory
   file: dest=/var/lib/docker/build/icinga state=directory
+  tags:
+    - docker 
+    - icinga
 
 - name: copy image files 
   copy: src={{ item }} dest=/var/lib/docker/build/icinga 
   with_fileglob:
     - ./*
+  tags:
+    - docker 
+    - icinga
         
 - name: build docker image 
   docker_image: 
     name: icinga
     path: /var/lib/docker/build/icinga
     state: present
+  tags:
+    - docker 
+    - icinga
      
 - name: start icinga image 
   docker: 
@@ -35,4 +53,7 @@
     volumes:
       - /mnt/data/icinga/status:/var/lib/icinga2 
       - /mnt/data/icinga/mysql:/var/lib/mysql
+  tags:
+    - docker 
+    - icinga
 
