@@ -18,11 +18,6 @@ RUN apt-get -qq update \
     && apt-get -qqy install --no-install-recommends icinga2 icinga2-ido-mysql nagios-plugins icingaweb2 \
     && apt-get clean
 
-ADD content/ /
-
-RUN chmod u+x /opt/supervisor/mysql_supervisor /opt/supervisor/icinga2_supervisor /opt/supervisor/apache2_supervisor
-RUN chmod u+x /opt/run
-
 # Temporary hack to get icingaweb2 modules via git
 RUN mkdir -p /etc/icingaweb2/enabledModules
 RUN wget --no-cookies "https://github.com/Icinga/icingaweb2/archive/master.zip" -O /tmp/icingaweb2.zip
@@ -30,6 +25,25 @@ RUN unzip /tmp/icingaweb2.zip "icingaweb2-master/modules/doc/*" "icingaweb2-mast
 RUN cp -R /tmp/icingaweb2/icingaweb2-master/modules/monitoring /etc/icingaweb2/modules/
 RUN cp -R  /tmp/icingaweb2/icingaweb2-master/modules/doc /etc/icingaweb2/modules/
 RUN rm -rf /tmp/icingaweb2.zip /tmp/icingaweb2
+
+ADD run /opt/
+RUN chmod u+x /opt/run
+
+ADD apache2_supervisor /opt/supervisor/
+ADD icinga2_supervisor /opt/supervisor/
+ADD mysql_supervisor /opt/supervisor/
+RUN chmod u+x /opt/supervisor/mysql_supervisor /opt/supervisor/icinga2_supervisor /opt/supervisor/apache2_supervisor
+
+ADD supervisor_icinga2.conf /etc/supervisor/conf.d/icinga2.conf
+
+ADD icingaweb2_authentication.ini /etc/icingaweb2/authentication.ini
+ADD icingaweb2_config.ini /etc/icingaweb2/config.ini
+ADD icingaweb2_resources.ini /etc/icingaweb2/resources.ini
+ADD icingaweb2_roles.ini /etc/icingaweb2/roles.ini
+
+ADD icingaweb2_monitoring_backends.ini /etc/icingaweb2/modules/monitoring/backends.ini
+ADD icingaweb2_monitoring_commandtransports.ini /etc/icingaweb2/modules/monitoring/commandtransports.ini
+ADD icingaweb2_monitoring_config.ini /etc/icingaweb2/modules/monitoring/config.ini
 
 EXPOSE 80 443 5665
 
