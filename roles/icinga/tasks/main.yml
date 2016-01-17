@@ -10,7 +10,7 @@
   file: dest=/mnt/data/icinga/mysql state=directory
 
 - name: create build directory
-  file: dest=/var/lib/icinga/build/icinga state=directory
+  file: dest=/var/lib/docker/build/icinga state=directory
 
 - name: copy image files 
   copy: src={{ item }} dest=/var/lib/docker/build/icinga 
