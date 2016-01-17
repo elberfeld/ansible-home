@@ -35,6 +35,7 @@ Icinga Web 2 can be accessed at http://localhost/icingaweb2 with the credentials
 ICINGA_PASSWORD
 ICINGAWEB2_PASSWORD
 IDO_PASSWORD
+DEBIAN_SYS_MAINT_PASSWORD
 ```
 
 ```

@@ -21,6 +21,7 @@ find /etc/icingaweb2 -type d -exec chmod 2770 {} \;
 if [ ! -f "${initfile}" ]; then
 
 # Passwords...
+DEBIAN_SYS_MAINT_PASSWORD=${DEBIAN_SYS_MAINT_PASSWORD:-$(pwgen -s 15 1)}
 ICINGA_PASSWORD=${ICINGA_PASSWORD:-$(pwgen -s 15 1)}
 IDO_PASSWORD=${IDO_PASSWORD:-$(pwgen -s 15 1)}
 ICINGAWEB2_PASSWORD=${ICINGAWEB2_PASSWORD:-$(pwgen -s 15 1)}
@@ -47,6 +48,15 @@ fi
 usermod -a -G nagios www-data >> /dev/null
 chfn -f "nagios at $(hostname)" nagios
 
+update_user_password () {
+   (
+   echo "UPDATE mysql.user SET password=PASSWORD('${2}') WHERE user='${1}';"
+   echo "FLUSH PRIVILEGES;"
+   echo "quit"
+   ) |
+   mysql
+}
+
 echo "=>Initializing databases and icinga2 configurations."
 echo "=>This may take a few minutes"
 
@@ -65,6 +75,10 @@ else
    ) |
    mysql
 fi
+
+# Set debian-sys-maint password
+update_user_password debian-sys-maint ${DEBIAN_SYS_MAINT_PASSWORD}
+sed -i 's,password\ \=\ .*,password\ \=\ '${DEBIAN_SYS_MAINT_PASSWORD}',g' /etc/mysql/debian.cnf
 
 # icinga
 (
@@ -116,6 +130,7 @@ chown www-data:adm /var/log/icingaweb2
 echo -e "\n\n\n"
 echo "==================================================================="
 echo "MySQL user 'root' has no password but only allows local connections"
+echo "MySQL user 'debian-sys-maint' password set to ${DEBIAN_SYS_MAINT_PASSWORD}"
 echo "MySQL user 'icinga' password set to ${ICINGA_PASSWORD}"
 echo "MySQL user 'icinga2-ido-mysq' password set to ${IDO_PASSWORD}"
 echo "MySQL user 'icingaweb2' password set to ${ICINGAWEB2_PASSWORD}"
