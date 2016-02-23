@@ -1,7 +1,9 @@
 
 rem Vagrant VM Starten 
 vagrant up 
-vagrant putty
+
+rem SSH Verbindung über PuTTY mit https://github.com/nickryand/vagrant-multi-putty
+vagrant putty -- -l vagrant -pw vagrant
 
 pause
 
