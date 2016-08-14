@@ -5,5 +5,5 @@
   roles:
     - hostname
     - common
-    - collectd
+#    - collectd
 

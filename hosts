@@ -5,6 +5,6 @@ master 		ansible_ssh_host=10.5.0.101
 [vpnserver]
 vpnserver	ansible_ssh_host=10.5.0.104
 
-[raspi-testing]
+[control]
 control		ansible_ssh_host=10.5.0.250
 

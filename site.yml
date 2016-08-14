@@ -2,5 +2,6 @@
 # Hauptdatei, includiert lediglich die einzelnen Playbooks 
 - include: all.yml
 - include: master.yml
+- include: control.yml
 - include: vpnserver.yml
 
