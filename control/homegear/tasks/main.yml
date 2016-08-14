@@ -1,0 +1,19 @@
+---
+
+- name: install packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - homegear 
+    - homegear-homematicbidcos 
+  notify: restart homegear
+
+- name: main.conf
+  copy: src=main.conf dest=/etc/homegear/main.conf
+  notify: restart homegear
+ 
+- name: homematicbidcos.conf
+  copy: src=homematicbidcos.conf dest=/etc/homegear/families/homematicbidcos.conf
+  notify: restart homegear

@@ -1,0 +1,7 @@
+---
+# Rollen, die nur auf dem Control-Server verwendet werden 
+
+- hosts: control 
+  remote_user: root
+  roles:
+    - { role: homegear, tags: homegear }

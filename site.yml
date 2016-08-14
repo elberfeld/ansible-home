@@ -1,5 +1,4 @@
 ---
 # Hauptdatei, includiert lediglich die einzelnen Playbooks 
 - include: all/main.yml
-#- include: homegear/main.yml
-#- include: openhab/main.yml
+- include: control/main.yml
