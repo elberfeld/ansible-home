@@ -1,0 +1,7 @@
+
+debian_sources: 
+  - "deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi"
+  - "deb https://homegear.eu/packages/Raspbian/ jessie/"
+
+debian_keys:
+  - "https://homegear.eu/packages/Release.key"

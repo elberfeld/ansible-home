@@ -3,6 +3,20 @@
 - name: create motd file
   template: src=motd.j2 dest=/etc/motd
 
+- name: install apt-transport-https packages before adding sources 
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - apt-transport-https
+
+- name: add debian repo keys 
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  with_items: "{{ debian_keys }}"
+  
 - name: set debian repos 
   template: src=sources.list.j2 dest=/etc/apt/sources.list   
 

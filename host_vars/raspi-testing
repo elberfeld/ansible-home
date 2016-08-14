@@ -1,5 +1,0 @@
-
-debian_sources: 
-  - "deb http://mirrordirector.raspbian.org/raspbian/ stable main contrib non-free rpi"
-  - "deb http://mirrordirector.raspbian.org/raspbian/ testing main contrib non-free rpi"
-
