@@ -1,4 +1,11 @@
 
+rem Vagrant VM für Ansible Arbeitsumgebung 
+rem Unter Windows müssen die folgenden Git-Einstellungen 
+rem gesetzt werden damit die Dateien lokal mit LF als Dateiendungen 
+rem vorliegen:
+rem $ git config core.eol lf
+rem $ git config core.autocrlf input
+
 rem Vagrant VM Starten 
 vagrant up 
 
