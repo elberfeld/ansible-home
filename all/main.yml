@@ -1,0 +1,9 @@
+---
+# Globale Konfiguration für alle Server
+
+- hosts: all 
+  remote_user: root
+  roles:
+    - { role: hostname, tags: common }
+    - { role: common, tags: common }
+#    - { role: collectd, tags: collectd }

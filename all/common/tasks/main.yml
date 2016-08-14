@@ -34,5 +34,5 @@
 - name: add sshkeys for server
   authorized_key: 
     user: root 
-    key: "{{ lookup('file', 'keyfiles/void.pub') }}"
+    key: "{{ lookup('file', '../keyfiles/void.pub') }}"
 
