@@ -5,3 +5,4 @@
   remote_user: root
   roles:
     - { role: homegear, tags: homegear }
+    - { role: openhab, tags: openhab }

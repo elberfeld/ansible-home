@@ -2,6 +2,9 @@
 debian_sources: 
   - "deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi"
   - "deb https://homegear.eu/packages/Raspbian/ jessie/"
+  - "deb http://dl.bintray.com/openhab/apt-repo2 testing main"
 
 debian_keys:
   - "https://homegear.eu/packages/Release.key"
+  - "https://bintray.com/user/downloadSubjectPublicKey?username=openhab"
+  

@@ -1,0 +1,19 @@
+---
+
+- name: install packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - oracle-java8-jdk
+    - openhab2-offline 
+  notify: restart openhab
+
+#- name: main.conf
+#  copy: src=main.conf dest=/etc/homegear/main.conf
+#  notify: restart openhab
+ 
+#- name: homematicbidcos.conf
+#  copy: src=homematicbidcos.conf dest=/etc/homegear/families/homematicbidcos.conf
+#  notify: restart openhab
