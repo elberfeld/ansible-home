@@ -10,6 +10,9 @@
     - homegear-homematicbidcos 
   notify: restart homegear
 
+- name: enable service
+  service: name=homegear enabled=yes
+
 - name: main.conf
   copy: src=main.conf dest=/etc/homegear/main.conf
   notify: restart homegear
@@ -17,3 +20,4 @@
 - name: homematicbidcos.conf
   copy: src=homematicbidcos.conf dest=/etc/homegear/families/homematicbidcos.conf
   notify: restart homegear
+

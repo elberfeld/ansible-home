@@ -10,6 +10,9 @@
     - openhab2-offline 
   notify: restart openhab
 
+- name: enable service
+  service: name=openhab2 enabled=yes
+
 #- name: main.conf
 #  copy: src=main.conf dest=/etc/homegear/main.conf
 #  notify: restart openhab
