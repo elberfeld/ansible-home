@@ -13,10 +13,6 @@
 - name: enable service
   service: name=openhab2 enabled=yes
 
-#- name: main.conf
-#  copy: src=main.conf dest=/etc/homegear/main.conf
-#  notify: restart openhab
+- name: default.sitemap
+  copy: src=default.sitemap dest=/etc/openhab2/sitemaps/_default.sitemap
  
-#- name: homematicbidcos.conf
-#  copy: src=homematicbidcos.conf dest=/etc/homegear/families/homematicbidcos.conf
-#  notify: restart openhab
