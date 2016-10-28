@@ -14,5 +14,5 @@
   service: name=openhab2 enabled=yes
 
 - name: default.sitemap
-  copy: src=default.sitemap dest=/etc/openhab2/sitemaps/_default.sitemap
+  copy: src=default.sitemap dest=/etc/openhab2/sitemaps/default.sitemap
  

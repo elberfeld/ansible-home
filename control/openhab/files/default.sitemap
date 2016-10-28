@@ -1,6 +1,6 @@
 sitemap demo label="VOID Home" {
 
-    Frame label="Wetter" {
+    Frame label="Status" {
 
         Text item=yahooweather_weather_4b0f3681_temperature label="Temperatur [%s °C]" icon="temperature"
         Text item=yahooweather_weather_4b0f3681_humidity label="Feuchtigkeit" icon="humidity"
