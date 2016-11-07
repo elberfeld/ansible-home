@@ -1,0 +1,52 @@
+# Pakete installieren
+- name: nginx installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - nginx
+    - git
+
+
+# sinp_le installieren 
+
+- name: create folder simp_le 
+  file: 
+    path: "/opt/simp_le/" 
+    state: "directory"
+
+- name: clone simp_le repo
+  git: 
+    repo: "https://github.com/kuba/simp_le" 
+    version: "3a103b76f933f9aef782a47401dd2eff5057a6f7"
+    dest: "/opt/simp_le/" 
+
+
+# nginx konfigurieren
+
+- stat: path=/etc/ssl/fullchain.pem
+  register: sslcert
+
+- name: Konfig-Datei default erstellen (initial)
+  template: src=default dest=/etc/nginx/sites-enabled/default
+  notify: restart nginx
+  when: sslcert.stat.exists == False
+
+- name: nginx restarten (initial)
+  meta: flush_handlers
+  when: sslcert.stat.exists == False
+
+- name: Letsencrypt-Zertifikat beantragen und installieren
+  shell: "cd /opt/simp_le/ && ./bootstrap.sh && if [ ! -e venv/bin/python ]; then ./venv.sh; fi && export PATH=/opt/simp_le/venv/bin:$PATH && cd /etc/ssl && simp_le --email {{ letsencrypt_mail }} -f account_key.json -f key.pem -f fullchain.pem --tos_sha256 {{ letsencrypt_tos_sha256 }} -d void.ms:/var/www/html" 
+  notify: restart nginx
+  when: sslcert.stat.exists == False
+
+
+- name: Konfig-Datei default erstellen
+  template: src=default dest=/etc/nginx/sites-enabled/default
+  notify: restart nginx
+
+
+- name: Cronjob für Zertifikatserneuerung
+  cron: name="simp_le" weekday="2" hour="20" minute="0" job="cd /etc/ssl && PATH=/opt/simp_le/venv/bin:/usr/sbin:/usr/bin:/sbin:/bin simp_le --email {{ letsencrypt_mail }} -f account_key.json -f key.pem -f fullchain.pem --tos_sha256 {{ letsencrypt_tos_sha256 }} -d void.ms:/var/www/html && systemctl reload nginx"

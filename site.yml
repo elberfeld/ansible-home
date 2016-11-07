@@ -2,3 +2,4 @@
 # Hauptdatei, includiert lediglich die einzelnen Playbooks 
 - include: all/main.yml
 - include: control/main.yml
+- include: webserver/main.yml

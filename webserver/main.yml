@@ -1,0 +1,7 @@
+---
+# Rollen, die nur auf dem Web-Server verwendet werden 
+
+- hosts: webserver 
+  remote_user: root
+  roles:
+    - { role: nginx, tags: nginx }
