@@ -1,0 +1,31 @@
+---
+- name: create folder struct for etherpad
+  file: 
+    path: "/srv/etherpad/" 
+    state: "directory"
+  
+- name: start mysql docker
+  docker_container: 
+    name: etherpad-db
+    image: mysql:5.7
+    hostname: etherpad-db
+    state: started
+    restart_policy: always
+    volumes:
+      - /data/etherpad/:/var/lib/mysql
+    env:
+      MYSQL_ROOT_PASSWORD: mysql
+     
+- name: start etherpad docker
+  docker_container: 
+    name: etherpad-app
+    image: tvelocity/etherpad-lite:latest
+    state: started
+    restart_policy: always
+    env: 
+      ETHERPAD_TITLE: void.ms Etherpad Lite  
+      ETHERPAD_PORT: 42001
+    ports:
+      - 127.0.0.1:42001:42001
+    links:
+      - etherpad-db:mysql

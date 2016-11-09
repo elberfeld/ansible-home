@@ -1,3 +1,4 @@
+
 # Pakete installieren
 - name: nginx installieren
   apt:
@@ -7,6 +8,19 @@
   with_items:
     - nginx
     - git
+    - ca-certificates 
+    - gcc
+    - libssl-dev 
+    - libffi-dev
+    - python
+    - python-dev
+    - virtualenv
+
+
+- name: nginx default Konfig entfernen 
+  file: 
+    path: /etc/nginx/sites-enabled/default 
+    state: absent
 
 
 # sinp_le installieren 
@@ -23,13 +37,25 @@
     dest: "/opt/simp_le/" 
 
 
-# nginx konfigurieren
+# LetsEncrypt Script erstellen 
 
-- stat: path=/etc/ssl/fullchain.pem
+- name: LetsEncrypt Script erstellen 
+  template: src=letsencrypt.sh dest=/opt/letsencrypt.sh mode=o+x
+  register: letsencryptsh
+
+- name: Cronjob für Zertifikatserneuerung
+  cron: name="letsencrypt" weekday="2" hour="20" minute="0" job="/opt/letsencrypt.sh"
+
+
+# nginx konfigurieren (initial, falls noch kein Zertifikat existiert)
+
+- name: check if fullchain.pem exists
+  stat: path=/etc/ssl/fullchain.pem
   register: sslcert
 
 - name: Konfig-Datei default erstellen (initial)
-  template: src=default dest=/etc/nginx/sites-enabled/default
+  template: src=nginx-site dest=/etc/nginx/sites-enabled/{{ item }}
+  with_items: webserver_domains
   notify: restart nginx
   when: sslcert.stat.exists == False
 
@@ -37,16 +63,15 @@
   meta: flush_handlers
   when: sslcert.stat.exists == False
 
-- name: Letsencrypt-Zertifikat beantragen und installieren
-  shell: "cd /opt/simp_le/ && ./bootstrap.sh && if [ ! -e venv/bin/python ]; then ./venv.sh; fi && export PATH=/opt/simp_le/venv/bin:$PATH && cd /etc/ssl && simp_le --email {{ letsencrypt_mail }} -f account_key.json -f key.pem -f fullchain.pem --tos_sha256 {{ letsencrypt_tos_sha256 }} -d void.ms:/var/www/html" 
-  notify: restart nginx
-  when: sslcert.stat.exists == False
+- name: Letsencrypt-Zertifikat beantragen und installieren 
+  shell: "/opt/letsencrypt.sh" 
+  when: sslcert.stat.exists == False or letsencryptsh.changed
 
+
+# nginx konfigurieren
 
 - name: Konfig-Datei default erstellen
-  template: src=default dest=/etc/nginx/sites-enabled/default
+  template: src=nginx-site dest=/etc/nginx/sites-enabled/{{ item }}
+  with_items: webserver_domains
   notify: restart nginx
 
-
-- name: Cronjob für Zertifikatserneuerung
-  cron: name="simp_le" weekday="2" hour="20" minute="0" job="cd /etc/ssl && PATH=/opt/simp_le/venv/bin:/usr/sbin:/usr/bin:/sbin:/bin simp_le --email {{ letsencrypt_mail }} -f account_key.json -f key.pem -f fullchain.pem --tos_sha256 {{ letsencrypt_tos_sha256 }} -d void.ms:/var/www/html && systemctl reload nginx"

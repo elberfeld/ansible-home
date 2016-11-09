@@ -4,4 +4,6 @@
 - hosts: webserver 
   remote_user: root
   roles:
+    - { role: docker, tags: docker }
+    - { role: docker_etherpad, tags: etherpad }
     - { role: nginx, tags: nginx }
