@@ -54,7 +54,7 @@
   register: sslcert
 
 - name: Konfig-Datei default erstellen (initial)
-  template: src=nginx-site dest=/etc/nginx/sites-enabled/{{ item }}
+  template: src=nginx-site dest=/etc/nginx/sites-enabled/{{ item }}.void.ms
   with_items: webserver_domains
   notify: restart nginx
   when: sslcert.stat.exists == False
@@ -71,7 +71,7 @@
 # nginx konfigurieren
 
 - name: Konfig-Datei default erstellen
-  template: src=nginx-site dest=/etc/nginx/sites-enabled/{{ item }}
+  template: src=nginx-site dest=/etc/nginx/sites-enabled/{{ item }}.void.ms
   with_items: webserver_domains
   notify: restart nginx
 

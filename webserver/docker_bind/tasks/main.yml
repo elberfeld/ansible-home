@@ -1,0 +1,48 @@
+---
+- name: create folder struct for bind container
+  file: 
+    path: "/tmp/docker_bind/" 
+    state: "directory"
+
+- name: copy container files  
+  template: src={{ item }} dest=/tmp/docker_bind/{{ item }}
+  with_items: 
+    - Dockerfile
+
+- name: build bind image 
+  docker_image: 
+    name: "bind-app"
+    path: /tmp/docker_bind/
+    state: present
+
+- name: Konfig-Dateien für bind erstellen 
+  template: src={{ item }} dest=/data/bind/{{ item }}
+  with_items: 
+    - bind.keys
+    - db.0
+    - db.127
+    - db.255
+    - db.empty
+    - db.local
+    - db.root
+    - db.void.ms
+    - named.conf
+    - named.conf.default-zones
+    - named.conf.local
+    - named.conf.options
+    - zones.rfc1918       
+
+- name: start bind docker
+  docker_container: 
+    name: bind-app
+    image: bind-app
+    hostname: bind-app
+    state: started
+    restart: yes
+    interactive: yes
+    restart_policy: always
+    ports:
+      - 0.0.0.0:53:53/udp
+    volumes:
+      - /data/bind/:/etc/bind/
+     

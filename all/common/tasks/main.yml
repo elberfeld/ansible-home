@@ -26,10 +26,11 @@
     update_cache: yes
     state: installed
   with_items:
-    - vim
-    - wget
+    - dnsutils 
     - psmisc
     - tree
+    - vim
+    - wget
 
 - name: add sshkeys for server
   authorized_key: 

@@ -1,0 +1,8 @@
+        
+include "/etc/bind/zones.rfc1918";
+include "/etc/bind/named.conf.default-zones";
+
+zone "void.ms." IN {
+        type master;
+        file "/etc/bind/db.void.ms";
+};

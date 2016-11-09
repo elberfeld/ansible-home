@@ -21,12 +21,14 @@ server {
         {% endif %}
 
 	server_name {{ item }};
+	root /dev/null;
+	index index.html;
 
 	location /.well-known/ {
 		root /var/www/html/;
 	}
 
-        {% include "includes/" + item %}
+        {% include "includes/" + item ignore missing %}
 
 }
 

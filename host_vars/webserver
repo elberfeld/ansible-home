@@ -14,10 +14,9 @@ letsencrypt_mail: elberfeld@web.de
 
 letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df987a6221
 
+webserver_ext_ip: 130.180.13.106
+
 webserver_domains: 
-  - "void.ms"
-  - "www.void.ms"
-
-webserver_domains_disabled:   
-  - "pad.void.ms"
-
+  - "vpn"
+  - "pad"
+  - "www"

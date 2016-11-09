@@ -1,7 +1,4 @@
 
-	root /dev/null;
-	index index.html;
-
 	location /  {
 
         	proxy_set_header        Host $host;

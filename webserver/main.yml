@@ -6,4 +6,5 @@
   roles:
     - { role: docker, tags: docker }
     - { role: docker_etherpad, tags: etherpad }
+    - { role: docker_bind, tags: bind }
     - { role: nginx, tags: nginx }
