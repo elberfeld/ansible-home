@@ -14,6 +14,8 @@ ns1     IN      AAAA    {{ webserver_ext_ip6 }}
 ns2     IN      A       {{ webserver_ext_ip }}
 ns2     IN      AAAA    {{ webserver_ext_ip6 }}
 
+vpn     IN      A       {{ webserver_ext_ip }}
+
 {% for domain in webserver_domains %}
 
 {{domain }}    IN  A      {{ webserver_ext_ip }}

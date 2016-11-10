@@ -1,0 +1,64 @@
+---
+- name: get secrets from server 1
+  slurp: src={{ item }}
+  with_items:
+    - /data/nextcloud/mysql_admin_pass
+    - /data/nextcloud/mysql_user_pass
+    - /data/nextcloud/nextcloud_admin_pass
+  register: nextcloud_secrets
+
+- name: get secrets from server 2
+  set_fact: 
+    mysql_admin_pass: "{{ nextcloud_secrets.results | selectattr('item', 'equalto', '/data/nextcloud/mysql_admin_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    mysql_user_pass: "{{ nextcloud_secrets.results | selectattr('item', 'equalto', '/data/nextcloud/mysql_user_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    nextcloud_admin_pass: "{{ nextcloud_secrets.results | selectattr('item', 'equalto', '/data/nextcloud/nextcloud_admin_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+
+- name: create folder struct for nextcloud
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "/data/nextcloud/"
+    - "/data/nextcloud/data/"
+    - "/data/nextcloud/db/"
+    - "/data/nextcloud/config/"
+    - "/data/nextcloud/apps2/"
+
+- name: start nextcloud-db docker
+  docker_container: 
+    name: nextcloud-db
+    image: mariadb:10
+    hostname: nextcloud-db
+    state: started
+    restart_policy: always
+    volumes:
+      - /data/nextcloud/db/:/var/lib/mysql
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
+     
+- name: start nextcloud-app docker
+  docker_container: 
+    name: nextcloud-app
+    image: wonderfall/nextcloud:10.0
+    state: started
+    restart_policy: always
+    env: 
+      TZ: Europe/Berlin
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: "{{ nextcloud_admin_pass }}"
+      DB_TYPE: mysql
+      DB_NAME: nextcloud
+      DB_USER: nextcloud
+      DB_PASSWORD: "{{ mysql_user_pass }}"
+      DB_HOST: db_nextcloud
+    ports:
+      - 127.0.0.1:42002:8888
+    links:
+      - nextcloud-db:db_nextcloud
+    volumes:
+      - /data/nextcloud/data/:/data/ 
+      - /data/nextcloud/config/:/config/
+      - /data/nextcloud/apps2/:/apps2/
