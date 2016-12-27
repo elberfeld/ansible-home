@@ -20,7 +20,7 @@ server {
 
         {% endif %}
 
-	server_name {{ item }};
+	server_name {{ item }}.void.ms;
 	root /dev/null;
 	index index.html;
 
