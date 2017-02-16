@@ -7,4 +7,6 @@ debian_sources:
 debian_keys:
   - "https://homegear.eu/packages/Release.key"
   - "https://bintray.com/user/downloadSubjectPublicKey?username=openhab"
+
+openhab_homematic_id: "6ae8de84"  
   
