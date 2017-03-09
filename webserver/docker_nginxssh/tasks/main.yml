@@ -1,0 +1,40 @@
+---
+- name: Get a timestamp
+  command: "date +%Y%m%d%H%M%S"
+  register: timestamp
+
+- name: create folder struct for docker_nginxssh container
+  file: 
+    path: "/tmp/docker_nginxssh/" 
+    state: "directory"
+
+- name: copy container files  
+  template: src={{ item }} dest=/tmp/docker_nginxssh/{{ item }}
+  with_items: 
+    - Dockerfile
+    - entrypoint.sh
+    - sshd_config
+
+- name: build docker_nginxssh image 
+  docker_image: 
+    name: "nginxssh-{{ timestamp.stdout }}"
+    path: /tmp/docker_nginxssh/
+    state: present 
+
+- name: start docker_nginxssh_connectiv docker
+  docker_container: 
+    name: nginxssh-connectiv
+    image: nginxssh-{{ timestamp.stdout }}
+    hostname: nginxssh-connectiv
+    state: started
+    restart: yes
+    interactive: yes
+    restart_policy: always
+    ports:
+      - 0.0.0.0:42004:80
+      - 0.0.0.0:444:22
+    volumes:
+      - /data/nginxssh_connectiv/ssh:/etc/ssh/keys/
+      - /data/nginxssh_connectiv/nginx.conf:/etc/nginx/conf.d/default.conf
+      - /data/nginxssh_connectiv/html/:/var/www/html/
+      - /data/nginxssh_connectiv/authorized_keys:/var/www/.ssh/authorized_keys

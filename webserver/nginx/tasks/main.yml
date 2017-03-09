@@ -32,8 +32,8 @@
 
 - name: clone simp_le repo
   git: 
-    repo: "https://github.com/kuba/simp_le" 
-    version: "3a103b76f933f9aef782a47401dd2eff5057a6f7"
+    repo: "https://github.com/zenhack/simp_le.git" 
+    version: "60ee2111609022e6550dbe137c2a6064890a5ca0"
     dest: "/opt/simp_le/" 
 
 

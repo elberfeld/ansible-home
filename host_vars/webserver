@@ -18,6 +18,7 @@ webserver_ext_ip: 130.180.13.106
 webserver_ext_ip6: 2001:470:1f0b:7ce::110
 
 webserver_domains: 
+  - "connectiv"
   - "pad"
   - "seafile"
   - "www"
