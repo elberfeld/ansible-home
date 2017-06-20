@@ -8,5 +8,6 @@
     - { role: docker_bind, tags: bind }
     - { role: docker_etherpad, tags: etherpad }
     - { role: docker_nginxssh, tags: nginxssh }
+    - { role: docker_nextcloud, tags: nextcloud }
     - { role: docker_seafile, tags: seafile }
     - { role: nginx, tags: nginx }

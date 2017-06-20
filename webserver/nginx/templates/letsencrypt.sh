@@ -1,10 +1,7 @@
 #!/bin/bash
 
-cd /opt/simp_le/ 
-if [ ! -e venv/bin/python ]; then ./venv.sh; fi 
+{% for domain in webserver_domains %}
+certbot certonly --non-interactive --agree-tos --webroot -m {{ letsencrypt_mail }} -w /var/www/html/  -d {{ domain }}.void.ms
+{% endfor %}
 
-cd /etc/ssl 
-PATH=/opt/simp_le/venv/bin:/usr/sbin:/usr/bin:/sbin:/bin 
-
-simp_le --email {{ letsencrypt_mail }} -f account_key.json -f key.pem -f fullchain.pem --tos_sha256 {{ letsencrypt_tos_sha256 }} {% for domain in webserver_domains %} -d {{ domain }}.void.ms:/var/www/html {% endfor %} && systemctl reload nginx
-
+systemctl reload nginx

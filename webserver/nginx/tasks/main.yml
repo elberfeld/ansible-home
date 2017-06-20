@@ -9,12 +9,7 @@
     - nginx
     - git
     - ca-certificates 
-    - gcc
-    - libssl-dev 
-    - libffi-dev
-    - python
-    - python-dev
-    - virtualenv
+    - certbot
 
 
 - name: nginx default Konfig entfernen 
@@ -23,25 +18,12 @@
     state: absent
 
 
-# sinp_le installieren 
-
-- name: create folder simp_le 
-  file: 
-    path: "/opt/simp_le/" 
-    state: "directory"
-
-- name: clone simp_le repo
-  git: 
-    repo: "https://github.com/zenhack/simp_le.git" 
-    version: "60ee2111609022e6550dbe137c2a6064890a5ca0"
-    dest: "/opt/simp_le/" 
-
-
 # LetsEncrypt Script erstellen 
 
 - name: LetsEncrypt Script erstellen 
   template: src=letsencrypt.sh dest=/opt/letsencrypt.sh mode=o+x
   register: letsencryptsh
+  notify: restart nginx
 
 - name: Cronjob für Zertifikatserneuerung
   cron: name="letsencrypt" weekday="2" hour="20" minute="0" job="/opt/letsencrypt.sh"
@@ -49,29 +31,33 @@
 
 # nginx konfigurieren (initial, falls noch kein Zertifikat existiert)
 
-- name: check if fullchain.pem exists
-  stat: path=/etc/ssl/fullchain.pem
-  register: sslcert
+- set_fact:
+    nginx_https: False
+  when: letsencryptsh.changed
 
-- name: Konfig-Datei default erstellen (initial)
+- name: Konfig-Datei default erstellen (httponly)
   template: src=nginx-site dest=/etc/nginx/sites-enabled/{{ item }}.void.ms
-  with_items: webserver_domains
-  notify: restart nginx
-  when: sslcert.stat.exists == False
+  with_items: 
+    - "{{ webserver_domains }}"
+  when: letsencryptsh.changed
 
-- name: nginx restarten (initial)
-  meta: flush_handlers
-  when: sslcert.stat.exists == False
+- name: nginx restarten (httponly)
+  service: name=nginx state=restarted
+  when: letsencryptsh.changed
 
 - name: Letsencrypt-Zertifikat beantragen und installieren 
   shell: "/opt/letsencrypt.sh" 
-  when: sslcert.stat.exists == False or letsencryptsh.changed
+  when: letsencryptsh.changed 
 
 
 # nginx konfigurieren
 
+- set_fact:
+    nginx_https: True
+
 - name: Konfig-Datei default erstellen
   template: src=nginx-site dest=/etc/nginx/sites-enabled/{{ item }}.void.ms
-  with_items: webserver_domains
+  with_items: 
+    - "{{ webserver_domains }}"
   notify: restart nginx
 

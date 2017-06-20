@@ -4,13 +4,17 @@ server {
 	listen 80;
 	listen [::]:80;
 
-        {% if sslcert.stat.exists == True %}
+        {% if nginx_https == True %}
 
 	listen 443 ssl spdy;
     	listen [::]:443 ssl spdy;
 
-	ssl_certificate /etc/ssl/fullchain.pem;
-	ssl_certificate_key /etc/ssl/key.pem;
+	#ssl_certificate /etc/ssl/fullchain.pem;
+	#ssl_certificate_key /etc/ssl/key.pem; 
+
+	ssl_certificate /etc/letsencrypt/live/{{ item }}.void.ms/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/{{ item }}.void.ms/privkey.pem;
+	
 	ssl_session_cache shared:SSL:5m;
 	ssl_session_timeout 5m;
 	add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
@@ -29,6 +33,6 @@ server {
 	}
 
         {% include "includes/" + item ignore missing %}
-
+	
 }
 
