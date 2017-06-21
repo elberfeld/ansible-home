@@ -1,4 +1,13 @@
 ---
+# Pakete installieren
+- name: nginx installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - curl
+
 - name: get secrets from server 1
   slurp: src={{ item }}
   with_items:
@@ -20,9 +29,28 @@
   with_items:
     - "/data/nextcloud/"
     - "/data/nextcloud/data/"
-    - "/data/nextcloud/config/"
-    - "/data/nextcloud/apps/"
     - "/data/nextcloud/db/"
+
+- name: create folder struct for nextcloud 2
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+    owner: 8983
+    group: 8983
+  with_items:
+    - "/data/nextcloud/solr/"
+
+- name: start nextcloud-solr docker
+  docker_container: 
+    name: nextcloud-solr
+    image: solr:6.6
+    hostname: nextcloud-solr
+    state: started
+    restart_policy: always
+    volumes:
+      - /data/nextcloud/solr/:/opt/solr/server/solr/mycores
+    entrypoint:
+      - "docker-entrypoint.sh solr-precreate nextcloud"
 
 - name: start nextcloud-db docker
   docker_container: 
@@ -48,8 +76,10 @@
     ports:
       - 127.0.0.1:42005:80
     links:
+      - nextcloud-solr:solr
       - nextcloud-db:mysql
     volumes:
-      - /data/nextcloud/data/:/var/www/html/data/
-      - /data/nextcloud/config/:/var/www/html/config/
-      - /data/nextcloud/apps/:/var/www/html/apps/
+      - /data/nextcloud/data/:/var/www/html/
+
+- name: Cronjob für nextcloud cron
+  cron: name="nextcloud-cron" weekday="*" hour="*" minute="*/15" job=" curl --silent http://127.0.0.1:42005/cron.php"
