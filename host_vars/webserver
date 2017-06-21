@@ -10,6 +10,21 @@ debian_sources:
 debian_keys:
   - "http://apt.dockerproject.org/gpg"
 
+borgbackup_weekday: "*"
+borgbackup_hour: "4"
+borgbackup_minute: "0"
+
+borgbackup_directories:
+  - "/etc/"
+  - "/data/borgbackup/"
+  - "/data/nextcloud/"
+
+borgbackup_prune:
+  - "--keep-within=2d"
+  - "--keep-daily=7"
+  - "--keep-weekly=4"
+  - "--keep-monthly=6"
+
 letsencrypt_mail: elberfeld@web.de
 
 letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df987a6221

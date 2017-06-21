@@ -1,6 +1,6 @@
 ---
 # Pakete installieren
-- name: nginx installieren
+- name: pakete installieren
   apt:
     pkg: "{{ item }}"
     update_cache: yes

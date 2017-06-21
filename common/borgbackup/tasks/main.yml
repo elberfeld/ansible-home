@@ -1,0 +1,48 @@
+---
+# Pakete installieren
+- name: pakete installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - borgbackup
+    - logrotate
+    - moreutils
+
+- name: get secrets from server 1
+  slurp: src={{ item }}
+  with_items:
+    - /data/borgbackup/repo_passphrase 
+    - /data/borgbackup/repo_url 
+  register: borgbackup_secrets
+
+- name: get secrets from server 2
+  set_fact: 
+    repo_passphrase: "{{ borgbackup_secrets.results | selectattr('item', 'equalto', '/data/borgbackup/repo_passphrase') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    repo_url: "{{ borgbackup_secrets.results | selectattr('item', 'equalto', '/data/borgbackup/repo_url') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+
+
+# BorgBackup Scripte erstellen 
+
+- name: BorgBackup Script erstellen 
+  template: src={{ item }} dest=/opt/{{ item }} mode=o+x
+  with_items:
+    - "borgbackup-check.sh"
+    - "borgbackup-create.sh"
+    - "borgbackup-delete.sh"
+    - "borgbackup-info.sh"
+    - "borgbackup-init.sh"
+    - "borgbackup-list.sh"
+    - "borgbackup-mount.sh"
+
+- name: BorgBackup log folder erstellen 
+  file: 
+    path: "/var/log/borgbackup"
+    state: "directory"
+
+- name: BorgBackup LogRotate config erstellen 
+  template: src=logrotate dest=/etc/logrotate.d/borgbackup
+
+- name: Cronjob für BorgBackup
+  cron: name="borgbackup" weekday="{{borgbackup_weekday}}" hour="{{borgbackup_hour}}" minute="{{borgbackup_minute}}" job="/opt/borgbackup-create.sh 2>&1 | ts '[%Y-%m-%d %H:%M:%S]' >> /var/log/borgbackup/borgbackup.log"

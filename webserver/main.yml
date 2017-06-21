@@ -4,6 +4,7 @@
 - hosts: webserver 
   remote_user: root
   roles:
+    - { role: "../common/borgbackup", tags: borgbackup }
     - { role: docker, tags: docker }
     - { role: docker_bind, tags: bind }
     - { role: docker_etherpad, tags: etherpad }
