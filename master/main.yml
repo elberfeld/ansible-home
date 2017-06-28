@@ -1,0 +1,7 @@
+---
+# Rollen, die nur auf dem Master-Server verwendet werden 
+
+- hosts: master 
+  remote_user: root
+  roles:
+    - { role: "../common/borgbackup", tags: borgbackup }

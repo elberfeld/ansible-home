@@ -12,3 +12,19 @@ debian_sources:
   - "deb http://apt.dockerproject.org/repo debian-stretch main"
 
 debian_keys:
+
+borgbackup_weekday: "*"
+borgbackup_hour: "5"
+borgbackup_minute: "0"
+
+borgbackup_directories:
+  - "/etc/"
+  - "/mnt/data/borgbackup/"
+  - "/mnt/data/libvirt/"
+
+borgbackup_prune:
+  - "--keep-within=2d"
+  - "--keep-daily=7"
+  - "--keep-weekly=4"
+  - "--keep-monthly=6"
+  

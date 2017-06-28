@@ -35,6 +35,7 @@ webserver_ext_ip6: 2001:470:1f0b:7ce::110
 webserver_domains: 
   - "connectiv"
   - "cloud"
+  - "node"
   - "pad"
   - "seafile"
   - "www"
