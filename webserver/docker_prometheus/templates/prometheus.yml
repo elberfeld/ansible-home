@@ -58,6 +58,8 @@ scrape_configs:
     static_configs:
       - targets:
         - 10.5.0.254  
+          labels:
+            group: 'service'
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -65,3 +67,50 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: snmp-exporter:9116  
+
+
+  - job_name: 'ping'
+    metrics_path: /probe
+    params:
+      module: [icmp]  
+    static_configs:
+      - targets:
+        - 130.180.13.106         # Unitymedia Router Box 
+        - 2001:470:1f0a:7c8::1   # HE Tunnel Endpoint 
+        - 8.8.8.8                # Google DNS 
+        - 10.5.0.100             # NAS 
+        - 10.5.0.250             # Control Server 
+        - 10.5.0.254             # Firewall 
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115  
+
+
+  - job_name: 'http'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]  
+    static_configs:
+      - targets:
+        - https://ccc.de    
+        - https://chaos-west.de    
+        - https://freifunk-muensterland.de    
+        - https://heise.de    
+        - https://pro-linux.de    
+        - https://warpzone.ms  
+        - https://gitlab.warpzone.ms  
+        - https://infra.warpzone.ms  
+        - https://mattermost.warpzone.ms  
+        - https://pad.warpzone.ms  
+        - https://wiki.warpzone.ms  
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115  
