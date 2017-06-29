@@ -1,0 +1,18 @@
+
+ALERT MEM_FULL_99P
+IF ((node_memory_MemTotal - node_memory_MemFree )/ node_memory_MemTotal * 100) > 99
+FOR 15m
+
+ALERT HIGH_CPU
+IF rate(node_cpu{mode = "idle"}[5m]) < 0.1 
+FOR 15m
+
+ALERT HIGH_DISK_IO
+IF node_disk_io_now > 10 
+FOR 5m
+
+ALERT DISK_FULL_95P 
+IF ( 100 *(1 - (node_filesystem_free  / node_filesystem_size) ) ) > 95 
+
+ALERT DISK_FULL_4H
+IF predict_linear(node_filesystem_free[1h],4*3600) < 0
