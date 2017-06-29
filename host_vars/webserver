@@ -18,6 +18,7 @@ borgbackup_directories:
   - "/etc/"
   - "/data/borgbackup/"
   - "/data/nextcloud/"
+  - "/data/prometheus/"
 
 borgbackup_prune:
   - "--keep-within=2d"
