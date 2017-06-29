@@ -50,6 +50,14 @@ scrape_configs:
           group: 'server'
 
 
+  - job_name: 'nginx'
+
+    static_configs:
+      - targets: ['10.5.0.110:9145']
+        labels:
+          group: 'service'
+
+
   - job_name: 'firewall'
 
     metrics_path: /snmp
@@ -58,8 +66,6 @@ scrape_configs:
     static_configs:
       - targets:
         - 10.5.0.254  
-          labels:
-            group: 'service'
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

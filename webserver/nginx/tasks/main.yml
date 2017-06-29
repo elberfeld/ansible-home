@@ -7,16 +7,31 @@
     state: installed
   with_items:
     - nginx
-    - git
+    - nginx-extras
     - ca-certificates 
     - certbot
+    - git
 
+# Git Repo nginx-lua-prometheus Clonen 
+
+- name: clone nginx-lua-prometheus repository
+  git: 
+    repo: https://github.com/knyar/nginx-lua-prometheus.git 
+    dest: /opt/nginx-lua-prometheus
+    version: cb21d1442d0d2e86d4f4ffd3bf7097b3ff73c84d
+
+
+# NginX einrichten 
 
 - name: nginx default Konfig entfernen 
   file: 
     path: /etc/nginx/sites-enabled/default 
     state: absent
 
+- name: nginx Konfigurationsdateien erstellen  
+  template: src={{ item }} dest=/etc/nginx/conf.d/{{ item }}
+  with_items: 
+    - nginx-lua-prometheus.conf
 
 # LetsEncrypt Script erstellen 
 
