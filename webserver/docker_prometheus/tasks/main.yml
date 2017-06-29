@@ -1,0 +1,44 @@
+---
+- name: create folder struct for prometheus
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "/data/prometheus/"
+    - "/data/prometheus/config/"
+    - "/data/prometheus/data/"
+
+- name: create config files
+  template: src={{ item }} dest=/data/prometheus/config/{{ item }}
+  with_items: 
+    - prometheus.yml
+  register: config
+
+- name: start prometheus snmp-exporter docker
+  docker_container: 
+    name: prometheus-snmp-exporter
+    image: prom/snmp-exporter:v0.4.0
+    state: started
+    restart_policy: always
+    ports:
+      - 0.0.0.0:9116:9116
+
+- name: stop prometheus docker
+  docker_container: 
+    name: prometheus-app
+    state: absent
+  when: config.changed
+
+- name: start prometheus docker
+  docker_container: 
+    name: prometheus-app
+    image: prom/prometheus:v1.7.1
+    state: started
+    restart_policy: always
+    volumes:
+      - /data/prometheus/config/prometheus.yml/:/etc/prometheus/prometheus.yml
+      - /data/prometheus/data/:/prometheus
+    ports:
+      - 0.0.0.0:9090:9090
+    links:
+      - prometheus-snmp-exporter:snmp-exporter
