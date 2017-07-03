@@ -1,12 +1,25 @@
 
 debian_sources: 
   - "deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi"
+  - "deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi"
   - "deb https://homegear.eu/packages/Raspbian/ jessie/"
-  - "deb http://dl.bintray.com/openhab/apt-repo2 testing main"
+  - "deb https://homegear.eu/packages/Raspbian/ stretch/"
 
 debian_keys:
   - "https://homegear.eu/packages/Release.key"
-  - "https://bintray.com/user/downloadSubjectPublicKey?username=openhab"
 
-openhab_homematic_id: "6ae8de84"  
+borgbackup_weekday: "*"
+borgbackup_hour: "2"
+borgbackup_minute: "0"
+
+borgbackup_directories:
+  - "/etc/"
+  - "/data/borgbackup/"
+  - "/var/lib/homegear/"
+
+borgbackup_prune:
+  - "--keep-within=2d"
+  - "--keep-daily=7"
+  - "--keep-weekly=4"
+  - "--keep-monthly=6"
   

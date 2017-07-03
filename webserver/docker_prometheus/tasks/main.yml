@@ -47,6 +47,16 @@
     ports:
       - 0.0.0.0:9116:9116
 
+- name: start prometheus statsd-exporter docker
+  docker_container: 
+    name: prometheus-statsd-exporter
+    image: prom/statsd-exporter:v0.4.0
+    state: started
+    restart_policy: always
+    ports:
+      - 0.0.0.0:9102:9102
+      - 0.0.0.0:9125:9125/udp
+
 - name: stop prometheus-alertmanager docker
   docker_container: 
     name: prometheus-alert
@@ -86,5 +96,6 @@
     links:
       - prometheus-blackbox-exporter:blackbox-exporter
       - prometheus-snmp-exporter:snmp-exporter
+      - prometheus-statsd-exporter:statsd-exporter
       - prometheus-alert:alertmanager
 

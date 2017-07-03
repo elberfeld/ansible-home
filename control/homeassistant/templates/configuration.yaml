@@ -1,0 +1,129 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 51.9623333
+  longitude: 7.6239243
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Berlin
+
+  # customize sensor names
+  customize:
+    
+    homematic.wireless:
+      hidden: true
+
+    binary_sensor.bad_fenster_state:
+      device_class: opening
+      icon: mdi:glassdoor
+
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  # api_password: PASSWORD
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+#discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+#conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather Prediction via yr.no
+sensor:
+  - platform: yr
+
+  - platform: template
+    sensors:
+{% for sensor in ['Schlafzimmer','Wohnzimmer','Schreibtisch','Badezimmer'] %}
+      {{sensor|lower}}_current_temperature:
+        value_template: '{{ '{{' }} states.climate.{{sensor|lower}}.attributes.current_temperature {{ '}}' }}'
+        unit_of_measurement: '°C'
+        entity_id: climate.{{sensor|lower}}
+        friendly_name: '{{sensor}} akt. Temp'
+      {{sensor|lower}}_temperature:
+        value_template: '{{ '{{' }} states.climate.{{sensor|lower}}.attributes.temperature {{ '}}' }}'
+        unit_of_measurement: '°C'
+        entity_id: climate.{{sensor|lower}}
+        friendly_name: '{{sensor}} Temp'
+      {{sensor|lower}}_valve:
+        value_template: '{{ '{{' }} states.climate.{{sensor|lower}}.attributes.valve {{ '}}' }}'
+        unit_of_measurement: '%'
+        entity_id: climate.{{sensor|lower}}
+        friendly_name: '{{sensor}} Leistung'
+      {{sensor|lower}}_battery:
+        value_template: '{{ '{{' }} states.climate.{{sensor|lower}}.attributes.battery {{ '}}' }}'
+        unit_of_measurement: 'V'
+        entity_id: climate.{{sensor|lower}}
+        friendly_name: '{{sensor}} Batterie'
+{% endfor %}  
+
+      
+# Text to speech
+#tts:
+#  platform: google
+
+# connect homematic devices via local homegear instance
+homematic:
+  hosts:
+    wireless:
+      ip: 127.0.0.1
+      resolvenames: metadata
+
+climate:
+  platform: homematic
+    
+
+# presence via nmap scan
+device_tracker:
+  - platform: nmap_tracker
+    track_new_devices: no
+    hosts: 10.5.0.1-99
+
+# Pushover notifier
+notify:
+  - name: pushover
+    platform: pushover
+    api_key: {{pushover_token}}
+    user_key: {{pushover_user_key}}
+
+# export data to statsd
+statsd:
+  host: 10.5.0.110 
+  port: 9125
+  prefix: ha
+
+# include group config 
+group: !include groups.yaml
+
+#include automation config 
+automation: !include automations.yaml

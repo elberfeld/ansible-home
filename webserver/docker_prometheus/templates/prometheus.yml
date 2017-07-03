@@ -64,6 +64,14 @@ scrape_configs:
           group: 'service'
 
 
+  - job_name: 'homeassistant'
+
+    static_configs:
+      - targets: ['statsd-exporter:9102']
+        labels:
+          group: 'sensor' 
+
+
   - job_name: 'firewall'
 
     metrics_path: /snmp

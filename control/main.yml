@@ -4,5 +4,6 @@
 - hosts: control 
   remote_user: root
   roles:
+    - { role: "../common/borgbackup", tags: borgbackup }
     - { role: homegear, tags: homegear }
-    - { role: openhab, tags: openhab }
+    - { role: homeassistant, tags: homeassistant }
