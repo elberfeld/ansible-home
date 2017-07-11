@@ -5,13 +5,13 @@
     - /etc/homeassistant/pushover_user_key
     - /etc/homeassistant/pushover_token
     - /etc/homeassistant/chris_handy_mac
-  register: prometheus_secrets
+  register: homeassistant_secrets
 
 - name: get secrets from server 2
   set_fact: 
-    pushover_user_key: "{{ prometheus_secrets.results | selectattr('item', 'equalto', '/etc/homeassistant/pushover_user_key') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
-    pushover_token: "{{ prometheus_secrets.results | selectattr('item', 'equalto', '/etc/homeassistant/pushover_token') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
-    chris_handy_mac: "{{ prometheus_secrets.results | selectattr('item', 'equalto', '/etc/homeassistant/chris_handy_mac') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    pushover_user_key: "{{ homeassistant_secrets.results | selectattr('item', 'equalto', '/etc/homeassistant/pushover_user_key') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    pushover_token: "{{ homeassistant_secrets.results | selectattr('item', 'equalto', '/etc/homeassistant/pushover_token') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    chris_handy_mac: "{{ homeassistant_secrets.results | selectattr('item', 'equalto', '/etc/homeassistant/chris_handy_mac') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
 
 - name: install packages
   apt:
