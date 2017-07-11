@@ -1,3 +1,6 @@
 ---
 - name: restart homegear
   service: name=homegear state=restarted
+
+- name: reboot
+  command: /sbin/reboot

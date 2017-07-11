@@ -21,6 +21,38 @@
 
 - name: enable service
   service: name=homegear enabled=yes
+  notify: restart homegear
+
+- name: disable service
+  service: name=serial-getty@ttyAMA0.service enabled=no
+  notify: reboot
+
+- name: disable service
+  service: name=serial-getty@serial0.service enabled=no
+  notify: reboot
+
+- name: disable service
+  service: name=serial-getty@ttyS0.service enabled=no
+  notify: reboot
+
+- lineinfile:
+    path: /boot/config.txt
+    line: 'enable_uart=1'
+  notify: reboot
+
+- lineinfile:
+    path: /boot/config.txt
+    line: 'dtparam=spi=on'
+  notify: reboot
+
+- lineinfile:
+    path: /boot/config.txt
+    line: 'dtparam=i2c_arm=on'
+  notify: reboot
+
+- name: cmdline.txt
+  template: src=cmdline.txt dest=/boot/cmdline.txt
+  notify: reboot
 
 - name: main.conf
   template: src=main.conf dest=/etc/homegear/main.conf
