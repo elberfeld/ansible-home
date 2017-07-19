@@ -9,7 +9,7 @@ debian_keys:
   - "https://homegear.eu/packages/Release.key"
 
 borgbackup_weekday: "*"
-borgbackup_hour: "2"
+borgbackup_hour: "*/4"
 borgbackup_minute: "0"
 
 borgbackup_directories:

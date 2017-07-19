@@ -35,6 +35,7 @@
     - "borgbackup-init.sh"
     - "borgbackup-list.sh"
     - "borgbackup-mount.sh"
+    - "borgbackup-prometheus.sh"
 
 - name: BorgBackup log folder erstellen 
   file: 
@@ -42,7 +43,18 @@
     state: "directory"
 
 - name: BorgBackup LogRotate config erstellen 
-  template: src=logrotate dest=/etc/logrotate.d/borgbackup
+  template: 
+    src: logrotate 
+    dest: /etc/logrotate.d/borgbackup
 
-- name: Cronjob für BorgBackup
-  cron: name="borgbackup" weekday="{{borgbackup_weekday}}" hour="{{borgbackup_hour}}" minute="{{borgbackup_minute}}" job="/opt/borgbackup-create.sh 2>&1 | ts '[%Y-%m-%d %H:%M:%S]' >> /var/log/borgbackup/borgbackup.log"
+- name: Alten cronjob entfernen falls vorhanden  
+  cron: 
+    name: "borgbackup" 
+    state: absent
+
+- name: Cronjob für BorgBackup Backup 
+  cron: name="borgbackup-create" weekday="{{borgbackup_weekday}}" hour="{{borgbackup_hour}}" minute="{{borgbackup_minute}}" job="/opt/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/borgbackup.log"
+
+- name: Cronjob für BorgBackup Prometheus export  
+  cron: name="borgbackup-prom" weekday="*" hour="*" minute="0" job="/opt/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup.log"
+  

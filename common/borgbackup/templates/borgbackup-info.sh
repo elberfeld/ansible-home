@@ -5,9 +5,22 @@ export BORG_RSH="ssh -i /data/borgbackup/repo_sshkey"
 
 #  Anzeige des Inhaltes im Borg Backup Archiv
 
-borg list $1 $2 $3 --info --show-rc --remote-path borg1 {{repo_url}}
+BACKUPS=$(borg list $1 $2 $3 --info --show-rc --remote-path borg1 {{repo_url}})
 
-echo "BackupName, followed by [ENTER]:"
-read target
+echo "============================================="
+echo "Backups List "
+echo "$BACKUPS"
 
-borg info $1 $2 $3 --info --show-rc --remote-path borg1 {{repo_url}}::$target
+BACKUPS_LIST=$(echo "$BACKUPS" | awk '{print $1}')
+
+for BACKUP in $BACKUPS_LIST; do
+
+  echo "============================================="
+
+  borg info $1 $2 $3 --info --show-rc --remote-path borg1 {{repo_url}}::$BACKUP
+
+done
+
+echo "============================================="
+
+

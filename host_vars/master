@@ -20,7 +20,8 @@ borgbackup_minute: "0"
 borgbackup_directories:
   - "/etc/"
   - "/mnt/data/borgbackup/"
-  - "/mnt/data/libvirt/"
+
+#  - "/mnt/data/libvirt/"
 
 borgbackup_prune:
   - "--keep-within=2d"
