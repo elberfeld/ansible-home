@@ -7,5 +7,6 @@
     - { role: "../common/docker", tags: docker }
     - { role: "../common/prometheus-node", tags: prometheus-node }
     - { role: "../common/borgbackup", tags: borgbackup }
+    - { role: docker_grafana, tags: grafana }
     - { role: docker_nodered, tags: nodered }
     - { role: docker_prometheus, tags: prometheus }
