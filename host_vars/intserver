@@ -21,6 +21,3 @@ borgbackup_prune:
   - "--keep-daily=7"
   - "--keep-weekly=4"
   - "--keep-monthly=6"
-
-nfs_imports:
-  - "/srv 10.5.0.101:/data/intserver"

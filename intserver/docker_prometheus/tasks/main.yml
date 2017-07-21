@@ -2,27 +2,27 @@
 - name: get secrets from server 1
   slurp: src={{ item }}
   with_items:
-    - /data/prometheus/pushover_user_key
-    - /data/prometheus/pushover_token
+    - /srv/prometheus/pushover_user_key
+    - /srv/prometheus/pushover_token
   register: prometheus_secrets
 
 - name: get secrets from server 2
   set_fact: 
-    pushover_user_key: "{{ prometheus_secrets.results | selectattr('item', 'equalto', '/data/prometheus/pushover_user_key') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
-    pushover_token: "{{ prometheus_secrets.results | selectattr('item', 'equalto', '/data/prometheus/pushover_token') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    pushover_user_key: "{{ prometheus_secrets.results | selectattr('item', 'equalto',  '/srv/prometheus/pushover_user_key') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    pushover_token: "{{ prometheus_secrets.results | selectattr('item', 'equalto',  '/srv/prometheus/pushover_token') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
 
 - name: create folder struct for prometheus
   file: 
     path: "{{ item }}"
     state: "directory"
   with_items:
-    - "/data/prometheus/"
-    - "/data/prometheus/config/"
-    - "/data/prometheus/data/"
-    - "/data/prometheus/alert-data/"
+    -  /srv/prometheus/
+    -  /srv/prometheus/config/
+    -  /srv/prometheus/data/
+    -  /srv/prometheus/alert-data/
 
 - name: create config files
-  template: src={{ item }} dest=/data/prometheus/config/{{ item }}
+  template: src={{ item }} dest=/srv/prometheus/config/{{ item }}
   with_items: 
     - alertmanager.yml
     - prometheus.yml
@@ -70,8 +70,8 @@
     state: started
     restart_policy: always
     volumes:
-      - /data/prometheus/config/alertmanager.yml/:/etc/alertmanager/config.yml
-      - /data/prometheus/alert-data/:/alertmanager
+      - /srv/prometheus/config/alertmanager.yml/:/etc/alertmanager/config.yml
+      - /srv/prometheus/alert-data/:/alertmanager
     ports:
       - 0.0.0.0:9093:9093
 
@@ -88,9 +88,9 @@
     state: started
     restart_policy: always
     volumes:
-      - /data/prometheus/config/prometheus.yml/:/etc/prometheus/prometheus.yml
-      - /data/prometheus/config/prometheus.rules/:/etc/prometheus/prometheus.rules
-      - /data/prometheus/data/:/prometheus
+      - /srv/prometheus/config/prometheus.yml/:/etc/prometheus/prometheus.yml
+      - /srv/prometheus/config/prometheus.rules/:/etc/prometheus/prometheus.rules
+      - /srv/prometheus/data/:/prometheus
     ports:
       - 0.0.0.0:9090:9090
     links:
