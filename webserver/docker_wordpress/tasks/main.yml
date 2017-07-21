@@ -19,8 +19,14 @@
     group: www-data
   with_items:
     - "/data/wordpress/"
+    - "/data/wordpress/config"
     - "/data/wordpress/data/"
     - "/data/wordpress/db/"
+
+- name: create config files
+  template: src={{ item }} dest=/data/wordpress/config/{{ item }}
+  with_items: 
+    - uploads.ini
 
 - name: start wordpress-db docker
   docker_container: 
@@ -44,6 +50,7 @@
     state: started
     restart_policy: always
     volumes:
+      - /data/wordpress/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - /data/wordpress/data:/var/www/html
     ports:
       - 127.0.0.1:42007:80
