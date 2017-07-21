@@ -13,6 +13,5 @@
     - { role: docker_nginxssh, tags: nginxssh }
     - { role: docker_nodered, tags: nodered }
     - { role: docker_prometheus, tags: prometheus }
-    - { role: docker_seafile, tags: seafile }
     - { role: docker_wordpress, tags: wordpress }
     - { role: nginx, tags: nginx }
