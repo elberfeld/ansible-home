@@ -1,0 +1,29 @@
+
+debian_sources: 
+  - "deb http://ftp.halifax.rwth-aachen.de/debian/ stretch main contrib non-free"
+  - "deb http://ftp.halifax.rwth-aachen.de/debian/ stretch-updates main contrib non-free"
+  - "deb http://security.debian.org/ stretch/updates main contrib non-free"
+  - "deb http://apt.dockerproject.org/repo debian-stretch main"
+
+debian_keys:
+  - "http://apt.dockerproject.org/gpg"
+
+borgbackup_weekday: "*"
+borgbackup_hour: "*/4"
+borgbackup_minute: "0"
+
+borgbackup_directories:
+  - "/etc/"
+#  - "/data/borgbackup/"
+#  - "/data/nextcloud/"
+#  - "/data/prometheus/"
+
+borgbackup_prune:
+  - "--keep-within=2d"
+  - "--keep-daily=7"
+  - "--keep-weekly=4"
+  - "--keep-monthly=6"
+
+nfs_imports:
+  - "/srv 10.5.0.101:/data/intserver"
+  

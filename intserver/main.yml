@@ -1,0 +1,12 @@
+---
+# Rollen, die nur auf dem internen Server verwendet werden 
+
+- hosts: intserver 
+  remote_user: root
+  roles:
+    - { role: "../common/docker", tags: docker }
+    - { role: "../common/nfsimports", tags: nfsimports }
+    - { role: "../common/prometheus-node", tags: prometheus-node }
+#    - { role: "../common/borgbackup", tags: borgbackup }
+#    - { role: docker_nodered, tags: nodered }
+#    - { role: docker_prometheus, tags: prometheus }

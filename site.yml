@@ -4,3 +4,4 @@
 - include: control/main.yml
 - include: master/main.yml
 - include: webserver/main.yml
+- include: intserver/main.yml
