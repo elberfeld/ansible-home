@@ -16,7 +16,7 @@
     state: present
 
 - name: Konfig-Dateien für bind erstellen 
-  template: src={{ item }} dest=/data/bind/{{ item }}
+  template: src={{ item }} dest=/srv/bind/{{ item }}
   with_items: 
     - bind.keys
     - db.0

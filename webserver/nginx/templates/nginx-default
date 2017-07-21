@@ -1,0 +1,27 @@
+
+server {
+
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+
+    {% if nginx_https == True %}
+
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+
+	ssl_certificate /etc/letsencrypt/live/www.void.ms/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/www.void.ms/privkey.pem;
+
+    {% endif %}
+    
+
+	server_name _;
+
+	root /dev/null;
+
+    location / {
+      rewrite     ^(.*)   https://www.void.ms$1 permanent;
+    }
+
+}

@@ -76,6 +76,10 @@
     - "{{ webserver_domains }}"
   notify: restart nginx
 
+- name: Konfig-Datei default erstellen
+  template: src=nginx-default dest=/etc/nginx/sites-enabled/default
+  notify: restart nginx
+
 - name: Konfig-Datei metrics erstellen
   template: src=nginx-metrics dest=/etc/nginx/sites-enabled/metrics
   notify: restart nginx
