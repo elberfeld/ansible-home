@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export BORG_PASSPHRASE="{{repo_passphrase}}"
-export BORG_RSH="ssh -i /data/borgbackup/repo_sshkey"
+export BORG_RSH="ssh -i /srv/borgbackup/repo_sshkey"
 
 #  Anzeige des Inhaltes im Borg Backup Archiv
 
