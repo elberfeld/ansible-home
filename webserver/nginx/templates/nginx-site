@@ -1,16 +1,29 @@
 
 server {
 
-	listen 80;
-	listen [::]:80;
+	listen 80{% if item == "www" %} default_server{% endif %};
+	listen [::]:80{% if item == "www" %} default_server{% endif %};
 
-        {% if nginx_https == True %}
+	server_name {{ item }}.void.ms;
+	root /dev/null;
+	index index.html;
 
-	listen 443 ssl http2;
- 	listen [::]:443 ssl http2;
+	location /.well-known/ {
+		root /var/www/html/;
+	}
 
-	#ssl_certificate /etc/ssl/fullchain.pem;
-	#ssl_certificate_key /etc/ssl/key.pem; 
+  location / {
+    deny  all;
+	}
+
+}
+
+{% if nginx_https == True %}
+
+server {
+
+	listen 443 ssl http2{% if item == "www" %} default_server{% endif %};
+ 	listen [::]:443 ssl http2{% if item == "www" %} default_server{% endif %};
 
 	ssl_certificate /etc/letsencrypt/live/{{ item }}.void.ms/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/{{ item }}.void.ms/privkey.pem;
@@ -22,8 +35,6 @@ server {
 	ssl_ciphers "AES:!ADH:!AECDH:!MD5:!DSS";
 	ssl_prefer_server_ciphers on;    
 
-        {% endif %}
-
 	server_name {{ item }}.void.ms;
 	root /dev/null;
 	index index.html;
@@ -32,8 +43,9 @@ server {
 		root /var/www/html/;
 	}
 
-        {% include "includes/" + item ignore missing %}
+  {% include "includes/" + item ignore missing %}
 	
 }
 
+{% endif %}
 
