@@ -6,8 +6,8 @@
     update_cache: yes
     state: installed
   with_items:
-    - nginx
-    - nginx-extras
+    - nginx-light
+    - libnginx-mod-http-lua
     - ca-certificates 
     - certbot
     - git
@@ -76,3 +76,6 @@
     - "{{ webserver_domains }}"
   notify: restart nginx
 
+- name: Konfig-Datei metrics erstellen
+  template: src=nginx-metrics dest=/etc/nginx/sites-enabled/metrics
+  notify: restart nginx

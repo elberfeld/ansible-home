@@ -1,11 +1,9 @@
 
 debian_sources: 
-  - "deb http://ftp.halifax.rwth-aachen.de/debian/ jessie main contrib non-free"
-  - "deb http://security.debian.org/ jessie/updates main contrib non-free"
-  - "deb http://ftp.de.debian.org/debian/ jessie-updates main"
-  - "deb http://ftp.halifax.rwth-aachen.de/debian/ jessie-updates main contrib non-free"
-  - "deb http://ftp.halifax.rwth-aachen.de/debian/ jessie-backports main contrib non-free"
-  - "deb http://apt.dockerproject.org/repo debian-jessie main"
+  - "deb http://ftp.halifax.rwth-aachen.de/debian/ stretch main contrib non-free"
+  - "deb http://ftp.halifax.rwth-aachen.de/debian/ stretch-updates main contrib non-free"
+  - "deb http://security.debian.org/ stretch/updates main contrib non-free"
+  - "deb http://apt.dockerproject.org/repo debian-stretch main"
 
 debian_keys:
   - "http://apt.dockerproject.org/gpg"

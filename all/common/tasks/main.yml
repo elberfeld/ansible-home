@@ -9,6 +9,7 @@
     update_cache: yes
     state: installed
   with_items:
+    - debian-archive-keyring
     - apt-transport-https
 
 - name: add debian repo keys 

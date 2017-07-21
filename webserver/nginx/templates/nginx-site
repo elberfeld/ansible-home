@@ -6,8 +6,8 @@ server {
 
         {% if nginx_https == True %}
 
-	listen 443 ssl spdy;
-    	listen [::]:443 ssl spdy;
+	listen 443 ssl http2;
+ 	listen [::]:443 ssl http2;
 
 	#ssl_certificate /etc/ssl/fullchain.pem;
 	#ssl_certificate_key /etc/ssl/key.pem; 
@@ -36,17 +36,4 @@ server {
 	
 }
 
-server {
 
-  listen 9145;
-
-  location /metrics {
-    content_by_lua '
-      metric_connections:set(ngx.var.connections_reading, {"reading"})
-      metric_connections:set(ngx.var.connections_waiting, {"waiting"})
-      metric_connections:set(ngx.var.connections_writing, {"writing"})
-      prometheus:collect()
-    ';
-  }
-  
-}
