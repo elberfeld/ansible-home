@@ -14,7 +14,8 @@
     url: "{{ item }}"
     state: present
   with_items: "{{ debian_keys }}"
-  
+  when: debian_keys > 0
+
 - name: set debian repos 
   template: src=sources.list.j2 dest=/etc/apt/sources.list   
 
