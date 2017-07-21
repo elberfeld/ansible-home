@@ -9,7 +9,6 @@
     - { role: "../common/nfsimports", tags: nfsimports }
     - { role: "../common/prometheus-node", tags: prometheus-node }
     - { role: docker_bind, tags: bind }
-    - { role: docker_etherpad, tags: etherpad }
     - { role: docker_nextcloud, tags: nextcloud }
     - { role: docker_nginxssh, tags: nginxssh }
     - { role: docker_nodered, tags: nodered }

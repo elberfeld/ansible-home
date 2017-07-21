@@ -38,6 +38,5 @@ webserver_domains:
   - "connectiv"
   - "cloud"
   - "node"
-  - "pad"
   - "seafile"
   - "www"
