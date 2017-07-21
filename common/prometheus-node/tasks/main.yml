@@ -8,3 +8,11 @@
   with_items:
     - prometheus-node-exporter
 
+- name: reload systemd and enable service
+  systemd:
+    name: prometheus-node-exporter
+    enabled: yes
+    daemon_reload: yes
+
+- name: restart prometheus-node-exporter
+  service: name=prometheus-node-exporter state=restarted
