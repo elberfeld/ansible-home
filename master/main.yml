@@ -6,4 +6,6 @@
   roles:
     - { role: "../common/borgbackup", tags: borgbackup }
     - { role: "../common/prometheus-node", tags: prometheus-node }
-    - { role: "nfsexports", tags: nfsexports }
+
+#    - { role: "nfsexports", tags: nfsexports }
+#    - { role: "nfsimports", tags: nfsimports }

@@ -14,9 +14,7 @@ borgbackup_minute: "0"
 
 borgbackup_directories:
   - "/etc/"
-  - "/srv/borgbackup/"
-  - "/srv/nextcloud/"
-  - "/srv/prometheus/"
+  - "/srv/"
 
 borgbackup_prune:
   - "--keep-within=2d"

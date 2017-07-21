@@ -99,6 +99,7 @@ scrape_configs:
         - 2001:470:1f0a:7c8::1   # HE Tunnel Endpoint 
         - 8.8.8.8                # Google DNS 
         - 10.5.0.100             # NAS 
+        - 10.5.0.110             # WebServer 
         - 10.5.0.250             # Control Server 
         - 10.5.0.254             # Firewall 
     relabel_configs:

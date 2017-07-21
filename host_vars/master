@@ -14,12 +14,12 @@ debian_sources:
 debian_keys:
 
 borgbackup_weekday: "*"
-borgbackup_hour: "5"
+borgbackup_hour: "3"
 borgbackup_minute: "0"
 
 borgbackup_directories:
   - "/etc/"
-  - "/mnt/data/borgbackup/"
+  - "/srv/"
 
 #  - "/mnt/data/libvirt/"
 
@@ -29,6 +29,11 @@ borgbackup_prune:
   - "--keep-weekly=4"
   - "--keep-monthly=6"
 
-nfs_exports: 
-  - "/data/webserver 10.5.0.110(rw,sync,no_root_squash)"  
-  - "/data/intserver 10.5.0.111(rw,sync,no_root_squash)"  
+## Sample, curently not used 
+
+#nfs_imports: 
+#  - "/data/bilder 10.5.0.100:/Bilder/"  
+
+#nfs_exports: 
+#  - "/data/dummy/ 10.5.0.111(rw,sync,no_root_squash)"  
+
