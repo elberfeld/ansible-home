@@ -1,8 +1,5 @@
 ---
 
-- name: create motd file
-  template: src=motd.j2 dest=/etc/motd
-
 - name: install apt-transport-https packages before adding sources 
   apt:
     pkg: "{{ item }}"
@@ -20,21 +17,4 @@
   
 - name: set debian repos 
   template: src=sources.list.j2 dest=/etc/apt/sources.list   
-
-- name: install common packages
-  apt:
-    pkg: "{{ item }}"
-    update_cache: yes
-    state: installed
-  with_items:
-    - dnsutils 
-    - psmisc
-    - tree
-    - vim
-    - wget
-
-- name: add sshkeys for server
-  authorized_key: 
-    user: root 
-    key: "{{ lookup('file', '../keyfiles/void.pub') }}"
 

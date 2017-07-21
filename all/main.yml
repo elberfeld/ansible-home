@@ -4,6 +4,8 @@
 - hosts: all 
   remote_user: root
   roles:
-    - { role: hostname, tags: common }
-    - { role: common, tags: common }
-    - { role: prometheus-node, tags: prometheus }
+    - { role: apt, tags: apt }
+    - { role: hostname, tags: hostname }
+    - { role: motd, tags: motd }
+    - { role: packages, tags: packages }
+    - { role: sshd, tags: sshd }

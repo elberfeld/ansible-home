@@ -5,3 +5,5 @@
   remote_user: root
   roles:
     - { role: "../common/borgbackup", tags: borgbackup }
+    - { role: "../common/prometheus-node", tags: prometheus-node }
+    - { role: "nfsexports", tags: nfsexports }
