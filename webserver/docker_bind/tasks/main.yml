@@ -44,5 +44,5 @@
     ports:
       - 0.0.0.0:53:53/udp
     volumes:
-      - /data/bind/:/etc/bind/
+      - /srv/bind/:/etc/bind/
      
