@@ -5,8 +5,9 @@
   remote_user: root
   roles:
     - { role: "../common/borgbackup", tags: borgbackup }
+    - { role: "../common/docker", tags: docker }
+    - { role: "../common/nfsimports", tags: nfsimports }
     - { role: "../common/prometheus-node", tags: prometheus-node }
-    - { role: docker, tags: docker }
     - { role: docker_bind, tags: bind }
     - { role: docker_etherpad, tags: etherpad }
     - { role: docker_nextcloud, tags: nextcloud }

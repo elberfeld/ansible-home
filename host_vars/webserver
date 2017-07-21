@@ -24,6 +24,9 @@ borgbackup_prune:
   - "--keep-weekly=4"
   - "--keep-monthly=6"
 
+nfs_imports:
+  - "/srv 10.5.0.101:/data/webserver"
+
 letsencrypt_mail: elberfeld@web.de
 
 letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df987a6221
