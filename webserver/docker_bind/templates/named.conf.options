@@ -10,7 +10,7 @@ options {
         auth-nxdomain no;    # conform to RFC1035
         listen-on-v6 { any; };
 
-        querylog yes;
+        querylog no;
 };
 
 

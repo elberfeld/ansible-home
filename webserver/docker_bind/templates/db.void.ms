@@ -10,6 +10,7 @@ $TTL     86400
 @         IN      NS      ns1
 @         IN      A       {{ webserver_ext_ip }}
 @         IN      AAAA    {{ webserver_ext_ip6 }}
+@         IN      CAA     0 issue "letsencrypt.org"
 
 ns1       IN      A       {{ webserver_ext_ip }}
 ns1       IN      AAAA    {{ webserver_ext_ip6 }}

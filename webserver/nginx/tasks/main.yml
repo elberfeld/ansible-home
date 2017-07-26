@@ -9,6 +9,7 @@
     - nginx-light
     - libnginx-mod-http-lua
     - ca-certificates 
+    - openssl
     - certbot
     - git
 
@@ -20,6 +21,16 @@
     dest: /opt/nginx-lua-prometheus
     version: cb21d1442d0d2e86d4f4ffd3bf7097b3ff73c84d
 
+# DH Parameter geneieriern 
+
+- name: check if DH Params exists 
+  stat:
+    path: /etc/nginx/dhparams.pem
+  register: dhparams
+
+- name: generate new DH Params 
+  command: openssl dhparam -out /etc/nginx/dhparams.pem 2048
+  when: dhparams.stat.exists == False 
 
 # NginX einrichten 
 

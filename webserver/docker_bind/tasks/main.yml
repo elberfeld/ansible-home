@@ -4,6 +4,10 @@
     path: "/tmp/docker_bind/" 
     state: "directory"
 
+- name: Get a timestamp
+  command: "date +%Y-%m-%d_%H-%m"
+  register: timestamp
+
 - name: copy container files  
   template: src={{ item }} dest=/tmp/docker_bind/{{ item }}
   with_items: 
@@ -11,7 +15,7 @@
 
 - name: build bind image 
   docker_image: 
-    name: "bind-app"
+    name: "bind-app-{{ timestamp.stdout }}"
     path: /tmp/docker_bind/
     state: present
 
@@ -35,7 +39,7 @@
 - name: start bind docker
   docker_container: 
     name: bind-app
-    image: bind-app
+    image: bind-app-{{ timestamp.stdout }}
     hostname: bind-app
     state: started
     restart: yes
