@@ -15,13 +15,4 @@
     ports:
       - 1880:1880
 
-- name: Install NodeRed Modules
-  command: docker exec nodered-app npm install {{ item }}
-  with_items:
-    - node-red-dashboard
-    - node-red-contrib-ui
-    - node-red-node-pushover
-
-- name: Install NodeRed Modules
-  command: docker restart nodered-app
     

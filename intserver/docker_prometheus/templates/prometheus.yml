@@ -32,44 +32,12 @@ scrape_configs:
           group: 'service'
 
 
-  - job_name: 'srv-master'
+  - job_name: 'warpsrvint'
 
     static_configs:
-      - targets: ['10.5.0.101:9100']
+      - targets: ['warpsrvint:9100']
         labels:
           group: 'server'
-
-
-  - job_name: 'srv-webserver'
-
-    static_configs:
-      - targets: ['10.5.0.110:9100']
-        labels:
-          group: 'server'
-
-
-  - job_name: 'srv-control'
-
-    static_configs:
-      - targets: ['10.5.0.250:9100']
-        labels:
-          group: 'server'
-
-
-  - job_name: 'nginx'
-
-    static_configs:
-      - targets: ['10.5.0.110:9145']
-        labels:
-          group: 'service'
-
-
-  - job_name: 'homeassistant'
-
-    static_configs:
-      - targets: ['statsd-exporter:9102']
-        labels:
-          group: 'sensor' 
 
 
   - job_name: 'firewall'
@@ -79,24 +47,7 @@ scrape_configs:
       module: [default]
     static_configs:
       - targets:
-        - 10.5.0.254  
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: snmp-exporter:9116  
-
-
-  - job_name: 'storage'
-
-    metrics_path: /snmp
-    params:
-      module: [default]
-    static_configs:
-      - targets:
-        - 10.5.0.100  
+        - warpfire  
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -112,13 +63,14 @@ scrape_configs:
       module: [icmp]  
     static_configs:
       - targets:
-        - 130.180.13.106         # Unitymedia Router Box 
-        - 2001:470:1f0a:7c8::1   # HE Tunnel Endpoint 
+        - 212.124.34.241         # Next Hop Globe 
+        - 2001:470:1f0a:a3b::1   # HE Tunnel Endpoint 
         - 8.8.8.8                # Google DNS 
-        - 10.5.0.100             # NAS 
-        - 10.5.0.110             # WebServer 
-        - 10.5.0.250             # Control Server 
-        - 10.5.0.254             # Firewall 
+        - 217.79.181.126         # Server MyLoc IPv4 
+        - 2001:4ba0:ffff:7c::1   # Server MyLoc IPv4 
+        - 10.5.0.1               # warpfire
+        - 192.168.0.100          # Switch HP 
+        - 192.168.0.101          # Switch Brocade 
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -134,11 +86,6 @@ scrape_configs:
       module: [http_2xx]  
     static_configs:
       - targets:
-        - https://ccc.de    
-        - https://chaos-west.de    
-        - https://freifunk-muensterland.de    
-        - https://heise.de    
-        - https://pro-linux.de    
         - https://warpzone.ms  
         - https://gitlab.warpzone.ms  
         - https://infra.warpzone.ms  
