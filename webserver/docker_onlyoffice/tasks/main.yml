@@ -1,0 +1,13 @@
+---
+
+- name: start onlyoffice docker
+  docker_container: 
+    name: onlyoffice-app
+    image: onlyoffice/documentserver:4.4.2.20
+    hostname: collabora
+    state: started
+    restart_policy: always
+    interactive: yes
+    detach: yes
+    ports:
+      - 127.0.0.1:42008:80

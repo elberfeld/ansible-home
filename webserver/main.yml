@@ -8,7 +8,7 @@
     - { role: "../common/docker", tags: docker }
     - { role: "../common/prometheus-node", tags: prometheus-node }
     - { role: docker_bind, tags: bind }
-    - { role: docker_collabora, tags: collabora }
+    - { role: docker_onlyoffice, tags: onlyoffice }
     - { role: docker_nextcloud, tags: nextcloud }
     - { role: docker_nginxssh, tags: nginxssh }
     - { role: docker_wordpress, tags: wordpress }

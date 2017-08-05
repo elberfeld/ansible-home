@@ -55,7 +55,7 @@
 - name: start nextcloud-db docker
   docker_container: 
     name: nextcloud-db
-    image: mariadb:10
+    image: mariadb:10.3
     hostname: nextcloud-db
     state: started
     restart_policy: always
