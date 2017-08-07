@@ -30,6 +30,8 @@
     - "/srv/nextcloud/"
     - "/srv/nextcloud/data/"
     - "/srv/nextcloud/db/"
+    - "/srv/nextcloud/tmp/"
+    - "/tmp/docker_nextcloud_ocr/"
 
 - name: create folder struct for nextcloud 2
   file: 
@@ -39,6 +41,52 @@
     group: 8983
   with_items:
     - "/srv/nextcloud/solr/"
+
+- name: start nextcloud-redis docker
+  docker_container: 
+    name: nextcloud-redis
+    image: redis:4.0
+    hostname: nextcloud-redis
+    state: started
+    restart_policy: always
+
+- name: clone nextcloud-ocr repo
+  git: 
+    repo: "https://github.com/janis91/ocr.git" 
+    version: "f023d1cb62e41143d441682f247ba9243b7ee667"
+    dest: "/tmp/docker_nextcloud_ocr/" 
+    force: "yes"
+  register: gitclone 
+
+- name: clone repo status 
+  debug: 
+    msg: "{{gitclone}}"
+
+- name: build nextcloud-ocr image 
+  docker_image: 
+    name: "nextcloud-ocr-{{ gitclone.after }}"
+    path: /tmp/docker_nextcloud_ocr/worker/
+    state: present 
+    buildargs:
+      LANGUAGES: "tesseract-ocr-deu"
+
+- name: start nextcloud-ocr docker
+  docker_container: 
+    name: nextcloud-ocr
+    image: nextcloud-ocr-{{ gitclone.after }}
+    hostname: nextcloud-ocr
+    state: started
+    restart_policy: always
+    links:
+      - nextcloud-redis:redis
+    volumes:
+      - /srv/nextcloud/data/data/:/home/node/data:ro
+      - /srv/nextcloud/tmp/:/home/node/output
+    env:
+      NODE_ENV=production
+      REDIS_HOST=redis
+      REDIS_PORT=6379
+      REDIS_DB=0
 
 - name: start nextcloud-solr docker
   docker_container: 
@@ -76,10 +124,12 @@
     ports:
       - 127.0.0.1:42005:80
     links:
+      - nextcloud-redis:redis
       - nextcloud-solr:solr
       - nextcloud-db:mysql
     volumes:
       - /srv/nextcloud/data/:/var/www/html/
+      - /srv/nextcloud/tmp/:/tmp/nextcloudtemp/
 
 - name: Cronjob für nextcloud cron
   cron: name="nextcloud-cron" weekday="*" hour="*" minute="*/15" job=" curl --silent http://127.0.0.1:42005/cron.php"
