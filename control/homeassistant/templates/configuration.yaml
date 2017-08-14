@@ -116,11 +116,20 @@ notify:
     api_key: {{pushover_token}}
     user_key: {{pushover_user_key}}
 
-# export data to statsd
-statsd:
+# export data to influxdb
+influxdb:
   host: 10.5.0.111 
-  port: 9125
-  prefix: ha
+  port: 8086
+  database: home_assistant
+
+# provide data for prometheus
+# prometheus:
+
+# export data to prometheus via statsd 
+# statsd:
+#  host: 10.5.0.111 
+#  port: 9125
+#  prefix: ha
 
 # include group config 
 group: !include groups.yaml

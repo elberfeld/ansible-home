@@ -28,8 +28,15 @@
 - name: install pip packages
   pip: 
     executable: pip3
+    name: aiohttp_cors
+    state: present
+  notify: restart homeassistant
+
+- name: install pip packages
+  pip: 
+    executable: pip3
     name: homeassistant
-    version: 0.48.0
+    version: 0.51.0
     state: present
   notify: restart homeassistant
 
