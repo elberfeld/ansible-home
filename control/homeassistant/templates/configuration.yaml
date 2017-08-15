@@ -123,12 +123,6 @@ graphite:
   port: 2003
   prefix: ha
 
-# export data to influxdb
-influxdb:
-  host: 10.5.0.111 
-  port: 8086
-  database: home_assistant
-
 # export data to prometheus via statsd 
 statsd:
   host: 10.5.0.111 
