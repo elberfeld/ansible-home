@@ -64,6 +64,18 @@
     ports:
       - 0.0.0.0:9093:9093
 
+- name: start prometheus-storage-adapter docker
+  docker_container: 
+    name: prometheus-storage-adapter
+    image: gra2f/remote_storage_adapter
+    interactive: yes
+    tty: yes
+    command: remote_storage_adapter -graphite-address=10.5.0.111:2003 -graphite-prefix=prom
+    state: started
+    restart_policy: always
+    ports:
+      - 0.0.0.0:9201:9201
+
 - name: stop prometheus docker
   docker_container: 
     name: prometheus-app
@@ -87,4 +99,5 @@
       - prometheus-snmp-exporter:snmp-exporter
       - prometheus-statsd-exporter:statsd-exporter
       - prometheus-alert:alertmanager
+      - prometheus-storage-adapter:storage-adapter
 

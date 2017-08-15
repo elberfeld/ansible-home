@@ -9,6 +9,11 @@ global:
   external_labels:
       monitor: 'prometheus'
 
+# Write data to graphite for long term storage  
+# currently not possible 
+#remote_write:
+#  - url: "http://storage-adapter:9201/write"
+
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
   - "/etc/prometheus/prometheus.rules"

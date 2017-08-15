@@ -1,0 +1,38 @@
+---
+- name: create folder struct for graphite
+  file: 
+    path: "{{ item }}" 
+    state: "directory"  
+  with_items: 
+    - /srv/graphite/conf/
+    - /srv/graphite/data/
+
+- name: create config files
+  template: src={{ item }} dest=/srv/graphite/conf/{{ item }}
+  with_items: 
+    - carbon.conf
+    - blacklist.conf
+    - storage-schemas.conf
+    - whitelist.conf
+  register: config
+
+- name: stop graphite docker
+  docker_container: 
+    name: graphite-app
+    state: absent
+  when: config.changed
+
+- name: start graphite docker
+  docker_container: 
+    name: graphite-app
+    image: graphiteapp/graphite-statsd:1.0.2-1
+    state: started
+    restart_policy: always
+    volumes:
+      - /srv/graphite/conf/:/opt/graphite/conf/
+      - /srv/graphite/data/:/opt/graphite/storage/
+    ports:
+      - 80:80
+      - 2003:2003
+      - 2004:2004
+      
