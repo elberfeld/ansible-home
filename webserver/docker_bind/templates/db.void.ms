@@ -25,6 +25,10 @@ vpn       IN      A       {{ webserver_ext_ip }}
 {{ domain }}    IN  A      {{ webserver_ext_ip }}
 {{ domain }}    IN  AAAA   {{ webserver_ext_ip6 }}
 
+; Matrix Server federation 
+; <yourdomain.com> <ttl> IN SRV 10 0 <port> <synapse.server.name>
+_matrix._tcp.void.ms.   3600    IN      SRV     10  0   8448    void.ms.
+
 {% endfor %}
 
 

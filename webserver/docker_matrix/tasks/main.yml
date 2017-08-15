@@ -1,0 +1,74 @@
+---
+# Pakete installieren
+- name: pakete installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - openssl
+
+- name: get secrets from server 1
+  slurp: src={{ item }}
+  with_items:
+    - /srv/matrix/turn_shared_secret
+    - /srv/matrix/registration_shared_secret
+    - /srv/matrix/macaroon_secret_key
+  register: matrix_secrets
+
+- name: get secrets from server 2
+  set_fact: 
+    turn_shared_secret: "{{ matrix_secrets.results | selectattr('item', 'equalto', '/srv/matrix/turn_shared_secret') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    registration_shared_secret: "{{ matrix_secrets.results | selectattr('item', 'equalto', '/srv/matrix/registration_shared_secret') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    macaroon_secret_key: "{{ matrix_secrets.results | selectattr('item', 'equalto', '/srv/matrix/macaroon_secret_key') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+
+- name: create folder struct for matrix
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+    owner: www-data
+    group: www-data
+  with_items:
+    - "/srv/matrix/"
+    - "/srv/matrix/synapse-data/"
+
+
+
+- name: check if DH Params exists 
+  stat:
+    path: /srv/matrix/synapse-data/dhparams.pem
+  register: dhparams
+
+- name: generate new DH Params 
+  command: openssl dhparam -out /srv/matrix/synapse-data/dhparams.pem 2048
+  when: dhparams.stat.exists == False 
+
+- name: Konfig-Dateien für matrix-synapse-app erstellen 
+  template: src={{ item }} dest=/srv/matrix/synapse-data/{{ item }}
+  with_items: 
+    - homeserver.log.config
+    - homeserver.yaml
+    - turnserver.conf
+  register: config_synapse
+
+- name: stop matrix-synapse-app docker
+  docker_container: 
+    name: matrix-synapse-app
+    state: absent
+  when: config_synapse.changed
+
+- name: start matrix-synapse-app docker
+  docker_container: 
+    name: matrix-synapse-app
+    image: silviof/docker-matrix:latest 
+    hostname: matrix-synapse-app
+    state: started
+    restart_policy: always
+    volumes:
+      - /etc/letsencrypt/live/matrix.void.ms/cert.pem:/cert/cert.pem
+      - /etc/letsencrypt/live/matrix.void.ms/privkey.pem:/cert/privkey.pem
+      - /srv/matrix/synapse-data/:/data
+    ports:
+      - 8008:8008
+      - 8448:8448
+      - 3478:3478
