@@ -106,6 +106,7 @@ climate:
 # presence via nmap scan
 device_tracker:
   - platform: nmap_tracker
+    interval_seconds: 30
     track_new_devices: no
     hosts: 10.5.0.1-99
 
@@ -116,20 +117,23 @@ notify:
     api_key: {{pushover_token}}
     user_key: {{pushover_user_key}}
 
+# export data to graphite
+graphite:
+  host: 10.5.0.111 
+  port: 2003
+  prefix: ha
+
 # export data to influxdb
 influxdb:
   host: 10.5.0.111 
   port: 8086
   database: home_assistant
 
-# provide data for prometheus
-# prometheus:
-
 # export data to prometheus via statsd 
-# statsd:
-#  host: 10.5.0.111 
-#  port: 9125
-#  prefix: ha
+statsd:
+  host: 10.5.0.111 
+  port: 9125
+  prefix: ha
 
 # include group config 
 group: !include groups.yaml
