@@ -1,0 +1,27 @@
+---
+- name: install packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - git 
+    - wiringpi
+
+- name: clone raspberry-remote 
+  git: 
+    repo: https://github.com/xkonni/raspberry-remote.git
+    version: c1fa6e3d57d70a09f86bfc1d03422a3442d8c041
+    dest: /opt/raspberry-remote/
+    force: yes
+  register: gitclone_raspi_remote 
+
+- name: clone repo status 
+  debug: 
+    msg: "{{gitclone_raspi_remote}}"
+
+- name: build raspberry-remote 
+  make:
+    chdir: /opt/raspberry-remote
+    target: send
+

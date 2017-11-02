@@ -29,6 +29,7 @@ frontend:
 config:
 
 http:
+  server_port: 80 
   # Uncomment this to add a password (recommended!)
   # api_password: PASSWORD
   # Uncomment this if you are using SSL or running in Docker etc
@@ -87,7 +88,18 @@ sensor:
         friendly_name: '{{sensor}} Batterie'
 {% endfor %}  
 
-      
+# Switches 
+# Funksteckdosen über 433 MHz Sender, GPIO 27 (PIN 2 in WirigPI) 
+# - Gruppencode per DIP Schalter
+# - Steckdosencode A=1, B=2, .. 
+# - ON=1, OFF=0
+switch:
+  platform: command_line
+  switches:
+    test_light:
+      command_on: /opt/raspberry-remote/send --pin=2 11001 1 1
+      command_off: /opt/raspberry-remote/send --pin=2 11001 1 0
+
 # Text to speech
 #tts:
 #  platform: google
