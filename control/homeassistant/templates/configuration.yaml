@@ -96,9 +96,15 @@ sensor:
 switch:
   platform: command_line
   switches:
-    test_light:
+    licht_dvdregal:
       command_on: /opt/raspberry-remote/send --pin=2 11001 1 1
       command_off: /opt/raspberry-remote/send --pin=2 11001 1 0
+    licht_tetris:
+      command_on: /opt/raspberry-remote/send --pin=2 11001 2 1
+      command_off: /opt/raspberry-remote/send --pin=2 11001 2 0
+    licht_flur:
+      command_on: /opt/raspberry-remote/send --pin=2 11001 3 1
+      command_off: /opt/raspberry-remote/send --pin=2 11001 3 0
 
 # Text to speech
 #tts:
