@@ -105,6 +105,18 @@ switch:
     licht_flur:
       command_on: /opt/raspberry-remote/send --pin=2 11001 3 1
       command_off: /opt/raspberry-remote/send --pin=2 11001 3 0
+    licht_leselampe:
+      command_on: /opt/raspberry-remote/send --pin=2 11001 4 1
+      command_off: /opt/raspberry-remote/send --pin=2 11001 4 0
+    licht_vitrine:
+      command_on: /opt/raspberry-remote/send --pin=2 11001 5 1
+      command_off: /opt/raspberry-remote/send --pin=2 11001 5 0
+    licht_sideboard:
+      command_on: /opt/raspberry-remote/send --pin=2 11010 1 1
+      command_off: /opt/raspberry-remote/send --pin=2 11010 1 0
+    device_audio:
+      command_on: /opt/raspberry-remote/send --pin=2 11010 2 1
+      command_off: /opt/raspberry-remote/send --pin=2 11010 2 0
 
 # Text to speech
 #tts:
