@@ -21,6 +21,9 @@ homeassistant:
       device_class: opening
       icon: mdi:glassdoor
 
+# Logging
+logger:
+  default: warning
 
 # Enables the frontend
 frontend:
@@ -55,6 +58,9 @@ history:
 
 # View all events in a logbook
 logbook:
+
+# Provide Metrics to Prometheus
+prometheus:
 
 # Track the sun
 sun:
@@ -124,9 +130,9 @@ switch:
 
 # connect homematic devices via local homegear instance
 homematic:
-  hosts:
+  interfaces:
     wireless:
-      ip: 127.0.0.1
+      host: 127.0.0.1
       resolvenames: metadata
 
 climate:
