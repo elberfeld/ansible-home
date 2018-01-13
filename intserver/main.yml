@@ -9,5 +9,7 @@
     - { role: "../common/borgbackup", tags: borgbackup }
     - { role: docker_grafana, tags: grafana }
     - { role: docker_graphite, tags: graphite }
+    - { role: docker_iobroker, tags: iobroker }
+    - { role: docker_mqtt, tags: mqtt }
     - { role: docker_nodered, tags: nodered }
     - { role: docker_prometheus, tags: prometheus }
