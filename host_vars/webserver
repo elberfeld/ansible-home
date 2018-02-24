@@ -3,10 +3,10 @@ debian_sources:
   - "deb http://ftp.halifax.rwth-aachen.de/debian/ stretch main contrib non-free"
   - "deb http://ftp.halifax.rwth-aachen.de/debian/ stretch-updates main contrib non-free"
   - "deb http://security.debian.org/ stretch/updates main contrib non-free"
-  - "deb http://apt.dockerproject.org/repo debian-stretch main"
+  - "deb https://download.docker.com/linux/debian stretch stable"
 
 debian_keys:
-  - "http://apt.dockerproject.org/gpg"
+  - "https://download.docker.com/linux/debian/gpg"
 
 borgbackup_weekday: "*"
 borgbackup_hour: "*/4"
