@@ -1,13 +1,18 @@
 ---
 
+- name: create folder struct for onlyoffice
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "/srv/onlyoffice/"
+    
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "docker-compose.yml"
+    dest: "/srv/onlyoffice/docker-compose.yml"
+
 - name: start onlyoffice docker
-  docker_container: 
-    name: onlyoffice-app
-    image: onlyoffice/documentserver:4.4.2.20
-    hostname: collabora
-    state: started
-    restart_policy: always
-    interactive: yes
-    detach: yes
-    ports:
-      - 127.0.0.1:42008:80
+  docker_service:
+    project_src: /srv/onlyoffice/
+    state: present

@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: onlyoffice/documentserver:4.4.2.20
+    restart: always
+    hostname: collabora
+    interactive: yes
+    detach: yes
+    ports:
+      - 127.0.0.1:42008:80

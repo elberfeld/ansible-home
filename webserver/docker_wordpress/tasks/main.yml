@@ -27,37 +27,21 @@
   template: src={{ item }} dest=/srv/wordpress/config/{{ item }}
   with_items: 
     - uploads.ini
+  register: config 
 
-- name: start wordpress-db docker
-  docker_container: 
-    name: wordpress-db
-    image: mariadb:10
-    hostname: wordpress-db
-    state: started
-    restart_policy: always
-    volumes:
-      - /srv/wordpress/db/:/var/lib/mysql
-    env:
-      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
-      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "docker-compose.yml"
+    dest: "/srv/wordpress/docker-compose.yml"
 
-- name: start wordpress-app docker
-  docker_container: 
-    name: wordpress-app
-    image: wordpress:4.8.0-php7.1-apache
-    state: started
-    restart_policy: always
-    volumes:
-      - /srv/wordpress/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-      - /srv/wordpress/data:/var/www/html
-    ports:
-      - 127.0.0.1:42007:80
-    links:
-      - wordpress-db:mysql
-    env:
-      WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: "{{ mysql_user_pass }}"
-      
+- name: stop wordpress docker
+  docker_service:
+    project_src: /srv/wordpress/
+    state: absent
+  when: config.changed
+
+- name: start wordpress docker
+  docker_service:
+    project_src: /srv/wordpress/
+    state: present
+

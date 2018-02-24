@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+
+  db:
+
+    image: mariadb:10
+    restart: always
+    volumes:
+      - /srv/wordpress/db/:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
+      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+
+  app:
+
+    image: wordpress:4.8.0-php7.1-apache
+    restart: always
+    ports:
+      - 127.0.0.1:42007:80
+    volumes:
+      - /srv/wordpress/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - /srv/wordpress/data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: "{{ mysql_user_pass }}"
