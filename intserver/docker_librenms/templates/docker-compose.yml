@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+
+  db:
+
+    image: mariadb:10.3
+    restart: always
+    volumes:
+      - /srv/librenms/db/:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
+      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
+      MYSQL_DATABASE: librenms
+      MYSQL_USER: librenms
+
+  app:
+
+    image: jarischaefer/docker-librenms
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - /srv/librenms/logs/:/opt/librenms/logs/
+      - /srv/librenms/rrd/:/opt/librenms/rrd/
+    environment:
+      DB_HOST: db
+      DB_NAME: librenms
+      DB_USER: librenms
+      DB_PASS: "{{ mysql_user_pass }}"
+      BASE_URL: http://10.5.0.111:8080
+      POLLERS: 16 
+      TZ: UTC 
