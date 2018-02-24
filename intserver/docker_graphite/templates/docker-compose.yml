@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: graphiteapp/graphite-statsd:1.0.2-1
+    image: graphiteapp/graphite-statsd:1.1.2-1
     restart: always
     ports:
       - 80:80

@@ -4,21 +4,21 @@ services:
 
   blackbox_exporter:
 
-    image: prom/blackbox-exporter:v0.5.0
+    image: prom/blackbox-exporter:v0.11.0
     restart: always
     ports:
       - 0.0.0.0:9115:9115
 
   snmp_exporter:
 
-    image: prom/snmp-exporter:v0.4.0
+    image: prom/snmp-exporter:v0.8.0
     restart: always
     ports:
       - 0.0.0.0:9116:9116
 
   alertmanager:
 
-    image: prom/alertmanager:v0.7.1
+    image: prom/alertmanager:v0.14.0
     restart: always
     ports:
       - 0.0.0.0:9093:9093
@@ -28,7 +28,7 @@ services:
 
   app:
 
-    image: prom/prometheus:v1.7.1
+    image: prom/prometheus:v2.1.0
     restart: always
     ports:
       - 0.0.0.0:9090:9090

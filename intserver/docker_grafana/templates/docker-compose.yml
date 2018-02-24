@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: grafana/grafana:4.4.1
+    image: grafana/grafana:5.0.0-beta4
     restart: always
     ports:
       - 3000:3000

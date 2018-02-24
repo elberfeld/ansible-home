@@ -4,7 +4,7 @@ services:
 
   db:
 
-    image: mariadb:10.3
+    image: mariadb:10.3.4
     restart: always
     volumes:
       - /srv/librenms/db/:/var/lib/mysql
@@ -16,7 +16,7 @@ services:
 
   app:
 
-    image: jarischaefer/docker-librenms
+    image: jarischaefer/docker-librenms:1.36.01
     restart: always
     ports:
       - 8080:80
