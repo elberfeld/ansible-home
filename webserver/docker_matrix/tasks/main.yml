@@ -51,24 +51,18 @@
     - turnserver.conf
   register: config_synapse
 
-- name: stop matrix-synapse-app docker
-  docker_container: 
-    name: matrix-synapse-app
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "docker-compose.yml"
+    dest: "/srv/matrix/docker-compose.yml"
+
+- name: stop matrix docker
+  docker_service:
+    project_src: /srv/matrix/
     state: absent
   when: config_synapse.changed
 
-- name: start matrix-synapse-app docker
-  docker_container: 
-    name: matrix-synapse-app
-    image: silviof/docker-matrix:latest 
-    hostname: matrix-synapse-app
-    state: started
-    restart_policy: always
-    volumes:
-      - /etc/letsencrypt/live/matrix.void.ms/cert.pem:/cert/cert.pem
-      - /etc/letsencrypt/live/matrix.void.ms/privkey.pem:/cert/privkey.pem
-      - /srv/matrix/synapse-data/:/data
-    ports:
-      - 8008:8008
-      - 8448:8448
-      - 3478:3478
+- name: start matrix docker
+  docker_service:
+    project_src: /srv/matrix/
+    state: present

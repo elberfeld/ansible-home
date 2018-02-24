@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: silviof/docker-matrix:latest 
+    restart: always
+    ports:
+      - 8008:8008
+      - 8448:8448
+      - 3478:3478
+    volumes:
+      - /etc/letsencrypt/live/matrix.void.ms/cert.pem:/cert/cert.pem
+      - /etc/letsencrypt/live/matrix.void.ms/privkey.pem:/cert/privkey.pem
+      - /srv/matrix/synapse-data/:/data      
