@@ -1,0 +1,62 @@
+---
+# Pakete installieren
+- name: get secrets from server 1
+  slurp: src={{ item }}
+  with_items:
+    - /srv/librenms/mysql_admin_pass
+    - /srv/librenms/mysql_user_pass
+  register: librenms_secrets
+
+- name: get secrets from server 2
+  set_fact: 
+    mysql_admin_pass: "{{ librenms_secrets.results | selectattr('item', 'equalto', '/srv/librenms/mysql_admin_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    mysql_user_pass: "{{ librenms_secrets.results | selectattr('item', 'equalto', '/srv/librenms/mysql_user_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+
+- name: create folder struct for librenms
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+    owner: www-data
+    group: www-data
+  with_items:
+    - "/srv/librenms/"
+    - "/srv/librenms/db/"
+    - "/srv/librenms/logs/"
+    - "/srv/librenms/rrd/"
+
+- name: start librenms-db docker
+  docker_container: 
+    name: librenms-db
+    image: mariadb:10.3
+    hostname: librenms-db
+    state: started
+    restart_policy: always
+    volumes:
+      - /srv/librenms/db/:/var/lib/mysql
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
+      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
+      MYSQL_DATABASE: librenms
+      MYSQL_USER: librenms
+
+- name: start librenms-app docker
+  docker_container: 
+    name: librenms-app
+    image: jarischaefer/docker-librenms:1.34-1
+    state: started
+    restart_policy: always
+    ports:
+      - 8080:80
+    links:
+      - librenms-db:db
+    volumes:
+      - /srv/librenms/logs/:/opt/librenms/logs/
+      - /srv/librenms/rrd/:/opt/librenms/rrd/
+    env:
+      DB_HOST: db
+      DB_NAME: librenms
+      DB_USER: librenms
+      DB_PASS: "{{ mysql_user_pass }}"
+      BASE_URL: http://localhost 
+      POLLERS: 16 
+      TZ: UTC 

@@ -1,0 +1,39 @@
+---
+# Pakete installieren
+- name: get secrets from server 1
+  slurp: src={{ item }}
+  with_items:
+    - /srv/hibiscus/mysql_admin_pass
+    - /srv/hibiscus/mysql_user_pass
+  register: hibiscus_secrets
+
+- name: get secrets from server 2
+  set_fact: 
+    mysql_admin_pass: "{{ hibiscus_secrets.results | selectattr('item', 'equalto', '/srv/hibiscus/mysql_admin_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+    mysql_user_pass: "{{ hibiscus_secrets.results | selectattr('item', 'equalto', '/srv/hibiscus/mysql_user_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+
+- name: create folder struct for hibiscus
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "/srv/hibiscus/"
+    - "/srv/hibiscus/db/"
+
+- name: start hibiscus-db docker
+  docker_container: 
+    name: hibiscus-db
+    image: mariadb:10.3
+    hostname: hibiscus-db
+    state: started
+    restart_policy: always
+    volumes:
+      - /srv/hibiscus/db/:/var/lib/mysql
+    ports:
+      - 33306:3306
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
+      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
+      MYSQL_DATABASE: hibiscus
+      MYSQL_USER: hibiscus
+
