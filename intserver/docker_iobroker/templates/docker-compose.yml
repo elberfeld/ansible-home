@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  app:                                                                                                   
+                                      
+    build: .
+    image: "iobroker--{{ ansible_date_time.date }}--{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}"
+    hostname: srvint-iobroker                                                              
+    restart: always                                                                                      
+    ports:          
+      - 2001:2001                                                                                     
+      - 8081:8081         
+      - 8082:8082         
+      - 8083:8083         
+      - 8084:8084   
+    volumes:
+      - /srv/iobroker/data:/opt/iobroker                                                                   
+

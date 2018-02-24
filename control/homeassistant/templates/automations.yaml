@@ -1,0 +1,65 @@
+
+{%raw%}
+
+- alias: Temp Wonzimmer zu Schreibtisch
+  trigger:
+    platform: state
+    entity_id: sensor.wohnzimmer_temperature
+  condition:
+    condition: template
+    value_template: '{{ trigger.to_state.state != states.sensor.schreibtisch_temperature }}'
+  action:
+    service: climate.set_temperature 
+    data_template: 
+      entity_id: climate.schreibtisch
+      temperature: '{{ trigger.to_state.state }}' 
+
+- alias: Temp Schreibtisch zu Wonzimmer 
+  trigger:
+    platform: state
+    entity_id: sensor.schreibtisch_temperature
+  condition:
+    condition: template
+    value_template: '{{ trigger.to_state.state != states.sensor.wohnzimmer_temperature }}'
+  action:
+    service: climate.set_temperature 
+    data_template: 
+      entity_id: climate.wohnzimmer
+      temperature: '{{ trigger.to_state.state }}' 
+
+{%endraw%}
+
+{% for schalter in ['licht_dvdregal','licht_tetris','licht_flur','licht_leselampe','licht_vitrine','licht_sideboard','device_audio'] %}
+
+- alias: {{ schalter }} MQTT An
+  trigger:
+    platform: mqtt
+    topic: {{ schalter }}
+    payload: 'true'
+  action:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.{{ schalter }}
+
+- alias: {{ schalter }} MQTT Aus
+  trigger:
+    platform: mqtt
+    topic: {{ schalter }}
+    payload: 'false'
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.{{ schalter }}
+
+- alias: {{ schalter }} MQTT Publish
+  trigger:
+    platform: state
+    entity_id: switch.{{ schalter }}
+  action:
+    - service: mqtt.publish
+      data: 
+        topic: {{ schalter }}
+        payload_template: '{%raw%}{{{%endraw%} states.switch.{{ schalter }}.state {%raw%}}}{%endraw%}' 
+        retain: 'true'
+
+{% endfor %}  

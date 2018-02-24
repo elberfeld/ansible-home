@@ -1,0 +1,25 @@
+---
+- name: create folder struct for iobroker
+  file: 
+    path: "/srv/iobroker/" 
+    state: "directory"
+
+- name: create folder struct for iobroker
+  file: 
+    path: "/srv/iobroker/data/" 
+    state: "directory"
+  
+- name: Konfig-Dateien erstellen
+  template: 
+    src: "{{ item }}" 
+    dest: "/srv/iobroker/{{ item }}"
+  with_items:
+    - docker-compose.yml
+    - Dockerfile
+    - run.sh
+
+- name: start iobroker docker
+  docker_service:
+    project_src: /srv/iobroker/
+    state: present
+
