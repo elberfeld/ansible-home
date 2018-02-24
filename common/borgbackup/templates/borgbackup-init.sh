@@ -6,18 +6,15 @@
 export BORG_PASSPHRASE="{{repo_passphrase}}"
 export BORG_RSH="ssh -i /srv/borgbackup/repo_sshkey"
 
-{% for repo_url in borgbackup_repos %}
+if [ ! -e "/srv/borgbackup/{{ item.key }}/initialized" ]; then
 
-if [ ! -e "{{repo_url}}.initialized" ]; then
+  echo "Initialize Repo: {{ item.key }}"
+  date > "/srv/borgbackup/{{ item.key }}/initialized"
 
-  echo "Initialize Repo: {{repo_url}}"
-  date > "{{repo_url}}.initialized"
-
-  borg init $1 $2 $3 --info --show-rc --remote-path borg1 --encryption=repokey {{repo_url}} 
+  borg init $1 $2 $3 --info --show-rc --encryption=repokey {{ item.value.options }} {{ item.value.repo }}  
 else
   
-  echo "Repo already initialized: {{repo_url}}"
+  echo "Repo already initialized: {{ item.key }}"
 
 fi
 
-{% endfor %}

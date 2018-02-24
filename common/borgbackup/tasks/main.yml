@@ -11,16 +11,19 @@
     - moreutils
     - openssl
 
-- name: create directory
+- name: create directories 1
   file: 
-    path: "/srv/borgbackup/"
+    path: "{{ item }}"
     state: "directory"
+  with_items:
+    - /srv/borgbackup 
+    - /var/log/borgbackup 
 
-- name: create directories
+- name: create directories 2
   file: 
-    path: "/srv/borgbackup/{{ item }}"
+    path: "/srv/borgbackup/{{ item.key }}"
     state: "directory"
-  with_items: "{{ borgbackup_repos }}"
+  with_dict: "{{ borgbackup_repos }}"
 
 - name: generate new repo_passphrase (check)
   stat:
@@ -53,23 +56,61 @@
 
 # BorgBackup Scripte erstellen 
 
-- name: BorgBackup Scripte erstellen 
-  template: src={{ item }} dest=/srv/borgbackup/{{ item }} mode=o+x
-  with_items:
-    - "borgbackup-check.sh"
-    - "borgbackup-create.sh"
-    - "borgbackup-delete.sh"
-    - "borgbackup-info.sh"
-    - "borgbackup-init.sh"
-    - "borgbackup-list.sh"
-    - "borgbackup-mount.sh"
-    - "borgbackup-prometheus.sh"
+- name: BorgBackup Scripte erstellen (check)
+  template: 
+    src: borgbackup-check.sh 
+    dest: /srv/borgbackup/{{ item.key }}/borgbackup-check.sh 
+    mode: o+x
+  with_dict: "{{ borgbackup_repos }}"
 
-- name: BorgBackup log folder erstellen 
-  file: 
-    path: "/var/log/borgbackup"
-    state: "directory"
+- name: BorgBackup Scripte erstellen (create)
+  template: 
+    src: borgbackup-create.sh 
+    dest: /srv/borgbackup/{{ item.key }}/borgbackup-create.sh 
+    mode: o+x
+  with_dict: "{{ borgbackup_repos }}"
 
+- name: BorgBackup Scripte erstellen (delete)
+  template: 
+    src: borgbackup-delete.sh 
+    dest: /srv/borgbackup/{{ item.key }}/borgbackup-delete.sh 
+    mode: o+x
+  with_dict: "{{ borgbackup_repos }}"
+  
+- name: BorgBackup Scripte erstellen (init)
+  template: 
+    src: borgbackup-init.sh 
+    dest: /srv/borgbackup/{{ item.key }}/borgbackup-init.sh 
+    mode: o+x
+  with_dict: "{{ borgbackup_repos }}"
+
+- name: BorgBackup Scripte erstellen (info)
+  template: 
+    src: borgbackup-info.sh 
+    dest: /srv/borgbackup/{{ item.key }}/borgbackup-info.sh 
+    mode: o+x
+  with_dict: "{{ borgbackup_repos }}"
+
+- name: BorgBackup Scripte erstellen (list)
+  template: 
+    src: borgbackup-list.sh 
+    dest: /srv/borgbackup/{{ item.key }}/borgbackup-list.sh 
+    mode: o+x
+  with_dict: "{{ borgbackup_repos }}"
+
+- name: BorgBackup Scripte erstellen (mount)
+  template: 
+    src: borgbackup-mount.sh 
+    dest: /srv/borgbackup/{{ item.key }}/borgbackup-mount.sh 
+    mode: o+x
+  with_dict: "{{ borgbackup_repos }}"
+
+- name: BorgBackup Scripte erstellen (prometheus)
+  template: 
+    src: borgbackup-prometheus.sh 
+    dest: /srv/borgbackup/borgbackup-prometheus.sh 
+    mode: o+x
+  
 - name: BorgBackup LogRotate config erstellen 
   template: 
     src: logrotate 
@@ -81,8 +122,9 @@
     state: absent
 
 - name: Cronjob für BorgBackup Backup 
-  cron: name="borgbackup-create" weekday="{{borgbackup_weekday}}" hour="{{borgbackup_hour}}" minute="{{borgbackup_minute}}" job="/srv/borgbackup/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/borgbackup.log"
+  cron: name="borgbackup-{{ item.key }}" weekday="{{ item.value.weekday }}" hour="{{ item.value.hour }}" job="/srv/borgbackup/{{ item.key }}/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/{{ item.key }}.log"
+  with_dict: "{{ borgbackup_repos }}"
 
 - name: Cronjob für BorgBackup Prometheus export  
-  cron: name="borgbackup-prom" weekday="*" hour="*" minute="0" job="/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup.log"
+  cron: name="borgbackup-prom" weekday="*" hour="*" minute="40" job="/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup-prometheus.log"
   

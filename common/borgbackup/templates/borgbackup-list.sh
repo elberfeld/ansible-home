@@ -5,10 +5,7 @@ export BORG_RSH="ssh -i /srv/borgbackup/repo_sshkey"
 
 # Anzeige des Inhaltes in den Borg Backup Archiven
 
-{% for repo_url in borgbackup_repos %}
+echo "===[ List Repo: {{ item.key }} ]==="
+borg list $1 $2 $3 --info --show-rc {{ item.value.options }} {{ item.value.repo }} 
 
-echo "===[ List Repo: {{repo_url}} ]============================================================"
-borg list $1 $2 $3 --info --show-rc --remote-path borg1 {{repo_url}} 
-
-{% endfor %}
 
