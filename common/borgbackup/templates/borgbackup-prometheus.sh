@@ -47,7 +47,7 @@ done
 
 BORG_INFO=$(borg info {{ borgbackup_repos[repo].options }} {{ borgbackup_repos[repo].repo }}::$BACKUP)
 
-echo "borgbackup_count{repo="{{ repo }}"} $COUNTER" > $TMP_FILE
+echo "borgbackup_count{repo="{{ repo }}"} $COUNTER" >> $TMP_FILE
 echo "borgbackup_files{repo="{{ repo }}"} $(echo "$BORG_INFO" | grep "Number of files" | awk '{print $4}')" >> $TMP_FILE
 echo "borgbackup_chunks_unique{repo="{{ repo }}"} $(echo "$BORG_INFO" | grep "Chunk index" | awk '{print $3}')" >> $TMP_FILE
 echo "borgbackup_chunks_total{repo="{{ repo }}"} $(echo "$BORG_INFO" | grep "Chunk index" | awk '{print $4}')" >> $TMP_FILE
