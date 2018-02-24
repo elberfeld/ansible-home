@@ -28,7 +28,8 @@ borgbackup_repos:
     
     # Backup Schedule 
     weekday: "*"
-    hour: "5"
+    hour: "*/4"
+    minute: "5"
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:
@@ -50,7 +51,8 @@ borgbackup_repos:
     
     # Backup Schedule 
     weekday: "*"
-    hour: "3"
+    hour: "*/4"
+    minute: "15"
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:

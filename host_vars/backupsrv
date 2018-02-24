@@ -9,6 +9,8 @@ borgbackup_user:
   private: 
 
      sshkeys:
+       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWVdc/woZlMIcuMmXE84Vx2Ex3xH9yimHQcO59exQjW void-2016"
+       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDEC0XBJJVrhOPkOZAef+vRClm2AY5PmDcd4KjBUMUDy root@webserver"
+       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDAzgq1OJCVmXG81O7HCWTUWjIaC5/7cLzH53MLsCbXE root@control"
+       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC706NolYWQMirmBGKQ3fgPNHZgJYZG3Vmu4bCpv7A/W root@intserver"
        - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINV5gD+rL5dsS7lrC66UigsiIyjhEBlbkLlLhoQDdx4c root@master"
-
-

@@ -8,19 +8,6 @@ debian_sources:
 debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
 
-borgbackup_weekday: "*"
-borgbackup_hour: "*/4"
-borgbackup_minute: "0"
-
-borgbackup_directories:
-  - "/etc/"
-  - "/srv/"
-
-borgbackup_prune:
-  - "--keep-within=2d"
-  - "--keep-daily=7"
-  - "--keep-weekly=4"
-  - "--keep-monthly=6"
 
 letsencrypt_mail: elberfeld@web.de
 
@@ -35,3 +22,58 @@ webserver_domains:
   - "matrix"
   - "office"
   - "www"
+
+
+# Definition von Borgbackup Repositories 
+borgbackup_repos:
+  
+  backupsrv: 
+
+    # URL des Repos   
+    repo: "private@192.168.0.201:/data/private/webserver"
+    
+    # Repo-spezifische Optionen zum Aufruf von Borgbackup
+    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+    options: ""
+
+    # Compression Options, z,b. "zlib,5, "zstd,5"
+    compression: "zlib,5"
+
+    # Prune Optionen 
+    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+    
+    # Backup Schedule 
+    weekday: "*"
+    hour: "*/4"
+    minute: "10"
+
+    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
+    # directories:
+
+  rsyncnet: 
+
+    # URL des Repos   
+    repo: "17953@ch-s011.rsync.net:privat/webserver"
+    
+    # Repo-spezifische Optionen zum Aufruf von Borgbackup
+    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+    options: "--remote-path=borg1"
+
+    # Compression Options , "zstd,18"
+    compression: "zlib,5"
+
+    # Prune Optionen 
+    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+    
+    # Backup Schedule 
+    weekday: "*"
+    hour: "*/4"
+    minute: "20"
+
+    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
+    # directories:
+
+# Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
+borgbackup_directories:
+  - "/etc/"
+  - "/srv/"
