@@ -16,23 +16,19 @@
     - whitelist.conf
   register: config
 
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "docker-compose.yml"
+    dest: "/srv/graphite/docker-compose.yml"
+
 - name: stop graphite docker
-  docker_container: 
-    name: graphite-app
+  docker_service:
+    project_src: /srv/graphite/
     state: absent
   when: config.changed
 
 - name: start graphite docker
-  docker_container: 
-    name: graphite-app
-    image: graphiteapp/graphite-statsd:1.0.2-1
-    state: started
-    restart_policy: always
-    volumes:
-      - /srv/graphite/conf/:/opt/graphite/conf/
-      - /srv/graphite/data/:/opt/graphite/storage/
-    ports:
-      - 80:80
-      - 2003:2003
-      - 2004:2004
-      
+  docker_service:
+    project_src: /srv/graphite/
+    state: present
+

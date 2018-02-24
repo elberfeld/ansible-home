@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: graphiteapp/graphite-statsd:1.0.2-1
+    restart: always
+    ports:
+      - 80:80
+      - 2003:2003
+      - 2004:2004
+    volumes:
+      - /srv/graphite/conf/:/opt/graphite/conf/
+      - /srv/graphite/data/:/opt/graphite/storage/
+
