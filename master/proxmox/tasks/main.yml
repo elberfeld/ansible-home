@@ -1,0 +1,41 @@
+---
+
+- name: Add hosts file entry 
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    regexp: '^(.*)master.master(.*)$'
+    line: "{{ansible_br0.ipv4.address}} master.master master pvelocalhost"
+
+- name: Install Proxmox Packages
+  apt: "name={{ item }} state=installed"
+  with_items:
+    - proxmox-ve 
+    - postfix 
+    - open-iscsi
+
+- name: Remove conflicting Packages 
+  apt: "name={{ item }} state=absent"
+  with_items:
+    - os-prober 
+    - resolvconf 
+    - rdnssd
+
+- name: Remove debian Kernel 
+  apt: "name={{ item }} state=absent"
+  with_items:
+    - linux-image-amd64 
+    - linux-image-4.9.0-3-amd64
+  register: kerneluninstall
+
+- name: Grub aktualisieren  
+  shell: "update-grub" 
+  when: kerneluninstall.changed 
+
+- name: Remove PVE Enterprise Repos 
+  file:
+    path: /etc/apt/sources.list.d/pve-enterprise.list
+    state: absent
+
+- name: Subscription Popup entfernen  
+  shell: "sed -i.bak 's/NotFound/Active/g' /usr/share/perl5/PVE/API2/Subscription.pm && systemctl restart pveproxy.service" 

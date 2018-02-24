@@ -9,24 +9,52 @@
     - borgbackup
     - logrotate
     - moreutils
+    - openssl
+
+- name: create directory
+  file: 
+    path: "/srv/borgbackup/"
+    state: "directory"
+
+- name: create directories
+  file: 
+    path: "/srv/borgbackup/{{ item }}"
+    state: "directory"
+  with_items: "{{ borgbackup_repos }}"
+
+- name: generate new repo_passphrase (check)
+  stat:
+    path: /srv/borgbackup/repo_passphrase 
+  register: repo_passphrase 
+
+- name: generate new repo_passphrase (generate)
+  command: openssl rand -base64 -out /srv/borgbackup/repo_passphrase 24 
+  when: repo_passphrase.stat.exists == False 
+
+- name: generate new repo_sshkey (check)
+  stat:
+    path: /srv/borgbackup/repo_sshkey 
+  register: repo_sshkey 
+
+- name: generate new repo_sshkey (generate)
+  command: ssh-keygen -N '' -t ed25519 -f /srv/borgbackup/repo_sshkey
+  when: repo_sshkey.stat.exists == False 
 
 - name: get secrets from server 1
   slurp: src={{ item }}
   with_items:
     - /srv/borgbackup/repo_passphrase 
-    - /srv/borgbackup/repo_url 
   register: borgbackup_secrets
 
 - name: get secrets from server 2
   set_fact: 
     repo_passphrase: "{{ borgbackup_secrets.results | selectattr('item', 'equalto', '/srv/borgbackup/repo_passphrase') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
-    repo_url: "{{ borgbackup_secrets.results | selectattr('item', 'equalto', '/srv/borgbackup/repo_url') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
 
 
 # BorgBackup Scripte erstellen 
 
-- name: BorgBackup Script erstellen 
-  template: src={{ item }} dest=/opt/{{ item }} mode=o+x
+- name: BorgBackup Scripte erstellen 
+  template: src={{ item }} dest=/srv/borgbackup/{{ item }} mode=o+x
   with_items:
     - "borgbackup-check.sh"
     - "borgbackup-create.sh"
@@ -53,8 +81,8 @@
     state: absent
 
 - name: Cronjob für BorgBackup Backup 
-  cron: name="borgbackup-create" weekday="{{borgbackup_weekday}}" hour="{{borgbackup_hour}}" minute="{{borgbackup_minute}}" job="/opt/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/borgbackup.log"
+  cron: name="borgbackup-create" weekday="{{borgbackup_weekday}}" hour="{{borgbackup_hour}}" minute="{{borgbackup_minute}}" job="/srv/borgbackup/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/borgbackup.log"
 
 - name: Cronjob für BorgBackup Prometheus export  
-  cron: name="borgbackup-prom" weekday="*" hour="*" minute="0" job="/opt/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup.log"
+  cron: name="borgbackup-prom" weekday="*" hour="*" minute="0" job="/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup.log"
   
