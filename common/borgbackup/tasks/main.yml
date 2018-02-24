@@ -122,7 +122,7 @@
     state: absent
 
 - name: Cronjob für BorgBackup Backup 
-  cron: name="borgbackup-{{ item.key }}" weekday="{{ item.value.weekday }}" hour="{{ item.value.hour }}" job="/srv/borgbackup/{{ item.key }}/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/{{ item.key }}.log"
+  cron: name="borgbackup-{{ item.key }}" weekday="{{ item.value.weekday }}" hour="{{ item.value.hour }}" minute="{{ item.value.minute }}" job="/srv/borgbackup/{{ item.key }}/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/{{ item.key }}.log"
   with_dict: "{{ borgbackup_repos }}"
 
 - name: Cronjob für BorgBackup Prometheus export  
