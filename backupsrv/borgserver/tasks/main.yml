@@ -1,0 +1,30 @@
+---
+# Pakete installieren
+- name: pakete installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - borgbackup
+
+# User for private backups 
+- name: create backup user account
+  user:  
+    name: "{{ item.key }}"
+    group: "users"
+    home: "/data/{{ item.key }}"
+    createhome: yes 
+  with_dict: "{{ borgbackup_user }}"
+
+- name: create authorized_keys for users 1
+  file: 
+    path: "/data/{{ item.key }}/.ssh"
+    state: "directory"
+  with_dict: "{{ borgbackup_user }}"
+
+- name: create authorized_keys for users 2
+  template: 
+    src: authorized_keys 
+    dest: "/data/{{ item.key }}/.ssh/authorized_keys" 
+  with_dict: "{{ borgbackup_user }}"

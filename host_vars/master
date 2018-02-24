@@ -7,21 +7,58 @@ debian_sources:
 debian_keys:
   - http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg
 
+
+# Definition von Borgbackup Repositories 
 borgbackup_repos:
-  - "17953@ch-s011.rsync.net:privat/master"
+  
+  backupsrv: 
 
-borgbackup_weekday: "*"
-borgbackup_hour: "3"
-borgbackup_minute: "0"
+    # URL des Repos   
+    repo: "private@192.168.0.201:/data/private/master"
+    
+    # Repo-spezifische Optionen zum Aufruf von Borgbackup
+    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+    options: ""
 
+    # Compression Options, z,b. "zlib,5, "zstd,5"
+    compression: "zlib,5"
+
+    # Prune Optionen 
+    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+    
+    # Backup Schedule 
+    weekday: "*"
+    hour: "5"
+
+    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
+    # directories:
+
+  rsyncnet: 
+
+    # URL des Repos   
+    repo: "17953@ch-s011.rsync.net:privat/master"
+    
+    # Repo-spezifische Optionen zum Aufruf von Borgbackup
+    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+    options: "--remote-path=borg1"
+
+    # Compression Options , "zstd,18"
+    compression: "zlib,5"
+
+    # Prune Optionen 
+    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+    
+    # Backup Schedule 
+    weekday: "*"
+    hour: "3"
+
+    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
+    # directories:
+
+# Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
 borgbackup_directories:
   - "/etc/"
 
-borgbackup_prune:
-  - "--keep-within=2d"
-  - "--keep-daily=7"
-  - "--keep-weekly=4"
-  - "--keep-monthly=6"
 
 ## Sample, curently not used 
 

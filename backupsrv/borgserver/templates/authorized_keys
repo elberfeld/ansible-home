@@ -1,0 +1,3 @@
+{% for sshkey in item.value.sshkeys %}
+{{ sshkey }}
+{% endfor %}
