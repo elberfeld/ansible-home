@@ -1,17 +1,14 @@
 
 debian_sources: 
-  - "deb http://ftp.halifax.rwth-aachen.de/debian/ stable main contrib non-free"
-  - "deb http://ftp.halifax.rwth-aachen.de/debian/ testing main contrib non-free"
-  - "deb http://security.debian.org/ stable/updates main contrib non-free"
-  - "deb http://security.debian.org/ testing/updates main contrib non-free"
-  - "deb http://ftp.de.debian.org/debian/ stable-updates main"
-  - "deb http://ftp.de.debian.org/debian/ testing-updates main"
-  - "deb http://ftp.halifax.rwth-aachen.de/debian/ jessie-updates main contrib non-free"
-  - "deb http://ftp.halifax.rwth-aachen.de/debian/ jessie-backports main contrib non-free"
-  - "deb http://apt.dockerproject.org/repo debian-jessie main"
-  - "deb http://apt.dockerproject.org/repo debian-stretch main"
+  - "deb http://deb.debian.org/debian/ stretch main"
+  - "deb http://security.debian.org/debian-security stretch/updates main"
+  - "deb http://download.proxmox.com/debian/pve stretch pve-no-subscription"
 
 debian_keys:
+  - http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg
+
+borgbackup_repos:
+  - "17953@ch-s011.rsync.net:privat/master"
 
 borgbackup_weekday: "*"
 borgbackup_hour: "3"
@@ -19,9 +16,6 @@ borgbackup_minute: "0"
 
 borgbackup_directories:
   - "/etc/"
-  - "/srv/"
-
-#  - "/mnt/data/libvirt/"
 
 borgbackup_prune:
   - "--keep-within=2d"
