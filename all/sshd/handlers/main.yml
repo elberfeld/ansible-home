@@ -1,3 +1,8 @@
 ---
 - name: restart sshd
   service: name=sshd state=restarted
+  ignore_errors: true
+
+- name: restart ssh
+  service: name=ssh state=restarted
+  ignore_errors: true
