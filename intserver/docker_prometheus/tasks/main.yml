@@ -18,86 +18,18 @@
     - prometheus.rules
   register: config
 
-- name: start prometheus blackbox-exporter docker
-  docker_container: 
-    name: prometheus-blackbox-exporter
-    image: prom/blackbox-exporter:v0.5.0
-    state: started
-    restart_policy: always
-    ports:
-      - 0.0.0.0:9115:9115
-
-- name: start prometheus snmp-exporter docker
-  docker_container: 
-    name: prometheus-snmp-exporter
-    image: prom/snmp-exporter:v0.4.0
-    state: started
-    restart_policy: always
-    ports:
-      - 0.0.0.0:9116:9116
-
-- name: start prometheus statsd-exporter docker
-  docker_container: 
-    name: prometheus-statsd-exporter
-    image: prom/statsd-exporter:v0.4.0
-    state: started
-    restart_policy: always
-    ports:
-      - 0.0.0.0:9102:9102
-      - 0.0.0.0:9125:9125/udp
-
-- name: stop prometheus-alertmanager docker
-  docker_container: 
-    name: prometheus-alert
-    state: absent
-  when: config.changed
-
-- name: start prometheus-alertmanager docker
-  docker_container: 
-    name: prometheus-alert
-    image: prom/alertmanager:v0.7.1
-    state: started
-    restart_policy: always
-    volumes:
-      - /srv/prometheus/config/alertmanager.yml/:/etc/alertmanager/config.yml
-      - /srv/prometheus/alert-data/:/alertmanager
-    ports:
-      - 0.0.0.0:9093:9093
-
-- name: start prometheus-storage-adapter docker
-  docker_container: 
-    name: prometheus-storage-adapter
-    image: gra2f/remote_storage_adapter
-    interactive: yes
-    tty: yes
-    command: remote_storage_adapter -graphite-address=10.5.0.111:2003 -graphite-prefix=prom
-    state: started
-    restart_policy: always
-    ports:
-      - 0.0.0.0:9201:9201
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "docker-compose.yml"
+    dest: "/srv/prometheus/docker-compose.yml"
 
 - name: stop prometheus docker
-  docker_container: 
-    name: prometheus-app
+  docker_service:
+    project_src: /srv/prometheus/
     state: absent
   when: config.changed
 
 - name: start prometheus docker
-  docker_container: 
-    name: prometheus-app
-    image: prom/prometheus:v1.7.1
-    state: started
-    restart_policy: always
-    volumes:
-      - /srv/prometheus/config/prometheus.yml/:/etc/prometheus/prometheus.yml
-      - /srv/prometheus/config/prometheus.rules/:/etc/prometheus/prometheus.rules
-      - /srv/prometheus/data/:/prometheus
-    ports:
-      - 0.0.0.0:9090:9090
-    links:
-      - prometheus-blackbox-exporter:blackbox-exporter
-      - prometheus-snmp-exporter:snmp-exporter
-      - prometheus-statsd-exporter:statsd-exporter
-      - prometheus-alert:alertmanager
-      - prometheus-storage-adapter:storage-adapter
-
+  docker_service:
+    project_src: /srv/prometheus/
+    state: present

@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+
+  blackbox_exporter:
+
+    image: prom/blackbox-exporter:v0.5.0
+    restart: always
+    ports:
+      - 0.0.0.0:9115:9115
+
+  snmp_exporter:
+
+    image: prom/snmp-exporter:v0.4.0
+    restart: always
+    ports:
+      - 0.0.0.0:9116:9116
+
+  alertmanager:
+
+    image: prom/alertmanager:v0.7.1
+    restart: always
+    ports:
+      - 0.0.0.0:9093:9093
+    volumes:
+      - /srv/prometheus/config/alertmanager.yml/:/etc/alertmanager/config.yml
+      - /srv/prometheus/alert-data/:/alertmanager
+
+  app:
+
+    image: prom/prometheus:v1.7.1
+    restart: always
+    ports:
+      - 0.0.0.0:9090:9090
+    volumes:
+      - /srv/prometheus/config/prometheus.yml/:/etc/prometheus/prometheus.yml
+      - /srv/prometheus/config/prometheus.rules/:/etc/prometheus/prometheus.rules
+      - /srv/prometheus/data/:/prometheus
+
+
