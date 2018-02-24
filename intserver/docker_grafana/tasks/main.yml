@@ -15,19 +15,14 @@
     state: "directory"
   with_items:
     - "/srv/grafana/"
-    - "/srv/grafana/data/"
+    - "/srv/grafana/data/"   
 
-- name: start grafana-app docker
-  docker_container: 
-    name: grafana-app
-    image: grafana/grafana:4.4.1
-    state: started
-    restart_policy: always
-    volumes:
-      - /srv/grafana/data/:/var/lib/grafana
-    ports:
-      - 3000:3000
-    env:
-      GF_SERVER_ROOT_URL: "http://10.5.0.111:3000"
-      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_pass }}"
-      
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "docker-compose.yml"
+    dest: "/srv/grafana/docker-compose.yml"
+
+- name: start grafana docker
+  docker_service:
+    project_src: /srv/grafana/
+    state: present

@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: grafana/grafana:4.4.1
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - /srv/grafana/data/:/var/lib/grafana
+    environment:
+      GF_SERVER_ROOT_URL: "http://10.5.0.111:3000"
+      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_pass }}"
+
