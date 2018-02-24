@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+
+  db:
+
+    image: mariadb:10.3
+    restart: always
+    ports:
+      - 33306:3306
+    volumes:
+      - /srv/hibiscus/db/:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
+      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
+      MYSQL_DATABASE: hibiscus
+      MYSQL_USER: hibiscus
+
