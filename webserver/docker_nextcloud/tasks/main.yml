@@ -45,7 +45,7 @@
 - name: clone nextcloud-ocr repo
   git: 
     repo: "https://github.com/janis91/ocr.git" 
-    version: "f023d1cb62e41143d441682f247ba9243b7ee667"
+    version: "9809131759f265929085c04ed3e120241ce519dd"
     dest: "/srv/nextcloud/docker_ocr/" 
     force: "yes"
   register: gitclone_ocr 

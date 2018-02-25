@@ -4,7 +4,7 @@ services:
 
   redis:
 
-    image: redis:4.0
+    image: redis:4.0.8
     restart: always
 
   ocr:
@@ -26,7 +26,7 @@ services:
 
   solr:
 
-    image: solr:6.6
+    image: solr:7.2.1
     restart: always
     entrypoint: "docker-entrypoint.sh solr-precreate nextcloud"
     volumes:
@@ -34,7 +34,7 @@ services:
 
   mysql:
 
-    image: mariadb:10.3
+    image: mariadb:10.3.4
     restart: always
     volumes:
       - /srv/nextcloud/db/:/var/lib/mysql
@@ -46,7 +46,7 @@ services:
 
   app:
 
-    image: nextcloud:12.0-apache
+    image: nextcloud:13.0.0-apache
     restart: always
     ports:
       - 127.0.0.1:42005:80
