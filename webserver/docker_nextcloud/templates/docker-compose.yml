@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+
+  redis:
+
+    image: redis:4.0
+    restart: always
+
+  ocr:
+
+    build: 
+      context: ./docker_ocr/worker
+      args:
+        LANGUAGES: "tesseract-ocr-deu"
+    image: "nextcloud-ocr-{{ gitclone_ocr.after }}"
+    restart: always
+    volumes:
+      - /srv/nextcloud/data/data/:/home/node/data:ro
+      - /srv/nextcloud/tmp/:/home/node/output
+    environment:
+      NODE_ENV: production
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+
+  solr:
+
+    image: solr:6.6
+    restart: always
+    entrypoint: "docker-entrypoint.sh solr-precreate nextcloud"
+    volumes:
+      - /srv/nextcloud/solr/:/opt/solr/server/solr/mycores
+
+  mysql:
+
+    image: mariadb:10.3
+    restart: always
+    volumes:
+      - /srv/nextcloud/db/:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
+      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+
+  app:
+
+    image: nextcloud:12.0-apache
+    restart: always
+    ports:
+      - 127.0.0.1:42005:80
+    volumes:
+      - /srv/nextcloud/data/:/var/www/html/
+      - /srv/nextcloud/tmp/:/tmp/nextcloudtemp/
