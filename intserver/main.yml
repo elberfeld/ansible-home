@@ -12,5 +12,4 @@
     - { role: docker_hibiscus, tags: hibiscus }
     - { role: docker_iobroker, tags: iobroker }
     - { role: docker_librenms, tags: librenms }
-    - { role: docker_mqtt, tags: mqtt }
     - { role: docker_prometheus, tags: prometheus }
