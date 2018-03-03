@@ -8,4 +8,5 @@
     - { role: "../common/prometheus-node", tags: prometheus-node }
     - { role: homegear, tags: homegear }
     - { role: homeassistant, tags: homeassistant }
+    - { role: iobroker, tags: iobroker }
     - { role: raspberryremote, tags: raspberryremote }

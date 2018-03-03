@@ -4,10 +4,11 @@ debian_sources:
   - "deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi"
   - "deb https://homegear.eu/packages/Raspbian/ jessie/"
   - "deb https://homegear.eu/packages/Raspbian/ stretch/"
+  - "deb https://deb.nodesource.com/node_8.x stretch main"
 
 debian_keys:
   - "https://homegear.eu/packages/Release.key"
-
+  - "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
 
   
 # Definition von Borgbackup Repositories 

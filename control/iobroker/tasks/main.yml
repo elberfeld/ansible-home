@@ -1,0 +1,34 @@
+---
+
+- name: install packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - logrotate
+    - build-essential 
+    - libavahi-compat-libdnssd-dev 
+    - libudev-dev 
+    - nodejs 
+
+- name: create folder struct for iobroker
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "/srv/"
+    - "/srv/iobroker/"
+
+- name: Downgrade npm to Version 4
+  shell: "npm install -g npm@4"
+  args:
+    chdir: /srv/iobroker/
+
+    - name: Install node.js package
+  shell: "npm install iobroker"
+  args:
+    chdir: /srv/iobroker/
+
+   
+ 
