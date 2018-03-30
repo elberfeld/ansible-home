@@ -20,14 +20,29 @@ services:
     restart: always
     ports:
       - 8080:80
+      - 514:514
+      - 514:514/udp
     volumes:
       - /srv/librenms/logs/:/opt/librenms/logs/
       - /srv/librenms/rrd/:/opt/librenms/rrd/
+      - /srv/librenms/config.custom.php:/opt/librenms/conf.d/config.custom.php
     environment:
       DB_HOST: db
       DB_NAME: librenms
       DB_USER: librenms
       DB_PASS: "{{ mysql_user_pass }}"
       BASE_URL: http://10.5.0.111:8080
-      POLLERS: 16 
-      TZ: UTC 
+      TZ: Europe/Zurich
+      ALERTS_ENABLE: "true"
+      BILLING_CALCULATE_ENABLE: "false"
+      CHECK_SERVICES_ENABLE: "true"
+      DAILY_ENABLE: "true"
+      DISCOVERY_ENABLE: "true"
+      DISCOVERY_THREADS: 2
+      POLLERS_ENABLE: "true"
+      POLL_BILLING_ENABLE: "false"
+      POLLERS: 4
+      ENABLE_SYSLOG: "true"
+      SNMP_SCAN_ENABLE: "true"
+      SNMP_SCAN_CRON: "0 0 * * *"
+

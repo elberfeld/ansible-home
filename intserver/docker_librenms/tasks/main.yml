@@ -29,6 +29,11 @@
     src: "docker-compose.yml"
     dest: "/srv/librenms/docker-compose.yml"
 
+- name: Zussätzliche Konfig-Datei erstellen
+  template:
+    src: "config.custom.php"
+    dest: "/srv/librenms/config.custom.php"
+
 - name: start librenms docker
   docker_service:
     project_src: /srv/librenms/
