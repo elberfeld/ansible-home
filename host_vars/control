@@ -10,6 +10,8 @@ debian_keys:
   - "https://homegear.eu/packages/Release.key"
   - "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
 
+snmp_sysLocation: Wohnung
+snmp_sysContact: Me <me@example.org>
   
 # Definition von Borgbackup Repositories 
 borgbackup_repos:

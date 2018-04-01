@@ -7,6 +7,7 @@
     - { role: "../common/borgbackup", tags: borgbackup }
     - { role: "../common/docker", tags: docker }
     - { role: "../common/prometheus-node", tags: prometheus-node }
+    - { role: "../common/snmpd", tags: snmpd }
     - { role: docker_bind, tags: bind }
     - { role: docker_onlyoffice, tags: onlyoffice }
     - { role: docker_matrix, tags: matrix }

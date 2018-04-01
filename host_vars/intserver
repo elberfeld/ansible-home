@@ -8,6 +8,9 @@ debian_sources:
 debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
 
+snmp_sysLocation:  VM auf Master
+snmp_sysContact: Me <me@example.org>
+
 
 # Definition von Borgbackup Repositories 
 borgbackup_repos:

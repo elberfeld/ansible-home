@@ -6,6 +6,7 @@
   roles:
     - { role: "../common/borgbackup", tags: borgbackup }
     - { role: "../common/prometheus-node", tags: prometheus-node }
+    - { role: "../common/snmpd", tags: snmpd }
     - { role: homegear, tags: homegear }
     - { role: homeassistant, tags: homeassistant }
     - { role: iobroker, tags: iobroker }

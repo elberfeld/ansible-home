@@ -7,6 +7,8 @@ debian_sources:
 debian_keys:
   - http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg
 
+snmp_sysLocation:  Wohnung
+snmp_sysContact: Me <me@example.org>
 
 # Definition von Borgbackup Repositories 
 borgbackup_repos:

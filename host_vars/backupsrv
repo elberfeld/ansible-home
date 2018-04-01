@@ -4,6 +4,10 @@ debian_sources:
   - "deb http://security.debian.org/debian-security stretch/updates main"
 
 
+snmp_sysLocation: Wohnung
+snmp_sysContact: Me <me@example.org>
+
+
 borgbackup_user:
 
   private: 
@@ -14,3 +18,9 @@ borgbackup_user:
        - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDAzgq1OJCVmXG81O7HCWTUWjIaC5/7cLzH53MLsCbXE root@control"
        - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC706NolYWQMirmBGKQ3fgPNHZgJYZG3Vmu4bCpv7A/W root@intserver"
        - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINV5gD+rL5dsS7lrC66UigsiIyjhEBlbkLlLhoQDdx4c root@master"
+
+  warpzone: 
+
+     sshkeys:
+       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID2EdE/pfN3L91XytQ3+KXLTxAvAGSUE6TKpHTcOcJWw root@warpsrvint"
+       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIENYus4S4XOaGHVL4B6vbnIrovtqaCT1lbEF73StiTt+ root@webserver"

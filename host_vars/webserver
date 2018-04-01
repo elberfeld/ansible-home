@@ -8,6 +8,9 @@ debian_sources:
 debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
 
+snmp_sysLocation:  VM auf master 
+snmp_sysContact: Me <me@example.org>
+
 
 letsencrypt_mail: elberfeld@web.de
 

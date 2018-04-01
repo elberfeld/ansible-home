@@ -1,0 +1,18 @@
+---
+# Pakete installieren
+- name: pakete installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - snmp
+    - snmpd
+  notify: restart snmpd
+
+- name: copy config file
+  template:
+    src: "snmpd.conf"
+    dest: "/etc/snmp/snmpd.conf"
+  notify: restart snmpd
+
