@@ -31,8 +31,11 @@
 
 - name: Zussätzliche Konfig-Datei erstellen
   template:
-    src: "config.custom.php"
-    dest: "/srv/librenms/config.custom.php"
+    src: "{{item}}"
+    dest: "/srv/librenms/{{item}}"
+  with_items:
+    - config.custom.php
+    - sql_mode.cnf
 
 - name: start librenms docker
   docker_service:

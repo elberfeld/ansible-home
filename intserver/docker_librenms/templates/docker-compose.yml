@@ -8,15 +8,19 @@ services:
     restart: always
     volumes:
       - /srv/librenms/db/:/var/lib/mysql
+      - /srv/librenms/sql_mode.cnf:/etc/mysql/conf.d/sql_mode.cnf
     environment:
       MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
       MYSQL_PASSWORD: "{{ mysql_user_pass }}"
       MYSQL_DATABASE: librenms
       MYSQL_USER: librenms
 
+# run database upgrades: docker exec librenms_app_1 sh -c "cd /opt/librenms && php /opt/librenms/build-base.php"
+# create initial user: docker exec librenms_app_1 php /opt/librenms/adduser.php admin admin 10 test@example.com
+
   app:
 
-    image: jarischaefer/docker-librenms:1.36.01
+    image: jarischaefer/docker-librenms:1.37-1
     restart: always
     ports:
       - 8080:80
@@ -39,10 +43,9 @@ services:
       DAILY_ENABLE: "true"
       DISCOVERY_ENABLE: "true"
       DISCOVERY_THREADS: 2
+      POLL_BILLING_ENABLE: "true"
       POLLERS_ENABLE: "true"
-      POLL_BILLING_ENABLE: "false"
       POLLERS: 4
-      ENABLE_SYSLOG: "true"
       SNMP_SCAN_ENABLE: "true"
-      SNMP_SCAN_CRON: "0 0 * * *"
-
+      SNMP_SCAN_CRON: "30 * * * *"
+      ENABLE_SYSLOG: "true"
