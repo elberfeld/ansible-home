@@ -4,6 +4,13 @@
   with_items:
    - { path: /srv/prometheus/influx_admin_pw,  length: 24 }
    - { path: /srv/prometheus/influx_user_pw, length: 12 }
+   - { path: /srv/prometheus/smtp_email_from, length: -1 }
+   - { path: /srv/prometheus/smtp_auth_username, length: -1 }
+   - { path: /srv/prometheus/smtp_auth_password, length: -1 }
+   - { path: /srv/prometheus/alert_email_to, length: -1 }
+   - { path: /srv/prometheus/pushover_user_key, length: -1 }
+   - { path: /srv/prometheus/pushover_token, length: -1 }
+ 
  
 - name: create folder struct for prometheus
   file: 

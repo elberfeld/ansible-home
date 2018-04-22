@@ -1,9 +1,9 @@
 global:
   # The smarthost and SMTP sender used for mail notifications.
-  smtp_smarthost: 'mail.warpzone.ms:25'
-  smtp_from: 'alert@warpzone.ms'
-  # smtp_auth_username: 'alertmanager'
-  # smtp_auth_password: 'password'
+  smtp_smarthost: 'smtp.web.de:587'
+  smtp_from: '{{smtp_email_from}}'
+  smtp_auth_username: '{{smtp_auth_username}}'
+  smtp_auth_password: '{{smtp_auth_password}}}'
 
 # The root route on which each incoming alert enters.
 route:
@@ -30,6 +30,14 @@ route:
   # A default receiver
   receiver: mail
 
+  # additional routes  
+  routes:
+
+  # send severity high to pushover 
+  - receiver: 'pushover'
+    match:
+      severity: high 
+
 
 # Inhibition rules allow to mute a set of alerts given that another alert is
 # firing.
@@ -44,6 +52,12 @@ inhibit_rules:
   equal: ['alertname', 'cluster', 'service']
 
 receivers:
+
 - name: 'mail'
   email_configs:
-  - to: 'test@example.org'
+  - to: '{{alert_email_to}}'
+
+- name: 'pushover'
+  pushover_config:
+  - user_key: '{{pushover_user_key}}'
+  - token: '{{pushover_token}}'
