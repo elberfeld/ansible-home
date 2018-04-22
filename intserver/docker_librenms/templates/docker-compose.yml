@@ -20,7 +20,7 @@ services:
 
   app:
 
-    image: jarischaefer/docker-librenms:1.37-1
+    image: jarischaefer/docker-librenms:1.38
     restart: always
     ports:
       - 8080:80

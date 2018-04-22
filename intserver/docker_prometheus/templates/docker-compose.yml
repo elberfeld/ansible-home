@@ -2,16 +2,32 @@ version: "3"
 
 services:
 
+  db:
+
+    image: influxdb:1.5.2
+    restart: always
+    ports:
+      - 0.0.0.0:18086:8086
+    volumes:
+      - /srv/prometheus/db/:/var/lib/influxdb
+    environment:
+      INFLUXDB_DB: "prometheus"
+      INFLUXDB_ADMIN_USER: "admin"
+      INFLUXDB_ADMIN_PASSWORD: "{{ influx_admin_pw }}"
+      INFLUXDB_USER: "prometheus"
+      INFLUXDB_USER_PASSWORD: "{{ influx_user_pw }}"
+      INFLUXDB_HTTP_AUTH_ENABLED: "true"
+
   blackbox_exporter:
 
-    image: prom/blackbox-exporter:v0.11.0
+    image: prom/blackbox-exporter:v0.12.0
     restart: always
     ports:
       - 0.0.0.0:9115:9115
 
   snmp_exporter:
 
-    image: prom/snmp-exporter:v0.8.0
+    image: prom/snmp-exporter:v0.9.0
     restart: always
     ports:
       - 0.0.0.0:9116:9116
@@ -23,18 +39,18 @@ services:
     ports:
       - 0.0.0.0:9093:9093
     volumes:
-      - /srv/prometheus/config/alertmanager.yml/:/etc/alertmanager/config.yml
+      - /srv/prometheus/config/alertmanager.yml:/etc/alertmanager/config.yml
       - /srv/prometheus/alert-data/:/alertmanager
 
   app:
 
-    image: prom/prometheus:v2.1.0
+    image: prom/prometheus:v2.2.1
     restart: always
     ports:
       - 0.0.0.0:9090:9090
     volumes:
-      - /srv/prometheus/config/prometheus.yml/:/etc/prometheus/prometheus.yml
-      - /srv/prometheus/config/prometheus.rules/:/etc/prometheus/prometheus.rules
+      - /srv/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /srv/prometheus/config/alertrules.yml:/etc/prometheus/alertrules.yml
       - /srv/prometheus/data/:/prometheus
 
 

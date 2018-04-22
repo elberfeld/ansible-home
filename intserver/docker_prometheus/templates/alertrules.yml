@@ -1,0 +1,62 @@
+
+{% raw %}
+
+groups:
+
+- name: system_general
+
+  rules:
+
+  - alert: SYS_DOWN
+    expr: up < 1
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "System {{ $labels.instance }} / {{ $labels.job }} is down"
+
+- name: memory_general
+
+  rules:
+
+  - alert: MEM_FULL
+    expr: ((node_memory_MemTotal - node_memory_MemFree )/ node_memory_MemTotal * 100) > 99
+    for: 15m
+
+- name: cpu_general
+
+  rules:
+
+  - alert: HIGH_CPU
+    expr: rate(node_cpu{mode = "idle"}[5m]) < 0.1 
+    for: 15m
+
+- name: disk_general
+
+  rules:
+
+  - alert: HIGH_DISK_IO
+    expr: node_disk_io_now > 10 
+    for: 5m
+
+  - alert: DISK_FULL_85P 
+    expr: ( 100 *(1 - (node_filesystem_free  / node_filesystem_size) ) ) > 85
+      
+  - alert: DISK_FULL_95P 
+    expr: ( 100 *(1 - (node_filesystem_free  / node_filesystem_size) ) ) > 95 
+    labels:
+      severity: high 
+      
+  - alert: DISK_FULL_IN_24H
+    expr: predict_linear(node_filesystem_free[1h],24*3600) < 0
+    annotations:
+      summary: "Disk {{ $labels.instance }} / {{ $labels.job }} will be full in 24 hours"
+
+  - alert: DISK_FULL_IN_4H
+    expr: predict_linear(node_filesystem_free[1h],4*3600) < 0
+    labels:
+      severity: high 
+    annotations:
+      summary: "Disk {{ $labels.instance }} / {{ $labels.job }} will be full in 4 hours"
+
+{% endraw %}

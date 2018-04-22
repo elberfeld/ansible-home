@@ -9,14 +9,17 @@ global:
   external_labels:
       monitor: 'prometheus'
 
-# Write data to graphite for long term storage  
-# currently not possible 
-#remote_write:
-#  - url: "http://storage-adapter:9201/write"
+# Write data to influxdb for long term storage  
+remote_write:
+  - url: "http://db:8086/api/v1/prom/write?u=prometheus&p={{ influx_user_pw }}&db=prometheus"
+
+# Read data from influxdb long term storage
+remote_read:
+  - url: "http://db:8086/api/v1/prom/read?u=prometheus&p={{ influx_user_pw }}&db=prometheus"
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
-  - "/etc/prometheus/prometheus.rules"
+  - "/etc/prometheus/alertrules.yml"
 
 alerting:
   alertmanagers:
@@ -36,23 +39,46 @@ scrape_configs:
         labels:
           group: 'service'
 
+{% for item in groups['server'] %}
 
-  - job_name: 'warpsrvint'
+  - job_name: '{{ item }}'
 
     static_configs:
-      - targets: ['warpsrvint:9100']
+      - targets: ['{{ hostvars[item]['ansible_ssh_host'] }}:9100']
         labels:
           group: 'server'
 
+{% endfor %}
 
   - job_name: 'firewall'
 
     metrics_path: /snmp
     params:
-      module: [default]
+      module: [if_mib]
     static_configs:
       - targets:
-        - warpfire  
+        - 10.5.0.254  
+        labels:
+          group: 'network'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: snmp_exporter:9116  
+
+
+  - job_name: 'core'
+
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    static_configs:
+      - targets:
+        - 10.5.0.253  
+        labels:
+          group: 'network'
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -68,14 +94,12 @@ scrape_configs:
       module: [icmp]  
     static_configs:
       - targets:
-        - 212.124.34.241         # Next Hop Globe 
-        - 2001:470:1f0a:a3b::1   # HE Tunnel Endpoint 
+        - 130.180.13.105         # Next Hop Unitymedia
+        - 2001:470:1f0a:7c8::1   # HE Tunnel Endpoint 
         - 8.8.8.8                # Google DNS 
-        - 217.79.181.126         # Server MyLoc IPv4 
-        - 2001:4ba0:ffff:7c::1   # Server MyLoc IPv4 
-        - 10.5.0.1               # warpfire
-        - 192.168.0.100          # Switch HP 
-        - 192.168.0.101          # Switch Brocade 
+        - 1.1.1.1                # Cloudflare DNS 
+        labels:
+          group: 'external'
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -91,12 +115,10 @@ scrape_configs:
       module: [http_2xx]  
     static_configs:
       - targets:
-        - https://warpzone.ms  
-        - https://gitlab.warpzone.ms  
-        - https://infra.warpzone.ms  
-        - https://mattermost.warpzone.ms  
-        - https://pad.warpzone.ms  
-        - https://wiki.warpzone.ms  
+        - https://google.de  
+        - https://heise.de  
+        labels:
+          group: 'external'
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

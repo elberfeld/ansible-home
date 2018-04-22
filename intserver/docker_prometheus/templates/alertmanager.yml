@@ -46,4 +46,4 @@ inhibit_rules:
 receivers:
 - name: 'mail'
   email_configs:
-  - to: 'void@members.warpzone.ms'
+  - to: 'test@example.org'
