@@ -9,10 +9,7 @@
     - prometheus-node-exporter
 
 - name: reload systemd and enable service
-  systemd:
-    name: prometheus-node-exporter
-    enabled: yes
-    daemon_reload: yes
+  command: systemctl enable prometheus-node-exporter
 
 - name: restart prometheus-node-exporter
   service: name=prometheus-node-exporter state=restarted
