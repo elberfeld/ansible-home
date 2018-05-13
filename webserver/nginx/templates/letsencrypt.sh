@@ -5,3 +5,4 @@ certbot certonly --non-interactive --agree-tos --webroot -m {{ letsencrypt_mail 
 {% endfor %}
 
 systemctl reload nginx
+docker restart mail_app_1

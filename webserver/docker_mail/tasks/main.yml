@@ -1,0 +1,21 @@
+---
+- name: create folder struct for mail
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "/srv/mail/"
+    - "/srv/mail/data/"
+    - "/srv/mail/state/"
+    - "/srv/mail/config/"
+  
+- name: Docker Compose Konfig-Datei erstellen
+  template: src="{{ item }}" dest="/srv/mail/{{ item }}"
+  with_items:
+    - "docker-compose.yml"
+
+- name: start mail docker
+  docker_service:
+    project_src: /srv/mail/
+    state: present
+

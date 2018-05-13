@@ -10,6 +10,7 @@
     - { role: "../common/snmpd", tags: snmpd }
     - { role: docker_bind, tags: bind }
     - { role: docker_onlyoffice, tags: onlyoffice }
+    - { role: docker_mail, tags: mail }
     - { role: docker_matrix, tags: matrix }
     - { role: docker_nextcloud, tags: nextcloud }
     - { role: docker_nginxssh, tags: nginxssh }

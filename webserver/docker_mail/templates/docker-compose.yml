@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: tvial/docker-mailserver:release-v6.0.0
+    hostname: mail
+    domainname: void.ms
+    ports:
+      - 25:25
+      - 587:587
+      - 993:993
+    volumes:
+      - /srv/mail/data:/var/mail/
+      - /srv/mail/state:/var/mail-state/
+      - /srv/mail/config/:/tmp/docker-mailserver/
+      - /etc/letsencrypt/:/tmp/ssl/
+    environment:
+      ENABLE_SPAMASSASSIN: "1"
+      ENABLE_CLAMAV: "1"
+      ENABLE_FAIL2BAN: "1"
+      ENABLE_POSTGREY: "1"
+      ONE_DIR: "1"
+      DMS_DEBUG: "0"
+      SSL_TYPE: "manual"
+      SSL_CERT_PATH: "/tmp/ssl/live/mail.void.ms/fullchain.pem"
+      SSL_KEY_PATH: "/tmp/ssl/live/mail.void.ms/privkey.pem"
+      TLS_LEVEL: "intermediate" 
+      VIRUSMAILS_DELETE_DELAY: "30"
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
+
+  autodiscover:
+
+    image: jsmitsnl/docker-email-autodiscover:release-v1.1.0
+    domainname: void.ms
+    restart: always
+    ports:
+      - 127.0.0.1:42009:80
+    environment:
+      COMPANY_NAME: "void.ms"
+      SUPPORT_URL: "https://www.void.ms"
+      DOMAIN: "void.ms"
+      IMAP_HOST: "mail.void.ms"
+      IMAP_PORT: "993"
+      IMAP_SOCKET: "SSL"
+      SMTP_HOST: "mail.void.ms"
+      SMTP_PORT: "587" 
+      SMTP_SOCKET: "STARTTLS"
+  
