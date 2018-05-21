@@ -27,7 +27,11 @@ vpn       IN      A       {{ webserver_ext_ip }}
 {% for domain in webserver_domains %}
 
 {{ domain }}    IN  A      {{ webserver_ext_ip }}
+
+{% if domain == 'mail' %}
+{% else %}
 {{ domain }}    IN  AAAA   {{ webserver_ext_ip6 }}
+{% endif %}
 
 {% endfor %}
 
