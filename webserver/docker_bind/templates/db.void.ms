@@ -38,7 +38,12 @@ vpn       IN      A       {{ webserver_ext_ip }}
 
 ; E-Mail Konfiguration 
 @         IN      MX      10 mail
-@         IN      TXT     "v=spf1 mx -all"
+@         IN      TXT     "v=spf1 mx ~all"
+@         IN      SPF     "v=spf1 mx ~all"
+
+mail._domainkey   IN      TXT     ( "v=DKIM1; h=sha256; k=rsa; "
+          "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxA8UfQ+gkbCmhB7hgNO0vNlUjEzsg8Ba+dYF/kx+MZNI+nU1qRC8tJfojDJ2H/fiEFE3pjVb+bBsBR/2zRsIJZ3QxattNV0Fr6SZHcUdSkZtwfwVylyg2KfJiHq8fb8y7uDh803tT+uo24LytWAss1tRtQwJ+kQo6+BpbxytYOuxoXdWDzqJ22l+I89dmuZFgSKarWdPgUT8mL"
+          "bhfAo7kZhT+q1rdm/IGojVJNAeNF96Tc3uPf9+BqOjLKMTIGabH5TvIZUqE+MNFlnQPO+D8HHVzb9T8M0TZdAw9ARX15f1F5hvNJChSL1q/2Bg9el5N14d5J/5y23UNN1KiicyHQIDAQAB" )  ; ----- DKIM key mail for void.ms
 
 
 ; E-Mail Autoconfig
