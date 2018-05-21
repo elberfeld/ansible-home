@@ -13,10 +13,7 @@ $TTL     86400
 @         IN      AAAA    {{ webserver_ext_ip6 }}
 
 ns1       IN      A       {{ webserver_ext_ip }}
-ns1       IN      AAAA    {{ webserver_ext_ip6 }}
-
 ns2       IN      A       {{ webserver_ext_ip }}
-ns2       IN      AAAA    {{ webserver_ext_ip6 }}
 
 
 ; Manuelle Domains 
