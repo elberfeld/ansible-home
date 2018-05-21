@@ -26,6 +26,7 @@ vpn       IN      A       {{ webserver_ext_ip }}
 {{ domain }}    IN  A      {{ webserver_ext_ip }}
 
 {% if domain == 'mail' %}
+;IPv6 disabled for {{ domain }}
 {% else %}
 {{ domain }}    IN  AAAA   {{ webserver_ext_ip6 }}
 {% endif %}
