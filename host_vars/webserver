@@ -4,12 +4,16 @@ debian_sources:
   - "deb http://ftp.halifax.rwth-aachen.de/debian/ stretch-updates main contrib non-free"
   - "deb http://security.debian.org/ stretch/updates main contrib non-free"
   - "deb https://download.docker.com/linux/debian stretch stable"
+  - "deb https://repos.influxdata.com/debian stretch stable"
 
 debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
+  - "https://repos.influxdata.com/influxdb.key"
 
-snmp_sysLocation:  VM auf master 
-snmp_sysContact: Me <me@example.org>
+
+# Art des Hosts: physical, vm, docker 
+host_type: "vm"
+
 
 
 letsencrypt_mail: elberfeld@web.de

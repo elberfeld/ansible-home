@@ -5,13 +5,17 @@ debian_sources:
   - "deb https://homegear.eu/packages/Raspbian/ jessie/"
   - "deb https://homegear.eu/packages/Raspbian/ stretch/"
   - "deb https://deb.nodesource.com/node_8.x stretch main"
+  - "deb https://repos.influxdata.com/debian stretch stable"
 
 debian_keys:
   - "https://homegear.eu/packages/Release.key"
   - "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+  - "https://repos.influxdata.com/influxdb.key"
 
-snmp_sysLocation: Wohnung
-snmp_sysContact: Me <me@example.org>
+
+# Art des Hosts: physical, vm, docker 
+host_type: "physical"
+
   
 # Definition von Borgbackup Repositories 
 borgbackup_repos:

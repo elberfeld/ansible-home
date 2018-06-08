@@ -13,14 +13,6 @@
     - certbot
     - git
 
-# Git Repo nginx-lua-prometheus Clonen 
-
-- name: clone nginx-lua-prometheus repository
-  git: 
-    repo: https://github.com/knyar/nginx-lua-prometheus.git 
-    dest: /opt/nginx-lua-prometheus
-    version: cb21d1442d0d2e86d4f4ffd3bf7097b3ff73c84d
-
 # DH Parameter geneieriern 
 
 - name: check if DH Params exists 
@@ -39,10 +31,6 @@
     path: /etc/nginx/sites-enabled/default 
     state: absent
 
-- name: nginx Konfigurationsdateien erstellen  
-  template: src={{ item }} dest=/etc/nginx/conf.d/{{ item }}
-  with_items: 
-    - nginx-lua-prometheus.conf
 
 # LetsEncrypt Script erstellen 
 
@@ -91,6 +79,13 @@
   template: src=nginx-default dest=/etc/nginx/sites-enabled/default
   notify: restart nginx
 
-- name: Konfig-Datei metrics erstellen
-  template: src=nginx-metrics dest=/etc/nginx/sites-enabled/metrics
+- name: Konfig-Datei status erstellen
+  template: src=nginx-status dest=/etc/nginx/sites-enabled/status
   notify: restart nginx
+
+# telegraf konfigurieren 
+
+- name: Konfig-Datei status erstellen
+  template: src=telegraf.conf dest=/etc/telegraf/telegraf.d/nginx.conf
+  notify: restart telegraf 
+  

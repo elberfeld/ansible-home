@@ -3,12 +3,16 @@ debian_sources:
   - "deb http://deb.debian.org/debian/ stretch main"
   - "deb http://security.debian.org/debian-security stretch/updates main"
   - "deb http://download.proxmox.com/debian/pve stretch pve-no-subscription"
+  - "deb https://repos.influxdata.com/debian stretch stable"
 
 debian_keys:
   - http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg
+  - "https://repos.influxdata.com/influxdb.key"
 
-snmp_sysLocation:  Wohnung
-snmp_sysContact: Me <me@example.org>
+
+# Art des Hosts: physical, vm, docker 
+host_type: "physical"
+
 
 # Definition von Borgbackup Repositories 
 borgbackup_repos:
