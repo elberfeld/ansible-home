@@ -1,15 +1,16 @@
 ---
+- name: stop snmpd
+  service: name=prometheus-node-exporter state=stopped
+
+
 # Pakete installieren
 - name: pakete installieren
   apt:
     pkg: "{{ item }}"
     update_cache: yes
-    state: installed
+    state: absent
+    purge: yes
   with_items:
     - prometheus-node-exporter
 
-- name: reload systemd and enable service
-  command: systemctl enable prometheus-node-exporter
 
-- name: restart prometheus-node-exporter
-  service: name=prometheus-node-exporter state=restarted
