@@ -1,0 +1,25 @@
+---
+
+- include: ../functions/get_secret.yml
+  with_items:
+   - { path: /srv/influx/influx_admin_pw,  length: 24 }
+   - { path: /srv/influx/influx_user_pw, length: 12 }
+ 
+ 
+- name: create folder struct for influx
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - /srv/influx/
+    - /srv/influx/sysmon/
+
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "docker-compose.yml"
+    dest: "/srv/influx/docker-compose.yml"
+
+- name: start influx docker
+  docker_service:
+    project_src: /srv/influx/
+    state: present

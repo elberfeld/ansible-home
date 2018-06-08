@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+
+  sysmon:
+
+    image: influxdb:1.5.3
+    restart: always
+    ports:
+      - 0.0.0.0:18086:8086
+    volumes:
+      - /srv/influx/sysmon/:/var/lib/influxdb
+    environment:
+      INFLUXDB_DB: "influx"
+      INFLUXDB_ADMIN_USER: "admin"
+      INFLUXDB_ADMIN_PASSWORD: "{{ influx_admin_pw }}"
+      INFLUXDB_USER: "influx"
+      INFLUXDB_USER_PASSWORD: "{{ influx_user_pw }}"
+      INFLUXDB_HTTP_AUTH_ENABLED: "true"
+
+
+
+
