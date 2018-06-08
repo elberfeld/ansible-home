@@ -1,7 +1,7 @@
 
 [server]
 #master 		ansible_ssh_host=10.5.0.101
-master 		ansible_ssh_host=10.5.0.51
+master 		ansible_ssh_host=10.5.0.58
 webserver	ansible_ssh_host=10.5.0.110
 intserver	ansible_ssh_host=10.5.0.111
 control		ansible_ssh_host=10.5.0.250
