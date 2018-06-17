@@ -8,8 +8,10 @@
     - { role: "../common/prometheus-node", tags: prometheus-node }
     - { role: "../common/borgbackup", tags: borgbackup }
     - { role: "../common/snmpd", tags: snmpd }
+    - { role: "../common/telegraf", tags: telegraf }
     - { role: docker_grafana, tags: grafana }
     - { role: docker_graphite, tags: graphite }
     - { role: docker_hibiscus, tags: hibiscus }
+    - { role: docker_influx, tags: influx }
     - { role: docker_librenms, tags: librenms }
     - { role: docker_prometheus, tags: prometheus }

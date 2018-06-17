@@ -2,10 +2,15 @@
 debian_sources: 
   - "deb http://deb.debian.org/debian/ stretch main"
   - "deb http://security.debian.org/debian-security stretch/updates main"
+  - "deb https://repos.influxdata.com/debian stretch stable"
+
+debian_keys:
+  - "https://repos.influxdata.com/influxdb.key"
 
 
-snmp_sysLocation: Wohnung
-snmp_sysContact: Me <me@example.org>
+# Art des Hosts: physical, vm, docker 
+host_type: "physical"
+
 
 
 borgbackup_user:

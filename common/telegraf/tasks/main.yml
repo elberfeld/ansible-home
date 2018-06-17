@@ -1,0 +1,42 @@
+---
+# Pakete installieren
+- name: pakete installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - telegraf
+
+- name: pakete installieren (host_type = physical)
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - hddtemp
+    - lm-sensors
+    - smartmontools
+  when: host_type == 'physical'
+
+
+- name: create main config 
+  template: src={{ item }} dest=/etc/telegraf/{{ item }}
+  with_items: 
+    - telegraf.conf
+  notify: restart telegraf
+
+#- name: create config files 
+#  template: src={{ item }} dest=/etc/telegraf/telegraf.d/{{ item }}
+#  with_items: 
+#    - outputs-influxdb.conf
+#  notify: restart telegraf
+
+- name: reload systemd and enable service
+  command: systemctl enable telegraf
+  notify: restart telegraf
+
+- name: delete config file 1
+  file: 
+    path: "/etc/telegraf/telegraf.d/outputs-influxdb.conf"
+    state: absent

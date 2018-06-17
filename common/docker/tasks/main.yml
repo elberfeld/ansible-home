@@ -27,3 +27,6 @@
   template: src=daemon.conf dest=/etc/docker/daemon.conf
   notify: restart docker
   
+- name: create telegraf config  
+  template: src=telegraf.conf dest=/etc/telegraf/telegraf.d/docker.conf
+  notify: restart telegraf
