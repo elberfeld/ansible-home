@@ -25,7 +25,7 @@
   args:
     chdir: /srv/iobroker/
 
-    - name: Install node.js package
+- name: Install node.js package
   shell: "npm install iobroker"
   args:
     chdir: /srv/iobroker/

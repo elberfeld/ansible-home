@@ -1,0 +1,51 @@
+---
+
+- name: install packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: installed
+  with_items:
+    - logrotate
+    - build-essential 
+    - git
+    - nodejs 
+
+- name: create folder struct for iobroker
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "/srv/"
+    - "/srv/pimatic/"
+
+#- name: Install node.js package
+#  shell: "npm install pimatic --production"
+#  args:
+#    chdir: /srv/pimatic/
+
+- name: Konfig-Dateien erstellen 
+  template: src={{ item }} dest=/srv/pimatic/{{ item }}
+  with_items: 
+    - config.json
+
+#- name: repair 0.9.42 version 
+#  blockinfile:
+#    path: /srv/pimatic/node_modules/pimatic/coffee-cache.js
+#    state: absent
+#    block: |
+#      require.extensions.__defineGetter__('.coffee', function(){
+#        return compile;
+#      });
+
+#- name: repair 0.9.42 version 
+#  blockinfile:
+#    path: /srv/pimatic/node_modules/pimatic/coffee-cache.js
+#    state: present
+#    insertafter: EOF
+#    block: |
+#      Object.defineProperty(require.extensions, '.coffee', {
+#        get: function() {
+#          return compile;
+#        }
+#      });

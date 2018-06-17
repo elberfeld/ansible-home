@@ -10,4 +10,5 @@
     - { role: homegear, tags: homegear }
     - { role: homeassistant, tags: homeassistant }
     - { role: iobroker, tags: iobroker }
+    - { role: pimatic, tags: pimatic }
     - { role: raspberryremote, tags: raspberryremote }
