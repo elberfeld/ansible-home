@@ -46,7 +46,7 @@ services:
 
   app:
 
-    image: nextcloud:13.0.0-apache
+    image: nextcloud:13.0.4-apache
     restart: always
     ports:
       - 127.0.0.1:42005:80
