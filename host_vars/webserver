@@ -23,6 +23,9 @@ letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df
 webserver_ext_ip: 130.180.13.106
 webserver_ext_ip6: 2001:470:1f0b:7ce::110
 
+webserver_int_ip: 10.5.0.110
+webserver_int_ip6: 2001:470:1f0b:7ce::110
+
 webserver_domains:
   - "autoconfig"
   - "autodiscover" 
