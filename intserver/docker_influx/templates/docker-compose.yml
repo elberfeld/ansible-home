@@ -11,13 +11,13 @@ services:
     volumes:
       - /srv/influx/sysmon/:/var/lib/influxdb
     environment:
-      INFLUXDB_DB: "influx"
+      INFLUXDB_DB: "{{influxdb_sysmon.db}}"
       INFLUXDB_ADMIN_USER: "admin"
       INFLUXDB_ADMIN_PASSWORD: "{{ influx_admin_pw }}"
-      INFLUXDB_USER: "influx"
-      INFLUXDB_USER_PASSWORD: "{{ influx_user_pw }}"
+      INFLUXDB_USER: "{{influxdb_sysmon.user}}"
+      INFLUXDB_USER_PASSWORD: "{{influxdb_sysmon.password}}"
       INFLUXDB_HTTP_AUTH_ENABLED: "true"
 
+  
 
-
-
+  
