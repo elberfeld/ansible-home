@@ -12,3 +12,11 @@ graphite_data_target:
 collectd:
   # Prefix für Graphite-Daten
   graphite_prefix: host.
+
+influxdb_sysmon:
+  url: "http://10.5.0.111:18086"
+  db: "influx"
+  user: "influx" 
+  password: "influx" 
+
+
