@@ -12,8 +12,19 @@ $TTL     86400
 @         IN      A       {{ webserver_ext_ip }}
 @         IN      AAAA    {{ webserver_ext_ip6 }}
 
+
+; Nameserver 
 ns1       IN      A       {{ webserver_ext_ip }}
 ns2       IN      A       {{ webserver_ext_ip }}
+
+
+; Unitimedia Gateway 
+gw-um     IN      A       130.180.13.105
+
+
+; Home Ips
+home4     IN      A       {{ webserver_ext_ip }}
+home6     IN      AAAA    {{ webserver_ext_ip6 }}
 
 
 ; Manuelle Domains 
