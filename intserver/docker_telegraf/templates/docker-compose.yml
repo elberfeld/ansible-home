@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+
+  dns:
+
+    build: .
+    restart: always
+    volumes:
+      - /srv/telegraf/dns.conf:/etc/telegraf/telegraf.conf:ro
+
+  firewall:
+
+    build: .
+    restart: always
+    volumes:
+      - /srv/telegraf/firewall.conf:/etc/telegraf/telegraf.conf:ro
+
+  ping:
+
+    build: .
+    restart: always
+    volumes:
+      - /srv/telegraf/ping.conf:/etc/telegraf/telegraf.conf:ro
+
+  switch:
+
+    build: .
+    restart: always
+    volumes:
+      - /srv/telegraf/switch.conf:/etc/telegraf/telegraf.conf:ro
+
+  storage:
+
+    build: .
+    restart: always
+    volumes:
+      - /srv/telegraf/storage.conf:/etc/telegraf/telegraf.conf:ro
+

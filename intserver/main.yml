@@ -15,3 +15,4 @@
     - { role: docker_influx, tags: influx }
     - { role: docker_librenms, tags: librenms }
     - { role: docker_prometheus, tags: prometheus }
+    - { role: docker_telegraf, tags: telegraf }

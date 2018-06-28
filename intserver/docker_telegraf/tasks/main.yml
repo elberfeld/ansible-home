@@ -1,0 +1,27 @@
+---
+
+- name: create folder struct for telegraf
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - /srv/telegraf/
+
+- name: Konfig-Dateien erstellen
+  template:
+    src: "{{ item }}"
+    dest: "/srv/telegraf/{{ item }}"
+  with_items:
+    - Dockerfile
+    - docker-compose.yml
+    - dns.conf
+    - firewall.conf
+    - ping.conf
+    - storage.conf
+    - switch.conf
+  notify: restart docker_telegraf 
+
+- name: start telegraf dockers
+  docker_service:
+    project_src: /srv/telegraf/
+    state: present
