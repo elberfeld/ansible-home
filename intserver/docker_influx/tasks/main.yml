@@ -20,7 +20,7 @@
     dest: "/srv/influx/{{ item }}"
   with_items:
     - docker-compose.yml
-    - sysmonproxy.conf
+
 
 - name: Script-Dateien erstellen
   template:
@@ -29,6 +29,7 @@
     mode: "o+rwx"
   with_items:
     - influx_sysmon.sh
+
 
 - name: start influx docker
   docker_service:

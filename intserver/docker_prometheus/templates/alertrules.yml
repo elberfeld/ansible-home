@@ -28,7 +28,7 @@ groups:
   rules:
 
   - alert: MEM_FULL
-    expr: (( mem_total - mem_free ) / mem_total * 100) > 30
+    expr: (( mem_total - mem_free ) / mem_total * 100) > 90
     for: 15m
 
 - name: cpu_general

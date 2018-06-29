@@ -28,15 +28,15 @@ route:
   repeat_interval: 3h 
 
   # A default receiver
-  receiver: mail
+  receiver: alerta
 
   # additional routes  
-  routes:
+#  routes:
 
   # send severity high to pushover 
-  - receiver: 'pushover'
-    match:
-      severity: high 
+#  - receiver: 'pushover'
+#    match:
+#      severity: high 
 
 
 # Inhibition rules allow to mute a set of alerts given that another alert is
@@ -51,13 +51,19 @@ inhibit_rules:
   # Apply inhibition if the alertname is the same.
   equal: ['alertname', 'cluster', 'service']
 
+
 receivers:
 
-- name: 'mail'
-  email_configs:
-  - to: '{{alert_email_to}}'
+- name: "alerta"
+  webhook_configs:
+  - url: 'http://10.5.0.111:8080/api/webhooks/prometheus'
+    send_resolved: true
 
-- name: 'pushover'
-  pushover_config:
-  - user_key: '{{pushover_user_key}}'
-  - token: '{{pushover_token}}'
+#- name: 'mail'
+#  email_configs:
+#  - to: '{{alert_email_to}}'
+
+#- name: 'pushover'
+#  pushover_config:
+#  - user_key: '{{pushover_user_key}}'
+#  - token: '{{pushover_token}}'

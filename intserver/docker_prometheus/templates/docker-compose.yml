@@ -21,7 +21,7 @@ services:
     ports:
       - 0.0.0.0:9093:9093
     volumes:
-      - /srv/prometheus/config/alertmanager.yml:/etc/alertmanager/config.yml
+      - /srv/prometheus/config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
       - /srv/prometheus/alert-data/:/alertmanager
 
 
