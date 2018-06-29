@@ -21,6 +21,14 @@
     - switch.conf
   notify: restart docker_telegraf 
 
+- name: Script-Dateien erstellen
+  template:
+    src: "{{ item }}"
+    dest: "/srv/telegraf/{{ item }}"
+    mode: "o+rwx"
+  with_items:
+    - test.sh
+
 - name: start telegraf dockers
   docker_service:
     project_src: /srv/telegraf/
