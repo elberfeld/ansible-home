@@ -10,7 +10,9 @@
    - { path: /srv/prometheus/alert_email_to, length: -1 }
    - { path: /srv/prometheus/pushover_user_key, length: -1 }
    - { path: /srv/prometheus/pushover_token, length: -1 }
- 
+   - { path: /srv/prometheus/telegram_admin, length: -1 }
+   - { path: /srv/prometheus/telegram_token, length: -1 }
+   
  
 - name: create folder struct for prometheus
   file: 
@@ -22,6 +24,7 @@
     - /srv/prometheus/config/
     - /srv/prometheus/data/
     - /srv/prometheus/alert-data/
+    - /srv/prometheus/telegram-data/
 
 - name: create config files
   template: src={{ item }} dest=/srv/prometheus/config/{{ item }}

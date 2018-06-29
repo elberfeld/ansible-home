@@ -1,6 +1,6 @@
 global:
   # The smarthost and SMTP sender used for mail notifications.
-  smtp_smarthost: 'smtp.web.de:587'
+  smtp_smarthost: 'mail.void.ms:587'
   smtp_from: '{{smtp_email_from}}'
   smtp_auth_username: '{{smtp_auth_username}}'
   smtp_auth_password: '{{smtp_auth_password}}}'

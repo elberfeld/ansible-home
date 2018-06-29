@@ -6,16 +6,16 @@ global:
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
-  external_labels:
-      monitor: 'prometheus'
+  #external_labels:
+  #    monitor: 'prometheus'
 
 # Write data to influxdb for long term storage  
-remote_write:
-  - url: "http://db:8086/api/v1/prom/write?u=prometheus&p={{ influx_user_pw }}&db=prometheus"
+#remote_write:
+#  - url: "{{influxdb_sysmon.url}}/api/v1/prom/write?u={{influxdb_sysmon.user}}&p={{influxdb_sysmon.password}}&db={{influxdb_sysmon.db}}"
 
 # Read data from influxdb long term storage
-remote_read:
-  - url: "http://db:8086/api/v1/prom/read?u=prometheus&p={{ influx_user_pw }}&db=prometheus"
+#remote_read:
+#  - url: "{{influxdb_sysmon.url}}/api/v1/prom/read?u={{influxdb_sysmon.user}}&p={{influxdb_sysmon.password}}&db={{influxdb_sysmon.db}}"
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
@@ -28,101 +28,9 @@ alerting:
     - targets:
       - "alertmanager:9093"
 
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
+
+  - job_name: 'sysmonproxy'
 
     static_configs:
-      - targets: ['localhost:9090']
-        labels:
-          group: 'service'
-
-{% for item in groups['server'] %}
-
-  - job_name: '{{ item }}'
-
-    static_configs:
-      - targets: ['{{ hostvars[item]['ansible_ssh_host'] }}:9100']
-        labels:
-          group: 'server'
-
-{% endfor %}
-
-  - job_name: 'firewall'
-
-    metrics_path: /snmp
-    params:
-      module: [if_mib]
-    static_configs:
-      - targets:
-        - 10.5.0.254  
-        labels:
-          group: 'network'
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: snmp_exporter:9116  
-
-
-  - job_name: 'core'
-
-    metrics_path: /snmp
-    params:
-      module: [if_mib]
-    static_configs:
-      - targets:
-        - 10.5.0.253  
-        labels:
-          group: 'network'
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: snmp_exporter:9116  
-
-
-  - job_name: 'ping'
-    metrics_path: /probe
-    params:
-      module: [icmp]  
-    static_configs:
-      - targets:
-        - 130.180.13.105         # Next Hop Unitymedia
-        - 2001:470:1f0a:7c8::1   # HE Tunnel Endpoint 
-        - 8.8.8.8                # Google DNS 
-        - 1.1.1.1                # Cloudflare DNS 
-        labels:
-          group: 'external'
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: blackbox_exporter:9115  
-
-
-  - job_name: 'http'
-    metrics_path: /probe
-    params:
-      module: [http_2xx]  
-    static_configs:
-      - targets:
-        - https://google.de  
-        - https://heise.de  
-        labels:
-          group: 'external'
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: blackbox_exporter:9115  
+      - targets: ['10.5.0.111:19273']
