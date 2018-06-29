@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: kapacitor:1.5
+    restart: always
+    ports:
+      - 0.0.0.0:9092:9092
+    volumes:
+      - /srv/kapacitor/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro
+      - /srv/kapacitor/data/:/var/lib/kapacitor/
+      - /srv/kapacitor/load/:/etc/kapacitor/load

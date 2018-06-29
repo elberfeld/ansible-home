@@ -1,0 +1,7 @@
+---
+
+- name: restart kapacitor docker
+  docker_service:
+    project_src: /srv/kapacitor/
+    state: present
+    restarted: yes

@@ -1,0 +1,24 @@
+
+
+dbrp "{{ influxdb_sysmon.db }}"."autogen"
+
+
+var data =batch 
+   |query(''' SELECT (( mean(total) - mean(free) ) / mean(total) * 100) AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."mem" ''')
+    .period(5m)
+    .every(30s)
+    .fill('linear')
+    .groupBy('host')
+
+{% raw %}
+
+data
+  |alert()
+    .id('{{ index .Tags "host"}}/mem_used')
+    .message('{{ .ID }}:{{ index .Fields "value" }}')
+    .info(lambda: "value" > 80 )
+    .warn(lambda: "value" > 90 )
+    .crit(lambda: "value" > 95 )
+    .alerta()
+
+{% endraw %}

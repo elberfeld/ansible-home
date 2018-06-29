@@ -9,10 +9,10 @@
     - { role: "../common/borgbackup", tags: borgbackup }
     - { role: "../common/snmpd", tags: snmpd }
     - { role: "../common/telegraf", tags: telegraf }
+    - { role: docker_alerta, tags: alerta }
     - { role: docker_grafana, tags: grafana }
     - { role: docker_graphite, tags: graphite }
     - { role: docker_hibiscus, tags: hibiscus }
     - { role: docker_influx, tags: influx }
-    - { role: docker_librenms, tags: librenms }
-    - { role: docker_prometheus, tags: prometheus }
+    - { role: docker_kapacitor, tags: kapacitor }
     - { role: docker_telegraf, tags: telegraf }

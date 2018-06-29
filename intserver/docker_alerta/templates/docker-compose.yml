@@ -1,0 +1,31 @@
+
+
+version: "3"
+
+services:
+  
+  app:
+
+    image: alerta/alerta-web:5.2.4
+    restart: always
+    ports:
+      - 0.0.0.0:8080:8080
+    volumes:
+      - /srv/alerta/alertad.conf:/app/alertad.conf
+      - /srv/alerta/config.js:/web/config.js
+    depends_on:
+      - db
+    environment:
+      INSTALL_PLUGINS: "normalise,pushover,telegram"
+
+
+  db:
+
+    image: postgres
+    restart: always
+    volumes:
+      - /srv/alerta/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: alerta
+      POSTGRES_USER: alerta
+      POSTGRES_PASSWORD: alerta 

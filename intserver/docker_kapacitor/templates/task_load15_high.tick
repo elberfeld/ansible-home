@@ -1,0 +1,24 @@
+
+
+dbrp "{{ influxdb_sysmon.db }}"."autogen"
+
+
+var data =batch 
+   |query(''' SELECT mean(load15) AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."system" ''')
+    .period(5m)
+    .every(30s)
+    .fill('linear')
+    .groupBy('host')
+
+{% raw %}
+
+data
+  |alert()
+    .id('{{ index .Tags "host"}}/load15_high')
+    .message('{{ .ID }}:{{ index .Fields "value" }}')
+    .info(lambda: "value" > 4 )
+    .warn(lambda: "value" > 8 )
+    .crit(lambda: "value" > 16 )
+    .alerta()
+
+{% endraw %}
