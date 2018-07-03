@@ -7,4 +7,5 @@ intserver	ansible_ssh_host=10.5.0.111
 control		ansible_ssh_host=10.5.0.250
 backupsrv   ansible_ssh_host=192.168.0.201 	
 
+osmc1       ansible_ssh_host=10.5.0.60
 

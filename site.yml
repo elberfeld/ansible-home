@@ -6,3 +6,4 @@
 - include: master/main.yml
 - include: webserver/main.yml
 - include: intserver/main.yml
+- include: osmc/main.yml

@@ -1,0 +1,17 @@
+
+# OSMC + https://makingstuffwork.net/technology/install-netflix-amazon-prime-video-plex-raspberry-pi-kodi-osmc/ 
+ 
+debian_sources: 
+  - "deb http://ftp.debian.org/debian stretch main contrib non-free"
+  - "deb http://ftp.debian.org/debian/ stretch-updates main contrib non-free"
+  - "deb http://security.debian.org/ stretch/updates main contrib non-free"
+  - "deb http://apt.osmc.tv stretch main"
+  - "deb http://download.osmc.tv/dev/gmc-18 gmc-18 main"
+
+debian_keys:
+  - "http://download.osmc.tv/dev/gmc-18/gpg.key"
+
+
+# Art des Hosts: physical, vm, docker 
+host_type: "physical"
+
