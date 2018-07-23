@@ -34,7 +34,7 @@ frontend:
 config:
 
 http:
-  server_port: 80 
+  server_port: 8123 
   # Uncomment this to add a password (recommended!)
   # api_password: PASSWORD
   # Uncomment this if you are using SSL or running in Docker etc
