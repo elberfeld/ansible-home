@@ -25,10 +25,14 @@
   args:
     chdir: /srv/iobroker/
 
-- name: Install node.js package
+- name: Install node.js iobroker package
   shell: "npm install iobroker"
   args:
     chdir: /srv/iobroker/
 
+- name: Install node.js iobroker.hass package from git
+  shell: "npm install https://github.com/ioBroker/ioBroker.hass.git"
+  args:
+    chdir: /srv/iobroker/
    
  
