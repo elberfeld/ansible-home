@@ -37,7 +37,7 @@
   pip: 
     executable: pip3
     name: homeassistant
-    version: 0.60.1
+    version: 0.74.0
     state: present
   notify: restart homeassistant
 
