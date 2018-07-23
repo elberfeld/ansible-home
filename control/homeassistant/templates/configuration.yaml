@@ -67,23 +67,7 @@ prometheus:
 # Track the sun
 sun:
 
-# MQTT Server 
-mqtt:
-  broker: 10.5.0.111
-  client_id: control-homeassistant
-  keepalive: 60
-  birth_message:
-    topic: 'HomeAssistant/status'
-    payload: 'online'
-  will_message:
-    topic: 'HomeAssistant/status'
-    payload: 'offline'
 
-# Publish Status to MQTT
-mqtt_statestream:
-  base_topic: HomeAssistant
-  publish_attributes: true
-  publish_timestamps: true
 
 # Weather Prediction via yr.no
 sensor:
