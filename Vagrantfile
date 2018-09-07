@@ -2,7 +2,7 @@
 Vagrant.configure(2) do |config|
 
   # Debian Jessie + VirtualBox Addons 
-  config.vm.box = "debian/contrib-jessie64"
+  config.vm.box = "debian/contrib-stretch64"
 
   # Hostname
   config.vm.hostname = "box"
@@ -64,7 +64,7 @@ Vagrant.configure(2) do |config|
 	echo "Installing Ansible ..."
 	echo "######################################################"
 		
-	sudo apt-get install -y python python-pip python-dev libffi6 libffi-dev libssl-dev
+	sudo apt-get install -y python python-pip python-dev libffi6 libffi-dev libssl-dev sshpass
 	sudo pip install ansible markupsafe netaddr
 
     echo "    StrictHostKeyChecking no" >> /etc/ssh/ssh_config  
