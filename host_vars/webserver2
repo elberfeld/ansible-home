@@ -1,0 +1,93 @@
+
+debian_sources: 
+  - "deb http://ftp.halifax.rwth-aachen.de/debian/ stretch main contrib non-free"
+  - "deb http://ftp.halifax.rwth-aachen.de/debian/ stretch-updates main contrib non-free"
+  - "deb http://security.debian.org/ stretch/updates main contrib non-free"
+  - "deb https://download.docker.com/linux/debian stretch stable"
+  - "deb https://repos.influxdata.com/debian stretch stable"
+
+debian_keys:
+  - "https://download.docker.com/linux/debian/gpg"
+  - "https://repos.influxdata.com/influxdb.key"
+
+
+# Art des Hosts: physical, vm, docker 
+host_type: "vm"
+
+
+# Primäre IP Adressen des Hosts 
+ext_ip4: 159.69.124.138
+ext_ip6: 2a01:4f8:c010:c8a::1
+
+
+# Letseccrypt config 
+letsencrypt_mail: elberfeld@web.de
+letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df987a6221
+
+
+# Webserver settings 
+webserver_domains:
+  - "autoconfig"
+  - "autodiscover" 
+  - "connectiv"
+  - "cloud"
+  - "mail"
+  - "matrix"
+  - "office"
+  - "www"
+
+
+# Definition von Borgbackup Repositories 
+borgbackup_repos:
+  
+  backupsrv: 
+
+    # URL des Repos   
+    repo: "private@192.168.0.201:/data/private/webserver2"
+    
+    # Repo-spezifische Optionen zum Aufruf von Borgbackup
+    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+    options: ""
+
+    # Compression Options, z,b. "zlib,5, "zstd,5"
+    compression: "zlib,5"
+
+    # Prune Optionen 
+    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+    
+    # Backup Schedule 
+    weekday: "*"
+    hour: "*/4"
+    minute: "10"
+
+    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
+    # directories:
+
+  rsyncnet: 
+
+    # URL des Repos   
+    repo: "17953@ch-s011.rsync.net:privat/webserver2"
+    
+    # Repo-spezifische Optionen zum Aufruf von Borgbackup
+    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+    options: "--remote-path=borg1"
+
+    # Compression Options , "zstd,18"
+    compression: "zlib,5"
+
+    # Prune Optionen 
+    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+    
+    # Backup Schedule 
+    weekday: "*"
+    hour: "*/4"
+    minute: "20"
+
+    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
+    # directories:
+
+# Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
+borgbackup_directories:
+  - "/etc/"
+  - "/srv/"
+

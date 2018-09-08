@@ -12,10 +12,17 @@ $TTL     86400
 @         IN      A       {{ webserver_ext_ip }}
 @         IN      AAAA    {{ webserver_ext_ip6 }}
 
-
 ; Nameserver 
 ns1       IN      A       {{ webserver_ext_ip }}
 ns2       IN      A       {{ webserver_ext_ip }}
+
+
+; Server 
+webserver1       IN      A       {{ hostvars['webserver1'].ext_ip4 }}
+webserver1       IN      AAAA    {{ hostvars['webserver1'].ext_ip6 }}
+
+webserver2       IN      A       {{ hostvars['webserver2'].ext_ip4 }}
+webserver2       IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 
 
 ; Unitimedia Gateway 
