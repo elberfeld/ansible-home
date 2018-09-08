@@ -1,9 +1,10 @@
 ---
 # Hauptdatei, includiert lediglich die einzelnen Playbooks 
-- include: all/main.yml
-- include: backupsrv/main.yml
-- include: control/main.yml
-- include: master/main.yml
-- include: webserver/main.yml
-- include: intserver/main.yml
-- include: osmc/main.yml
+- import_playbook: roles_all/main.yml
+
+#- include: backupsrv/main.yml
+#- include: control/main.yml
+#- include: master/main.yml
+#- include: webserver/main.yml
+#- include: intserver/main.yml
+#- include: osmc/main.yml
