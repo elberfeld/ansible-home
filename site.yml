@@ -19,14 +19,14 @@
 - hosts: webserver1,webserver2 
   remote_user: root
   roles:
-    - { role: "roles_common/borgbackup", tags: borgbackup }
-    - { role: "roles_common/telegraf", tags: telegraf }
+    - { role: roles_common/borgbackup, tags: borgbackup }
+    - { role: roles_common/telegraf, tags: telegraf }
 
 - hosts: webserver1 
   remote_user: root
   roles:
-    - { role: "roles_common/docker", tags: docker }
-#    - { role: docker_bind, tags: bind }
+    - { role: roles_common/docker, tags: docker }
+    - { role: roles_webserver/docker_bind, tags: bind }
 #    - { role: docker_onlyoffice, tags: onlyoffice }
 #    - { role: docker_mail, tags: mail }
 #    - { role: docker_matrix, tags: matrix }
@@ -39,7 +39,7 @@
   remote_user: root
   roles:
     - { role: "roles_common/docker", tags: docker }
-#    - { role: docker_bind, tags: bind }
+    - { role: roles_webserver/docker_bind, tags: bind }
 #    - { role: docker_onlyoffice, tags: onlyoffice }
 #    - { role: docker_mail, tags: mail }
 #    - { role: docker_matrix, tags: matrix }

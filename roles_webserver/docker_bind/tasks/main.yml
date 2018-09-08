@@ -22,7 +22,6 @@
     - db.local
     - db.root
     - db.void.ms
-    - int.void.ms
     - named.conf
     - named.conf.default-zones
     - named.conf.local

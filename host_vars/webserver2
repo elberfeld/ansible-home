@@ -27,14 +27,16 @@ letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df
 
 # Webserver settings 
 webserver_domains:
-  - "autoconfig"
-  - "autodiscover" 
-  - "connectiv"
-  - "cloud"
-  - "mail"
-  - "matrix"
-  - "office"
-  - "www"
+  - "b"
+  
+#  - "autoconfig"
+#  - "autodiscover" 
+#  - "connectiv"
+#  - "cloud"
+#  - "mail"
+#  - "matrix"
+#  - "office"
+#  - "www"
 
 
 # Definition von Borgbackup Repositories 

@@ -1,5 +1,6 @@
 ; zonefile for void.ms.
-$TTL     86400
+; Reduced ttl 86400
+$TTL     10 
 @        IN      SOA     ns1.void.ms. webmaster.void.ms. (
                          {{ansible_date_time.epoch}}         ; Serial
                          604800         ; Refresh
@@ -7,14 +8,16 @@ $TTL     86400
                          2419200         ; Expire
                          86400 )       ; Negative Cache TTL
 
-@         IN      NS      ns1
+@         IN      A       {{ ext_ip4 }}
+@         IN      AAAA    {{ ext_ip6 }}
 
-@         IN      A       {{ webserver_ext_ip }}
-@         IN      AAAA    {{ webserver_ext_ip6 }}
-
-; Nameserver 
-ns1       IN      A       {{ webserver_ext_ip }}
-ns2       IN      A       {{ webserver_ext_ip }}
+; Nameserver
+@         IN      NS      ns1.void.ms.
+@         IN      NS      ns2.void.ms.
+ns1       IN      A       {{ hostvars['webserver1'].ext_ip4 }}
+ns1       IN      AAAA    {{ hostvars['webserver1'].ext_ip6 }}
+ns2       IN      A       {{ hostvars['webserver2'].ext_ip4 }}
+ns2       IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 
 
 ; Server 
@@ -25,32 +28,43 @@ webserver2       IN      A       {{ hostvars['webserver2'].ext_ip4 }}
 webserver2       IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 
 
+
 ; Unitimedia Gateway 
 gw-um     IN      A       130.180.13.105
 
 
 ; Home Ips
-home4     IN      A       {{ webserver_ext_ip }}
-home6     IN      AAAA    {{ webserver_ext_ip6 }}
+home4     IN      A       {{ hostvars['webserver'].webserver_ext_ip }}
+home6     IN      AAAA    {{ hostvars['webserver'].webserver_ext_ip6 }}
 
 
 ; Manuelle Domains 
-vpn       IN      A       {{ webserver_ext_ip }}
+vpn       IN      A       {{ hostvars['webserver'].webserver_ext_ip }}
 
 
 ; Webserver-Domains 
-{% for domain in webserver_domains %}
+{% for domain in hostvars['webserver'].webserver_domains %}
 
-{{ domain }}    IN  A      {{ webserver_ext_ip }}
+{{ domain }}    IN  A      {{ hostvars['webserver'].webserver_ext_ip }}
 
 {% if domain == 'mail' %}
 ;IPv6 disabled for {{ domain }}
 {% else %}
-{{ domain }}    IN  AAAA   {{ webserver_ext_ip6 }}
+{{ domain }}    IN  AAAA   {{ hostvars['webserver'].webserver_ext_ip6 }}
 {% endif %}
 
 {% endfor %}
 
+; Webserver1-Domains 
+{% for domain in hostvars['webserver1'].webserver_domains %}
+{{ domain }}    IN  CNAME webserver1.void.ms.
+{% endfor %}
+
+
+; Webserver2-Domains 
+{% for domain in hostvars['webserver2'].webserver_domains %}
+{{ domain }}    IN  CNAME webserver2.void.ms.
+{% endfor %}
 
 ; Zertifikats-Authoriaet festlegen 
 @         IN      CAA     0 issue "letsencrypt.org"
@@ -70,14 +84,12 @@ mail._domainkey   IN      TXT     ( "v=DKIM1; h=sha256; k=rsa; "
 
 ; E-Mail Autoconfig
 @                       IN       TXT    "mailconf=https://autoconfig.void.ms/mail/config-v1.1.xml"
-_imaps._tcp             SRV 0 1 993     mail.void.ms
-_submission._tcp        SRV 0 1 587     mail.void.ms
-_autodiscover._tcp      SRV 0 0 443     autodiscover.void.ms
+_imaps._tcp             SRV 0 1 993     mail.void.ms.
+_submission._tcp        SRV 0 1 587     mail.void.ms.
+_autodiscover._tcp      SRV 0 0 443     autodiscover.void.ms.
 
 
 ; Matrix Server federation 
 ; <yourdomain.com> <ttl> IN SRV 10 0 <port> <synapse.server.name>
 _matrix._tcp.void.ms.   3600    IN      SRV     10  0   8448    void.ms.
-
-
 
