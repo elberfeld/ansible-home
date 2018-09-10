@@ -4,8 +4,7 @@ services:
 
   app:
 
-    image: onlyoffice/documentserver:4.4.2.20
+    image: onlyoffice/documentserver:5.1.4.22
     restart: always
-    hostname: collabora
     ports:
       - 127.0.0.1:42008:80
