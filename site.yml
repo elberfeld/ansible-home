@@ -1,9 +1,50 @@
 ---
-# Hauptdatei, includiert lediglich die einzelnen Playbooks 
-- include: all/main.yml
-- include: backupsrv/main.yml
-- include: control/main.yml
-- include: master/main.yml
-- include: webserver/main.yml
-- include: intserver/main.yml
-- include: osmc/main.yml
+
+#- include: backupsrv/main.yml
+#- include: control/main.yml
+#- include: master/main.yml
+#- include: webserver/main.yml
+#- include: intserver/main.yml
+#- include: osmc/main.yml
+
+- hosts: all 
+  remote_user: root
+  roles:
+    - { role: roles_all/apt, tags: apt }
+    - { role: roles_all/hostname, tags: hostname }
+    - { role: roles_all/motd, tags: motd }
+    - { role: roles_all/packages, tags: packages }
+    - { role: roles_all/sshd, tags: sshd }
+
+- hosts: webserver1,webserver2 
+  remote_user: root
+  roles:
+    - { role: roles_common/borgbackup, tags: borgbackup }
+    - { role: roles_common/telegraf, tags: telegraf }
+
+- hosts: webserver1 
+  remote_user: root
+  roles:
+    - { role: roles_common/docker, tags: docker }
+    - { role: roles_webserver/docker_bind, tags: bind }
+#    - { role: docker_onlyoffice, tags: onlyoffice }
+#    - { role: docker_mail, tags: mail }
+#    - { role: docker_matrix, tags: matrix }
+#    - { role: docker_nextcloud, tags: nextcloud }
+#    - { role: docker_nginxssh, tags: nginxssh }
+#    - { role: docker_wordpress, tags: wordpress }
+#    - { role: nginx, tags: nginx }
+
+- hosts: webserver2
+  remote_user: root
+  roles:
+    - { role: "roles_common/docker", tags: docker }
+    - { role: roles_webserver/docker_bind, tags: bind }
+#    - { role: docker_onlyoffice, tags: onlyoffice }
+#    - { role: docker_mail, tags: mail }
+#    - { role: docker_matrix, tags: matrix }
+#    - { role: docker_nextcloud, tags: nextcloud }
+#    - { role: docker_nginxssh, tags: nginxssh }
+#    - { role: docker_wordpress, tags: wordpress }
+#    - { role: nginx, tags: nginx }
+
