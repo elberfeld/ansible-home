@@ -8,7 +8,7 @@ $TTL     300
                          300 )       ; Negative Cache TTL
 
 @         IN      A       {{ hostvars['webserver1'].ext_ip4 }}
-@         IN      AAAA    {{ hostvars['webserver1'].ext_ip4 }}
+@         IN      AAAA    {{ hostvars['webserver1'].ext_ip6 }}
 
 ; Nameserver
 @         IN      NS      ns1.void.ms.
