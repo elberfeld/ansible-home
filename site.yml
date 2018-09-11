@@ -30,22 +30,21 @@
 - hosts: webserver1 
   remote_user: root
   roles:
+    - { role: roles_webserver/nginx, tags: nginx }
+    - { role: roles_webserver/docker_wordpress, tags: wordpress }
 #    - { role: docker_onlyoffice, tags: onlyoffice }
 #    - { role: docker_mail, tags: mail }
 #    - { role: docker_matrix, tags: matrix }
 #    - { role: docker_nextcloud, tags: nextcloud }
 #    - { role: docker_nginxssh, tags: nginxssh }
-#    - { role: docker_wordpress, tags: wordpress }
-#    - { role: nginx, tags: nginx }
 
 - hosts: webserver2
   remote_user: root
   roles:
+#    - { role: nginx, tags: nginx }
 #    - { role: docker_onlyoffice, tags: onlyoffice }
 #    - { role: docker_mail, tags: mail }
 #    - { role: docker_matrix, tags: matrix }
 #    - { role: docker_nextcloud, tags: nextcloud }
 #    - { role: docker_nginxssh, tags: nginxssh }
-#    - { role: docker_wordpress, tags: wordpress }
-#    - { role: nginx, tags: nginx }
 

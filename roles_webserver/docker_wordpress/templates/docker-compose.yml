@@ -16,8 +16,10 @@ services:
 
   app:
 
-    image: wordpress:4.8.0-php7.1-apache
+    image: wordpress:4.9.8-php7.2-apache
     restart: always
+    depends_on: 
+      - db
     ports:
       - 127.0.0.1:42007:80
     volumes:

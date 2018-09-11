@@ -4,7 +4,7 @@
   apt:
     pkg: "{{ item }}"
     update_cache: yes
-    state: installed
+    state: present
   with_items:
     - nginx-light
     - libnginx-mod-http-lua
@@ -36,7 +36,6 @@
 
 - name: LetsEncrypt Script erstellen 
   template: src=letsencrypt.sh dest=/opt/letsencrypt.sh mode=o+x
-  register: letsencryptsh
   notify: restart nginx
 
 - name: Cronjob für Zertifikatserneuerung
@@ -47,21 +46,17 @@
 
 - set_fact:
     nginx_https: False
-  when: letsencryptsh.changed
 
 - name: Konfig-Datei default erstellen (httponly)
   template: src=nginx-site dest=/etc/nginx/sites-enabled/{{ item }}.void.ms
   with_items: 
     - "{{ webserver_domains }}"
-  when: letsencryptsh.changed
 
 - name: nginx restarten (httponly)
   service: name=nginx state=restarted
-  when: letsencryptsh.changed
 
 - name: Letsencrypt-Zertifikat beantragen und installieren 
   shell: "/opt/letsencrypt.sh" 
-  when: letsencryptsh.changed 
 
 
 # nginx konfigurieren

@@ -34,7 +34,8 @@ webserver_domains:
   - "mail"
   - "matrix"
   - "office"
-  - "www"
+
+#  - "www"
 
 
 # Definition von Borgbackup Repositories 
