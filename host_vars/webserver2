@@ -18,6 +18,7 @@ host_type: "vm"
 # Primäre IP Adressen des Hosts 
 ext_ip4: 159.69.124.138
 ext_ip6: 2a01:4f8:c010:c8a::1
+int_ip4: 10.100.1.2
 
 
 # Letseccrypt config 
@@ -27,7 +28,7 @@ letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df
 
 # Webserver settings 
 webserver_domains:
-  - "b"
+  - "ldap2"
   
 #  - "autoconfig"
 #  - "autodiscover" 
@@ -37,6 +38,14 @@ webserver_domains:
 #  - "matrix"
 #  - "office"
 #  - "www"
+
+
+#OpenVPN Konfigurationen 
+openvpn_server:
+  - "server-home"
+
+openvpn_clients:
+  - "client-webs1"
 
 
 # Definition von Borgbackup Repositories 

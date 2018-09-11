@@ -25,6 +25,7 @@
     - { role: roles_common/borgbackup, tags: borgbackup }
     - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_common/docker, tags: docker }
+    - { role: roles_common/openvpn, tags: openvpn }
     - { role: roles_webserver/docker_bind, tags: bind }
 
 - hosts: webserver1 
