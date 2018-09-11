@@ -1,15 +1,14 @@
-; zonefile for void.ms.
-; Reduced ttl 86400
-$TTL     10 
+; zonefile for void.ms.1200
+$TTL     300
 @        IN      SOA     ns1.void.ms. webmaster.void.ms. (
-                         {{ansible_date_time.epoch}}         ; Serial
-                         604800         ; Refresh
-                         86400         ; Retry
-                         2419200         ; Expire
-                         86400 )       ; Negative Cache TTL
+                         {{ playbook_date_time.epoch[:9] }}         ; Serial
+                         1200          ; Refresh  1200 - 43200
+                         120           ; Retry  120 -7200
+                         3600          ; Expire
+                         300 )       ; Negative Cache TTL
 
-@         IN      A       {{ ext_ip4 }}
-@         IN      AAAA    {{ ext_ip6 }}
+@         IN      A       {{ hostvars['webserver1'].ext_ip4 }}
+@         IN      AAAA    {{ hostvars['webserver1'].ext_ip4 }}
 
 ; Nameserver
 @         IN      NS      ns1.void.ms.
