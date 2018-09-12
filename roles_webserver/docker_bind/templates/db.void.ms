@@ -27,7 +27,6 @@ webserver2       IN      A       {{ hostvars['webserver2'].ext_ip4 }}
 webserver2       IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 
 
-
 ; Unitimedia Gateway 
 gw-um     IN      A       130.180.13.105
 

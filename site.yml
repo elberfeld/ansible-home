@@ -26,12 +26,13 @@
     - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_common/docker, tags: docker }
     - { role: roles_common/openvpn, tags: openvpn }
+    - { role: roles_webserver/nginx, tags: nginx }
     - { role: roles_webserver/docker_bind, tags: bind }
+    - { role: roles_webserver/docker_ldap, tags: ldap }
 
 - hosts: webserver1 
   remote_user: root
   roles:
-    - { role: roles_webserver/nginx, tags: nginx }
     - { role: roles_webserver/docker_wordpress, tags: wordpress }
 #    - { role: docker_onlyoffice, tags: onlyoffice }
 #    - { role: docker_mail, tags: mail }

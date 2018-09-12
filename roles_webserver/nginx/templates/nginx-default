@@ -10,8 +10,8 @@ server {
 	listen 443 ssl default_server;
 	listen [::]:443 ssl default_server;
 
-	ssl_certificate /etc/letsencrypt/live/www.void.ms/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/www.void.ms/privkey.pem;
+	ssl_certificate /etc/letsencrypt/live/{{ webserver_defaultdomain }}.void.ms/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/{{ webserver_defaultdomain }}.void.ms/privkey.pem;
 
     {% endif %}
     
@@ -21,7 +21,7 @@ server {
 	root /dev/null;
 
     location / {
-      rewrite     ^(.*)   https://www.void.ms$1 permanent;
+      rewrite     ^(.*)   https://{{ webserver_defaultdomain }}.void.ms$1 permanent;
     }
 
 }

@@ -1,0 +1,36 @@
+
+version: "3"
+
+services:
+
+  openldap:
+    image: osixia/openldap:1.2.2
+    restart: always
+    command: --loglevel debug
+    network_mode: host
+    volumes:
+      - /srv/ldap/database:/var/lib/ldap
+      - /srv/ldap/config:/etc/ldap/slapd.d
+    environment:
+      - HOSTNAME={{ int_ip4 }}
+      - LDAP_ORGANISATION=VOID
+      - LDAP_DOMAIN=void.ms
+      - LDAP_ADMIN_PASSWORD={{ ldap_admin_pass }}
+      - LDAP_CONFIG_PASSWORD={{ ldap_config_pass }}
+      - LDAP_READONLY_USER=true
+      - LDAP_READONLY_USER_USERNAME=readonly
+      - LDAP_READONLY_USER_PASSWORD={{ ldap_readonly_pass }}
+      - LDAP_REPLICATION=true
+      - LDAP_REPLICATION_HOSTS=#PYTHON2BASH:['ldap://10.100.1.1','ldap://10.100.1.2']
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:0.7.2
+    restart: always
+    depends_on:
+      - openldap
+    ports:
+      - 127.0.0.1:42003:80
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS={{ int_ip4 }}
+      - PHPLDAPADMIN_HTTPS=false
+      - PHPLDAPADMIN_TRUST_PROXY_SSL=true
