@@ -36,11 +36,7 @@ webserver_domains:
   - "mail"
   - "www"
   
-#  - "cloud"
-#  - "matrix"
-#  - "office"
-
-
+  
 #OpenVPN Konfigurationen 
 openvpn_server:
   - "server-home"

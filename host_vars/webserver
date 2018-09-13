@@ -28,9 +28,9 @@ webserver_int_ip6: 2001:470:1f0b:7ce::110
 
 webserver_domains:
   - "cloud"
-  - "matrix"
-  - "office"
 
+#  - "matrix"
+#  - "office"
 #  - "www"
 #  - "autoconfig"
 #  - "autodiscover" 

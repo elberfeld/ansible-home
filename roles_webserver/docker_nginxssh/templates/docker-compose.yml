@@ -9,7 +9,7 @@ services:
     restart: always
     hostname: nginxssh-connectiv
     ports:
-      - 0.0.0.0:42004:80
+      - 127.0.0.1:42004:80
       - 0.0.0.0:444:22
     volumes:
       - /srv/nginxssh_connectiv/ssh:/etc/ssh/keys/

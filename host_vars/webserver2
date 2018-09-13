@@ -31,16 +31,11 @@ webserver_defaultdomain: www2
 
 webserver_domains:
   - "ldap2"
+  - "matrix"
+  - "office"
   - "www2"
   
-#  - "autoconfig"
-#  - "autodiscover" 
-#  - "connectiv"
 #  - "cloud"
-#  - "mail"
-#  - "matrix"
-#  - "office"
-#  - "www"
 
 
 #OpenVPN Konfigurationen 

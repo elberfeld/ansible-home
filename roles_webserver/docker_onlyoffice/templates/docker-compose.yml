@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: onlyoffice/documentserver:5.1.4.22
+    image: onlyoffice/documentserver:5.1.5.59
     restart: always
     ports:
       - 127.0.0.1:42008:80
