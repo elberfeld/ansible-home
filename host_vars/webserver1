@@ -29,12 +29,12 @@ letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df
 webserver_defaultdomain: www
 
 webserver_domains:
+  - "connectiv"
   - "ldap"
   - "www"
   
 #  - "autoconfig"
 #  - "autodiscover" 
-#  - "connectiv"
 #  - "cloud"
 #  - "mail"
 #  - "matrix"
