@@ -16,14 +16,15 @@ services:
 
   app:
 
-    image: wordpress:4.9.8-php7.2-apache
+    build: .
+    image: "wordpress-{{ timestamp.stdout }}"
     restart: always
     depends_on: 
       - db
     ports:
       - 127.0.0.1:42007:80
     volumes:
-      - /srv/wordpress/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - /srv/wordpress/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - /srv/wordpress/data:/var/www/html
     environment:
       WORDPRESS_DB_HOST: db

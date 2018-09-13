@@ -12,15 +12,19 @@
     group: www-data
   with_items:
     - "/srv/wordpress/"
-    - "/srv/wordpress/config"
     - "/srv/wordpress/data/"
     - "/srv/wordpress/db/"
 
 - name: create config files
-  template: src={{ item }} dest=/srv/wordpress/config/{{ item }}
+  template: src={{ item }} dest=/srv/wordpress/{{ item }}
   with_items: 
+    - Dockerfile
     - uploads.ini
   register: config 
+
+- name: Get a timestamp
+  command: "date +%Y%m%d%H%M%S"
+  register: timestamp
 
 - name: Docker Compose Konfig-Datei erstellen
   template:
