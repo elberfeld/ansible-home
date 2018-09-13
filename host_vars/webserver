@@ -27,15 +27,15 @@ webserver_int_ip: 10.5.0.110
 webserver_int_ip6: 2001:470:1f0b:7ce::110
 
 webserver_domains:
-  - "autoconfig"
-  - "autodiscover" 
-  - "connectiv"
   - "cloud"
-  - "mail"
   - "matrix"
   - "office"
 
 #  - "www"
+#  - "autoconfig"
+#  - "autodiscover" 
+#  - "connectiv"
+#  - "mail"
 
 
 # Definition von Borgbackup Repositories 

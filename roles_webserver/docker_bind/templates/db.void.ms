@@ -69,7 +69,7 @@ vpn       IN      A       {{ hostvars['webserver'].webserver_ext_ip }}
 
 
 ; E-Mail Konfiguration 
-@         IN      MX      10 mail
+@         IN      MX      10 mail.void.ms.
 @         IN      TXT     "v=spf1 mx ~all"
 @         IN      SPF     "v=spf1 mx ~all"
 

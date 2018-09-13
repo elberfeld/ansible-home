@@ -35,8 +35,8 @@
   roles:
     - { role: roles_webserver/docker_wordpress, tags: wordpress }
     - { role: roles_webserver/docker_nginxssh, tags: nginxssh }
+    - { role: roles_webserver/docker_mail, tags: mail }
 #    - { role: docker_onlyoffice, tags: onlyoffice }
-#    - { role: docker_mail, tags: mail }
 #    - { role: docker_matrix, tags: matrix }
 #    - { role: docker_nextcloud, tags: nextcloud }
 
