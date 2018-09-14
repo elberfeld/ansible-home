@@ -4,11 +4,13 @@ services:
 
   app:
 
-    image: grafana/grafana:5.2.1
+    image: grafana/grafana:5.2.4
     restart: always
     ports:
-      - 3000:3000
+      - 127.0.0.1:42011:3000
     volumes:
+      - /srv/grafana/config/grafana.ini:/etc/grafana/grafana.ini
+      - /srv/grafana/config/ldap.toml:/etc/grafana/ldap.toml
       - /srv/grafana/data/:/var/lib/grafana
     environment:
       GF_SERVER_ROOT_URL: "http://10.5.0.111:3000"

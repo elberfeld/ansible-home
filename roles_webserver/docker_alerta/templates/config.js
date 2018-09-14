@@ -3,7 +3,7 @@
 
 angular.module('config', [])
   .constant('config', {
-    'endpoint'    : "http://"+window.location.hostname+":8080/api",
+    'endpoint'    : "https://"+window.location.hostname+"/api",
     'provider'    : "basic", // google, github, gitlab, saml2 or basic
 
     'dates': {

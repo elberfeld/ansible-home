@@ -6,12 +6,13 @@ services:
   
   app:
 
-    image: alerta/alerta-web:5.2.4
+    image: alerta/alerta-web:5.2.9
     restart: always
     ports:
-      - 0.0.0.0:8080:8080
+      - 127.0.0.1:42010:8080
     volumes:
       - /srv/alerta/alertad.conf:/app/alertad.conf
+      - /srv/alerta/telegram.txt:/app/telegram.txt
       - /srv/alerta/config.js:/web/config.js
     depends_on:
       - db
@@ -21,7 +22,7 @@ services:
 
   db:
 
-    image: postgres
+    image: postgres:10.5
     restart: always
     volumes:
       - /srv/alerta/db:/var/lib/postgresql/data

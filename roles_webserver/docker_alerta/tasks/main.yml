@@ -26,6 +26,7 @@
     - docker-compose.yml
     - alertad.conf
     - config.js
+    - telegram.txt
   notify: restart alerta docker
 
 - name: start alerta docker
