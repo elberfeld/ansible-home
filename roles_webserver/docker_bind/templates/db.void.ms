@@ -40,19 +40,6 @@ home6     IN      AAAA    {{ hostvars['webserver'].webserver_ext_ip6 }}
 vpn       IN      A       {{ hostvars['webserver'].webserver_ext_ip }}
 
 
-; Webserver-Domains 
-{% for domain in hostvars['webserver'].webserver_domains %}
-
-{{ domain }}    IN  A      {{ hostvars['webserver'].webserver_ext_ip }}
-
-{% if domain == 'mail' %}
-;IPv6 disabled for {{ domain }}
-{% else %}
-{{ domain }}    IN  AAAA   {{ hostvars['webserver'].webserver_ext_ip6 }}
-{% endif %}
-
-{% endfor %}
-
 ; Webserver1-Domains 
 {% for domain in hostvars['webserver1'].webserver_domains %}
 {{ domain }}    IN  CNAME webserver1.void.ms.

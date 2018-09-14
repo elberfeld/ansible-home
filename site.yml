@@ -42,5 +42,5 @@
   roles:
     - { role: roles_webserver/docker_onlyoffice, tags: onlyoffice }
     - { role: roles_webserver/docker_matrix, tags: matrix }
-#    - { role: docker_nextcloud, tags: nextcloud }
+    - { role: roles_webserver/docker_nextcloud, tags: nextcloud }
 

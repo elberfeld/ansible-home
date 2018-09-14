@@ -30,12 +30,11 @@ letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df
 webserver_defaultdomain: www2
 
 webserver_domains:
+  - "cloud"
   - "ldap2"
   - "matrix"
   - "office"
-  - "www2"
-  
-#  - "cloud"
+  - "www2"  
 
 
 #OpenVPN Konfigurationen 
