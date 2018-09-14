@@ -31,3 +31,9 @@
 - name: create telegraf config  
   template: src=telegraf.conf dest=/etc/telegraf/telegraf.d/docker.conf
   notify: restart telegraf
+
+- name: adding existing user 'telegraf' to group docker
+  user:
+    name: telegraf
+    groups: docker
+    append: yes

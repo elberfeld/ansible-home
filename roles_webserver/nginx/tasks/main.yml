@@ -84,3 +84,8 @@
   template: src=telegraf.conf dest=/etc/telegraf/telegraf.d/nginx.conf
   notify: restart telegraf 
   
+- name: adding existing user 'telegraf' to group adm
+  user:
+    name: telegraf
+    groups: adm
+    append: yes
