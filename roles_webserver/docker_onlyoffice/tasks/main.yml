@@ -6,6 +6,8 @@
     state: "directory"
   with_items:
     - "/srv/onlyoffice/"
+    - "/srv/onlyoffice/cache/"
+    - "/srv/onlyoffice/db/"
     
 - name: Docker Compose Konfig-Datei erstellen
   template:

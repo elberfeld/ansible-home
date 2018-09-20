@@ -4,61 +4,52 @@
   apt:
     pkg: "{{ item }}"
     update_cache: yes
-    state: installed
+    state: present
   with_items:
     - curl
 
-- name: get secrets from server 1
-  slurp: src={{ item }}
+- include: ../functions/get_secret.yml
   with_items:
-    - /srv/nextcloud/mysql_admin_pass
-    - /srv/nextcloud/mysql_user_pass
-  register: nextcloud_secrets
-
-- name: get secrets from server 2
-  set_fact: 
-    mysql_admin_pass: "{{ nextcloud_secrets.results | selectattr('item', 'equalto', '/srv/nextcloud/mysql_admin_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
-    mysql_user_pass: "{{ nextcloud_secrets.results | selectattr('item', 'equalto', '/srv/nextcloud/mysql_user_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}" 
+   - { path: /srv/nextcloud/mysql_admin_pass,  length: 24 }
+   - { path: /srv/nextcloud/mysql_user_pass,  length: 12 }
 
 - name: create folder struct for nextcloud
   file: 
     path: "{{ item }}"
     state: "directory"
     owner: www-data
-    group: www-data
+    group: root
   with_items:
     - "/srv/nextcloud/"
     - "/srv/nextcloud/data/"
     - "/srv/nextcloud/db/"
     - "/srv/nextcloud/tmp/"
-    - "/srv/nextcloud/docker_ocr/"
+    - "/srv/nextcloud/elasticsearch_data/"
 
-- name: create folder struct for nextcloud 2
-  file: 
-    path: "{{ item }}"
-    state: "directory"
-    owner: 8983
-    group: 8983
-  with_items:
-    - "/srv/nextcloud/solr/"
+- name: Get a timestamp
+  command: "date +%Y%m%d%H%M%S"
+  register: timestamp
 
-- name: clone nextcloud-ocr repo
-  git: 
-    repo: "https://github.com/janis91/ocr.git" 
-    version: "9809131759f265929085c04ed3e120241ce519dd"
-    dest: "/srv/nextcloud/docker_ocr/" 
-    force: "yes"
-  register: gitclone_ocr 
-
-- name: clone repo status 
-  debug: 
-    msg: "{{gitclone_ocr}}"
-  
+- name: set vm.max_map_count for elasticsearch etc.
+  sysctl:
+    name: vm.max_map_count
+    value: 262144
+    sysctl_file: /etc/sysctl.d/90-dstk-max_map_count.conf
 
 - name: Docker Compose Konfig-Datei erstellen
   template: src="{{ item }}" dest="/srv/nextcloud/{{ item }}"
   with_items:
     - "docker-compose.yml"
+    - "memory-limit.ini"
+    - "Dockerfile-elasticsearch"
+    - "Dockerfile-nextcloud"
+
+- name: Script Helper erstellen
+  template: src="{{ item }}" dest="/srv/nextcloud/{{ item }}"
+  mode: o+x
+  with_items:
+    - "occ.sh"
+    - "nextcloud-index-worker.sh"
 
 - name: start nextcloud docker
   docker_service:
@@ -66,4 +57,22 @@
     state: present
 
 - name: Cronjob für nextcloud cron
-  cron: name="nextcloud-cron" weekday="*" hour="*" minute="*/15" job=" curl --silent http://127.0.0.1:42005/cron.php"
+  cron: name="nextcloud-cron" weekday="*" hour="*" minute="*/15" job="curl --silent http://127.0.0.1:42005/cron.php"
+
+- name: Fulltext Worker Systemd Unit 
+  template: src="{{ item }}" dest="/etc/systemd/system/{{ item }}"
+  with_items:
+    - "nextcloud-index-worker.service"
+  notify: Fulltext Worker restart
+
+- name: Fulltext Worker enablels -alh 
+
+  systemd:
+    name: nextcloud-index-worker
+    daemon_reload: yes
+    enabled: yes
+
+- name: Fulltext Worker start
+  service:
+    name: nextcloud-index-worker
+    state: started

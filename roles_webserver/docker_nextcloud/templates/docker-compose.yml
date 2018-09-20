@@ -2,35 +2,10 @@ version: "3"
 
 services:
 
-#  redis:
+  redis:
 
-#    image: redis:4.0.8
-#    restart: always
-
-#  ocr:
-#
-#    build: 
-#      context: ./docker_ocr/worker
-#      args:
-#        LANGUAGES: "tesseract-ocr-deu"
-#    image: "nextcloud-ocr-{{ gitclone_ocr.after }}"
-#    restart: always
-#    volumes:
-#      - /srv/nextcloud/data/data/:/home/node/data:ro
-#      - /srv/nextcloud/tmp/:/home/node/output
-#    environment:
-#      NODE_ENV: production
-#      REDIS_HOST: redis
-#      REDIS_PORT: 6379
-#      REDIS_DB: 0
-
-#  solr:
-#
-#    image: solr:7.2.1
-#    restart: always
-#    entrypoint: "docker-entrypoint.sh solr-precreate nextcloud"
-#    volumes:
-#      - /srv/nextcloud/solr/:/opt/solr/server/solr/mycores
+    image: redis:4.0.8
+    restart: always
 
   mysql:
 
@@ -46,10 +21,22 @@ services:
 
   app:
 
-    image: nextcloud:14.0.0-apache
+    image: elberfeld/nextcloud-ocr:latest
     restart: always
     ports:
       - 127.0.0.1:42005:80
     volumes:
       - /srv/nextcloud/data/:/var/www/html/
       - /srv/nextcloud/tmp/:/tmp/nextcloudtemp/
+      - /srv/nextcloud/memory-limit.ini:/usr/local/etc/php/conf.d/memory-limit.ini:ro
+
+  # Build from Howto: https://nerdblog.steinkopf.net/2018/07/nextcloud-volltext-index-mit-docker-und-elasticsearch/
+  elasticsearch:
+
+    image: dsteinkopf/elasticsearch-ingest-attachment:latest 
+    restart: always
+    volumes:
+      - /srv/nextcloud/elasticsearch_data:/usr/share/elasticsearch/data
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+

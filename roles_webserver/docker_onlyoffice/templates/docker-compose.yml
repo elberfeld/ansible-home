@@ -6,5 +6,7 @@ services:
 
     image: onlyoffice/documentserver:5.1.5.59
     restart: always
+    stdin_open: true
     ports:
       - 127.0.0.1:42008:80
+
