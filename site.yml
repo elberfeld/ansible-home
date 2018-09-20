@@ -17,15 +17,24 @@
     - { role: roles_all/packages, tags: packages }
     - { role: roles_all/sshd, tags: sshd }
 
+- hosts: intserver 
+  remote_user: root
+  roles:
+    - { role: roles_common/borgbackup, tags: borgbackup }
+    - { role: roles_common/docker, tags: docker }
+    - { role: roles_common/telegraf, tags: telegraf }
+    - { role: roles_common/docker_telegraf, tags: telegraf }
+
 - hosts: webserver1,webserver2 
   remote_user: root
   vars:
     playbook_date_time: "{{ansible_date_time}}" # needed for role docker_bind 
   roles:
     - { role: roles_common/borgbackup, tags: borgbackup }
-    - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_common/docker, tags: docker }
     - { role: roles_common/openvpn, tags: openvpn }
+    - { role: roles_common/telegraf, tags: telegraf }
+    - { role: roles_common/docker_telegraf, tags: telegraf }
     - { role: roles_webserver/nginx, tags: nginx }
     - { role: roles_webserver/docker_bind, tags: bind }
     - { role: roles_webserver/docker_ldap, tags: ldap }
