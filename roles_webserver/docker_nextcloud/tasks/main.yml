@@ -46,7 +46,7 @@
 
 - name: Script Helper erstellen
   template: src="{{ item }}" dest="/srv/nextcloud/{{ item }}"
-  mode: o+x
+  mode: u+x
   with_items:
     - "occ.sh"
     - "nextcloud-index-worker.sh"

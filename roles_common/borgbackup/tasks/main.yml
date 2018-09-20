@@ -60,56 +60,56 @@
   template: 
     src: borgbackup-check.sh 
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-check.sh 
-    mode: o+x
+    mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (create)
   template: 
     src: borgbackup-create.sh 
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-create.sh 
-    mode: o+x
+    mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (delete)
   template: 
     src: borgbackup-delete.sh 
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-delete.sh 
-    mode: o+x
+    mode: u+x
   with_dict: "{{ borgbackup_repos }}"
   
 - name: BorgBackup Scripte erstellen (init)
   template: 
     src: borgbackup-init.sh 
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-init.sh 
-    mode: o+x
+    mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (info)
   template: 
     src: borgbackup-info.sh 
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-info.sh 
-    mode: o+x
+    mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (list)
   template: 
     src: borgbackup-list.sh 
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-list.sh 
-    mode: o+x
+    mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (mount)
   template: 
     src: borgbackup-mount.sh 
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-mount.sh 
-    mode: o+x
+    mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (prometheus)
   template: 
     src: borgbackup-prometheus.sh 
     dest: /srv/borgbackup/borgbackup-prometheus.sh 
-    mode: o+x
+    mode: u+x
   
 - name: BorgBackup LogRotate config erstellen 
   template: 

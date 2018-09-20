@@ -27,7 +27,13 @@
 - name: daemon config für docker erstellen 
   template: src=daemon.conf dest=/etc/docker/daemon.conf
   notify: restart docker
-  
+
+- name: daemon config für docker erstellen 
+  template: src="{{item}}.sh" dest=/usr/local/bin/{{item}}
+  mode: u+x
+  with_items:
+    - "dc"
+
 - name: create telegraf config  
   template: src=telegraf.conf dest=/etc/telegraf/telegraf.d/docker.conf
   notify: restart telegraf
