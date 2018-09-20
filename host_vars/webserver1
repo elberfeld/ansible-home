@@ -30,12 +30,9 @@ webserver_defaultdomain: www
 
 webserver_domains:
   - "alerta"
-  - "autoconfig"
-  - "autodiscover" 
   - "connectiv"
   - "grafana"
   - "ldap"
-  - "mail"
   - "www"
   
 
