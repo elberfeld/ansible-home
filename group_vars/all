@@ -1,7 +1,7 @@
 
 # Zentrale InfluxDb für Systemmonitoring  
 influxdb_sysmon:
-  url: "http://10.5.0.111:18086"
+  url: "http://10.100.1.1:18086"
   db: "influx"
   user: "influx" 
   password: "influx" 

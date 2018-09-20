@@ -37,6 +37,7 @@
     - { role: roles_webserver/docker_nginxssh, tags: nginxssh }
     - { role: roles_webserver/docker_alerta, tags: alerta }
     - { role: roles_webserver/docker_grafana, tags: grafana }
+    - { role: roles_common/docker_influx, tags: influx_sysmon, influx_instance: sysmon, influx_port: 18086 }
 
 - hosts: webserver2
   remote_user: root

@@ -20,5 +20,6 @@ data
     .warn(lambda: "value" > 80 )
     .crit(lambda: "value" > 90 )
     .alerta()
+      .environment('{{ index .Tags "host"}}')
 
 {% endraw %}

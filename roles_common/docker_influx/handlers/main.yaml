@@ -1,0 +1,7 @@
+---
+
+- name: restart influx docker
+  docker_service:
+    project_src: "/srv/influx_{{ influx_instance }}/"
+    state: present
+    restarted: yes
