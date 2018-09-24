@@ -1,0 +1,7 @@
+/var/log/alerta_backup/*.log {
+  rotate 12
+  monthly
+  compress
+  missingok
+  notifempty
+}

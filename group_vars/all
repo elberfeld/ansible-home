@@ -6,4 +6,6 @@ influxdb_sysmon:
   user: "influx" 
   password: "influx" 
 
-
+# Zentrale Alerta Instanz
+alerta:
+  url: "https://alerta.void.ms"

@@ -16,6 +16,7 @@
     - { role: roles_all/motd, tags: motd }
     - { role: roles_all/packages, tags: packages }
     - { role: roles_all/sshd, tags: sshd }
+    - { role: roles_all/alerta_heartbeat, tags: alerta_heartbeat }
 
 - hosts: intserver 
   remote_user: root
