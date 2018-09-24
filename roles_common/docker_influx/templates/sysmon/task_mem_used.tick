@@ -4,7 +4,7 @@ dbrp "{{ influxdb_sysmon.db }}"."autogen"
 
 
 var data =batch 
-   |query(''' SELECT (( mean(total) - mean(free) ) / mean(total) * 100) AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."mem" ''')
+   |query(''' SELECT ( mean(used)  / mean(total) * 100) AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."mem" ''')
     .period(5m)
     .every(30s)
     .fill('linear')
@@ -16,8 +16,8 @@ data
   |alert()
     .id('{{ index .Tags "host"}}/mem_used')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .info(lambda: "value" > 96 )
-    .warn(lambda: "value" > 98 )
+    .info(lambda: "value" > 90 )
+    .warn(lambda: "value" > 95 )
     .crit(lambda: "value" > 99 )
     .alerta()
       .environment('{{ index .Tags "host"}}')
