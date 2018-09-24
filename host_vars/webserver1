@@ -69,7 +69,7 @@ borgbackup_repos:
     # directories:
 
     # Alerta Heartbeat Timeout 
-    heartbeat_timeout: "{{ 7 * 60 * 60 }}"
+    heartbeat_timeout: "{{ 12 * 60 * 60 }}"
 
 # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
 borgbackup_directories:
