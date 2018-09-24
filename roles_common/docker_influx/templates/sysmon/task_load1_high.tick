@@ -5,7 +5,7 @@ dbrp "{{ influxdb_sysmon.db }}"."autogen"
 
 var data =batch 
    |query(''' SELECT mean(load1) AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."system" ''')
-    .period(1m)
+    .period(5m)
     .every(1m)
     .fill('linear')
     .groupBy('host')
