@@ -18,6 +18,7 @@
     - "/srv/influx_{{ influx_instance }}/kapacitor_load/tasks/"
     - "/srv/influx_{{ influx_instance }}/kapacitor_load/templates/"
     - "/srv/influx_{{ influx_instance }}/kapacitor_load/handlers/"
+    - "/srv/influx_{{ influx_instance }}/chronograf_load/"
 
 
 - name: Konfig-Dateien erstellen

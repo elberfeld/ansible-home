@@ -5,8 +5,8 @@ dbrp "{{ influxdb_sysmon.db }}"."autogen"
 
 var data =batch 
    |query(''' SELECT mean("usage_user") + mean("usage_system") + mean("usage_iowait") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."cpu" ''')
-    .period(5m)
-    .every(30s)
+    .period(1m)
+    .every(1m)
     .fill('linear')
     .groupBy('host')
 

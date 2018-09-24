@@ -5,8 +5,8 @@ dbrp "{{ influxdb_sysmon.db }}"."autogen"
 
 var data =batch 
    |query(''' SELECT (mean("total") - mean("free")) / mean("total") * 100 AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."disk" ''')
-    .period(5m)
-    .every(30s)
+    .period(1m)
+    .every(1m)
     .fill('linear')
     .groupBy('host','path')
 
@@ -17,8 +17,8 @@ data
     .id('{{ index .Tags "host"}}::{{ index .Tags "path" }}::disk_low')
     .message('{{ .ID }}::{{ index .Fields "value" }}')
     .info(lambda: "value" > 80 )
-    .warn(lambda: "value" > 95 )
-    .crit(lambda: "value" > 98 )
+    .warn(lambda: "value" > 90 )
+    .crit(lambda: "value" > 95 )
     .alerta()
       .environment('{{ index .Tags "host"}}')
 
