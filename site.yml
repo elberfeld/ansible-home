@@ -11,12 +11,13 @@
 - hosts: all 
   remote_user: root
   roles:
-    - { role: roles_all/apt, tags: apt }
     - { role: roles_all/hostname, tags: hostname }
     - { role: roles_all/motd, tags: motd }
+    - { role: roles_all/apt, tags: apt }
+    - { role: roles_all/cronapt, tags: cronapt }
     - { role: roles_all/packages, tags: packages }
-    - { role: roles_all/sshd, tags: sshd }
     - { role: roles_all/alerta_heartbeat, tags: alerta_heartbeat }
+    - { role: roles_all/sshd, tags: sshd }
 
 - hosts: intserver 
   remote_user: root
