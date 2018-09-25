@@ -1,0 +1,33 @@
+
+
+dbrp "{{ influxdb_sysmon.db }}"."autogen"
+
+var data =batch 
+   |query(''' SELECT mean("mean_average_response_ms") AS value, last("result_code") AS value2 FROM "{{ influxdb_sysmon.db }}"."autogen"."ping" ''')
+    .period(1m)
+    .every(1m)
+    .fill('linear')
+    .groupBy('host', 'url')
+
+{% raw %}
+
+data
+  |alert()
+    .id('{{ index .Tags "host"}}->{{ index .Tags "url"}} ping_avg_ms')
+    .message('{{ .ID }}:{{ index .Fields "value" }}')
+    .info(lambda: "value" > 20 )
+    .warn(lambda: "value" > 40 )
+    .crit(lambda: "value" > 80 )
+    .alerta()
+      .environment('{{ index .Tags "host"}}')
+
+data
+  |alert()
+    .id('{{ index .Tags "host"}}->{{ index .Tags "url"}} result_code')
+    .message('{{ .ID }}:{{ index .Fields "value2" }}')
+    .crit(lambda: "value2" != 0 )
+    .alerta()
+      .environment('{{ index .Tags "host"}}')
+
+{% endraw %}
+

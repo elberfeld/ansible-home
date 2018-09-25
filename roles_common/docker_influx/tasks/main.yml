@@ -53,6 +53,8 @@
     - task_load5_high.tick
     - task_load15_high.tick
     - task_mem_used.tick
+    - task_net_error.tick
+    - task_net_ping.tick
   notify: restart influx docker 
   when: influx_instance == "sysmon"
 
