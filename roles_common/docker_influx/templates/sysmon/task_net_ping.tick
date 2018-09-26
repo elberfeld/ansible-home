@@ -3,7 +3,7 @@
 dbrp "{{ influxdb_sysmon.db }}"."autogen"
 
 var data =batch 
-   |query(''' SELECT mean("mean_average_response_ms") AS value, last("result_code") AS value2 FROM "{{ influxdb_sysmon.db }}"."autogen"."ping" ''')
+   |query(''' SELECT mean("average_response_ms") AS value, last("result_code") AS value2 FROM "{{ influxdb_sysmon.db }}"."autogen"."ping" ''')
     .period(1m)
     .every(1m)
     .fill('linear')
@@ -15,9 +15,7 @@ data
   |alert()
     .id('{{ index .Tags "host"}}->{{ index .Tags "url"}} ping_avg_ms')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .info(lambda: "value" > 20 )
-    .warn(lambda: "value" > 40 )
-    .crit(lambda: "value" > 80 )
+    .warn(lambda: "value" > 100 )
     .alerta()
       .environment('{{ index .Tags "host"}}')
 

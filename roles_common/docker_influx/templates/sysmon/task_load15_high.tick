@@ -16,9 +16,9 @@ data
   |alert()
     .id('{{ index .Tags "host"}}/load15_high')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .info(lambda: "value" > 4 )
-    .warn(lambda: "value" > 8 )
-    .crit(lambda: "value" > 16 )
+    .info(lambda: "value" > 6 )
+    .warn(lambda: "value" > 12 )
+    .crit(lambda: "value" > 24 )
     .alerta()
       .environment('{{ index .Tags "host"}}')
 
