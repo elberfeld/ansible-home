@@ -12,6 +12,12 @@
     - { role: roles_all/sshd, tags: sshd }
 
 
+#- hosts: osmc1 
+#  remote_user: root
+#  roles:
+#    - { role: roles_osmc\osmc17, tags: osmc17 }
+
+
 - hosts: master 
   remote_user: root
   roles:

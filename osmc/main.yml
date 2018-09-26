@@ -1,7 +1,0 @@
----
-# Rollen, die nur auf dem Web-Server verwendet werden 
-
-- hosts: osmc1 
-  remote_user: root
-  roles:
-    - { role: osmc17, tags: osmc17 }
