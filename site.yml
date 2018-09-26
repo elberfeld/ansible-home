@@ -25,7 +25,8 @@
     - { role: roles_common/borgbackup, tags: borgbackup }
     - { role: roles_common/docker, tags: docker }
     - { role: roles_common/telegraf, tags: telegraf }
-    - { role: roles_common/docker_telegraf, tags: telegraf }
+    - { role: roles_common/docker_influx, tags: influx_sysmon, influx_instance: sysmon, influx_port: 18086, chronograf_port: 28086 }
+    - { role: roles_intserver/docker_telegraf, tags: telegraf }
 
 - hosts: webserver1,webserver2 
   remote_user: root
@@ -36,7 +37,6 @@
     - { role: roles_common/docker, tags: docker }
     - { role: roles_common/openvpn, tags: openvpn }
     - { role: roles_common/telegraf, tags: telegraf }
-    - { role: roles_common/docker_telegraf, tags: telegraf }
     - { role: roles_webserver/nginx, tags: nginx }
     - { role: roles_webserver/docker_bind, tags: bind }
     - { role: roles_webserver/docker_ldap, tags: ldap }
@@ -48,7 +48,6 @@
     - { role: roles_webserver/docker_nginxssh, tags: nginxssh }
     - { role: roles_webserver/docker_alerta, tags: alerta }
     - { role: roles_webserver/docker_grafana, tags: grafana }
-    - { role: roles_common/docker_influx, tags: influx_sysmon, influx_instance: sysmon, influx_port: 18086, chronograf_port: 28086 }
 
 - hosts: webserver2
   remote_user: root

@@ -14,20 +14,17 @@
   with_items:
     - Dockerfile
     - docker-compose.yml
-    - dns.conf
-    - ping.conf
   notify: restart docker_telegraf 
 
 - name: Konfig-Dateien erstellen (intserver)
   template:
-    src: "intserver/{{ item }}"
+    src: "{{ item }}"
     dest: "/srv/telegraf/{{ item }}"
   with_items:
     - firewall.conf
     - storage.conf
     - switch.conf
   notify: restart docker_telegraf 
-  when: inventory_hostname == "intserver"
 
 - name: Script-Dateien erstellen
   template:

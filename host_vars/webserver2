@@ -11,8 +11,14 @@ debian_keys:
   - "https://repos.influxdata.com/influxdb.key"
 
 
-# Art des Hosts: physical, vm, docker 
-host_type: "vm"
+# Telegraf Monitoring Konfigurationen 
+telegraf_monitoring:
+  - "disk.conf"
+  - "network.conf"
+  - "ping.conf"
+
+#  - "dns.conf" 
+#  - "hardware.conf"
 
 
 # Primäre IP Adressen des Hosts 

@@ -17,7 +17,7 @@
     - hddtemp
     - lm-sensors
     - smartmontools
-  when: host_type == 'physical'
+  when: '"hardware" in telegraf_monitoring'
 
 
 - name: create main config 
@@ -26,11 +26,11 @@
     - telegraf.conf
   notify: restart telegraf
 
-#- name: create config files 
-#  template: src={{ item }} dest=/etc/telegraf/telegraf.d/{{ item }}
-#  with_items: 
-#    - outputs-influxdb.conf
-#  notify: restart telegraf
+- name: create config files 
+  template: src={{ item }} dest=/etc/telegraf/telegraf.d/{{ item }}
+  with_items: 
+    - "{{ telegraf_monitoring }}"
+  notify: restart telegraf
 
 - name: reload systemd and enable service
   command: systemctl enable telegraf
