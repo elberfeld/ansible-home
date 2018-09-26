@@ -46,7 +46,7 @@
 
 - name: Script Helper erstellen
   template: src="{{ item }}" dest="/srv/nextcloud/{{ item }}"
-  mode: u+x
+    mode: u+x
   with_items:
     - "occ.sh"
     - "nextcloud-index-worker.sh"
@@ -63,16 +63,15 @@
   template: src="{{ item }}" dest="/etc/systemd/system/{{ item }}"
   with_items:
     - "nextcloud-index-worker.service"
-  notify: Fulltext Worker restart
+#  notify: Fulltext Worker restart
 
-- name: Fulltext Worker enablels -alh 
-
+- name: Fulltext Worker enableld (currently disabled) 
   systemd:
     name: nextcloud-index-worker
     daemon_reload: yes
-    enabled: yes
+    enabled: no
 
-- name: Fulltext Worker start
+- name: Fulltext Worker start (currently disabled) 
   service:
     name: nextcloud-index-worker
-    state: started
+    state: stopped
