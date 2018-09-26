@@ -1,0 +1,16 @@
+---
+
+- name: disable services to prevent laptop standby 
+  systemd:
+    name: "{{ item }}"
+    state: stopped
+    masked: yes
+    enabled: no
+  with_items:
+    - "sleep.target"
+    - "suspend.target" 
+    - "hibernate.target"
+    - "hybrid-sleep.target"
+
+- name: force systemd reload 
+  systemd: daemon_reload=yes

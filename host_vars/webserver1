@@ -18,7 +18,7 @@ telegraf_monitoring:
   - "ping.conf"
 
 #  - "dns.conf" 
-#  - "hardware.conf"
+
 
 
 # Primäre IP Adressen des Hosts 

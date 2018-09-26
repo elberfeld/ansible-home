@@ -5,24 +5,30 @@
     path: /etc/hosts
     state: present
     regexp: '^(.*)master.master(.*)$'
-    line: "{{ansible_br0.ipv4.address}} master.master master pvelocalhost"
+    line: "{{ int_ip4 }} master.master master pvelocalhost"
 
 - name: Install Proxmox Packages
-  apt: "name={{ item }} state=installed"
+  apt: 
+    name: "{{ item }}" 
+    state: present
   with_items:
     - proxmox-ve 
     - postfix 
     - open-iscsi
 
 - name: Remove conflicting Packages 
-  apt: "name={{ item }} state=absent"
+  apt: 
+    name: "{{ item }}" 
+    state: absent
   with_items:
     - os-prober 
     - resolvconf 
     - rdnssd
 
 - name: Remove debian Kernel 
-  apt: "name={{ item }} state=absent"
+  apt: 
+    name: "{{ item }}" 
+    state: absent
   with_items:
     - linux-image-amd64 
     - linux-image-4.9.0-3-amd64
