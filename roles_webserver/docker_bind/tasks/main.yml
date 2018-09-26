@@ -11,6 +11,20 @@
   command: "date +%Y-%m-%d_%H-%m"
   register: timestamp
 
+- name: get timestamp of db.void.ms
+  local_action: stat path="roles_webserver/docker_bind/templates/db.void.ms"
+  register: db_void_ms
+
+- debug: 
+    msg: "db.void.ms Serial will be set to: {{ ( db_void_ms.stat.mtime | string )[:9] }} equals: {{ '%Y-%m-%d %H:%M' | strftime(db_void_ms.stat.mtime) }} UTC"
+
+- name: get timestamp of Dockerfile
+  local_action: stat path="roles_webserver/docker_bind/templates/Dockerfile"
+  register: dockerfile
+
+- debug: 
+    msg: "Container Image will be: bind-app-{{ '%Y-%m-%d_%H-%M' | strftime(dockerfile.stat.mtime) }} (UTC)"
+
 - name: Konfig-Dateien für bind erstellen 
   template: src={{ item }} dest=/srv/bind/config/{{ item }}
   with_items: 

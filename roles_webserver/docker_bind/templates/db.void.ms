@@ -1,7 +1,7 @@
 ; zonefile for void.ms.1200
 $TTL     300
 @        IN      SOA     ns1.void.ms. webmaster.void.ms. (
-                         {{ playbook_date_time.epoch[:9] }}         ; Serial
+                         {{ ( db_void_ms.stat.mtime | string )[:9] }}         ; Serial
                          1200          ; Refresh  1200 - 43200
                          120           ; Retry  120 -7200
                          3600          ; Expire

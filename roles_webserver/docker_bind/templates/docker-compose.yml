@@ -5,7 +5,7 @@ services:
   app:
 
     build: .
-    image: bind-app-{{ timestamp.stdout }}
+    image: bind-app-{{ '%Y-%m-%d_%H-%M' | strftime(dockerfile.stat.mtime) }}
     restart: always
     ports:
       - 0.0.0.0:53:53
