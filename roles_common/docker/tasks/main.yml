@@ -29,8 +29,10 @@
   notify: restart docker
 
 - name: daemon config für docker erstellen 
-  template: src="{{item}}.sh" dest=/usr/local/bin/{{item}}
-  mode: u+x
+  template: 
+    src: "{{item}}.sh" 
+    dest: "/usr/local/bin/{{item}}"
+    mode: u+x
   with_items:
     - "dc"
 
