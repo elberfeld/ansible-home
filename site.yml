@@ -17,6 +17,12 @@
 #  roles:
 #    - { role: roles_osmc\osmc17, tags: osmc17 }
 
+#- hosts: backupsrv 
+#  remote_user: root
+#  roles:
+#    - { role: "roles_common/telegraf", tags: telegraf }
+#    - { role: "borgserver", tags: borgserver }
+
 
 - hosts: master 
   remote_user: root
