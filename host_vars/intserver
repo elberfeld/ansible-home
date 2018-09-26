@@ -51,6 +51,9 @@ borgbackup_repos:
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:
 
+    # Alerta Heartbeat Timeout 
+    heartbeat_timeout: "{{ 12 * 60 * 60 }}"
+
   rsyncnet: 
 
     # URL des Repos   
@@ -73,6 +76,10 @@ borgbackup_repos:
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:
+
+    # Alerta Heartbeat Timeout 
+    heartbeat_timeout: "{{ 12 * 60 * 60 }}"
+
 
 # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
 borgbackup_directories:

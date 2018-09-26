@@ -1,13 +1,5 @@
 ---
 
-#- include: backupsrv/main.yml
-#- include: control/main.yml
-#- include: master/main.yml
-#- include: webserver/main.yml
-#- include: intserver/main.yml
-#- include: osmc/main.yml
-
-
 - hosts: all 
   remote_user: root
   roles:
@@ -26,6 +18,7 @@
     - { role: roles_common/docker, tags: docker }
     - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_common/docker_influx, tags: influx_sysmon, influx_instance: sysmon, influx_port: 18086, chronograf_port: 28086 }
+    - { role: roles_intserver/docker_hibiscus, tags: hibiscus }
     - { role: roles_intserver/docker_telegraf, tags: telegraf }
 
 - hosts: webserver1,webserver2 
