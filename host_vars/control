@@ -4,19 +4,31 @@ debian_sources:
   - "deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi"
   - "deb https://homegear.eu/packages/Raspbian/ jessie/"
   - "deb https://homegear.eu/packages/Raspbian/ stretch/"
+  - "deb http://dl.bintray.com/openhab/apt-repo2 testing main"
   - "deb https://deb.nodesource.com/node_8.x stretch main"
   - "deb https://repos.influxdata.com/debian stretch stable"
 
 debian_keys:
   - "https://homegear.eu/packages/Release.key"
+  - "https://bintray.com/user/downloadSubjectPublicKey?username=openhab"
   - "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
   - "https://repos.influxdata.com/influxdb.key"
 
 
-# Art des Hosts: physical, vm, docker 
-host_type: "physical"
+# Telegraf Monitoring Konfigurationen 
+telegraf_monitoring:
+  - "disk.conf"
+  - "network.conf"
+  - "hardware.conf"
 
+
+# Primäre IP Adressen des Hosts 
+int_ip4: 10.5.0.250
+
+
+openhab_homematic_id: "6ae8de84"  
   
+
 # Definition von Borgbackup Repositories 
 borgbackup_repos:
   

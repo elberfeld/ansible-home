@@ -45,7 +45,9 @@
     - "Dockerfile-nextcloud"
 
 - name: Script Helper erstellen
-  template: src="{{ item }}" dest="/srv/nextcloud/{{ item }}"
+  template: 
+    src: "{{ item }}" 
+    dest: "/srv/nextcloud/{{ item }}"
     mode: u+x
   with_items:
     - "occ.sh"

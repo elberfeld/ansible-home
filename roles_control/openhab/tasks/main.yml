@@ -1,0 +1,18 @@
+---
+
+- name: install packages
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items:
+    - oracle-java8-jdk
+    - openhab2
+  notify: restart openhab
+
+- name: enable service
+  service: name=openhab2 enabled=yes
+
+#- name: default.sitemap
+#  template: src=default.sitemap dest=/etc/openhab2/sitemaps/default.sitemap
+ 

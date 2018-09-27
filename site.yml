@@ -29,11 +29,12 @@
   roles:
     - { role: "roles_common/borgbackup", tags: borgbackup }
     - { role: "roles_common/telegraf", tags: telegraf }
-    - { role: homegear, tags: homegear }
-    - { role: homeassistant, tags: homeassistant }
-    - { role: iobroker, tags: iobroker }
-    - { role: pimatic, tags: pimatic }
-    - { role: raspberryremote, tags: raspberryremote }
+    - { role: "roles_control/homegear", tags: homegear }
+    - { role: "roles_control/openhab", tags: openhab }
+#    - { role: homeassistant, tags: homeassistant }
+#    - { role: iobroker, tags: iobroker }
+#    - { role: pimatic, tags: pimatic }
+#    - { role: raspberryremote, tags: raspberryremote }
 
 
 - hosts: master 
