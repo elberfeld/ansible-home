@@ -36,6 +36,9 @@
   with_items:
     - "dc"
 
+- name: Cronjob to prune unused images  
+  cron: name="docker-prune" weekday="*" hour="5" minute="5" job="/usr/bin/docker system prune -f"  
+
 - name: create telegraf config  
   template: src=telegraf.conf dest=/etc/telegraf/telegraf.d/docker.conf
   notify: restart telegraf
