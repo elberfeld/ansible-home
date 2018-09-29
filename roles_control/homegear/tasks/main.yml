@@ -53,10 +53,6 @@
 - name: cmdline.txt
   template: src=cmdline.txt dest=/boot/cmdline.txt
   notify: reboot
-
-- name: main.conf
-  template: src=main.conf dest=/etc/homegear/main.conf
-  notify: restart homegear
  
 - name: homematicbidcos.conf
   template: src=homematicbidcos.conf dest=/etc/homegear/families/homematicbidcos.conf
