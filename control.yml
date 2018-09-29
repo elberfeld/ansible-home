@@ -1,7 +1,0 @@
----
-
-- hosts: control 
-  remote_user: root
-#  roles: 
-#    - libuecc
-

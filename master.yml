@@ -1,9 +1,0 @@
----
-
-- hosts: master 
-  remote_user: root
-  roles:
-    - graphite 
-    - grafana
-    - icinga
-
