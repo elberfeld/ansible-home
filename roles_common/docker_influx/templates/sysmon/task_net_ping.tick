@@ -4,8 +4,8 @@ dbrp "{{ influxdb_sysmon.db }}"."autogen"
 
 var data =batch 
    |query(''' SELECT mean("average_response_ms") AS value, last("result_code") AS value2 FROM "{{ influxdb_sysmon.db }}"."autogen"."ping" ''')
-    .period(1m)
-    .every(1m)
+    .period(5m)
+    .every(5m)
     .fill('linear')
     .groupBy('host', 'url')
 
