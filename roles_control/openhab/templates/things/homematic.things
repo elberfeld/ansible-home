@@ -1,0 +1,10 @@
+
+Bridge homematic:bridge:ccu [ gatewayAddress="127.0.0.1", callbackHost="127.0.0.1" ]
+{
+ 
+  {% for device in homematic_devices %}
+    Thing {{ device.type }} {{ device.id }} "{{ device.name }}" 
+  {% endfor %}
+
+}
+

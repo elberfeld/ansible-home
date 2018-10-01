@@ -58,6 +58,17 @@
   notify: restart influx docker 
   when: influx_instance == "sysmon"
 
+- name: Kapacitor-Tasks erstellen (openhab)
+  template:
+    src: "openhab/{{ item }}"
+    dest: "/srv/influx_{{ influx_instance }}/kapacitor_load/tasks/{{ item }}"
+  with_items:
+    - task_lowbat.tick
+    - task_unreach.tick
+    - task_controlmode.tick
+  notify: restart influx docker 
+  when: influx_instance == "openhab"
+
 
 - name: start influx {{ influx_instance }} docker
   docker_service:

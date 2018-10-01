@@ -1,0 +1,15 @@
+
+rule "Licht DVD Regal"
+  when
+     Item LichtDvdRegal changed
+  then
+
+      logInfo("Rule: Licht DVD Regal: START")
+
+      logInfo("Rule: Licht DVD Regal: state="+LichtDvdRegal.state)
+
+      LichtDvdRegal_Args.sendCommand(ON)
+      LichtDvdRegal_Run.sendCommand(ON)
+      
+      logInfo("Rule: Licht DVD Regal: DONE")
+end

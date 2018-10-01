@@ -1,0 +1,21 @@
+
+dbrp "{{ influxdb_openhab.db }}"."autogen"
+
+
+{% for device in homematic_devices %}
+
+var data_{{loop.index}} =batch 
+   |query(''' SELECT last("value") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."homematic_{{ device.type }}_ccu_{{ device.id }}_0_LOWBAT" ''')
+    .period(1m)
+    .every(1m)
+    .fill('previous')
+
+data_{{loop.index}}
+  |alert()
+    .id('openhab/lowbat/{{ device.id }}')
+    .message('{{ device.id }}:{{ device.name }} Low Battery')
+    .crit(lambda: "value" > 0 )
+    .alerta()
+      .environment('OpenHAB')
+
+{% endfor %}

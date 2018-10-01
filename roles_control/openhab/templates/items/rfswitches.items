@@ -1,0 +1,12 @@
+
+Switch	LichtDvdRegal "Licht DVD Regal"
+
+Switch	LichtDvdRegal_Run  { channel="exec:command:licht-dvdregal:run" }
+String	LichtDvdRegal_Args { channel="exec:command:licht-dvdregal:input" }
+
+// Switch	LichtTetris "Licht Tetris" { channel="exec:command:licht-tetris:input", autoupdate="false" }
+// Switch	LichtFlur "Licht Flur" { channel="exec:command:licht-flur:input", autoupdate="false" }
+// Switch	LichtLeselampe "Licht Leselampe" { channel="exec:command:licht-leselampe:input", autoupdate="false" }
+// Switch	LichtVitrine "Licht Vitrine" { channel="exec:command:licht-vitrine:input", autoupdate="false" }
+// Switch	LichtSideboard "Licht Sideboard" { channel="exec:command:licht-sideboard:input", autoupdate="false" }
+// Switch	AudioSystem "Audio System" { channel="exec:command:sw-audiosystem:input", autoupdate="false" }

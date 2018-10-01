@@ -26,8 +26,6 @@ telegraf_monitoring:
 int_ip4: 10.5.0.250
 
 
-openhab_homematic_id: "6ae8de84"  
-  
 
 # Definition von Borgbackup Repositories 
 borgbackup_repos:

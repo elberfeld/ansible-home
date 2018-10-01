@@ -10,8 +10,29 @@
     - openhab2
   notify: restart openhab
 
+- name: Add the user 'openhab' to group gpio 
+  user:
+    name: openhab
+    groups: gpio
+    append: yes
+
 - name: enable service
   service: name=openhab2 enabled=yes
+
+- name: services configs
+  template: src={{ item }} dest=/etc/openhab2/{{ item }} 
+  with_items:
+    - "items/rfswitches.items"
+    - "items/yahoowheather.items"
+    - "persistence/influxdb.persist"
+    - "rules/rfswitches.rules"
+    - "services/addons.cfg"
+    - "services/influxdb.cfg"
+    - "services/rpircswitch.cfg"
+    - "things/homematic.things"
+    - "things/rfswitches.things"
+    - "things/yahoowheather.things"
+  notify: restart openhab
 
 #- name: default.sitemap
 #  template: src=default.sitemap dest=/etc/openhab2/sitemaps/default.sitemap
