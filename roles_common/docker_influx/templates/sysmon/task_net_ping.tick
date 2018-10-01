@@ -22,7 +22,7 @@ data1
   |alert()
     .id('{{ index .Tags "host"}}->{{ index .Tags "url"}} ping_avg_ms')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .warn(lambda: "value" > 100 )
+    .warn(lambda: "value" > 300 )
     .alerta()
       .environment('{{ index .Tags "host"}}')
 
