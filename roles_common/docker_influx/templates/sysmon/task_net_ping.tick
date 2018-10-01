@@ -2,16 +2,23 @@
 
 dbrp "{{ influxdb_sysmon.db }}"."autogen"
 
-var data =batch 
-   |query(''' SELECT mean("average_response_ms") AS value, last("result_code") AS value2 FROM "{{ influxdb_sysmon.db }}"."autogen"."ping" ''')
-    .period(5m)
+var data1 =batch 
+   |query(''' SELECT mean("average_response_ms") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."ping" ''')
+    .period(15m)
     .every(5m)
+    .fill('linear')
+    .groupBy('host', 'url')
+
+var data2 =batch 
+   |query(''' SELECT last("result_code") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."ping" ''')
+    .period(1m)
+    .every(1m)
     .fill('linear')
     .groupBy('host', 'url')
 
 {% raw %}
 
-data
+data1
   |alert()
     .id('{{ index .Tags "host"}}->{{ index .Tags "url"}} ping_avg_ms')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
@@ -19,11 +26,11 @@ data
     .alerta()
       .environment('{{ index .Tags "host"}}')
 
-data
+data2
   |alert()
     .id('{{ index .Tags "host"}}->{{ index .Tags "url"}} result_code')
-    .message('{{ .ID }}:{{ index .Fields "value2" }}')
-    .crit(lambda: "value2" != 0 )
+    .message('{{ .ID }}:{{ index .Fields "value" }}')
+    .crit(lambda: "value" != 0 )
     .alerta()
       .environment('{{ index .Tags "host"}}')
 
