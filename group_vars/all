@@ -36,3 +36,14 @@ homematic_devices:
   - { id: "T-NEQ0442083", type: "HG-HM-Sec-SD-2-Team", name: "Rauchmelder Team" }
   - { id: "OEQ0160159",   type: "HG-HM-WDS40-TH-I-2",  name: "Sensor Badezimmer" }
 
+rfswitches:
+  - { id: "LichtDvdRegal", code: "11001 1", name: "DVD Regal" }
+  - { id: "LichtTetris", code: "11001 2", name: "Tetris" }
+  - { id: "LichtFlur", code: "11001 3", name: "Flur" }
+  - { id: "LichtLeselampe", code: "11001 4", name: "Leselampe" }
+  - { id: "LichtVitrine", code: "11001 5", name: "Vitrine" }
+  - { id: "LichtSideboard", code: "11010 1", name: "Sideboard" }
+  - { id: "PowerAudiosystem", code: "11010 2", name: "Audiosystem" }
+  - { id: "LichtStehlampe", code: "11010 3", name: "Stehlampe" }
+
+

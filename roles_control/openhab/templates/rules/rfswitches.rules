@@ -1,15 +1,19 @@
 
-rule "Licht DVD Regal"
+{% for rfswitch in rfswitches %}
+
+rule "{{ rfswitch.id }}_Rule"
   when
-     Item LichtDvdRegal changed
+     Item {{ rfswitch.id }} received command
   then
 
-      logInfo("Rule: Licht DVD Regal: START")
+      logInfo("rfswitches.rule","{{ rfswitch.id }} START")
 
-      logInfo("Rule: Licht DVD Regal: state="+LichtDvdRegal.state)
+      logInfo("rfswitches.rule","{{ rfswitch.id }} state="+{{ rfswitch.id }}.state)
 
-      LichtDvdRegal_Args.sendCommand(ON)
-      LichtDvdRegal_Run.sendCommand(ON)
-      
-      logInfo("Rule: Licht DVD Regal: DONE")
+      var results = executeCommandLine("sudo /opt/raspberry-remote-send.sh {{ rfswitch.code }} "+{{ rfswitch.id }}.state,1000)
+      logInfo("rfswitches.rule","Command Result: "+results)
+     
+      logInfo("rfswitches.rule","{{ rfswitch.id }} DONE")
 end
+
+{% endfor %}

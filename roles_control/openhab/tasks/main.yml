@@ -16,16 +16,20 @@
     groups: gpio
     append: yes
 
+- name: openhab sudo configs
+  template: src=011_openhab-nopasswd dest=/etc/sudoers.d/011_openhab-nopasswd
+
 - name: enable service
   service: name=openhab2 enabled=yes
 
-- name: services configs
+- name: openhab configs
   template: src={{ item }} dest=/etc/openhab2/{{ item }} 
   with_items:
     - "items/rfswitches.items"
     - "items/yahoowheather.items"
     - "persistence/influxdb.persist"
     - "rules/rfswitches.rules"
+    - "rules/tempcontrol.rules"
     - "services/addons.cfg"
     - "services/influxdb.cfg"
     - "services/rpircswitch.cfg"
@@ -33,7 +37,4 @@
     - "things/rfswitches.things"
     - "things/yahoowheather.things"
   notify: restart openhab
-
-#- name: default.sitemap
-#  template: src=default.sitemap dest=/etc/openhab2/sitemaps/default.sitemap
  

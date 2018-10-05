@@ -1,10 +1,9 @@
 
 
-Thing exec:command:licht-dvdregal [ command="/opt/raspberry-remote-send.sh 11001 1 %2$s", interval=0, timeout=5, autorun=false ]
-
+//Thing exec:command:licht-dvdregal [ command="sudo /opt/raspberry-remote-send.sh 11001 1 %2$s", interval=0, timeout=5, autorun=true ]
 //Thing exec:command:licht-tetris [ command="/opt/raspberry-remote-send.sh 11001 2 %2$s", interval=60, timeout=5, autorun=true ]
 //Thing exec:command:licht-flur [ command="/opt/raspberry-remote-send.sh 11001 3 %2$s", interval=60, timeout=5, autorun=true ]
 //Thing exec:command:licht-leselampe [ command="/opt/raspberry-remote-send.sh 11001 4 %2$s", interval=60, timeout=5, autorun=true ]
 //Thing exec:command:licht-vitrine [ command="/opt/raspberry-remote-send.sh 11001 5 %2$s", interval=60, timeout=5, autorun=true ]
-//Thing exec:command:licht-sideboard [ command="/opt/raspberry-remote-send.sh 11010 1 %2$s", interval=60, timeout=5, autorun=true ]
+//Thing exec:command:licht-sideboard [ command="sudo /opt/raspberry-remote-send.sh 11010 1 %2$s", interval=0, timeout=5, autorun=true ]
 //Thing exec:command:sw-audiosystem [ command="/opt/raspberry-remote-send.sh 11010 2 %2$s", interval=60, timeout=5, autorun=true ]
