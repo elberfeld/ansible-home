@@ -1,0 +1,2 @@
+
+network:pingdevice:handy_privat [ hostname="10.5.0.90", retry=1, timeout=5000, refreshInterval=60000 ]

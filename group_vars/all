@@ -45,5 +45,6 @@ rfswitches:
   - { id: "LichtSideboard",   name: "Sideboard",   code: "11010 1", groups: "gAlles,gLampen", category: "light" }
   - { id: "PowerAudiosystem", name: "Audiosystem", code: "11010 2", groups: "gAlles",         category: "light" }
   - { id: "LichtStehlampe",   name: "Stehlampe",   code: "11010 3", groups: "gAlles,gLampen", category: "light" }
+  - { id: "LichtCouch",       name: "Couch",       code: "11010 4", groups: "gAlles,gLampen", category: "light" }
 
 

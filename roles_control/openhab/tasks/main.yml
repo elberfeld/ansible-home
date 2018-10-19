@@ -8,6 +8,7 @@
   with_items:
     - oracle-java8-jdk
     - openhab2
+    - iputils-arping
   notify: restart openhab
 
 - lineinfile:
@@ -37,6 +38,7 @@
   with_items:
     - "items/gpio.items"
     - "items/homematic.items"
+    - "items/network.items"
     - "items/rfswitches.items"
     - "items/yahoowheather.items"
     - "persistence/influxdb.persist"
@@ -45,8 +47,10 @@
     - "services/addons.cfg"
     - "services/gpio.cfg"
     - "services/influxdb.cfg"
+    - "services/network.cfg"
     - "services/rpircswitch.cfg"
     - "things/homematic.things"
+    - "things/network.things"
     - "things/rfswitches.things"
     - "things/yahoowheather.things"
   notify: restart openhab

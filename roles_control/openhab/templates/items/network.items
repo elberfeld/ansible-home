@@ -1,0 +1,2 @@
+
+Switch HandyPrivat { channel="network:pingdevice:handy_privat:online" }
