@@ -37,13 +37,13 @@ homematic_devices:
   - { id: "OEQ0160159",   type: "HG-HM-WDS40-TH-I-2",  name: "Sensor Badezimmer" }
 
 rfswitches:
-  - { id: "LichtDvdRegal", code: "11001 1", name: "DVD Regal" }
-  - { id: "LichtTetris", code: "11001 2", name: "Tetris" }
-  - { id: "LichtFlur", code: "11001 3", name: "Flur" }
-  - { id: "LichtLeselampe", code: "11001 4", name: "Leselampe" }
-  - { id: "LichtVitrine", code: "11001 5", name: "Vitrine" }
-  - { id: "LichtSideboard", code: "11010 1", name: "Sideboard" }
-  - { id: "PowerAudiosystem", code: "11010 2", name: "Audiosystem" }
-  - { id: "LichtStehlampe", code: "11010 3", name: "Stehlampe" }
+  - { id: "LichtDvdRegal",    name: "DVD Regal",   code: "11001 1", groups: "gAlles,gLampen", category: "light" }
+  - { id: "LichtTetris",      name: "Tetris",      code: "11001 2", groups: "gAlles,gLampen", category: "light" }
+  - { id: "LichtFlur",        name: "Flur",        code: "11001 3", groups: "gAlles,gLampen", category: "light" }
+  - { id: "LichtLeselampe",   name: "Leselampe",   code: "11001 4", groups: "gAlles,gLampen", category: "light" }
+  - { id: "LichtVitrine",     name: "Vitrine",     code: "11001 5", groups: "gAlles,gLampen", category: "light" }
+  - { id: "LichtSideboard",   name: "Sideboard",   code: "11010 1", groups: "gAlles,gLampen", category: "light" }
+  - { id: "PowerAudiosystem", name: "Audiosystem", code: "11010 2", groups: "gAlles",         category: "light" }
+  - { id: "LichtStehlampe",   name: "Stehlampe",   code: "11010 3", groups: "gAlles,gLampen", category: "light" }
 
 

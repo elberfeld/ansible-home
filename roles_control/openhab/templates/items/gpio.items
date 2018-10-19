@@ -1,0 +1,2 @@
+
+Contact Wohnung_Tuer "Wohnung_Tuer" { gpio="pin:24 debounce:10 activelow:yes force:yes" }

@@ -1,4 +1,6 @@
 ---
 - name: restart openhab
-  service: name=openhab2 state=restarted
-  
+  systemd:
+    name: openhab2
+    enabled: yes
+    daemon_reload: yes

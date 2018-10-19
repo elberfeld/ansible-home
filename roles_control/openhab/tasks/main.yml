@@ -10,27 +10,40 @@
     - openhab2
   notify: restart openhab
 
-- name: Add the user 'openhab' to group gpio 
-  user:
-    name: openhab
-    groups: gpio
-    append: yes
+- lineinfile:
+    path: /etc/default/openhab2
+    regexp: '^EXTRA_JAVA_OPTS='
+    line: 'EXTRA_JAVA_OPTS="-Djna.boot.library.path=/usr/lib/jni"'
+  notify: restart openhab
 
-- name: openhab sudo configs
-  template: src=011_openhab-nopasswd dest=/etc/sudoers.d/011_openhab-nopasswd
+- lineinfile:
+    path: /usr/lib/systemd/system/openhab2.service
+    regexp: '^User='
+    line: 'User=root'
+  notify: restart openhab
+
+- lineinfile:
+    path: /usr/lib/systemd/system/openhab2.service
+    regexp: '^Group='
+    line: 'Group=root'
+  notify: restart openhab
 
 - name: enable service
   service: name=openhab2 enabled=yes
+  notify: restart openhab
 
 - name: openhab configs
   template: src={{ item }} dest=/etc/openhab2/{{ item }} 
   with_items:
+    - "items/gpio.items"
+    - "items/homematic.items"
     - "items/rfswitches.items"
     - "items/yahoowheather.items"
     - "persistence/influxdb.persist"
     - "rules/rfswitches.rules"
     - "rules/tempcontrol.rules"
     - "services/addons.cfg"
+    - "services/gpio.cfg"
     - "services/influxdb.cfg"
     - "services/rpircswitch.cfg"
     - "things/homematic.things"
