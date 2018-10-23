@@ -1,2 +1,3 @@
 
-Switch HandyPrivat { channel="network:pingdevice:handy_privat:online" }
+Switch HandyPrivat "Handy Privat" { channel="network:pingdevice:handy_privat:online" }
+Switch HandyArbeit "Handy Arbeit" { channel="network:pingdevice:handy_arbeit:online" }
