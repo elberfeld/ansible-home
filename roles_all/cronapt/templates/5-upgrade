@@ -1,0 +1,2 @@
+dist-upgrade -y -o APT::Get::Show-Upgraded=true
+crontab -e

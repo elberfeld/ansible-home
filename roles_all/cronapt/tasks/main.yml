@@ -7,6 +7,21 @@
     state: present
   with_items:
     - cron-apt
+    - needrestart
 
 # Cron-Apt runs with default configuration 
 # Daily update at 4am 
+
+- name: add upgrade step 
+  template: 
+    src: 5-upgrade
+    dest: /etc/cron-apt/action.d/5-upgrade
+   
+- name: Reboot Cronjob 
+  cron: 
+    name: "reboot_if_needed" 
+    weekday: "*" 
+    hour: "6" 
+    minute: "*" 
+    job: "needrestart -p > /dev/null; if [[ $? -gt 0 ]]; then reboot; fi"
+  
