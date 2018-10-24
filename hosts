@@ -3,7 +3,7 @@
 master 		ansible_ssh_host=10.5.0.101
 intserver	ansible_ssh_host=10.5.0.111
 control		ansible_ssh_host=10.5.0.250
-backupsrv   ansible_ssh_host=192.168.0.201 	
+backupsrv   ansible_ssh_host=130.180.13.106 ansible_ssh_port=5201	
 
 osmc1       ansible_ssh_host=10.5.0.60
 
