@@ -56,7 +56,33 @@ openvpn_clients:
 
 # Definition von Borgbackup Repositories 
 borgbackup_repos:
-  
+
+  backupsrv: 
+
+    # URL des Repos   
+    repo: "ssh://private@130.180.13.106:5201/data/private/webserver2"
+    
+    # Repo-spezifische Optionen zum Aufruf von Borgbackup
+    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+    options: ""
+
+    # Compression Options, z,b. "zlib,5, "zstd,5"
+    compression: "zlib,5"
+
+    # Prune Optionen 
+    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+    
+    # Backup Schedule 
+    weekday: "*"
+    hour: "4"
+    minute: "20"
+
+    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
+    # directories:
+
+    # Alerta Heartbeat Timeout 
+    heartbeat_timeout: "{{ 12 * 60 * 60 }}"
+
   rsyncnet: 
 
     # URL des Repos   
@@ -75,7 +101,7 @@ borgbackup_repos:
     # Backup Schedule 
     weekday: "*"
     hour: "*/4"
-    minute: "20"
+    minute: "50"
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:

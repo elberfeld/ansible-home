@@ -25,7 +25,7 @@ borgbackup_repos:
   backupsrv: 
 
     # URL des Repos   
-    repo: "private@192.168.0.201:/data/private/master"
+    repo: "ssh://private@10.5.0.254:5201/data/private/master"
     
     # Repo-spezifische Optionen zum Aufruf von Borgbackup
     # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
@@ -39,19 +39,19 @@ borgbackup_repos:
     
     # Backup Schedule 
     weekday: "*"
-    hour: "*/4"
-    minute: "5"
+    hour: "6"
+    minute: "00"
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:
 
     # Alerta Heartbeat Timeout 
-    heartbeat_timeout: "{{ 12 * 60 * 60 }}"
+    heartbeat_timeout: "{{ 24 * 60 * 60 }}"
 
   rsyncnet: 
 
     # URL des Repos   
-    repo: "17953@ch-s011.rsync.net:privat/master"
+    repo: "ssh://17953@ch-s011.rsync.net:privat/master"
     
     # Repo-spezifische Optionen zum Aufruf von Borgbackup
     # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
@@ -65,18 +65,19 @@ borgbackup_repos:
     
     # Backup Schedule 
     weekday: "*"
-    hour: "*/4"
-    minute: "15"
+    hour: "4"
+    minute: "00"
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:
 
     # Alerta Heartbeat Timeout 
-    heartbeat_timeout: "{{ 12 * 60 * 60 }}"
+    heartbeat_timeout: "{{ 24 * 60 * 60 }}"
 
 # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
 borgbackup_directories:
   - "/etc/"
+  - "/srv/"
 
 
 ## Sample, curently not used 
