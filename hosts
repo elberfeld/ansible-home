@@ -1,7 +1,6 @@
 
 [server]
 master 		ansible_ssh_host=10.5.0.101
-webserver	ansible_ssh_host=10.5.0.110
 intserver	ansible_ssh_host=10.5.0.111
 control		ansible_ssh_host=10.5.0.250
 backupsrv   ansible_ssh_host=192.168.0.201 	
