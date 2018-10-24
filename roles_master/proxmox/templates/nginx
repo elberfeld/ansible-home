@@ -1,0 +1,15 @@
+
+server {
+
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+
+    server_name {{ int_ip4 }};
+
+    location / {
+        rewrite     ^(.*)   https://{{ int_ip4 }}:8006 permanent;
+    }
+
+}

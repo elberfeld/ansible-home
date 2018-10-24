@@ -6,7 +6,7 @@ debian_sources:
   - "deb https://repos.influxdata.com/debian stretch stable"
 
 debian_keys:
-  - http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg
+  - "http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg"
   - "https://repos.influxdata.com/influxdb.key"
 
 
@@ -17,7 +17,7 @@ telegraf_monitoring:
   - "hardware.conf"
 
 # Primäre IP Adressen des Hosts 
-int_ip4: 10.5.0.58
+int_ip4: 10.5.0.101
 
 # Definition von Borgbackup Repositories 
 borgbackup_repos:

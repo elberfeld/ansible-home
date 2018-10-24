@@ -7,14 +7,18 @@
     regexp: '^(.*)master.master(.*)$'
     line: "{{ int_ip4 }} master.master master pvelocalhost"
 
+- name: Remove PVE Enterprise Repos 
+  file:
+    path: /etc/apt/sources.list.d/pve-enterprise.list
+    state: absent
+
 - name: Install Proxmox Packages
   apt: 
     name: "{{ item }}" 
     state: present
   with_items:
     - proxmox-ve 
-    - postfix 
-    - open-iscsi
+    - nginx-light
 
 - name: Remove conflicting Packages 
   apt: 
@@ -45,3 +49,9 @@
 
 - name: Subscription Popup entfernen  
   shell: "sed -i.bak 's/NotFound/Active/g' /usr/share/perl5/PVE/API2/Subscription.pm && systemctl restart pveproxy.service" 
+  
+- name: Nginx Config 
+  template:
+    src: "nginx"
+    dest: "/etc/nginx/sites-enabled/default"
+  notify: restart nginx
