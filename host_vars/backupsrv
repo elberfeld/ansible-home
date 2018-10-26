@@ -25,10 +25,11 @@ borgbackup_user:
 
      sshkeys:
        - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWVdc/woZlMIcuMmXE84Vx2Ex3xH9yimHQcO59exQjW void-2016"
-       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDEC0XBJJVrhOPkOZAef+vRClm2AY5PmDcd4KjBUMUDy root@webserver"
        - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDAzgq1OJCVmXG81O7HCWTUWjIaC5/7cLzH53MLsCbXE root@control"
        - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC706NolYWQMirmBGKQ3fgPNHZgJYZG3Vmu4bCpv7A/W root@intserver"
-       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINV5gD+rL5dsS7lrC66UigsiIyjhEBlbkLlLhoQDdx4c root@master"
+       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPO3w4Gy+KiP78cYYcbfXmPZu9q4bQi+DP1s0MAFeKV9 root@webserver1"
+       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPifYXkpb1olii1KpMKNh3KJW+avoLxxSMINEIyOw4Vp root@webserver2"
+       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkq4uLa9IY+XLBznyE/3qRJCie3pf4Md4fLMZWeVOys root@master"
 
   warpzone: 
 
