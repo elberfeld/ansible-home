@@ -35,37 +35,11 @@ borgbackup_repos:
     compression: "zlib,5"
 
     # Prune Optionen 
-    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+    prune: "--keep-daily=2 --keep-weekly=1"
     
     # Backup Schedule 
     weekday: "*"
-    hour: "6"
-    minute: "00"
-
-    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
-    # directories:
-
-    # Alerta Heartbeat Timeout 
-    heartbeat_timeout: "{{ 24 * 60 * 60 }}"
-
-  rsyncnet: 
-
-    # URL des Repos   
-    repo: "ssh://17953@ch-s011.rsync.net:privat/master"
-    
-    # Repo-spezifische Optionen zum Aufruf von Borgbackup
-    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
-    options: "--remote-path=borg1"
-
-    # Compression Options , "zstd,18"
-    compression: "zlib,5"
-
-    # Prune Optionen 
-    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
-    
-    # Backup Schedule 
-    weekday: "*"
-    hour: "4"
+    hour: "5"
     minute: "00"
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
