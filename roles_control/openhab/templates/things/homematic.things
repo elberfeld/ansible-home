@@ -3,7 +3,12 @@ Bridge homematic:bridge:ccu [ gatewayAddress="127.0.0.1", callbackHost="127.0.0.
 {
  
   {% for device in homematic_devices %}
-    Thing {{ device.type }} {{ device.id }} "{{ device.name }}" 
+    Thing {{ device.type }} {{ device.id }} "{{ device.name }}" [ 
+      HMP_0_POLLING_INTERVAL=360, 
+      HMP_0_POLLING=true, 
+      HMP_1_POLLING_INTERVAL=360, 
+      HMP_1_POLLING=true 
+    ]
   {% endfor %}
 
 }
