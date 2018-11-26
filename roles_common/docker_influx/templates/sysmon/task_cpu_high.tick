@@ -16,9 +16,9 @@ data
   |alert()
     .id('{{ index .Tags "host"}}/cpu_high')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .info(lambda: "value" > 80 )
-    .warn(lambda: "value" > 90 )
-    .crit(lambda: "value" > 95 )
+    .info(lambda: "value" > 95 )
+    .warn(lambda: "value" > 97 )
+    .crit(lambda: "value" > 99 )
     .alerta()
       .environment('{{ index .Tags "host"}}')
 
