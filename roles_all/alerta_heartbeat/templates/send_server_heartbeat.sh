@@ -8,5 +8,5 @@ curl -XPOST {{ alerta.url }}/api/heartbeat \
   "tags": [
     "server"
   ],
-  "timeout": 180
+  "timeout": 300
 }'
