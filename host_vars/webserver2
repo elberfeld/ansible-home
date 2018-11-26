@@ -74,14 +74,14 @@ borgbackup_repos:
     
     # Backup Schedule 
     weekday: "*"
-    hour: "4"
+    hour: "5"
     minute: "20"
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:
 
     # Alerta Heartbeat Timeout 
-    heartbeat_timeout: "{{ 12 * 60 * 60 }}"
+    heartbeat_timeout: "{{ 3 * 12 * 60 * 60 }}"
 
   rsyncnet: 
 
