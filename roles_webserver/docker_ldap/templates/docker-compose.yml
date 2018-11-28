@@ -13,8 +13,8 @@ services:
       - /srv/ldap/config:/etc/ldap/slapd.d
     environment:
       - HOSTNAME={{ int_ip4 }}
-      - LDAP_ORGANISATION=VOID
-      - LDAP_DOMAIN=void.ms
+      - LDAP_ORGANISATION={{ ldap.organization }}
+      - LDAP_DOMAIN={{ ldap.domain }}
       - LDAP_ADMIN_PASSWORD={{ ldap_admin_pass }}
       - LDAP_CONFIG_PASSWORD={{ ldap_config_pass }}
       - LDAP_READONLY_USER=true
