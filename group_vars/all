@@ -46,5 +46,6 @@ rfswitches:
   - { id: "PowerAudiosystem", name: "Audiosystem", code: "11010 2", groups: "gAlles",         category: "light" }
   - { id: "LichtStehlampe",   name: "Stehlampe",   code: "11010 3", groups: "gAlles,gLampen", category: "light" }
   - { id: "LichtCouch",       name: "Couch",       code: "11010 4", groups: "gAlles,gLampen", category: "light" }
+  - { id: "PowerFernseher",   name: "Fernseher",   code: "11010 5", groups: "gAlles",         category: "light" }
 
 
