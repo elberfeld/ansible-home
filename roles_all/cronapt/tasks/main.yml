@@ -21,7 +21,7 @@
   cron: 
     name: "reboot_if_needed" 
     weekday: "*" 
-    hour: "6" 
-    minute: "*" 
-    job: "needrestart -p > /dev/null; if [[ $? -gt 0 ]]; then reboot; fi"
+    hour: "*" 
+    minute: "42" 
+    job: "needrestart -p > /dev/null; if [[ $? -gt 0 ]]; then /srv/alerta_heartbeat/send_service_heartbeat.sh 10800 SYSTEM_REBOOT; fi"
   
