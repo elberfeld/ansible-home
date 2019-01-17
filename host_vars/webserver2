@@ -22,8 +22,8 @@ telegraf_monitoring:
 
 
 # Primäre IP Adressen des Hosts 
-ext_ip4: 159.69.124.138
-ext_ip6: 2a01:4f8:c010:c8a::1
+ext_ip4: 116.203.41.76
+ext_ip6: 2a01:4f8:1c1c:393c::/64
 int_ip4: 10.100.1.2
 
 
