@@ -1,0 +1,12 @@
+
+persist-tun
+persist-key
+
+cipher AES-256-CBC
+auth SHA256
+
+comp-lzo adaptive
+keepalive 10 60
+ping-timer-rem
+
+verb 3
