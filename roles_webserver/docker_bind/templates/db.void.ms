@@ -31,15 +31,6 @@ webserver2       IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 gw-um     IN      A       130.180.13.105
 
 
-; Home Ips
-home4     IN      A       {{ hostvars['webserver'].webserver_ext_ip }}
-home6     IN      AAAA    {{ hostvars['webserver'].webserver_ext_ip6 }}
-
-
-; Manuelle Domains 
-vpn       IN      A       {{ hostvars['webserver'].webserver_ext_ip }}
-
-
 ; Webserver1-Domains 
 {% for domain in hostvars['webserver1'].webserver_domains %}
 {{ domain }}    IN  CNAME webserver1.void.ms.
