@@ -43,6 +43,7 @@
     name: "openvpn-server@{{ item }}.service"
     state: started
     enabled: True
+    daemon_reload: yes
   with_items:
     - "{{ openvpn_server }}"
   when: openvpn_server is defined and openvpn_server > 0
@@ -52,6 +53,7 @@
     name: "openvpn-client@{{ item }}.service"
     state: started
     enabled: True
+    daemon_reload: yes
   with_items:
     - "{{ openvpn_clients }}"
   when: openvpn_clients is defined and openvpn_clients > 0
