@@ -23,5 +23,5 @@
     weekday: "*" 
     hour: "*" 
     minute: "42" 
-    job: "needrestart -p > /dev/null; if [[ $? -eq 0 ]]; then /srv/alerta_heartbeat/send_service_heartbeat.sh 10800 SYSTEM_REBOOT; fi"
+    job: "/bin/bash -c needrestart -p > /dev/null; if [[ $? -eq 0 ]]; then /srv/alerta_heartbeat/send_service_heartbeat.sh 10800 SYSTEM_REBOOT; fi"
   
