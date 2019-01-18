@@ -33,13 +33,15 @@ gw-um     IN      A       130.180.13.105
 
 ; Webserver1-Domains 
 {% for domain in hostvars['webserver1'].webserver_domains %}
-{{ domain }}    IN  CNAME webserver1.void.ms.
+{{ domain }}    IN   A       {{ hostvars['webserver1'].ext_ip4 }}    
+{{ domain }}    IN   AAAA    {{ hostvars['webserver1'].ext_ip6 }}
 {% endfor %}
 
 
 ; Webserver2-Domains 
 {% for domain in hostvars['webserver2'].webserver_domains %}
-{{ domain }}    IN  CNAME webserver2.void.ms.
+{{ domain }}    IN    A       {{ hostvars['webserver2'].ext_ip4 }}
+{{ domain }}    IN    AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 {% endfor %}
 
 ; Zertifikats-Authoriaet festlegen 
@@ -47,7 +49,7 @@ gw-um     IN      A       130.180.13.105
 
 
 ; E-Mail Konfiguration 
-@         IN      MX      10 webserver2.void.ms.
+@         IN      MX      10 mail.void.ms.
 @         IN      TXT     "v=spf1 mx ~all"
 @         IN      SPF     "v=spf1 mx ~all"
 
@@ -60,9 +62,9 @@ mail._domainkey   IN      TXT     ( "v=DKIM1; h=sha256; k=rsa; "
 
 ; E-Mail Autoconfig
 @                       IN       TXT    "mailconf=https://autoconfig.void.ms/mail/config-v1.1.xml"
-_imaps._tcp             SRV 0 1 993     webserver2.void.ms.
-_submission._tcp        SRV 0 1 587     webserver2.void.ms.
-_autodiscover._tcp      SRV 0 0 443     webserver2.void.ms.
+_imaps._tcp             SRV 0 1 993     mail.void.ms.
+_submission._tcp        SRV 0 1 587     mail.void.ms.
+_autodiscover._tcp      SRV 0 0 443     autodiscover.void.ms.
 
 
 ; Matrix Server federation 
