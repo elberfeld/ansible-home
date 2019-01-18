@@ -1,11 +1,12 @@
 ; zonefile for void.ms.1200
+; TTL min. 300 
 $TTL     300
 @        IN      SOA     ns1.void.ms. webmaster.void.ms. (
                          {{ ( db_void_ms.stat.mtime | string )[:9] }}         ; Serial
                          1200          ; Refresh  1200 - 43200
                          120           ; Retry  120 -7200
-                         3600          ; Expire
-                         300 )       ; Negative Cache TTL
+                         604800        ; Expire 604800 - 2419200
+                         3600 )       ; Negative Cache TTL 3600 - 86400
 
 @         IN      A       {{ hostvars['webserver1'].ext_ip4 }}
 @         IN      AAAA    {{ hostvars['webserver1'].ext_ip6 }}
