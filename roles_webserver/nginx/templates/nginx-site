@@ -14,7 +14,7 @@ server {
 	root /dev/null;
 	index index.html;
 
-	location /.well-known/ {
+	location /.well-known/acme-challenge/ {
 		root /var/www/html/;
 	}
 
@@ -51,7 +51,7 @@ server {
 	root /dev/null;
 	index index.html;
 
-	location /.well-known/ {
+	location /.well-known/acme-challenge/ {
 		root /var/www/html/;
 	}
 
