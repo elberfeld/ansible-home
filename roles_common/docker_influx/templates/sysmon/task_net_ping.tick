@@ -31,7 +31,7 @@ data2
   |alert()
     .id('{{ index .Tags "host"}}->{{ index .Tags "url"}} result_code')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .crit(lambda: "value" != 0 )
+    .crit(lambda: "value" > 0 )
     .alerta()
       .environment('{{ index .Tags "host"}}')
 
