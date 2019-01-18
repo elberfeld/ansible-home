@@ -11,8 +11,8 @@ var data1 =batch
 
 var data2 =batch 
    |query(''' SELECT last("result_code") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."ping" ''')
-    .period(5m)
-    .every(5m)
+    .period(15m)
+    .every(15m)
     .fill('linear')
     .groupBy('host', 'url')
 
@@ -23,6 +23,7 @@ data1
     .id('{{ index .Tags "host"}}->{{ index .Tags "url"}} ping_avg_ms')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
     .warn(lambda: "value" > 300 )
+    .crit(lambda: "value" > 500 )
     .alerta()
       .environment('{{ index .Tags "host"}}')
 
