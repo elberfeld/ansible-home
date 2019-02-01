@@ -1,0 +1,66 @@
+
+
+dbrp "{{ influxdb_sysmon.db }}"."autogen"
+
+
+var n_containers =batch 
+   |query(''' SELECT mean("n_containers") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" ''')
+    .period(5m)
+    .every(5m)
+    .fill('linear')
+
+var n_containers_running =batch 
+   |query(''' SELECT mean("n_containers_running") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" ''')
+    .period(5m)
+    .every(5m)
+    .fill('linear')
+
+var n_containers_paused =batch 
+   |query(''' SELECT mean("n_containers_paused") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" ''')
+    .period(5m)
+    .every(5m)
+    .fill('linear')
+
+var n_containers_stopped =batch 
+   |query(''' SELECT mean("n_containers_stopped") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" ''')
+    .period(5m)
+    .every(5m)
+    .fill('linear')
+
+
+{% raw %}
+
+n_containers
+  |alert()
+    .id('docker_containers')
+    .message('{{ .ID }}:{{ index .Fields "value" }}')
+    .crit(lambda: != 12 )
+    .alerta()
+      .environment('docker')
+
+n_containers_running
+  |alert()
+    .id('docker_containers_running')
+    .message('{{ .ID }}:{{ index .Fields "value" }}')
+    .crit(lambda: != 12 )
+    .alerta()
+      .environment('docker')
+
+n_containers_paused
+  |alert()
+    .id('docker_containers_paused')
+    .message('{{ .ID }}:{{ index .Fields "value" }}')
+    .crit(lambda: != 12 )
+    .alerta()
+      .environment('docker')
+
+n_containers_stopped
+  |alert()
+    .id('docker_containers_stopped')
+    .message('{{ .ID }}:{{ index .Fields "value" }}')
+    .crit(lambda: != 12 )
+    .alerta()
+      .environment('docker')
+
+{% endraw %}
+

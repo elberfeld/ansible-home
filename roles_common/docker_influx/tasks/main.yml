@@ -49,6 +49,7 @@
   with_items:
     - task_cpu_high.tick
     - task_disk_low.tick
+    - task_docker_container.tick
     - task_load1_high.tick
     - task_load5_high.tick
     - task_load15_high.tick
