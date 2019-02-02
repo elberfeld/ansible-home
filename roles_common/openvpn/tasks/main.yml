@@ -1,12 +1,13 @@
 # Pakete installieren
 - name: openvpn installieren
   apt:
-    pkg: "{{ item }}"
+    pkg: "{{ packages }}"
     update_cache: yes
     state: present
-  with_items:
-    - logrotate
-    - openvpn
+  vars:
+    packages:
+      - logrotate
+      - openvpn
 
 # Log-Verzeichnis erstellen 
 
