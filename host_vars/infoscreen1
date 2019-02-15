@@ -1,0 +1,7 @@
+
+debian_sources: 
+  - "deb http://raspbian.raspberrypi.org/raspbian/ stretch main contrib non-free rpi"
+
+debian_keys:
+
+

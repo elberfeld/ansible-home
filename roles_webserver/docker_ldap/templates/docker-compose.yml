@@ -20,6 +20,7 @@ services:
       - LDAP_READONLY_USER=true
       - LDAP_READONLY_USER_USERNAME=readonly
       - LDAP_READONLY_USER_PASSWORD={{ ldap_readonly_pass }}
+      - LDAP_TLS_VERIFY_CLIENT=never
       - LDAP_REPLICATION=true
       - LDAP_REPLICATION_HOSTS=#PYTHON2BASH:['ldap://10.100.1.1','ldap://10.100.1.2']
 

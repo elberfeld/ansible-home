@@ -1,0 +1,12 @@
+---
+
+- include: ../functions/get_secret.yml
+  with_items:
+   - { path: /root/outlook_url,  length: -1 }
+ 
+- name: URL-Datei erstellen
+  template:
+    src: "urls.json"
+    dest: "/var/www/html/FullPageDashboard/urls.json"
+  notify: reboot system
+
