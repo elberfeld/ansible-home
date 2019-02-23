@@ -4,6 +4,7 @@ version: "3"
 services:
 
   openldap:
+    # Achtung: Version 1.2.3 schein Probleme mit der Synchronisation zu haben
     image: osixia/openldap:1.2.2
     restart: always
     command: --loglevel debug
