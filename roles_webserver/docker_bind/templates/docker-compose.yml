@@ -4,11 +4,12 @@ services:
 
   app:
 
-    build: .
-    image: bind-app-{{ '%Y-%m-%d_%H-%M' | strftime(dockerfile.stat.mtime) }}
+    image: ventz/bind:9.12.2_p1-r0
     restart: always
     ports:
       - 0.0.0.0:53:53
       - 0.0.0.0:53:53/udp
     volumes:
       - /srv/bind/config/:/etc/bind/
+      - /srv/bind/cache/:/var/cache/bind/
+
