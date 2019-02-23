@@ -9,7 +9,7 @@ services:
 
   mysql:
 
-    image: mariadb:10.4.1
+    image: mariadb:10.4.2
     restart: always
     volumes:
       - /srv/nextcloud/db/:/var/lib/mysql
@@ -21,7 +21,7 @@ services:
 
   app:
 
-    image: elberfeld/nextcloud-ocr:15.0.2.0
+    image: nextcloud:15.0.4-apache
     restart: always
     ports:
       - 127.0.0.1:42005:80
