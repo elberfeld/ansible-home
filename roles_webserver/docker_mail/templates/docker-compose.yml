@@ -2,35 +2,88 @@ version: "3"
 
 services:
 
-  app:
+  redis:
 
-    image: tvial/docker-mailserver:release-v6.1.0
-    hostname: mail
-    domainname: void.ms
-    ports:
-      - 0.0.0.0:25:25
-      - 0.0.0.0:587:587
-      - 0.0.0.0:993:993
+    image: redis:5.0.3
+    restart: always
     volumes:
-      - /srv/mail/data:/var/mail/
-      - /srv/mail/state:/var/mail-state/
-      - /srv/mail/config/:/tmp/docker-mailserver/
-      - /etc/letsencrypt/:/tmp/ssl/
+      - /srv/mail/redis:/data
+
+
+  db:
+
+    image: mariadb:10.4.2
+    restart: always 
+    volumes:
+      - /srv/mail/db/:/var/lib/mysql
     environment:
-      ENABLE_SPAMASSASSIN: "0"
-      ENABLE_CLAMAV: "0"
-      ENABLE_FAIL2BAN: "1"
-      ENABLE_POSTGREY: "1"
-      ONE_DIR: "1"
-      DMS_DEBUG: "0"
-      SSL_TYPE: "manual"
-      SSL_CERT_PATH: "/tmp/ssl/live/mail.void.ms/fullchain.pem"
-      SSL_KEY_PATH: "/tmp/ssl/live/mail.void.ms/privkey.pem"
-      TLS_LEVEL: "intermediate" 
-      VIRUSMAILS_DELETE_DELAY: "30"
-    cap_add:
-      - NET_ADMIN
-      - SYS_PTRACE
+      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
+      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
+      MYSQL_DATABASE: "postfix"
+      MYSQL_USER: "postfix"
+
+
+  mailserver:
+
+    image: hardware/mailserver:1.1-stable
+    restart: always
+    domainname: void.ms   
+    hostname: mail
+    ports:
+      - "25:25"       
+      - "587:587"     
+      - "993:993"     
+      - "4190:4190"   
+      - "127.0.0.1:42013:11334"
+    environment:
+      - DBHOST=db
+      - DBNAME=postfix
+      - DBUSER=postfix
+      - DBPASS={{ mysql_user_pass }}              
+      - RSPAMD_PASSWORD={{ rspamd_admin_pass }}   
+      - REDIS_HOST=redis
+      - DEBUG_MODE=false                        
+      - ENABLE_FETCHMAIL=true                  
+    volumes:
+      - /srv/mail/data:/var/mail
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /srv/mail/postfix-custom.cf:/var/mail/postfix/custom.conf:ro
+      - /srv/mail/doevecot-10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
+    depends_on:
+      - db
+      - redis
+
+
+  postfixadmin:
+
+    image: hardware/postfixadmin:3.2
+    restart: always
+    domainname: void.ms
+    hostname: mail
+    ports:
+      - 127.0.0.1:42012:8888
+    environment:
+      - DBHOST=db
+      - DBNAME=postfix
+      - DBUSER=postfix
+      - DBPASS={{ mysql_user_pass }}              
+    depends_on:
+      - mailserver
+      - db
+
+
+  rainloop:
+
+    image: hardware/rainloop:1.12.0
+    restart: always
+    ports:
+      - 127.0.0.1:42009:8888
+    volumes:
+      - /srv/mail/rainloop:/rainloop/data
+    depends_on:
+      - mailserver
+      - db
+
 
   autodiscover:
 
@@ -38,7 +91,7 @@ services:
     domainname: void.ms
     restart: always
     ports:
-      - 127.0.0.1:42009:80
+      - 127.0.0.1:42014:80
     environment:
       COMPANY_NAME: "void.ms"
       SUPPORT_URL: "https://www.void.ms"

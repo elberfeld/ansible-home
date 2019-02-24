@@ -1,0 +1,5 @@
+
+smtpd_banner         = mail.void.ms ESMTP $mail_name
+smtpd_tls_cert_file  = /etc/letsencrypt/live/mail.void.ms/cert.pem
+smtpd_tls_key_file   = /etc/letsencrypt/live/mail.void.ms/privkey.pem
+

@@ -56,9 +56,8 @@ gw-um     IN      A       130.180.13.105
 
 _dmarc.void.ms.   3600    IN   TXT   "v=DMARC1; p=none; sp=none; pct=100; rua=mailto:postmaster@void.ms; ruf=mailto:postmaster@void.ms;"
 
-mail._domainkey   IN      TXT     ( "v=DKIM1; h=sha256; k=rsa; "
-          "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxA8UfQ+gkbCmhB7hgNO0vNlUjEzsg8Ba+dYF/kx+MZNI+nU1qRC8tJfojDJ2H/fiEFE3pjVb+bBsBR/2zRsIJZ3QxattNV0Fr6SZHcUdSkZtwfwVylyg2KfJiHq8fb8y7uDh803tT+uo24LytWAss1tRtQwJ+kQo6+BpbxytYOuxoXdWDzqJ22l+I89dmuZFgSKarWdPgUT8mL"
-          "bhfAo7kZhT+q1rdm/IGojVJNAeNF96Tc3uPf9+BqOjLKMTIGabH5TvIZUqE+MNFlnQPO+D8HHVzb9T8M0TZdAw9ARX15f1F5hvNJChSL1q/2Bg9el5N14d5J/5y23UNN1KiicyHQIDAQAB" )  ; ----- DKIM key mail for void.ms
+mail._domainkey IN TXT ( "v=DKIM1; k=rsa; "
+        "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCgsfrq8ED0r4KMZ22OsGbPZakVUhyTiceMGWvQcP8az3UE/abCyWi+7nNQYWU4KTx7g8rribL+WzPSDt1tz+jOKZfFq2LyX7TGFehYxeTx+is5/fg0VpTCN2SS1z9taVt2y3HcQsFVsdMTrR7lar1YGwvr8kuCuivAcfvjF2J/HwIDAQAB" ) ;
 
 
 ; E-Mail Autoconfig

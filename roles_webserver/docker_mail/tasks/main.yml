@@ -1,18 +1,36 @@
 ---
+- include: ../functions/get_secret.yml
+  with_items:
+   - { path: /srv/mail/mysql_admin_pass,  length: 24 }
+   - { path: /srv/mail/mysql_user_pass,  length: 12 }
+   - { path: /srv/mail/rspamd_admin_pass,  length: 24 }
+   - { path: /srv/mail/postfix_admin_pass,  length: 24 }
+   - { path: /srv/mail/rainloop_admin_pass,  length: 24 }
+
 - name: create folder struct for mail
   file: 
     path: "{{ item }}"
     state: "directory"
   with_items:
     - "/srv/mail/"
+    - "/srv/mail/redis/"
+    - "/srv/mail/db/"
     - "/srv/mail/data/"
-    - "/srv/mail/state/"
-    - "/srv/mail/config/"
+    - "/srv/mail/rainloop/"
   
 - name: Docker Compose Konfig-Datei erstellen
   template: src="{{ item }}" dest="/srv/mail/{{ item }}"
   with_items:
     - "docker-compose.yml"
+    - "postfix-custom.cf"
+    - "doevecot-10-ssl.conf"
+  register: config 
+
+- name: stop mail docker
+  docker_service:
+    project_src: /srv/mail/
+    state: absent
+  when: config.changed 
 
 - name: start mail docker
   docker_service:

@@ -41,8 +41,10 @@ webserver_domains:
   - "cloud"
   - "ldap2"
   - "mail"
+  - "mailadmin"
   - "matrix"
   - "office"
+  - "rspamd"
   - "www2"  
 
 
