@@ -1,11 +1,8 @@
 ---
 - include: ../functions/get_secret.yml
   with_items:
-   - { path: /srv/mail/mysql_admin_pass,  length: 24 }
-   - { path: /srv/mail/mysql_user_pass,  length: 12 }
+   - { path: /srv/ldap/secret/ldap_readonly_pass,  length: 12 }
    - { path: /srv/mail/rspamd_admin_pass,  length: 24 }
-   - { path: /srv/mail/postfix_admin_pass,  length: 24 }
-   - { path: /srv/mail/rainloop_admin_pass,  length: 24 }
 
 - name: create folder struct for mail
   file: 
@@ -14,16 +11,22 @@
   with_items:
     - "/srv/mail/"
     - "/srv/mail/redis/"
-    - "/srv/mail/db/"
     - "/srv/mail/data/"
-    - "/srv/mail/rainloop/"
   
 - name: Docker Compose Konfig-Datei erstellen
   template: src="{{ item }}" dest="/srv/mail/{{ item }}"
   with_items:
+    - "Dockerfile"
     - "docker-compose.yml"
     - "postfix-custom.cf"
-    - "doevecot-10-ssl.conf"
+    - "dovecot-10-auth.conf"
+    - "dovecot-10-ssl.conf"
+    - "dovecot-90-quota.conf"
+    - "dovecot-auth-ldap.conf.ext"
+    - "dovecot-ldap.conf.ext"
+    - "ldap_virtual_domains_maps.cf"
+    - "ldap_virtual_mailbox_maps.cf"
+    - "ldap_virtual_alias_maps.cf"
   register: config 
 
 - name: stop mail docker

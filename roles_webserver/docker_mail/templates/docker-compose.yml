@@ -10,22 +10,9 @@ services:
       - /srv/mail/redis:/data
 
 
-  db:
-
-    image: mariadb:10.4.2
-    restart: always 
-    volumes:
-      - /srv/mail/db/:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
-      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
-      MYSQL_DATABASE: "postfix"
-      MYSQL_USER: "postfix"
-
-
   mailserver:
 
-    image: hardware/mailserver:1.1-stable
+    build: . 
     restart: always
     domainname: void.ms   
     hostname: mail
@@ -35,54 +22,28 @@ services:
       - "993:993"     
       - "4190:4190"   
       - "127.0.0.1:42013:11334"
-    environment:
-      - DBHOST=db
-      - DBNAME=postfix
-      - DBUSER=postfix
-      - DBPASS={{ mysql_user_pass }}              
+    environment:    
+      - DBPASS=none
+      - DBHOST=localhost       
       - RSPAMD_PASSWORD={{ rspamd_admin_pass }}   
       - REDIS_HOST=redis
-      - DEBUG_MODE=false                        
+      - DEBUG_MODE=true                        
       - ENABLE_FETCHMAIL=true                  
     volumes:
       - /srv/mail/data:/var/mail
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /srv/mail/postfix-custom.cf:/var/mail/postfix/custom.conf:ro
-      - /srv/mail/doevecot-10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
+      - /srv/mail/ldap_virtual_alias_maps.cf:/etc/postfix/ldap_virtual_alias_maps.cf
+      - /srv/mail/ldap_virtual_domains_maps.cf:/etc/postfix/ldap_virtual_domains_maps.cf
+      - /srv/mail/ldap_virtual_mailbox_maps.cf:/etc/postfix/ldap_virtual_mailbox_maps.cf
+      - /srv/mail/dovecot-10-auth.conf:/etc/dovecot/conf.d/10-auth.conf
+      - /srv/mail/dovecot-10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
+      - /srv/mail/dovecot-90-quota.conf:/etc/dovecot/conf.d/90-quota.conf
+      - /srv/mail/dovecot-auth-ldap.conf.ext:/etc/dovecot/conf.d/auth-ldap.conf.ext
+      - /srv/mail/dovecot-ldap.conf.ext:/etc/dovecot/conf.d/dovecot-ldap.conf.ext
     depends_on:
-      - db
       - redis
 
-
-  postfixadmin:
-
-    image: hardware/postfixadmin:3.2
-    restart: always
-    domainname: void.ms
-    hostname: mail
-    ports:
-      - 127.0.0.1:42012:8888
-    environment:
-      - DBHOST=db
-      - DBNAME=postfix
-      - DBUSER=postfix
-      - DBPASS={{ mysql_user_pass }}              
-    depends_on:
-      - mailserver
-      - db
-
-
-  rainloop:
-
-    image: hardware/rainloop:1.12.0
-    restart: always
-    ports:
-      - 127.0.0.1:42009:8888
-    volumes:
-      - /srv/mail/rainloop:/rainloop/data
-    depends_on:
-      - mailserver
-      - db
 
 
   autodiscover:

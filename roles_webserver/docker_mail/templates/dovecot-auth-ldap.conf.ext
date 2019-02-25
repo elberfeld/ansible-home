@@ -1,0 +1,17 @@
+
+auth default {
+    mechanisms = plain 
+
+    passdb {
+        driver = ldap
+        args = /etc/dovecot/conf.d/dovecot-ldap.conf.ext
+    }
+
+    userdb {
+        driver = ldap
+        args = /etc/dovecot/conf.d/dovecot-ldap.conf.ext
+    }
+
+    user = root
+    auth_verbose = yes 
+}

@@ -1,0 +1,15 @@
+
+# E-Mail Aliase 
+# Die E-Mail Aliase sind im LDAP als 'mailAlias' Objekte angelegt.
+# Das Attribut 'mail' enthält den Namen der Alias Adresse, 
+# das Attribut 'mailalias' enthält die Adresse an die Weitergeleitet wird.
+# Quick Check: postmap -v -q alias@void.ms ldap:/etc/postfix/ldap_virtual_alias_maps.cf
+
+server_host = ldap://{{ int_ip4 }}/
+search_base = {{ ldap.search_base }}
+version = 3
+bind = yes
+bind_dn = {{ ldap.readonly_dn }}
+bind_pw = {{ ldap_readonly_pass }}
+query_filter = (&(ObjectClass=mailAlias)(mail=%s))
+result_attribute = mailalias
