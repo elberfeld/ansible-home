@@ -2,65 +2,70 @@
 
 dbrp "{{ influxdb_sysmon.db }}"."autogen"
 
+{% set num_container = { "intserver": 12, "webserver1": 9, "webserver2": 13 } %}
 
-var n_containers =batch 
-   |query(''' SELECT mean("n_containers") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" ''')
+{% for key in num_container %}
+
+var n_containers_{{ key }} =batch 
+   |query(''' SELECT last("n_containers") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" WHERE "engine_host" =~ /^{{ key }}$/ ''')
     .period(5m)
-    .every(5m)
+    .every(5s)
     .fill('linear')
+    .groupBy('engine_host')
 
-var n_containers_running =batch 
-   |query(''' SELECT mean("n_containers_running") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" ''')
+var n_containers_running_{{ key }} =batch 
+   |query(''' SELECT last("n_containers_running") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" WHERE "engine_host" =~ /^{{ key }}$/ ''')
     .period(5m)
-    .every(5m)
+    .every(5s)
     .fill('linear')
+    .groupBy('engine_host')
 
-var n_containers_paused =batch 
-   |query(''' SELECT mean("n_containers_paused") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" ''')
+var n_containers_paused_{{ key }} =batch 
+   |query(''' SELECT last("n_containers_paused") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" WHERE "engine_host" =~ /^{{ key }}$/ ''')
     .period(5m)
-    .every(5m)
+    .every(5s)
     .fill('linear')
+    .groupBy('engine_host')
 
-var n_containers_stopped =batch 
-   |query(''' SELECT mean("n_containers_stopped") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" ''')
+var n_containers_stopped_{{ key }} =batch 
+   |query(''' SELECT last("n_containers_stopped") AS value FROM "{{ influxdb_sysmon.db }}"."autogen"."docker" WHERE "engine_host" =~ /^{{ key }}$/ ''')
     .period(5m)
-    .every(5m)
+    .every(5s)
     .fill('linear')
+    .groupBy('engine_host')
 
 
-{% raw %}
-
-n_containers
+n_containers_{{ key }}
   |alert()
-    .id('docker_containers')
-    .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .crit(lambda: != 34 )
+    .id('{% raw %}{{ index .Tags "engine_host" }}::docker_containers{% endraw %}')
+    .message('{% raw %}{{ .ID }}:{{ index .Fields "value" }}{% endraw %}')
+    .crit(lambda: "value" != {{ num_container[key] }} )
     .alerta()
-      .environment('docker')
+      .environment('{% raw %}{{ index .Tags "engine_host"}}{% endraw %}')
 
-n_containers_running
+n_containers_running_{{ key }}
   |alert()
-    .id('docker_containers_running')
-    .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .crit(lambda: "value" != 34 )
+    .id('{% raw %}{{ index .Tags "engine_host" }}::docker_containers_running{% endraw %}')
+    .message('{% raw %}{{ .ID }}:{{ index .Fields "value" }}{% endraw %}')
+    .crit(lambda: "value" != {{ num_container[key] }} )
     .alerta()
-      .environment('docker')
+      .environment('{% raw %}{{ index .Tags "engine_host"}}{% endraw %}')
 
-n_containers_paused
+n_containers_paused_{{ key }}
   |alert()
-    .id('docker_containers_paused')
-    .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .crit(lambda: "value" != 0 )
+    .id('{% raw %}{{ index .Tags "engine_host" }}::docker_containers_paused{% endraw %}')
+    .message('{% raw %}{{ .ID }}::{{ index .Fields "value" }}{% endraw %}')
+    .crit(lambda: "value" > 0 )
     .alerta()
-      .environment('docker')
+      .environment('{% raw %}{{ index .Tags "engine_host"}}{% endraw %}')
 
-n_containers_stopped
+n_containers_stopped_{{ key }}
   |alert()
-    .id('docker_containers_stopped')
-    .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .crit(lambda: "value" != 0 )
+    .id('{% raw %}{{ index .Tags "engine_host" }}::docker_containers_stopped{% endraw %}')
+    .message('{% raw %}{{ .ID }}::{{ index .Fields "value" }}{% endraw %}')
+    .crit(lambda: "value" > 0 )
     .alerta()
-      .environment('docker')
+      .environment('{% raw %}{{ index .Tags "engine_host"}}{% endraw %}')
 
-{% endraw %}
 
+{% endfor %}
