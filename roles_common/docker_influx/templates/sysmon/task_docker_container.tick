@@ -34,7 +34,7 @@ n_containers
   |alert()
     .id('docker_containers')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .crit(lambda: != 12 )
+    .crit(lambda: != 34 )
     .alerta()
       .environment('docker')
 
@@ -42,7 +42,7 @@ n_containers_running
   |alert()
     .id('docker_containers_running')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .crit(lambda: "value" != 12 )
+    .crit(lambda: "value" != 34 )
     .alerta()
       .environment('docker')
 
@@ -50,7 +50,7 @@ n_containers_paused
   |alert()
     .id('docker_containers_paused')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .crit(lambda: "value" != 12 )
+    .crit(lambda: "value" != 0 )
     .alerta()
       .environment('docker')
 
@@ -58,7 +58,7 @@ n_containers_stopped
   |alert()
     .id('docker_containers_stopped')
     .message('{{ .ID }}:{{ index .Fields "value" }}')
-    .crit(lambda: "value" != 12 )
+    .crit(lambda: "value" != 0 )
     .alerta()
       .environment('docker')
 
