@@ -1,0 +1,4 @@
+---
+- name: restart icinga
+  service: name=icinga2.service state=restarted
+

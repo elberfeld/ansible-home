@@ -50,6 +50,7 @@
     - { role: roles_common/alerta_heartbeat, tags: alerta_heartbeat }
     - { role: roles_common/borgbackup, tags: borgbackup }
     - { role: roles_common/telegraf, tags: telegraf }
+    - { role: roles_master/icinga, tags: icinga }
     - { role: roles_master/nostandby, tags: nostandby }
     - { role: roles_master/proxmox, tags: proxmox }
 
