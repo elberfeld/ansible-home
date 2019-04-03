@@ -11,3 +11,7 @@
 #			
 #    }
 
+    location / {
+      rewrite     ^(.*)   https://{{ webserver_defaultdomain }}.void.ms$1 permanent;
+    }
+    

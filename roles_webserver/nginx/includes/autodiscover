@@ -10,3 +10,8 @@
         	proxy_redirect  off;
 			
     }
+
+	location = / {
+    	return 301 https://autodiscover.void.ms/mail/config-v1.1.xml;
+	}
+
