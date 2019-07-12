@@ -39,6 +39,7 @@ webserver_domains:
   - "autoconfig"
   - "autodiscover" 
   - "cloud"
+  - "commafeed"
   - "ldap2"
   - "mail"
   - "mailadmin"

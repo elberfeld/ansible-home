@@ -1,0 +1,13 @@
+
+version: "3"
+
+services:
+  
+  app:
+
+    image: agross/commafeed:latest
+    ports:
+      - 127.0.0.1:42015:8082
+    volumes:
+      - /srv/commafeed/config.yml:/config/config.yml
+      - /srv/commafeed/db:/home/commafeed/

@@ -1,0 +1,24 @@
+---
+
+- name: create folder struct for commafeed
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - /srv/commafeed/
+    - /srv/commafeed/db/
+
+
+- name: Konfig-Dateien erstellen
+  template:
+    src: "{{ item }}"
+    dest: "/srv/commafeed/{{ item }}"
+  with_items:
+    - docker-compose.yml
+    - config.yml
+  notify: restart commafeed docker
+
+- name: start commafeed docker
+  docker_service:
+    project_src: /srv/commafeed/
+    state: present

@@ -1,0 +1,7 @@
+---
+
+- name: restart commafeed docker
+  docker_service:
+    project_src: /srv/commafeed/
+    state: present
+    restarted: yes

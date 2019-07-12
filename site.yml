@@ -96,6 +96,7 @@
 - hosts: webserver2
   remote_user: root
   roles:
+    - { role: roles_webserver/docker_commafeed, tags: commafeed }
     - { role: roles_webserver/docker_onlyoffice, tags: onlyoffice }
     - { role: roles_webserver/docker_mail, tags: mail }
 #    - { role: roles_webserver/docker_matrix, tags: matrix }
