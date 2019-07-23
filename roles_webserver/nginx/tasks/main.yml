@@ -1,3 +1,7 @@
+# Get secrets DODO: needs refactoring 
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+    - { path: /srv/commafeed/commafeed_auth, length: 24 }
 
 # Pakete installieren
 - name: nginx installieren
