@@ -6,6 +6,7 @@ services:
   app:
 
     image: agross/commafeed:latest
+    restart: always
     ports:
       - 127.0.0.1:42015:8082
     volumes:
