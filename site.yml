@@ -26,7 +26,6 @@
   remote_user: root
   roles:
     - { role: roles_common/alerta_heartbeat, tags: alerta_heartbeat }
-    - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_backupsrv/borgserver, tags: borgserver }
 
 
@@ -35,7 +34,6 @@
   roles:
     - { role: roles_common/alerta_heartbeat, tags: alerta_heartbeat }
     - { role: roles_common/borgbackup, tags: borgbackup }
-    - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_control/homegear, tags: homegear }
     - { role: roles_control/openhab, tags: openhab }
     - { role: roles_control/raspberryremote, tags: raspberryremote }
