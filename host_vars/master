@@ -1,10 +1,10 @@
 
 debian_sources: 
-  - "deb http://deb.debian.org/debian/ stretch main"
-  - "deb http://security.debian.org/debian-security stretch/updates main"
-  - "deb http://download.proxmox.com/debian/pve stretch pve-no-subscription"
-  - "deb https://repos.influxdata.com/debian stretch stable"
-  - "deb http://packages.icinga.com/raspbian icinga-stretch main"
+  - "deb http://deb.debian.org/debian/ buster main"
+  - "deb http://security.debian.org/debian-security buster/updates main"
+  - "deb http://download.proxmox.com/debian/pve buster pve-no-subscription"
+  - "deb https://repos.influxdata.com/debian buster stable"
+  - "deb http://packages.icinga.com/raspbian icinga-buster main"
 
 debian_keys:
   - "http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg"
