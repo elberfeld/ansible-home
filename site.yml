@@ -77,7 +77,6 @@
     - { role: roles_common/alerta_heartbeat, tags: alerta_heartbeat }
     - { role: roles_common/borgbackup, tags: borgbackup }
     - { role: roles_common/docker, tags: docker }
-    - { role: roles_common/openvpn, tags: openvpn }
     - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_webserver/nginx, tags: nginx }
     - { role: roles_webserver/docker_bind, tags: bind }

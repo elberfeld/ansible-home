@@ -1,7 +1,0 @@
-/var/log/openvpn/*.log {
-  rotate 12
-  monthly
-  compress
-  missingok
-  notifempty
-}
