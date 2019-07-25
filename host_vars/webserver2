@@ -4,20 +4,9 @@ debian_sources:
   - "deb http://ftp.halifax.rwth-aachen.de/debian/ buster-updates main contrib non-free"
   - "deb http://security.debian.org/ buster/updates main contrib non-free"
   - "deb https://download.docker.com/linux/debian buster stable"
-  - "deb https://repos.influxdata.com/debian buster stable"
 
 debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
-  - "https://repos.influxdata.com/influxdb.key"
-
-
-# Telegraf Monitoring Konfigurationen 
-telegraf_monitoring:
-  - "disk.conf"
-  - "network.conf"
-  - "ping.conf"
-
-#  - "dns.conf" 
 
 
 

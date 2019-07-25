@@ -6,20 +6,11 @@ debian_sources:
   - "deb https://homegear.eu/packages/Raspbian/ stretch/"
   - "deb http://dl.bintray.com/openhab/apt-repo2 testing main"
   - "deb https://deb.nodesource.com/node_8.x stretch main"
-  - "deb https://repos.influxdata.com/debian stretch stable"
 
 debian_keys:
   - "https://homegear.eu/packages/Release.key"
   - "https://bintray.com/user/downloadSubjectPublicKey?username=openhab"
   - "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
-  - "https://repos.influxdata.com/influxdb.key"
-
-
-# Telegraf Monitoring Konfigurationen 
-telegraf_monitoring:
-  - "disk.conf"
-  - "network.conf"
-  - "hardware.conf"
 
 
 # Primäre IP Adressen des Hosts 

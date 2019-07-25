@@ -49,7 +49,6 @@
   roles:
     - { role: roles_common/alerta_heartbeat, tags: alerta_heartbeat }
     - { role: roles_common/borgbackup, tags: borgbackup }
-    - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_master/icinga, tags: icinga }
     - { role: roles_master/nostandby, tags: nostandby }
     - { role: roles_master/proxmox, tags: proxmox }
@@ -64,7 +63,6 @@
     - { role: roles_common/alerta_heartbeat, tags: alerta_heartbeat }
     - { role: roles_common/borgbackup, tags: borgbackup }
     - { role: roles_common/docker, tags: docker }
-    - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_common/docker_influx, tags: influx_sysmon, influx_instance: sysmon, influx_port: 18086, chronograf_port: 18087 }
     - { role: roles_common/docker_influx, tags: influx_openhab, influx_instance: openhab, influx_port: 28086, chronograf_port: 28087 }
     - { role: roles_intserver/docker_hibiscus, tags: hibiscus }
@@ -77,7 +75,6 @@
     - { role: roles_common/alerta_heartbeat, tags: alerta_heartbeat }
     - { role: roles_common/borgbackup, tags: borgbackup }
     - { role: roles_common/docker, tags: docker }
-    - { role: roles_common/telegraf, tags: telegraf }
     - { role: roles_webserver/nginx, tags: nginx }
     - { role: roles_webserver/docker_bind, tags: bind }
     - { role: roles_webserver/docker_ldap, tags: ldap }
