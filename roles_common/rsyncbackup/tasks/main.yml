@@ -1,0 +1,31 @@
+---
+# Pakete installieren
+- name: pakete installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items:
+    - rsync
+    - logrotate
+
+- name: create directories 
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - /srv/rsyncbackup 
+    - /var/log/rsyncbackup 
+
+- name: create jobs
+  include: job.yml
+  loop: "{{ rsyncbackup|dict2items }}"
+  loop_control:
+    loop_var: job
+
+- name: rsyncbackup LogRotate config erstellen 
+  template: 
+    src: logrotate 
+    dest: /etc/logrotate.d/rsyncbackup
+
+

@@ -1,0 +1,23 @@
+
+- name: create directory
+  file: 
+    path: /srv/rsyncbackup/{{ job.key }}
+    state: "directory"
+
+- name: set file permissions 
+  file:
+    path: /srv/rsyncbackup/{{ job.key }}/rsync_password
+    owner: root
+    group: root
+    mode: 0600
+    state: touch
+
+- name: rsyncbackup Scripte erstellen 
+  template: 
+    src: rsyncbackup-job.sh 
+    dest: /srv/rsyncbackup/{{ job.key }}/rsyncbackup-job.sh 
+    mode: u+x
+
+- name: Cronjob für rsyncbackup Backup 
+  cron: name="rsyncbackup-{{ job.key }}" weekday="{{ job.value.weekday }}" hour="{{ job.value.hour }}" minute="{{ job.value.minute }}" job="/srv/rsyncbackup/{{ job.key }}/rsyncbackup-job.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/rsyncbackup/{{ job.key }}.log"
+  

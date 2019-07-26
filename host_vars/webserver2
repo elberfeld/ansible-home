@@ -46,6 +46,39 @@ openvpn_clients:
   - "client-webs1"
 
 
+# Definition von RSync Backup Jobs 
+rsyncbackup:
+
+  storage: 
+
+    # URL des Repos   
+    target: "rsync://rsync@10.5.0.100/RSyncBackup/webserver2/"
+    
+    # zusätzliche RSync Optionen
+    options: "--compress"
+    
+    # Base Directory
+    basedir: "/"
+
+    # Includes 
+    includes:
+      - "etc**"
+      - "srv**"
+      - "var/log**"
+
+    # Includes 
+    excludes:
+      - "*"
+
+    # Backup Schedule 
+    weekday: "*"
+    hour: "*"
+    minute: "00"
+
+    # Alerta Heartbeat Timeout 
+    heartbeat_timeout: "{{ 3 * 12 * 60 * 60 }}"
+
+
 # Definition von Borgbackup Repositories 
 borgbackup_repos:
 

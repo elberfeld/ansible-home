@@ -14,6 +14,40 @@ debian_keys:
 # Primäre IP Adressen des Hosts 
 int_ip4: 10.5.0.101
 
+
+# Definition von RSync Backup Jobs 
+rsyncbackup:
+
+  storage: 
+
+    # URL des Repos   
+    target: "rsync://rsync@10.5.0.100/RSyncBackup/master/"
+    
+    # zusätzliche RSync Optionen
+    options: ""
+    
+    # Base Directory
+    basedir: "/"
+
+    # Includes 
+    includes:
+      - "etc**"
+      - "srv**"
+      - "var/log**"
+
+    # Includes 
+    excludes:
+      - "*"
+
+    # Backup Schedule 
+    weekday: "*"
+    hour: "*"
+    minute: "15"
+
+    # Alerta Heartbeat Timeout 
+    heartbeat_timeout: "{{ 3 * 12 * 60 * 60 }}"
+
+
 # Definition von Borgbackup Repositories 
 borgbackup_repos:
   
