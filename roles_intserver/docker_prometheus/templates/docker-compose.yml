@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: prom/prometheus:v2.11.1
+    restart: always
+    ports:
+      - 0.0.0.0:9090:9090
+    volumes:
+      - /srv/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /srv/prometheus/config/alertrules.yml:/etc/prometheus/alertrules.yml
+      - /srv/prometheus/data/:/prometheus
+
+
+  alertmanager:
+
+    image: prom/alertmanager:v0.18.0
+    restart: always
+    ports:
+      - 0.0.0.0:9093:9093
+    volumes:
+      - /srv/prometheus/config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - /srv/prometheus/alert-data/:/alertmanager
+
+  snmp-exporter:
+
+    image: prom/snmp-exporter:v0.15.0
+    restart: always
+    ports:
+      - 0.0.0.0:9116:9116

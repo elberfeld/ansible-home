@@ -1,0 +1,70 @@
+
+{% raw %}
+
+groups:
+
+- name: system_general
+
+  rules:
+
+  - alert: SCRAPE_FAIL
+    expr: up < 1
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "Metric Scape is failing"
+
+  - alert: SYS_DOWN
+    expr: system_uptime < 1
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "System {{ $labels.host }} is down"
+
+- name: memory_general
+
+  rules:
+
+  - alert: MEM_FULL
+    expr: (( mem_total - mem_free ) / mem_total * 100) > 90
+    for: 15m
+
+- name: cpu_general
+
+  rules:
+
+  - alert: HIGH_CPU
+    expr: cpu_usage_idle < 0.1 
+    for: 15m
+
+- name: disk_general
+
+  rules:
+
+  - alert: HIGH_DISK_IO
+    expr: diskio_iops_in_progress > 10 
+    for: 5m
+
+  - alert: DISK_FULL_85P 
+    expr: ( 100 * ( 1 - ( disk_free / disk_total ) ) ) > 85
+      
+  - alert: DISK_FULL_95P 
+    expr: ( 100 * ( 1 - ( disk_free / disk_total ) ) ) > 95 
+    labels:
+      severity: high 
+      
+  - alert: DISK_FULL_IN_24H
+    expr: predict_linear( disk_free[24h], 24*3600 ) < 0
+    annotations:
+      summary: "Disk {{ $labels.host }} / {{ $labels.path }} will be full in 24 hours"
+
+  - alert: DISK_FULL_IN_4H
+    expr: predict_linear( disk_free[4h], 4*3600 ) < 0
+    labels:
+      severity: high 
+    annotations:
+      summary: "Disk {{ $labels.host }} / {{ $labels.path }} will be full in 4 hours"
+
+{% endraw %}

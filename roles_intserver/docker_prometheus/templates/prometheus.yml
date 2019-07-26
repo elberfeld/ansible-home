@@ -1,0 +1,72 @@
+
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+
+# Write data to influxdb for long term storage  
+remote_write:
+  - url: "http://{{int_ip4}}:18086/api/v1/prom/write?u=admin&p={{influx_admin_pw}}&db=influx"
+
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - "/etc/prometheus/alertrules.yml"
+
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "10.5.0.111:9093"
+
+scrape_configs:
+
+  - job_name: 'firewall'
+
+    static_configs:
+      - targets: ['10.5.0.254:9100']
+        labels:
+          group: 'network'
+
+{% for item in groups['server'] %}
+
+  - job_name: '{{ item }}'
+
+    static_configs:
+      - targets: ['{{ hostvars[item]['int_ip4'] }}:9100']
+        labels:
+          group: 'server'
+
+{% endfor %}
+
+  - job_name: 'storage'
+
+    metrics_path: /snmp
+    static_configs:
+      - targets:
+        - 10.5.0.100  
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.5.0.111:9116  
+
+  - job_name: 'hpswitch'
+
+    metrics_path: /snmp
+    static_configs:
+      - targets:
+        - 10.5.0.253  
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.5.0.111:9116  
+
+
