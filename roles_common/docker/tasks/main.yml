@@ -40,12 +40,19 @@
 - name: Cronjob to prune unused images  
   cron: name="docker-prune" weekday="*" hour="5" minute="5" job="/usr/bin/docker system prune --all -f"  
 
-- name: create telegraf config  
-  template: src=telegraf.conf dest=/etc/telegraf/telegraf.d/docker.conf
-  notify: restart telegraf
+- name: "Set Docker Server Blocker file: {{ docker_service_blocker_file }}"
+  ini_file:
+    path: "{{ item }}"
+    section: Unit
+    option: ConditionFileNotEmpty
+    value: "{{ docker_service_blocker_file }}"
+    backup: yes
+  with_items: 
+    - /lib/systemd/system/containerd.service 
+    - /lib/systemd/system/docker.service 
+    - /lib/systemd/system/docker.socket
+  when: docker_service_blocker_file is defined 
 
-- name: adding existing user 'telegraf' to group docker
-  user:
-    name: telegraf
-    groups: docker
-    append: yes
+- name: force systemd to reread configs 
+  systemd:
+    daemon_reload: yes
