@@ -15,15 +15,15 @@
     name: docker-py
     state: absent
     
-- name: install pip packages
-  pip: 
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - setuptools
-    - docker
-    - docker-compose
-    - python-docker
+#- name: install pip packages
+#  pip: 
+#    name: "{{ item }}"
+#    state: present
+#  with_items:
+#    - setuptools
+#    - docker
+#    - docker-compose
+#    - python-docker
 
 - name: daemon config für docker erstellen 
   template: src=daemon.conf dest=/etc/docker/daemon.conf

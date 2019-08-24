@@ -39,7 +39,19 @@ scrape_configs:
         labels:
           group: 'server'
 
+  {% if hostvars[item]['docker_service'] is defined %}        
+          
+  - job_name: '{{ item }}_docker'
+
+    static_configs:
+      - targets: ['{{ hostvars[item]['int_ip4'] }}:9323']
+        labels:
+          group: 'docker'
+  
+  {% endif %}
+
 {% endfor %}
+
 
   - job_name: 'storage'
 

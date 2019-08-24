@@ -1,4 +1,6 @@
 
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@webserver1.void.ms"'
+
 debian_sources: 
   - "deb http://ftp.halifax.rwth-aachen.de/debian/ buster main contrib non-free"
   - "deb http://ftp.halifax.rwth-aachen.de/debian/ buster-updates main contrib non-free"
@@ -13,6 +15,9 @@ debian_keys:
 
 # Primäre IP Adressen des Hosts 
 int_ip4: 10.5.0.111
+
+# Hier läuft Docker 
+docker_service: yes
 
 
 # Definition von RSync Backup Jobs 
