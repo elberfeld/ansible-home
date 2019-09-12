@@ -1,0 +1,81 @@
+---
+
+- include: ../functions/get_secret.yml
+  with_items:
+   - { path: /srv/openhab/tradfri_code,      length: -1 }
+   - { path: /srv/openhab/tradfri_identity,  length: -1 }
+   - { path: /srv/openhab/tradfri_key,       length: -1 }
+   - { path: /srv/openhab/pushover_token,    length: -1 }
+   - { path: /srv/openhab/pushover_userkey,  length: -1 }
+
+- name: pakete installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items:
+    - logrotate
+
+- name: openhab LogRotate config erstellen 
+  template: 
+    src: logrotate 
+    dest: /etc/logrotate.d/openhab
+
+- name: Get a timestamp
+  command: "date +%Y%m%d%H%M%S"
+  register: timestamp
+
+- name: create folder struct for openhab
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - /srv/openhab/
+    - /srv/openhab/addons/
+    - /srv/openhab/conf/
+    - /srv/openhab/conf/items/
+    - /srv/openhab/conf/services/
+    - /srv/openhab/conf/persistence/
+    - /srv/openhab/conf/rules/
+    - /srv/openhab/conf/things/
+    - /srv/openhab/userdata/
+
+- name: Konfig-Dateien erstellen
+  template:
+    src: "{{ item }}"
+    dest: "/srv/openhab/{{ item }}"
+  with_items:
+    - Dockerfile
+    - docker-compose.yml
+    - raspberry-remote-send.sh
+    - conf/items/gpio.items
+    - conf/items/groups.items
+    - conf/items/network.items
+    - conf/items/rfswitches.items
+    - conf/items/tradfri.items
+    - conf/items/homematic.items
+    - conf/persistence/influxdb.persist
+    - conf/rules/notifications.rules
+    - conf/services/addons.cfg
+    - conf/services/openhabcloud.cfg
+    - conf/services/pushover.cfg
+    - conf/services/runtime.cfg
+    - conf/services/gpio.cfg
+    - conf/services/influxdb.cfg
+    - conf/services/network.cfg
+    - conf/things/homematic.things
+    - conf/things/network.things
+    - conf/things/rfswitches.things
+    - conf/things/tradfri.things
+
+- name: stop openhab docker
+  docker_compose:
+    project_src: /srv/openhab/
+    state: absent
+
+- name: start openhab docker
+  docker_compose:
+    project_src: /srv/openhab/
+    state: present
+
+

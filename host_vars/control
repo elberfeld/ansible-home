@@ -1,16 +1,11 @@
 
 debian_sources: 
-  - "deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi"
-  - "deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi"
-  - "deb https://homegear.eu/packages/Raspbian/ jessie/"
-  - "deb https://homegear.eu/packages/Raspbian/ stretch/"
-  - "deb http://dl.bintray.com/openhab/apt-repo2 testing main"
-  - "deb https://deb.nodesource.com/node_8.x stretch main"
+  - "deb http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi"
+  - "deb http://archive.raspberrypi.org/debian/ buster main"
+  - "deb https://download.docker.com/linux/raspbian buster stable"
 
 debian_keys:
-  - "https://homegear.eu/packages/Release.key"
-  - "https://bintray.com/user/downloadSubjectPublicKey?username=openhab"
-  - "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+  - "https://download.docker.com/linux/raspbian/gpg"
 
 
 # Primäre IP Adressen des Hosts 

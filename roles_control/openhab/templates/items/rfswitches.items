@@ -1,8 +1,0 @@
-
-Group gAlles "Alles" ["Lighting"]
-Group gLampen "Lampen" ["Lighting"]
-
-{% for rfswitch in rfswitches %}
-Switch	{{ rfswitch.id }} "{{ rfswitch.name }}" <{{ rfswitch.category }}> ({{ rfswitch.groups }}) ["Lighting"]
-{% endfor %}
-

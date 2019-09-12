@@ -18,34 +18,33 @@ influxdb_sysmon:
   user: "influx" 
   password: "influx" 
 
-# Zentrale InfluxDb für Openhab  
-influxdb_openhab:
-  url: "http://10.5.0.111:28086"
-  db: "influx"
-  user: "influx" 
-  password: "influx" 
 
-homematic_devices:
-  - { id: "MEQ0806347",   type: "HG-HM-CC-RT-DN",      name: "Heizung Schlafzimmer" }
-  - { id: "MEQ0251087",   type: "HG-HM-CC-RT-DN",      name: "Heizung Wohnzimmer" }
-  - { id: "MEQ0250029",   type: "HG-HM-CC-RT-DN",      name: "Heizung Schreibtisch" }
-  - { id: "MEQ0805830",   type: "HG-HM-CC-RT-DN",      name: "Heizung Badezimmer" }
-  - { id: "MEQ1136898",   type: "HG-HM-Sec-SC-2",      name: "Fenster unten Badezimmer" }
-  - { id: "NEQ1833602",   type: "HG-HM-Sec-SC-2",      name: "Fenster oben Badezimmer" }
-  - { id: "NEQ0442083",   type: "HG-HM-Sec-SD-2",      name: "Rauchmelder Wohnzimmer" }
-  - { id: "T-NEQ0442083", type: "HG-HM-Sec-SD-2-Team", name: "Rauchmelder Team" }
-  - { id: "OEQ0160159",   type: "HG-HM-WDS40-TH-I-2",  name: "Sensor Badezimmer" }
+
+homematic_rauchmelder:
+  - { id: "NEQ0442083", name: "Rauchmelder Wohnzimmer" }
+  - { id: "OEQ2615046", name: "Rauchmelder Schlafzimmer" }
+
+homematic_heizung:
+  - { id: "MEQ0806347", name: "Heizung Schlafzimmer" }
+  - { id: "MEQ0251087", name: "Heizung Wohnzimmer" }
+  - { id: "MEQ0250029", name: "Heizung Schreibtisch" }
+  - { id: "MEQ0805830", name: "Heizung Badezimmer" }
+
+homematic_sensor:
+  - { id: "OEQ0160159", name: "Sensor Badezimmer" }
+
+homematic_fenster:
+  - { id: "MEQ1136898", name: "Fenster unten Badezimmer" }
+  - { id: "NEQ1833602", name: "Fenster oben Badezimmer" }
 
 rfswitches:
-  - { id: "LichtDvdRegal",    name: "DVD Regal",   code: "11001 1", groups: "gAlles,gLampen", category: "light" }
-  - { id: "LichtTetris",      name: "Tetris",      code: "11001 2", groups: "gAlles,gLampen", category: "light" }
-  - { id: "LichtFlur",        name: "Flur",        code: "11001 3", groups: "gAlles,gLampen", category: "light" }
-  - { id: "LichtLeselampe",   name: "Leselampe",   code: "11001 4", groups: "gAlles,gLampen", category: "light" }
-  - { id: "LichtVitrine",     name: "Vitrine",     code: "11001 5", groups: "gAlles,gLampen", category: "light" }
-  - { id: "LichtSideboard",   name: "Sideboard",   code: "11010 1", groups: "gAlles,gLampen", category: "light" }
-  - { id: "PowerAudiosystem", name: "Audiosystem", code: "11010 2", groups: "gAlles",         category: "light" }
-  - { id: "LichtStehlampe",   name: "Stehlampe",   code: "11010 3", groups: "gAlles,gLampen", category: "light" }
-  - { id: "LichtCouch",       name: "Couch",       code: "11010 4", groups: "gAlles,gLampen", category: "light" }
-  - { id: "PowerFernseher",   name: "Fernseher",   code: "11010 5", groups: "gAlles",         category: "light" }
-
+  - { id: "LichtDvdRegal",    name: "DVD Regal",   code: "11001 1",  groups: "gAlles,gLampen" }
+  - { id: "LampeTetris",      name: "Tetris",      code: "11001 2",  groups: "gAlles,gLampen" }
+  - { id: "LichtFlur",        name: "Licht Flur",  code: "11001 3",  groups: "gAlles,gLampen" }
+  - { id: "LampeLeselampe",   name: "Leselampe",   code: "11001 4",  groups: "gAlles,gLampen" }
+  - { id: "LichtVitrine",     name: "Vitrine",     code: "11001 5",  groups: "gAlles,gLampen" }
+  - { id: "LichtSideboard",   name: "Sideboard",   code: "11010 1",  groups: "gAlles,gLampen" }
+  - { id: "PowerAudiosystem", name: "Audiosystem", code: "11010 2",  groups: "gAlles",        }
+  - { id: "LampeStehlampe",   name: "Stehlampe",   code: "11010 3",  groups: "gAlles,gLampen" }
+  - { id: "PowerFernseher",   name: "Fernseher",   code: "11010 5",  groups: "gAlles",        }
 

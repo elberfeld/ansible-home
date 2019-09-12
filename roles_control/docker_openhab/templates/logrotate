@@ -1,0 +1,7 @@
+/srv/openhab/userdata/logs/*.log {
+  rotate 12
+  monthly
+  compress
+  missingok
+  notifempty
+}

@@ -1,6 +1,0 @@
----
-- name: restart openhab
-  systemd:
-    name: openhab2
-    enabled: yes
-    daemon_reload: yes

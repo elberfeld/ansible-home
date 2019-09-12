@@ -1,0 +1,31 @@
+
+
+version: "3"
+
+services:
+  
+  app:
+
+    build: .
+    image: "openhab-{{ timestamp.stdout }}"
+    restart: always
+    privileged: true
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    # The command node is very important. It overrides
+    # the "gosu openhab tini -s ./start.sh" command from Dockerfile and runs as root!
+    command: "tini -s ./start.sh server"
+    volumes:
+      - /boot/cmdline.txt:/boot/cmdline.txt:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /srv/openhab/addons:/openhab/addons
+      - /srv/openhab/conf:/openhab/conf
+      - /srv/openhab/userdata:/openhab/userdata
+    environment:
+      OPENHAB_HTTP_PORT: 80
+      OPENHAB_HTTPS_PORT: 443
+      EXTRA_JAVA_OPTS: "-Duser.timezone=Europe/Berlin -Djna.boot.library.path=/usr/lib/jni"
+

@@ -1,3 +1,0 @@
-
-Number:Temperature Temperature 	"Muenster Temp. [%.1f %unit%]" { channel="yahooweather:weather:muenster:temperature" }
-

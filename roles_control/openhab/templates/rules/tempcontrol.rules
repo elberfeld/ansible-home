@@ -1,7 +1,0 @@
-rule "lower at night"
-when
-    Time cron "0 0 2 * * ? *"
-then
-    logInfo("Rule: lower at night")
-    homematic_HG-HM-CC-RT-DN_ccu_MEQ0250029_4_SET_TEMPERATURE.sendCommand(18.0)
-end
