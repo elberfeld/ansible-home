@@ -8,7 +8,10 @@
   with_items:
     - debian-archive-keyring
     - apt-transport-https
+    - ca-certificates
     - curl
+    - gnupg2 
+    - software-properties-common
 
 - name: add debian repo keys 
   apt_key:
