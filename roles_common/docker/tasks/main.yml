@@ -5,25 +5,19 @@
     pkg: "{{ item }}"
     update_cache: yes
     state: present
+    install_recommends: no
   with_items:
     - docker-ce
     - python 
     - python-pip
-
-- name: uninstall pip packages
+    - python-docker
+   
+- name: install pip packages
   pip: 
-    name: docker-py
-    state: absent
-    
-#- name: install pip packages
-#  pip: 
-#    name: "{{ item }}"
-#    state: present
-#  with_items:
-#    - setuptools
-#    - docker
-#    - docker-compose
-#    - python-docker
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker-compose==1.23.2
 
 - name: daemon config für docker erstellen 
   template: src=daemon.conf dest=/etc/docker/daemon.conf
