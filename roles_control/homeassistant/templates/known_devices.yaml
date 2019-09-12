@@ -1,8 +1,0 @@
-
-devicename:
-  name: ChrisHandy
-  mac: {{chris_handy_mac}} 
-  picture: https://home-assistant.io/images/favicon-192x192.png
-  track: yes
-  hide_if_away: no
-

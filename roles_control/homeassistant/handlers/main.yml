@@ -1,3 +1,0 @@
----
-- name: restart homeassistant
-  service: name=homeassistant state=restarted
