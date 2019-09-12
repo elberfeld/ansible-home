@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: grafana/grafana:5.3.4
+    image: grafana/grafana:6.3.5
     restart: always
     ports:
       - 127.0.0.1:42011:3000
@@ -13,6 +13,6 @@ services:
       - /srv/grafana/config/ldap.toml:/etc/grafana/ldap.toml
       - /srv/grafana/data/:/var/lib/grafana
     environment:
-      GF_SERVER_ROOT_URL: "http://10.5.0.111:3000"
+      GF_SERVER_ROOT_URL: "http://grafana.void.ms"
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_pass }}"
 
