@@ -1,9 +1,0 @@
-
-// Command-Definitionen für 433 Mhz Funksteckdosen 
-// Für jede Steckdose gibt es eine Command Definition 
-
-{% for device in rfswitches %}
-
-Thing exec:command:{{ device.id }} [ command="/opt/raspberry-remote-send.sh {{ device.code }} %2$s", interval=0, autorun=true ]
-
-{% endfor %}

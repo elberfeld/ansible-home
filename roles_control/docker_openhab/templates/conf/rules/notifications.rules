@@ -3,7 +3,7 @@ rule "Tuer_Notify_Pushover_Open"
 when 
     Item WohnungTuer changed to OPEN 
 then 
-    logInfo("notification_rules", "tuer offen")
+    logInfo("default.rules", "tuer offen")
     sendPushoverMessage(pushoverBuilder("Tür offen"))
 end
 
@@ -11,7 +11,7 @@ rule "Tuer_Notify_Pushover_Close"
 when 
     Item WohnungTuer changed to CLOSED
 then 
-    logInfo("notification_rules", "tuer closed")
+    logInfo("default.rules", "tuer closed")
     sendPushoverMessage(pushoverBuilder("Tür zu"))
 end
 

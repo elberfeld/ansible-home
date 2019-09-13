@@ -1,9 +1,9 @@
 
 // Switche für 433MHz Funksteckdosen 
-// Die Ansteuerung erfolgt über das exec-binding
+// Die Ansteuerung erfolgt über Rules
 
 {% for device in rfswitches %}
 
-String {{ device.id }} "{{ device.name }}" ({{ device.groups }}) [ "Switchable" ] { channel="exec:command:{{ device.id }}:input", autoupdate="true" }
+Switch {{ device.id }} "{{ device.name }}" ({{ device.groups }}) [ "Switchable" ] { autoupdate="true" }
 
 {% endfor %}

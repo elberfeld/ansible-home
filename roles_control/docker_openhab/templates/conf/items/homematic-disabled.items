@@ -1,0 +1,8 @@
+{% for device in homematic_fenster %}
+
+// homematic_fenster
+Switch  {{ device.id }}_UNREACH   "{{ device.name }} Unreach"   {channel="homematic:HM-Sec-SC-2:OEQ1046187:{{ device.id }}:0#UNREACH"}
+Switch  {{ device.id }}_LOWBAT    "{{ device.name }} LowBatt"   {channel="homematic:HM-Sec-SC-2:OEQ1046187:{{ device.id }}:0#LOWBAT"}
+Switch  {{ device.id }}_State     "{{ device.name }} Status"    {channel="homematic:HM-Sec-SC-2:OEQ1046187:{{ device.id }}:1#STATE"}
+
+{% endfor %}

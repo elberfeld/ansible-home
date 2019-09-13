@@ -28,14 +28,14 @@ homematic_heizung:
   - { id: "MEQ0806347", name: "Heizung Schlafzimmer" }
   - { id: "MEQ0251087", name: "Heizung Wohnzimmer" }
   - { id: "MEQ0250029", name: "Heizung Schreibtisch" }
-  - { id: "MEQ0805830", name: "Heizung Badezimmer" }
+#  - { id: "MEQ0805830", name: "Heizung Badezimmer" }
 
 homematic_sensor:
   - { id: "OEQ0160159", name: "Sensor Badezimmer" }
 
-homematic_fenster:
-  - { id: "MEQ1136898", name: "Fenster unten Badezimmer" }
-  - { id: "NEQ1833602", name: "Fenster oben Badezimmer" }
+#homematic_fenster:
+#  - { id: "MEQ1136898", name: "Fenster unten Badezimmer" }
+#  - { id: "NEQ1833602", name: "Fenster oben Badezimmer" }
 
 rfswitches:
   - { id: "LichtDvdRegal",    name: "DVD Regal",   code: "11001 1",  groups: "gAlles,gLampen" }
