@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+
+  app:
+  
+    image: grafana/promtail:master-61be4c9
+    restart: always
+    volumes:
+      - /srv/promtail/docker-config.yaml:/etc/promtail/docker-config.yaml
+      - /etc/machine-id:/etc/machine-id 
+      - /run/log/journal:/run/log/journal
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/docker-config.yaml
+

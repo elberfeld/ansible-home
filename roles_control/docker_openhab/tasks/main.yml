@@ -47,6 +47,7 @@
   with_items:
     - Dockerfile
     - docker-compose.yml
+    - promtail-config.yaml
     - raspberry-remote-send.sh
     - conf/items/gpio.items
     - conf/items/groups.items

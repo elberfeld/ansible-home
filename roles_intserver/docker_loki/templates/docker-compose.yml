@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: grafana/loki:master-481906c
+    restart: always
+    ports:
+      - "3100:3100"
+    volumes:
+      - /srv/loki/local-config.yaml:/etc/loki/local-config.yaml:ro
+      - /srv/loki/data:/data
+    command: -config.file=/etc/loki/local-config.yaml
+

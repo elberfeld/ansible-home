@@ -29,3 +29,14 @@ services:
       OPENHAB_HTTPS_PORT: 443
       EXTRA_JAVA_OPTS: "-Duser.timezone=Europe/Berlin -Djna.boot.library.path=/usr/lib/jni"
 
+  
+  promtail:
+
+    image: grafana/promtail:master-61be4c9
+    restart: always
+    volumes:
+      - /srv/openhab/promtail-config.yaml:/etc/promtail/docker-config.yaml
+      - /srv/openhab/userdata/logs:/openhab-logs
+    command: -config.file=/etc/promtail/docker-config.yaml
+
+

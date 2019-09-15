@@ -12,6 +12,12 @@ debian_keys:
 int_ip4: 10.5.0.250
 
 
+# Docker konfigurationen 
+docker:
+  # Prometheus Metriken aktivieren 
+  prometheus_metrics: yes
+
+
 # Definition von RSync Backup Jobs 
 rsyncbackup:
 

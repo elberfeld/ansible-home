@@ -1,0 +1,31 @@
+---
+ 
+- name: create folder struct for loki
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - /srv/loki/
+    - /srv/loki/data/
+
+- name: create config files
+  template: src={{ item }} dest=/srv/loki/{{ item }}
+  with_items: 
+    - local-config.yaml
+  register: config
+
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "docker-compose.yml"
+    dest: "/srv/loki/docker-compose.yml"
+
+- name: stop loki docker
+  docker_service:
+    project_src: /srv/loki/
+    state: absent
+  when: config.changed
+
+- name: start loki docker
+  docker_service:
+    project_src: /srv/loki/
+    state: present

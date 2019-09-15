@@ -1,0 +1,30 @@
+---
+
+- name: create folder struct for promtail
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - /srv/promtail/
+
+- name: create config files
+  template: src={{ item }} dest=/srv/promtail/{{ item }}
+  with_items: 
+    - docker-config.yaml
+  register: config
+
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "docker-compose.yml"
+    dest: "/srv/promtail/docker-compose.yml"
+
+- name: stop promtail docker
+  docker_service:
+    project_src: /srv/promtail/
+    state: absent
+  when: config.changed
+
+- name: start promtail docker
+  docker_service:
+    project_src: /srv/promtail/
+    state: present

@@ -16,8 +16,14 @@ debian_keys:
 # Primäre IP Adressen des Hosts 
 int_ip4: 10.5.0.111
 
-# Hier läuft Docker 
-docker_service: yes
+
+# Docker konfigurationen 
+docker:
+  # Loki Log-Driver aktivieren 
+  loki_logging: yes
+  # Prometheus Metriken aktivieren 
+  prometheus_metrics: yes
+
 
 
 # Definition von RSync Backup Jobs 

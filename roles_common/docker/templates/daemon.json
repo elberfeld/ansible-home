@@ -1,0 +1,26 @@
+{
+    "storage-driver": "overlay2"
+
+{% if docker.prometheus_metrics is defined %}      
+
+    ,
+    "metrics-addr": "{{int_ip4}}:9323",
+    "experimental": true
+
+{% endif %}
+
+{% if docker.loki_logging is defined %}      
+
+    ,
+    "log-driver": "loki",
+    "log-opts": {
+        "loki-url": "{{ loki.server }}/api/prom/push",
+        "loki-external-labels": "job=docker-log,host={{ inventory_hostname }},{% raw %}container_name={{.Name}},container_image={{.ImageName}}{% endraw %}",
+        "loki-retries": "5",
+        "loki-batch-size": "400"
+    }
+
+{% endif %}
+
+}
+

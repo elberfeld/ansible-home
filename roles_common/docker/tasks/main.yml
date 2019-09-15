@@ -11,7 +11,7 @@
     - python 
     - python-pip
     - python-docker
-   
+
 - name: install pip packages
   pip: 
     name: "{{ item }}"
@@ -19,8 +19,29 @@
   with_items:
     - docker-compose==1.23.2
 
+- name: check if loki plugin is installed 
+  shell: docker plugin ls | grep -n loki
+  register: loki_plugin_installed
+  changed_when: no
+  ignore_errors: True
+  
+- name: install loki plugin 
+  shell: /usr/bin/docker plugin install  grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+  ignore_errors: True
+  when:
+    - loki_plugin_installed|failed
+
+- name: enable loki plugin 
+  shell: /usr/bin/docker plugin enable loki 
+  ignore_errors: True
+
+- name: remove old config if exists 
+  file: 
+    path: /etc/docker/daemon.conf
+    state: absent
+    
 - name: daemon config für docker erstellen 
-  template: src=daemon.conf dest=/etc/docker/daemon.conf
+  template: src=daemon.json dest=/etc/docker/daemon.json
   notify: restart docker
 
 - name: daemon config für docker erstellen 
@@ -34,18 +55,18 @@
 - name: Cronjob to prune unused images  
   cron: name="docker-prune" weekday="*" hour="5" minute="5" job="/usr/bin/docker system prune --all -f"  
 
-- name: "Set Docker Server Blocker file: {{ docker_service_blocker_file }}"
+- name: "Set Docker Server Blocker file: {{ docker.service_blocker_file }}"
   ini_file:
     path: "{{ item }}"
     section: Unit
     option: ConditionFileNotEmpty
-    value: "{{ docker_service_blocker_file }}"
+    value: "{{ docker.service_blocker_file }}"
     backup: yes
   with_items: 
     - /lib/systemd/system/containerd.service 
     - /lib/systemd/system/docker.service 
     - /lib/systemd/system/docker.socket
-  when: docker_service_blocker_file is defined 
+  when: docker.service_blocker_file is defined 
 
 - name: force systemd to reread configs 
   systemd:

@@ -7,6 +7,10 @@ ldap:
   readonly_dn: cn=readonly,dc=void,dc=ms
   group_active_dn: cn=active,ou=groups,dc=void,dc=ms
 
+# zentrales Logging 
+loki:
+  server: http://10.5.0.111:3100
+
 # Zentrale Alerta Instanz
 alerta:
   url: "https://alerta.void.ms"

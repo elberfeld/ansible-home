@@ -1,0 +1,51 @@
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+client:
+  url: {{ loki.server }}/api/prom/push
+
+scrape_configs:
+
+  - job_name: journal
+    journal:
+      max_age: 12h
+      path: /run/log/journal
+      labels:
+        job: systemd-journal
+        host: {{ inventory_hostname }}
+    relabel_configs:
+      - source_labels: ['__journal__systemd_unit']
+        target_label: 'unit'
+
+  - job_name: system
+    pipeline_stages:
+    - docker:
+    static_configs:
+    - targets:
+        - localhost
+      labels:
+        job: system
+        host: {{ inventory_hostname }}
+        __path__: /var/log/*log
+
+{% for job in ['apt', 'borgbackup', 'cron-apt', 'letsencrypt', 'nginx', 'rsyncbackup' ] %}
+
+  - job_name: system_{{job}}
+    pipeline_stages:
+    - docker:
+    static_configs:
+    - targets:
+        - localhost
+      labels:
+        job: {{job}}
+        host: {{ inventory_hostname }}
+        __path__: /var/log/{{job}}/*log
+
+{% endfor %}
+
+
