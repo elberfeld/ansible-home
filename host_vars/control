@@ -110,4 +110,3 @@ borgbackup_repos:
 borgbackup_directories:
   - "/etc/"
   - "/srv/"
-  - "/var/lib/homegear/"

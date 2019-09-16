@@ -38,10 +38,6 @@
     - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
     - { role: roles_control/docker_openhab, tags: openhab }
-#    - { role: roles_control/raspberryremote, tags: raspberryremote }
-#    - { role: homeassistant, tags: homeassistant }
-#    - { role: iobroker, tags: iobroker }
-#    - { role: pimatic, tags: pimatic }
 
 
 - hosts: master 
