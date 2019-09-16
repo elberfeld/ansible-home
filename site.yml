@@ -17,14 +17,6 @@
     - { role: roles_infoscreen/infoscreen, tags: infoscreen }
 
 
-
-- hosts: backupsrv 
-  remote_user: root
-  roles:
-    - { role: roles_common/alerta_heartbeat, tags: alerta_heartbeat }
-    - { role: roles_backupsrv/borgserver, tags: borgserver }
-
-
 - hosts: control 
   remote_user: root
   roles:
