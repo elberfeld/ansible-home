@@ -39,7 +39,7 @@ scrape_configs:
         labels:
           group: 'server'
 
-  {% if hostvars[item]['docker.prometheus_metrics'] is defined %}        
+  {% if hostvars[item]['docker']['prometheus_metrics'] is defined %}        
           
   - job_name: '{{ item }}_docker'
 
