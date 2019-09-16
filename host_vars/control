@@ -24,7 +24,7 @@ rsyncbackup:
   storage: 
 
     # URL des Repos   
-    target: "rsync://rsync@10.5.0.100/RSyncBackup/contol/"
+    target: "rsync://rsync@10.5.0.100/RSyncBackup/control/"
     
     # zusätzliche RSync Optionen
     options: ""
