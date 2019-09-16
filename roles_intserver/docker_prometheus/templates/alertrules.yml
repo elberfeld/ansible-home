@@ -115,7 +115,7 @@ groups:
       summary: "Invalid number of containes on {{ $labels.host }} / {{ $labels.engine_daemon_container_states_containers }}"
 
   - alert: DOCKER_RUNNING_CONTAINERS_INTSERVER
-    expr: engine_daemon_container_states_containers{state="running",job="webserver1_docker"} != 12
+    expr: engine_daemon_container_states_containers{state="running",job="intserver_docker"} != 12
     annotations:
       summary: "Invalid number of containes on {{ $labels.host }} / {{ $labels.engine_daemon_container_states_containers }}"
 
