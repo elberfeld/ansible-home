@@ -67,4 +67,29 @@ groups:
     annotations:
       summary: "Disk {{ $labels.host }} / {{ $labels.path }} will be full in 4 hours"
 
+  - alert: RSYNC_BACKUP_AGE
+    expr: (time()-rsyncbackup_lastbackup)/60/60 > 24
+    annotations:
+      summary: "RSync Backup {{ $labels.host }} / {{ $labels.rapo }} older than 24h"
+
+  - alert: RSYNC_BACKUP_AGE_HIGH
+    expr: (time()-rsyncbackup_lastbackup)/60/60 > 48
+    labels:
+      severity: high 
+    annotations:
+      summary: "RSync Backup {{ $labels.host }} / {{ $labels.repo }} older than 48h"
+
+  - alert: BORG_BACKUP_AGE
+    expr: (time()-borgbackup_lastbackup)/60/60 > 24
+    annotations:
+      summary: "Borg Backup {{ $labels.host }} / {{ $labels.repo }} older than 24h"
+
+  - alert: BORG_BACKUP_AGE_HIGH
+    expr: (time()-borgbackup_lastbackup)/60/60 > 48
+    labels:
+      severity: high 
+    annotations:
+      summary: "Borg Backup {{ $labels.host }} / {{ $labels.repo }} older than 48h"
+
+
 {% endraw %}

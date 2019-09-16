@@ -8,11 +8,18 @@
   with_items:
     - prometheus-node-exporter
 
+- name: create directories 
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - /srv/prometheus-node-exporter 
+
 - name: Configure Node-Exporter 
   lineinfile:
     path: /etc/default/prometheus-node-exporter
     regexp: '^ARGS='
-    line: ARGS="--web.listen-address={{int_ip4}}:9100"
+    line: ARGS="--web.listen-address={{int_ip4}}:9100 --collector.textfile.directory=/srv/prometheus-node-exporter"
 
 - name: reload systemd and enable service
   command: systemctl enable prometheus-node-exporter

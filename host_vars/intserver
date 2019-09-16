@@ -62,10 +62,10 @@ rsyncbackup:
 # Definition von Borgbackup Repositories 
 borgbackup_repos:
   
-  backupsrv: 
+  borgbase: 
 
     # URL des Repos   
-    repo: "ssh://private@10.5.0.254:5201/data/private/intserver"
+    repo: "j0or89jt@j0or89jt.repo.borgbase.com:repo"
     
     # Repo-spezifische Optionen zum Aufruf von Borgbackup
     # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
@@ -80,7 +80,7 @@ borgbackup_repos:
     # Backup Schedule 
     weekday: "*"
     hour: "*/4"
-    minute: "30"
+    minute: "20"
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:
@@ -106,7 +106,7 @@ borgbackup_repos:
     # Backup Schedule 
     weekday: "*"
     hour: "*/4"
-    minute: "0"
+    minute: "40"
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:

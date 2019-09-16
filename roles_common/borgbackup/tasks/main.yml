@@ -126,5 +126,5 @@
   with_dict: "{{ borgbackup_repos }}"
 
 - name: Cronjob für BorgBackup Prometheus export  
-  cron: name="borgbackup-prom" weekday="*" hour="*" minute="40" job="/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup-prometheus.log"
+  cron: name="borgbackup-prom" weekday="*" hour="*" minute="0" job="/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup-prometheus.log"
   

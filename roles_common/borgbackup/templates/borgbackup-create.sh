@@ -30,4 +30,6 @@ borg check $1 $2 $3 --info --show-rc {{ item.value.options }} {{ item.value.repo
 && \
 date > "/srv/borgbackup/{{ item.key }}/lastbackup" \
 && \
+echo "borgbackup_lastbackup{repo=\"{{ item.key }}\"} $(date +%s)" > "/srv/prometheus-node-exporter/borgbackup_{{ item.key }}.prom" \
+&& \
 /srv/alerta_heartbeat/send_service_heartbeat.sh {{ item.value.heartbeat_timeout }} borg@{{ item.key }}

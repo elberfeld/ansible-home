@@ -21,4 +21,6 @@ echo "===[ END RSync Job: {{ job.key }} ]===" \
 && \
 date > "/srv/rsyncbackup/{{ job.key }}/lastbackup" \
 && \
+echo "rsyncbackup_lastbackup{repo=\"{{ job.key }}\"} $(date +%s)" > "/srv/prometheus-node-exporter/rsyncbackup_{{ job.key }}.prom" \
+&& \
 /srv/alerta_heartbeat/send_service_heartbeat.sh {{ job.value.heartbeat_timeout }} rsync@{{ job.key }}

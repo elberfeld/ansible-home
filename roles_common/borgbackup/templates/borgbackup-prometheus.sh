@@ -4,7 +4,7 @@ export BORG_PASSPHRASE="{{repo_passphrase}}"
 export BORG_RSH="ssh -i /srv/borgbackup/repo_sshkey"
 
 # Metrics output file in the prometheus node-exporter directory 
-PROM_FILE="/var/lib/prometheus/node-exporter/borgbackup.prom"
+PROM_FILE="/srv/prometheus-node-exporter/borgbackup.prom"
 
 #  Borgbackup statistiken für Prometheus erstellen 
 
@@ -47,10 +47,10 @@ done
 
 BORG_INFO=$(borg info {{ borgbackup_repos[repo].options }} {{ borgbackup_repos[repo].repo }}::$BACKUP)
 
-echo "borgbackup_count{repo="{{ repo }}"} $COUNTER" >> $TMP_FILE
-echo "borgbackup_files{repo="{{ repo }}"} $(echo "$BORG_INFO" | grep "Number of files" | awk '{print $4}')" >> $TMP_FILE
-echo "borgbackup_chunks_unique{repo="{{ repo }}"} $(echo "$BORG_INFO" | grep "Chunk index" | awk '{print $3}')" >> $TMP_FILE
-echo "borgbackup_chunks_total{repo="{{ repo }}"} $(echo "$BORG_INFO" | grep "Chunk index" | awk '{print $4}')" >> $TMP_FILE
+echo "borgbackup_count{repo=\"{{ repo }}\"} $COUNTER" >> $TMP_FILE
+echo "borgbackup_files{repo=\"{{ repo }}\"} $(echo "$BORG_INFO" | grep "Number of files" | awk '{print $4}')" >> $TMP_FILE
+echo "borgbackup_chunks_unique{repo=\"{{ repo }}\"} $(echo "$BORG_INFO" | grep "Chunk index" | awk '{print $3}')" >> $TMP_FILE
+echo "borgbackup_chunks_total{repo=\"{{ repo }}\"} $(echo "$BORG_INFO" | grep "Chunk index" | awk '{print $4}')" >> $TMP_FILE
 
 # byte size calculation 
 LAST_SIZE=$(calc_bytes $(echo "$BORG_INFO" |grep "This archive" |awk '{print $3}') $(echo "$BORG_INFO" |grep "This archive" |awk '{print $4}'))
@@ -60,12 +60,12 @@ TOTAL_SIZE=$(calc_bytes $(echo "$BORG_INFO" |grep "All archives" |awk '{print $3
 TOTAL_SIZE_COMPRESSED=$(calc_bytes $(echo "$BORG_INFO" |grep "All archives" |awk '{print $5}') $(echo "$BORG_INFO" |grep "All archives" |awk '{print $6}'))
 TOTAL_SIZE_DEDUP=$(calc_bytes $(echo "$BORG_INFO" |grep "All archives" |awk '{print $7}') $(echo "$BORG_INFO" |grep "All archives" |awk '{print $8}'))
 
-echo "borgbackup_last_size{repo="{{ repo }}"} $LAST_SIZE" >> $TMP_FILE
-echo "borgbackup_last_size_compressed{repo="{{ repo }}"} $LAST_SIZE_COMPRESSED" >> $TMP_FILE
-echo "borgbackup_last_size_dedup{repo="{{ repo }}"} $LAST_SIZE_DEDUP" >> $TMP_FILE
-echo "borgbackup_total_size{repo="{{ repo }}"} $TOTAL_SIZE" >> $TMP_FILE
-echo "borgbackup_total_size_compressed{repo="{{ repo }}"} $TOTAL_SIZE_COMPRESSED" >> $TMP_FILE
-echo "borgbackup_total_size_dedup{repo="{{ repo }}"} $TOTAL_SIZE_DEDUP" >> $TMP_FILE
+echo "borgbackup_last_size{repo=\"{{ repo }}\"} $LAST_SIZE" >> $TMP_FILE
+echo "borgbackup_last_size_compressed{repo=\"{{ repo }}\"} $LAST_SIZE_COMPRESSED" >> $TMP_FILE
+echo "borgbackup_last_size_dedup{repo=\"{{ repo }}\"} $LAST_SIZE_DEDUP" >> $TMP_FILE
+echo "borgbackup_total_size{repo=\"{{ repo }}\"} $TOTAL_SIZE" >> $TMP_FILE
+echo "borgbackup_total_size_compressed{repo=\"{{ repo }}\"} $TOTAL_SIZE_COMPRESSED" >> $TMP_FILE
+echo "borgbackup_total_size_dedup{repo=\"{{ repo }}\"} $TOTAL_SIZE_DEDUP" >> $TMP_FILE
 
 {% endfor %}
 
@@ -73,5 +73,5 @@ echo "borgbackup_total_size_dedup{repo="{{ repo }}"} $TOTAL_SIZE_DEDUP" >> $TMP_
 mv $TMP_FILE $PROM_FILE
 chown prometheus:prometheus $PROM_FILE
  
-echo "created BorgBackup statistic for $COUNTER backups in {{ borgbackup_repos|length }} repos: $PROM_FILE"
+echo "created BorgBackup statistic for {{ borgbackup_repos|length }} repos: $PROM_FILE"
 
