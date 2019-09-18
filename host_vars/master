@@ -56,40 +56,6 @@ rsyncbackup:
     heartbeat_timeout: "{{ 3 * 12 * 60 * 60 }}"
 
 
-# Definition von Borgbackup Repositories 
-borgbackup_repos:
-  
-  borgbase: 
-
-    # URL des Repos   
-    repo: "nra736le@nra736le.repo.borgbase.com:repo"
-    
-    # Repo-spezifische Optionen zum Aufruf von Borgbackup
-    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
-    options: ""
-
-    # Compression Options, z,b. "zlib,5, "zstd,5"
-    compression: "zlib,7"
-
-    # Prune Optionen 
-    prune: "--keep-daily=2 --keep-weekly=1"
-    
-    # Backup Schedule 
-    weekday: "*"
-    hour: "5"
-    minute: "10"
-
-    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
-    # directories:
-
-    # Alerta Heartbeat Timeout 
-    heartbeat_timeout: "{{ 2 * 24 * 60 * 60 }}"
-
-# Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
-borgbackup_directories:
-  - "/etc/"
-  - "/srv/"
-
 
 ## Sample, curently not used 
 
