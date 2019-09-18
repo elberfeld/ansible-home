@@ -2,11 +2,14 @@
 
 - include: ../functions/get_secret.yml
   with_items:
-   - { path: /srv/openhab/tradfri_code,      length: -1 }
-   - { path: /srv/openhab/tradfri_identity,  length: -1 }
-   - { path: /srv/openhab/tradfri_key,       length: -1 }
-   - { path: /srv/openhab/pushover_token,    length: -1 }
-   - { path: /srv/openhab/pushover_userkey,  length: -1 }
+   - { path: /srv/openhab/tradfri_code,          length: -1 }
+   - { path: /srv/openhab/tradfri_identity,      length: -1 }
+   - { path: /srv/openhab/tradfri_key,           length: -1 }
+   - { path: /srv/openhab/location_latitude,     length: -1 }
+   - { path: /srv/openhab/location_longitude,    length: -1 }
+   - { path: /srv/openhab/openweathermap_apikey, length: -1 }
+   - { path: /srv/openhab/pushover_token,        length: -1 }
+   - { path: /srv/openhab/pushover_userkey,      length: -1 }
 
 - name: pakete installieren
   apt:
@@ -55,6 +58,7 @@
     - conf/items/rfswitches.items
     - conf/items/tradfri.items
     - conf/items/homematic.items
+    - conf/items/weather.items
     - conf/persistence/influxdb.persist
     - conf/rules/notifications.rules
     - conf/rules/rfswitches.rules
@@ -68,6 +72,7 @@
     - conf/things/homematic.things
     - conf/things/network.things
     - conf/things/tradfri.things
+    - conf/things/weather.things
 
 - name: stop openhab docker
   docker_compose:

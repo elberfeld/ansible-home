@@ -1,0 +1,3 @@
+
+Number:Temperature		Weather_OWM_Temperature			"Temperature [%.1f %unit%]" <temperature>		{channel="openweathermap:weather-and-forecast:api:local:current#temperature"}
+Number:Dimensionless 	Weather_OWM_Humidity			"Humidity [%d %unit%]"				            {channel="openweathermap:weather-and-forecast:api:local:current#humidity"}
