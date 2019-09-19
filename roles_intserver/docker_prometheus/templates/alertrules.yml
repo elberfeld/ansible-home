@@ -76,16 +76,16 @@ groups:
   rules:
 
   - alert: RSYNC_BACKUP_AGE
-    expr: (time()-rsyncbackup_lastbackup)/60/60 > 24
+    expr: (time()-rsyncbackup_lastbackup)/60/60 > 2
     annotations:
-      summary: "RSync Backup {{ $labels.host }} / {{ $labels.rapo }} older than 24h"
+      summary: "RSync Backup {{ $labels.host }} / {{ $labels.rapo }} older than 2h"
 
   - alert: RSYNC_BACKUP_AGE_HIGH
-    expr: (time()-rsyncbackup_lastbackup)/60/60 > 48
+    expr: (time()-rsyncbackup_lastbackup)/60/60 > 4
     labels:
       severity: high 
     annotations:
-      summary: "RSync Backup {{ $labels.host }} / {{ $labels.repo }} older than 48h"
+      summary: "RSync Backup {{ $labels.host }} / {{ $labels.repo }} older than 4h"
 
 
 - name: borgbackup
@@ -93,16 +93,16 @@ groups:
   rules:
 
   - alert: BORG_BACKUP_AGE
-    expr: (time()-borgbackup_lastbackup)/60/60 > 24
+    expr: (time()-borgbackup_lastbackup)/60/60 > 6
     annotations:
-      summary: "Borg Backup {{ $labels.host }} / {{ $labels.repo }} older than 24h"
+      summary: "Borg Backup {{ $labels.host }} / {{ $labels.repo }} older than 6h"
 
   - alert: BORG_BACKUP_AGE_HIGH
-    expr: (time()-borgbackup_lastbackup)/60/60 > 48
+    expr: (time()-borgbackup_lastbackup)/60/60 > 12
     labels:
       severity: high 
     annotations:
-      summary: "Borg Backup {{ $labels.host }} / {{ $labels.repo }} older than 48h"
+      summary: "Borg Backup {{ $labels.host }} / {{ $labels.repo }} older than 12h"
 
 
 - name: docker_running_containers
