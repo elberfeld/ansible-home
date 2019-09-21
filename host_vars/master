@@ -4,10 +4,12 @@ debian_sources:
   - "deb http://security.debian.org/debian-security buster/updates main"
   - "deb http://download.proxmox.com/debian/pve buster pve-no-subscription"
   - "deb http://packages.icinga.com/debian icinga-buster main"
+  - "deb https://download.docker.com/linux/debian buster stable"
 
 debian_keys:
-  - "http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg"
+  - "http://download.proxmox.com/debian/proxmox-ve-release-6.x.gpg"
   - "https://packages.icinga.com/icinga.key"
+  - "https://download.docker.com/linux/debian/gpg"
 
 
 

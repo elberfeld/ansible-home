@@ -112,27 +112,27 @@ groups:
   - alert: DOCKER_RUNNING_CONTAINERS_CONTROL
     expr: engine_daemon_container_states_containers{state="running",job="control_docker"} != 3
     annotations:
-      summary: "Invalid number of containes on {{ $labels.host }} / {{ $labels.engine_daemon_container_states_containers }}"
+      summary: "Invalid number of containes on control / {{ $value }}"
 
   - alert: DOCKER_RUNNING_CONTAINERS_INTSERVER
     expr: engine_daemon_container_states_containers{state="running",job="intserver_docker"} != 12
     annotations:
-      summary: "Invalid number of containes on {{ $labels.host }} / {{ $labels.engine_daemon_container_states_containers }}"
+      summary: "Invalid number of containes on intserver / {{ $value }}"
 
   - alert: DOCKER_RUNNING_CONTAINERS_MASTER
     expr: engine_daemon_container_states_containers{state="running",job="master_docker"} != 1
     annotations:
-      summary: "Invalid number of containes on {{ $labels.host }} / {{ $labels.engine_daemon_container_states_containers }}"
+      summary: "Invalid number of containes on master / {{ $value }}"
 
   - alert: DOCKER_RUNNING_CONTAINERS_WEBSERVER1
     expr: engine_daemon_container_states_containers{state="running",job="webserver1_docker"} != 10
     annotations:
-      summary: "Invalid number of containes on {{ $labels.host }} / {{ $labels.engine_daemon_container_states_containers }}"
+      summary: "Invalid number of containes on webserver1 / {{ $value }}"
 
   - alert: DOCKER_RUNNING_CONTAINERS_WEBSERVER2
     expr: engine_daemon_container_states_containers{state="running",job="webserver2_docker"} != 15
     annotations:
-      summary: "Invalid number of containes on {{ $labels.host }} / {{ $labels.engine_daemon_container_states_containers }}"
+      summary: "Invalid number of containes on webserver2 / {{ $value }}"
 
 
 

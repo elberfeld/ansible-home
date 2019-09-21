@@ -12,6 +12,7 @@
   template: src={{ item }} dest=/srv/loki/{{ item }}
   with_items: 
     - local-config.yaml
+    - pastash.json
   register: config
 
 - name: Docker Compose Konfig-Datei erstellen

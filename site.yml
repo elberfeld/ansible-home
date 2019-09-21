@@ -32,7 +32,6 @@
   remote_user: root
   roles:
     - { role: roles_common/alerta_heartbeat, tags: alerta_heartbeat }
-    - { role: roles_common/borgbackup, tags: borgbackup }
     - { role: roles_common/docker, tags: docker }
     - { role: roles_common/rsyncbackup, tags: rsyncbackup }
     - { role: roles_common/docker_promtail, tags: promtail }
