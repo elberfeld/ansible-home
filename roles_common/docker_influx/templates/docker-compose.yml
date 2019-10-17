@@ -4,7 +4,7 @@ services:
 
   db:
 
-    image: influxdb:1.6.3
+    image: influxdb:1.7.8
     restart: always
     ports:
       - {{ int_ip4 }}:{{ influx_port }}:8086
@@ -18,28 +18,18 @@ services:
       INFLUXDB_USER_PASSWORD: "{{influxdb_sysmon.password}}"
       INFLUXDB_HTTP_AUTH_ENABLED: "true"
 
-
-  kapacitor:
-
-    image: kapacitor:1.5
-    restart: always
-    volumes:
-      - /srv/influx_{{ influx_instance }}/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro
-      - /srv/influx_{{ influx_instance }}/kapacitor_data/:/var/lib/kapacitor/
-      - /srv/influx_{{ influx_instance }}/kapacitor_load/:/etc/kapacitor/load
-
-
-  chronograf:
-
-    image: chronograf:1.6
-    restart: always
-    volumes:
-      - /srv/influx_{{ influx_instance }}/chronograf_data/:/var/lib/chronograf
-    ports:
-      - {{ int_ip4 }}:{{ chronograf_port }}:8888
-    environment:
-      INFLUXDB_URL: "http://db:8086"
-      INFLUXDB_USERNAME: "admin"
-      INFLUXDB_PASSWORD: "{{ influx_admin_pw }}"
-      KAPACITOR_URL: "http://kapacitor:9092"
-      LOG_LEVEL: "info"
+# Only for debugging
+#
+#  chronograf:
+#
+#    image: chronograf:1.6
+#    restart: always
+#    volumes:
+#      - /srv/influx_{{ influx_instance }}/chronograf_data/:/var/lib/chronograf
+#    ports:
+#      - {{ int_ip4 }}:{{ chronograf_port }}:8888
+#    environment:
+#      INFLUXDB_URL: "http://db:8086"
+#      INFLUXDB_USERNAME: "admin"
+#      INFLUXDB_PASSWORD: "{{ influx_admin_pw }}"
+#      LOG_LEVEL: "info"
