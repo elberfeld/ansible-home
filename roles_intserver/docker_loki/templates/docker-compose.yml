@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: grafana/loki:master-481906c
+    image: grafana/loki:master-7072ed7
     restart: always
     command: pastash --config_file=/pastash.conf --log_level=info
     ports:
