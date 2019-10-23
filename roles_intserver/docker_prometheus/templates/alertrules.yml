@@ -14,7 +14,7 @@ groups:
     labels:
       severity: high 
     annotations:
-      summary: "Metric Scape is failing"
+      summary: "Metric Scape is failing for {{ $labels.job }}"
 
   - alert: SYS_DOWN
     expr: system_uptime < 1
@@ -22,7 +22,7 @@ groups:
     labels:
       severity: high 
     annotations:
-      summary: "System {{ $labels.host }} is down"
+      summary: "System {{ $labels.job }} is down"
 
 - name: memory
 
@@ -31,6 +31,8 @@ groups:
   - alert: MEM_FULL
     expr: (( mem_total - mem_free ) / mem_total * 100) > 90
     for: 15m
+    annotations:
+      summary: "Memory HIGH on {{ $labels.job }} / mem_free = {{ $value }}"
 
 
 - name: cpu
@@ -40,6 +42,8 @@ groups:
   - alert: HIGH_CPU
     expr: cpu_usage_idle < 0.1 
     for: 15m
+    annotations:
+      summary: "CPU HIGH on {{ $labels.job }} / usage_idle = {{ $value }}"
 
 
 - name: disk
@@ -49,26 +53,32 @@ groups:
   - alert: HIGH_DISK_IO
     expr: diskio_iops_in_progress > 10 
     for: 5m
+    annotations:
+      summary: "Memory HIGH on {{ $labels.job }} / diskio_iops_in_progress = {{ $value }}"
 
   - alert: DISK_FULL_85P 
     expr: ( 100 * ( 1 - ( disk_free / disk_total ) ) ) > 85
+    annotations:
+      summary: "Disk FULL_85% on {{ $labels.job }} / {{ $labels.path }} / full = {{ $value }}"
       
   - alert: DISK_FULL_95P 
     expr: ( 100 * ( 1 - ( disk_free / disk_total ) ) ) > 95 
     labels:
       severity: high 
+    annotations:
+      summary: "Disk FULL_95% on {{ $labels.job }} / {{ $labels.path }} / full = {{ $value }}"
       
   - alert: DISK_FULL_IN_24H
     expr: predict_linear( disk_free[24h], 24*3600 ) < 0
     annotations:
-      summary: "Disk {{ $labels.host }} / {{ $labels.path }} will be full in 24 hours"
+      summary: "Disk {{ $labels.job }} / {{ $labels.path }} will be full in 24 hours"
 
   - alert: DISK_FULL_IN_4H
     expr: predict_linear( disk_free[4h], 4*3600 ) < 0
     labels:
       severity: high 
     annotations:
-      summary: "Disk {{ $labels.host }} / {{ $labels.path }} will be full in 4 hours"
+      summary: "Disk {{ $labels.job }} / {{ $labels.path }} will be full in 4 hours"
 
 
 - name: rsyncbackup
@@ -78,14 +88,14 @@ groups:
   - alert: RSYNC_BACKUP_AGE
     expr: (time()-rsyncbackup_lastbackup)/60/60 > 2
     annotations:
-      summary: "RSync Backup {{ $labels.host }} / {{ $labels.rapo }} older than 2h"
+      summary: "RSync Backup {{ $labels.job }} / {{ $labels.repo }} older than 2h"
 
   - alert: RSYNC_BACKUP_AGE_HIGH
     expr: (time()-rsyncbackup_lastbackup)/60/60 > 4
     labels:
       severity: high 
     annotations:
-      summary: "RSync Backup {{ $labels.host }} / {{ $labels.repo }} older than 4h"
+      summary: "RSync Backup {{ $labels.job }} / {{ $labels.repo }} older than 4h"
 
 
 - name: borgbackup
@@ -95,14 +105,14 @@ groups:
   - alert: BORG_BACKUP_AGE
     expr: (time()-borgbackup_lastbackup)/60/60 > 6
     annotations:
-      summary: "Borg Backup {{ $labels.host }} / {{ $labels.repo }} older than 6h"
+      summary: "Borg Backup {{ $labels.job }} / {{ $labels.repo }} older than 6h"
 
   - alert: BORG_BACKUP_AGE_HIGH
     expr: (time()-borgbackup_lastbackup)/60/60 > 12
     labels:
       severity: high 
     annotations:
-      summary: "Borg Backup {{ $labels.host }} / {{ $labels.repo }} older than 12h"
+      summary: "Borg Backup {{ $labels.job }} / {{ $labels.repo }} older than 12h"
 
 
 - name: docker_running_containers
