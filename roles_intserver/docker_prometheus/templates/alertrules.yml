@@ -125,7 +125,7 @@ groups:
       summary: "Invalid number of containes on control / {{ $value }}"
 
   - alert: DOCKER_RUNNING_CONTAINERS_INTSERVER
-    expr: engine_daemon_container_states_containers{state="running",job="intserver_docker"} != 12
+    expr: engine_daemon_container_states_containers{state="running",job="intserver_docker"} != 8
     annotations:
       summary: "Invalid number of containes on intserver / {{ $value }}"
 
