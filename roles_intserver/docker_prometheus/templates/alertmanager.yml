@@ -1,6 +1,6 @@
 global:
   # The smarthost and SMTP sender used for mail notifications.
-  smtp_smarthost: 'localhost'
+  smtp_smarthost: 'localhost:25'
   smtp_from: 'prometheus@example.org'
   smtp_auth_username: ''
   smtp_auth_password: ''
