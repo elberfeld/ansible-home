@@ -6,7 +6,7 @@ services:
 
     image: grafana/loki:master-7072ed7
     restart: always
-    command: pastash --config_file=/pastash.conf --log_level=info
+    command: -config.file=/etc/loki/local-config.yaml 
     ports:
       - "3100:3100"
     volumes:
@@ -16,7 +16,7 @@ services:
 #
 #  pastash:
 #    image: qxip/pastash-loki:latest
-#    command: -config.file=/etc/loki/local-config.yaml --log_level=info
+#    command: pastash --config_file=/pastash.conf --log_level=info
 #    ports:
 #      - 5140:5140/udp
 #    volumes:
