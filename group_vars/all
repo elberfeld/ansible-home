@@ -32,7 +32,7 @@ homematic_heizung:
   - { id: "MEQ0806347", name: "Heizung Schlafzimmer" }
   - { id: "MEQ0251087", name: "Heizung Wohnzimmer" }
   - { id: "MEQ0250029", name: "Heizung Schreibtisch" }
-#  - { id: "MEQ0805830", name: "Heizung Badezimmer" }
+  - { id: "MEQ0805830", name: "Heizung Badezimmer" }
 
 homematic_sensor:
   - { id: "OEQ0160159", name: "Sensor Badezimmer" }
