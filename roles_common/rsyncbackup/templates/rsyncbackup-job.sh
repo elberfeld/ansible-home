@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export LAST_BACKUPS_PROM="/var/lib/prometheus/node-exporter/lastbackup.prom"
+
 echo "===[ START RSync Job: {{ job.key }} ]===" \
 && \
 /usr/bin/rsync --password-file=/srv/rsyncbackup/{{ job.key }}/rsync_password --verbose --archive --delete \
@@ -19,8 +21,20 @@ echo "===[ START RSync Job: {{ job.key }} ]===" \
 && \
 echo "===[ END RSync Job: {{ job.key }} ]===" \
 && \
+echo "===[ write: /srv/rsyncbackup/{{ job.key }}/lastbackup ]===" \
+&& \
 date > "/srv/rsyncbackup/{{ job.key }}/lastbackup" \
 && \
-echo "rsyncbackup_lastbackup{repo=\"{{ job.key }}\"} $(date +%s)" > "/srv/prometheus-node-exporter/rsyncbackup_{{ job.key }}.prom" \
+echo "===[ add value to: $LAST_BACKUPS_PROM ]===" \
 && \
-/srv/alerta_heartbeat/send_service_heartbeat.sh {{ job.value.heartbeat_timeout }} rsync@{{ job.key }}
+touch $LAST_BACKUPS_PROM \
+&& \
+sed -i '/rsyncbackup_lastbackup{repo="{{ job.key }}"}/d' $LAST_BACKUPS_PROM \
+&& \
+echo "rsyncbackup_lastbackup{repo=\"{{ job.key }}\"} $(date +%s)" >> $LAST_BACKUPS_PROM \
+&& \
+echo "===[ send alerta heartbeat ]===" \
+&& \
+/srv/alerta_heartbeat/send_service_heartbeat.sh {{ job.value.heartbeat_timeout }} rsync@{{ job.key }} \
+&& \
+echo "===[ DONE ]===" 

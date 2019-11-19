@@ -3,6 +3,7 @@
 export BORG_PASSPHRASE="{{repo_passphrase}}"
 export BORG_RSH="ssh -i /srv/borgbackup/repo_sshkey"
 export BACKUP_DATE=`date +%Y-%m-%d_%H_%M`
+export LAST_BACKUPS_PROM="/var/lib/prometheus/node-exporter/lastbackup.prom"
 
 # Ausführung der Backups
 # anschließend Bereinigung 
@@ -28,8 +29,20 @@ echo "===[ Check Repo: {{ item.value.repo }} ]===" \
 && \
 borg check $1 $2 $3 --info --show-rc {{ item.value.options }} {{ item.value.repo }} \
 && \
+echo "===[ write: /srv/rsyncbackup/{{ item.key }}/lastbackup ]===" \
+&& \
 date > "/srv/borgbackup/{{ item.key }}/lastbackup" \
 && \
-echo "borgbackup_lastbackup{repo=\"{{ item.key }}\"} $(date +%s)" > "/srv/prometheus-node-exporter/borgbackup_{{ item.key }}.prom" \
+echo "===[ add value to: $LAST_BACKUPS_PROM ]===" \
 && \
-/srv/alerta_heartbeat/send_service_heartbeat.sh {{ item.value.heartbeat_timeout }} borg@{{ item.key }}
+touch $LAST_BACKUPS_PROM \
+&& \
+sed -i '/borgbackup_lastbackup{repo="{{ item.key }}"}/d' $LAST_BACKUPS_PROM \
+&& \
+echo "borgbackup_lastbackup{repo=\"{{ item.key }}\"} $(date +%s)" >> $LAST_BACKUPS_PROM \
+&& \
+echo "===[ send alerta heartbeat ]===" \
+&& \
+/srv/alerta_heartbeat/send_service_heartbeat.sh {{ item.value.heartbeat_timeout }} borg@{{ item.key }} \
+&& \
+echo "===[ DONE ]===" 

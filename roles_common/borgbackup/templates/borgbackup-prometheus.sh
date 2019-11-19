@@ -4,7 +4,7 @@ export BORG_PASSPHRASE="{{repo_passphrase}}"
 export BORG_RSH="ssh -i /srv/borgbackup/repo_sshkey"
 
 # Metrics output file in the prometheus node-exporter directory 
-PROM_FILE="/srv/prometheus-node-exporter/borgbackup.prom"
+PROM_FILE="/var/lib/prometheus/node-exporter/borgbackup.prom"
 
 #  Borgbackup statistiken für Prometheus erstellen 
 

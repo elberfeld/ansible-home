@@ -8,10 +8,10 @@
   with_items:
     - prometheus-node-exporter
 
-- name: create directories 
+- name: remove old directories 
   file: 
     path: "{{ item }}"
-    state: "directory"
+    state: "absent"
   with_items:
     - /srv/prometheus-node-exporter 
 
@@ -19,7 +19,7 @@
   lineinfile:
     path: /etc/default/prometheus-node-exporter
     regexp: '^ARGS='
-    line: ARGS="--web.listen-address={{int_ip4}}:9100 --collector.textfile.directory=/srv/prometheus-node-exporter"
+    line: ARGS="--web.listen-address={{int_ip4}}:9100"
 
 - name: reload systemd and enable service
   command: systemctl enable prometheus-node-exporter
