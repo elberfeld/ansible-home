@@ -3,7 +3,6 @@
 - include: ../functions/get_secret.yml
   with_items:
    - { path: "/srv/influx_{{ influx_instance }}/influx_admin_pw",  length: 24 }
-   - { path: "/srv/influx_{{ influx_instance }}/alerta_token",  length: -1 }
 
 
 - name: create folder struct for influx {{ influx_instance }}
@@ -13,12 +12,6 @@
   with_items:
     - "/srv/influx_{{ influx_instance }}"
     - "/srv/influx_{{ influx_instance }}/db_data/"
-    - "/srv/influx_{{ influx_instance }}/kapacitor_data/"
-    - "/srv/influx_{{ influx_instance }}/kapacitor_load/"
-    - "/srv/influx_{{ influx_instance }}/kapacitor_load/tasks/"
-    - "/srv/influx_{{ influx_instance }}/kapacitor_load/templates/"
-    - "/srv/influx_{{ influx_instance }}/kapacitor_load/handlers/"
-    - "/srv/influx_{{ influx_instance }}/chronograf_load/"
 
 
 - name: Konfig-Dateien erstellen
@@ -27,48 +20,6 @@
     dest: "/srv/influx_{{ influx_instance }}/{{ item }}"
   with_items:
     - docker-compose.yml
-    - kapacitor.conf
-
-
-- name: Script-Dateien erstellen
-  template:
-    src: "{{ item }}"
-    dest: "/srv/influx_{{ influx_instance }}/{{ item }}"
-    mode: "o+rwx"
-  with_items:
-    - influx.sh
-    - kapacitor_listtasks.sh
-    - kapacitor_show.sh
-    - kapacitor_watch.sh
-
-
-- name: Kapacitor-Tasks erstellen (sysmon)
-  template:
-    src: "sysmon/{{ item }}"
-    dest: "/srv/influx_{{ influx_instance }}/kapacitor_load/tasks/{{ item }}"
-  with_items:
-    - task_cpu_high.tick
-    - task_disk_low.tick
-    - task_docker_container.tick
-    - task_load1_high.tick
-    - task_load5_high.tick
-    - task_load15_high.tick
-    - task_mem_used.tick
-    - task_net_error.tick
-    - task_net_ping.tick
-  notify: restart influx docker 
-  when: influx_instance == "sysmon"
-
-- name: Kapacitor-Tasks erstellen (openhab)
-  template:
-    src: "openhab/{{ item }}"
-    dest: "/srv/influx_{{ influx_instance }}/kapacitor_load/tasks/{{ item }}"
-  with_items:
-    - task_lowbat.tick
-    - task_unreach.tick
-    - task_controlmode.tick
-  notify: restart influx docker 
-  when: influx_instance == "openhab"
 
 
 - name: start influx {{ influx_instance }} docker
