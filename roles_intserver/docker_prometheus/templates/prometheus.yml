@@ -5,11 +5,6 @@ global:
   # scrape_timeout is set to the global default (10s).
 
 
-# Write data to influxdb for long term storage  
-remote_write:
-  - url: "http://{{int_ip4}}:18086/api/v1/prom/write?u=admin&p={{influx_admin_pw}}&db=influx"
-
-
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
   - "/etc/prometheus/alertrules.yml"
