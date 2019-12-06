@@ -15,13 +15,6 @@ loki:
 alerta:
   url: "https://alerta.void.ms"
 
-# Zentrale InfluxDb für Systemmonitoring  
-influxdb_sysmon:
-  url: "http://10.5.0.111:18086"
-  db: "influx"
-  user: "influx" 
-  password: "influx" 
-
 
 
 homematic_rauchmelder:
