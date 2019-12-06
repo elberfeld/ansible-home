@@ -1,6 +1,6 @@
 
 # Globale LDAP Settings   
-ldap:
+ldap_global:
   organization: VOID
   domain: void.ms
   search_base: dc=void,dc=ms

@@ -145,5 +145,17 @@ groups:
       summary: "Invalid number of containes on webserver2 / {{ $value }}"
 
 
+- name: ldap
+
+  rules:
+
+  - alert: LDAP_DOWN
+    expr: openldap_up < 1
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP {{ $labels.job }} is down"
+    
 
 {% endraw %}

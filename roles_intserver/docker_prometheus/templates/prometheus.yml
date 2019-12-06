@@ -34,6 +34,17 @@ scrape_configs:
         labels:
           group: 'server'
 
+  {% if hostvars[item]['ldap_local']['prometheus_metrics'] is defined %}        
+          
+  - job_name: '{{ item }}_ldap'
+
+    static_configs:
+      - targets: ['{{ hostvars[item]['int_ip4'] }}:9328']
+        labels:
+          group: 'ldap'
+  
+  {% endif %}
+
   {% if hostvars[item]['docker']['prometheus_metrics'] is defined %}        
           
   - job_name: '{{ item }}_docker'
@@ -59,8 +70,7 @@ scrape_configs:
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
-      - target_label: __address__
-        replacement: 10.5.0.111:9116  
+
 
   - job_name: 'hpswitch'
 
@@ -73,7 +83,4 @@ scrape_configs:
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
-      - target_label: __address__
-        replacement: 10.5.0.111:9116  
-
 

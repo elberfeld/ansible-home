@@ -1,9 +1,9 @@
 
-hosts = {{ int_ip4 }}
+hosts = {{ ldap_local.use_host }}
 auth_bind = yes
-base = {{ ldap.search_base }}
+base = {{ ldap_global.search_base }}
 ldap_version = 3
-dn = {{ ldap.readonly_dn }}
+dn = {{ ldap_global.readonly_dn }}
 dnpass = {{ ldap_readonly_pass }}
 deref = never
 scope = subtree

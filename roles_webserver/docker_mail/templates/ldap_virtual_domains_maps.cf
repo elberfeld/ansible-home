@@ -4,11 +4,11 @@
 # Das Attribut 'virtualdomain' bezeichnet hierbei die Domäne
 # Quick Check: postmap -v -q void.ms ldap:/etc/postfix/ldap_virtual_domains_maps.cf
 
-server_host = ldap://{{ int_ip4 }}/
-search_base = {{ ldap.search_base }}
+server_host = ldap://{{ ldap_local.use_host }}/
+search_base = {{ ldap_global.search_base }}
 version = 3
 bind = yes
-bind_dn = {{ ldap.readonly_dn }}
+bind_dn = {{ ldap_global.readonly_dn }}
 bind_pw = {{ ldap_readonly_pass }}
 query_filter = (&(ObjectClass=mailDomain)(virtualdomain=%s))
 result_attribute = virtualdomain

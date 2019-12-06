@@ -37,8 +37,12 @@
 
 - name: Docker Compose Konfig-Datei erstellen
   template:
-    src: "docker-compose.yml"
-    dest: "/srv/ldap/docker-compose.yml"
+    src: "{{ item }}"
+    dest: "/srv/ldap/{{ item }}"
+  with_items:
+    - docker-compose.yml
+    - Dockerfile 
+    - syncrepl_exporter.yml 
 
 - name: start openldap docker
   docker_service:

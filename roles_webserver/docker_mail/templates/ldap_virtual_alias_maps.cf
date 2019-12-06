@@ -5,11 +5,11 @@
 # das Attribut 'mailalias' enthält die Adresse an die Weitergeleitet wird.
 # Quick Check: postmap -v -q alias@void.ms ldap:/etc/postfix/ldap_virtual_alias_maps.cf
 
-server_host = ldap://{{ int_ip4 }}/
-search_base = {{ ldap.search_base }}
+server_host = ldap://{{ ldap_local.use_host }}/
+search_base = {{ ldap_global.search_base }}
 version = 3
 bind = yes
-bind_dn = {{ ldap.readonly_dn }}
+bind_dn = {{ ldap_global.readonly_dn }}
 bind_pw = {{ ldap_readonly_pass }}
 query_filter = (&(ObjectClass=mailAlias)(mail=%s))
 result_attribute = mailalias

@@ -14,8 +14,8 @@ services:
       - /srv/ldap/config:/etc/ldap/slapd.d
     environment:
       - HOSTNAME={{ int_ip4 }}
-      - LDAP_ORGANISATION={{ ldap.organization }}
-      - LDAP_DOMAIN={{ ldap.domain }}
+      - LDAP_ORGANISATION={{ ldap_global.organization }}
+      - LDAP_DOMAIN={{ ldap_global.domain }}
       - LDAP_ADMIN_PASSWORD={{ ldap_admin_pass }}
       - LDAP_CONFIG_PASSWORD={{ ldap_config_pass }}
       - LDAP_READONLY_USER=true
@@ -36,3 +36,15 @@ services:
       - PHPLDAPADMIN_LDAP_HOSTS={{ int_ip4 }}
       - PHPLDAPADMIN_HTTPS=false
       - PHPLDAPADMIN_TRUST_PROXY_SSL=true
+
+  syncreplexporter:
+    build: . 
+    image: "syncreplexporter--{{ ansible_date_time.date }}--{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}"
+    restart: always
+    depends_on:
+      - openldap
+    volumes:
+      - /srv/ldap/syncrepl_exporter.yml:/syncrepl_exporter.yml
+    ports:
+      - {{ int_ip4 }}:9328:9328
+

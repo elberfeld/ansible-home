@@ -1,0 +1,10 @@
+---
+
+    ldap:
+      host: '{{ int_ip4 }}'
+      port: '636'
+      basedn: '{{ ldap_global.search_base }}'
+      starttls: false
+      bind: true
+      bindcn: '{{ ldap_global.readonly_dn }}'
+      bindpass: '{{ ldap_readonly_pass }}'
