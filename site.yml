@@ -52,7 +52,6 @@
     - { role: roles_common/docker, tags: docker }
     - { role: roles_common/rsyncbackup, tags: rsyncbackup }
     - { role: roles_common/docker_influx, tags: influx_openhab, influx_instance: openhab, influx_port: 28086, chronograf_port: 28087 }
-    - { role: roles_common/docker_influx, tags: influx_prometheus, influx_instance: prometheus, influx_port: 18086, chronograf_port: 18087 }
     - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
     - { role: roles_intserver/docker_hibiscus, tags: hibiscus }
@@ -77,6 +76,7 @@
 - hosts: webserver1 
   remote_user: root
   roles:
+    - { role: roles_common/docker_keycloak, tags: keycloak }
     - { role: roles_webserver/docker_wordpress, tags: wordpress }
     - { role: roles_webserver/docker_nginxssh, tags: nginxssh }
     - { role: roles_webserver/docker_alerta, tags: alerta }
