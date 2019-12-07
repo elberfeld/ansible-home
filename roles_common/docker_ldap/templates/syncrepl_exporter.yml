@@ -1,7 +1,7 @@
 ---
 
     ldap:
-      host: '{{ int_ip4 }}'
+      host: 'openldap'
       port: '636'
       basedn: '{{ ldap_global.search_base }}'
       starttls: false

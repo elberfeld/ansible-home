@@ -7,12 +7,19 @@ services:
     image: osixia/openldap:1.3.0
     restart: always
     command: --loglevel debug
-    network_mode: host
+    hostname: {{ inventory_hostname }}-sync
+    extra_hosts:
+      - "webserver1-sync{% if inventory_hostname == "webserver1" %}-dummy{% endif %}:{{ hostvars['webserver1'].int_ip4 }}"
+      - "webserver2-sync{% if inventory_hostname == "webserver2" %}-dummy{% endif %}:{{ hostvars['webserver2'].int_ip4 }}"
+      - "intserver-sync{% if inventory_hostname == "intserver" %}-dummy{% endif %}:{{ hostvars['intserver'].int_ip4 }}"
     volumes:
       - /srv/ldap/database:/var/lib/ldap
       - /srv/ldap/config:/etc/ldap/slapd.d
+    ports:
+      - {{ int_ip4 }}:389:389
+      - {{ int_ip4 }}:636:636
     environment:
-      - HOSTNAME={{ int_ip4 }}
+      - HOSTNAME={{ inventory_hostname }}-sync
       - LDAP_ORGANISATION={{ ldap_global.organization }}
       - LDAP_DOMAIN={{ ldap_global.domain }}
       - LDAP_ADMIN_PASSWORD={{ ldap_admin_pass }}
@@ -22,7 +29,7 @@ services:
       - LDAP_READONLY_USER_PASSWORD={{ ldap_readonly_pass }}
       - LDAP_TLS_VERIFY_CLIENT=never
       - LDAP_REPLICATION=true
-      - LDAP_REPLICATION_HOSTS=#PYTHON2BASH:['ldap://10.100.1.1','ldap://10.100.1.2']
+      - LDAP_REPLICATION_HOSTS=#PYTHON2BASH:['ldap://webserver1-sync','ldap://webserver2-sync','ldap://intserver-sync']
 
   phpldapadmin:
     image: osixia/phpldapadmin:0.9.0
@@ -30,9 +37,9 @@ services:
     depends_on:
       - openldap
     ports:
-      - 127.0.0.1:42003:80
+      - {{ int_ip4 }}:42003:80
     environment:
-      - PHPLDAPADMIN_LDAP_HOSTS={{ int_ip4 }}
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
       - PHPLDAPADMIN_HTTPS=false
       - PHPLDAPADMIN_TRUST_PROXY_SSL=true
 

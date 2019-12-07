@@ -156,6 +156,104 @@ groups:
       severity: high 
     annotations:
       summary: "LDAP {{ $labels.job }} is down"
-    
+
+
+  - alert: LDAP_UNSYNC_ENTRIES_WS1_WS2
+    expr: openldap_entries_num{job="webserver1_ldap"} != ignoring(job) openldap_entries_num{job="webserver2_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_ENTRIES_WS1_WS2"
+      
+  - alert: LDAP_UNSYNC_ENTRIES_WS1_INT
+    expr: openldap_entries_num{job="webserver1_ldap"} != ignoring(job) openldap_entries_num{job="intserver_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_ENTRIES_WS1_INT"
+
+  - alert: LDAP_UNSYNC_ENTRIES_WS2_INT
+    expr: openldap_entries_num{job="webserver2_ldap"} != ignoring(job) openldap_entries_num{job="intserver_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_ENTRIES_WS2_INT"
+
+
+  - alert: LDAP_UNSYNC_CSN000_WS1_WS2
+    expr: openldap_contextCSN{index="000",job="webserver1_ldap"} != ignoring(job) openldap_contextCSN{index="000",job="webserver2_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_CSN000_WS1_WS2"
+      
+  - alert: LDAP_UNSYNC_000_WS1_INT
+    expr: openldap_contextCSN{index="000",job="webserver1_ldap"} != ignoring(job) openldap_contextCSN{index="000",job="intserver_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNCCSN_000_WS1_INT"
+
+  - alert: LDAP_UNSYNC_CSN000_WS2_INT
+    expr: openldap_contextCSN{index="000",job="webserver2_ldap"} != ignoring(job) openldap_contextCSN{index="000",job="intserver_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_CSN000_WS2_INT"
+
+
+  - alert: LDAP_UNSYNC_CSN001_WS1_WS2
+    expr: openldap_contextCSN{index="001",job="webserver1_ldap"} != ignoring(job) openldap_contextCSN{index="001",job="webserver2_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_CSN001_WS1_WS2"
+      
+  - alert: LDAP_UNSYNC_CSN001_WS1_INT
+    expr: openldap_contextCSN{index="001",job="webserver1_ldap"} != ignoring(job) openldap_contextCSN{index="001",job="intserver_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_CSN001_WS1_INT"
+
+  - alert: LDAP_UNSYNC_CSN001_WS2_INT
+    expr: openldap_contextCSN{index="001",job="webserver2_ldap"} != ignoring(job) openldap_contextCSN{index="001",job="intserver_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_CSN001_WS2_INT"
+
+  - alert: LDAP_UNSYNC_CSN002_WS1_WS2
+    expr: openldap_contextCSN{index="002",job="webserver1_ldap"} != ignoring(job) openldap_contextCSN{index="002",job="webserver2_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_CSN002_WS1_WS2"
+      
+  - alert: LDAP_UNSYNC_CSN002_WS1_INT
+    expr: openldap_contextCSN{index="002",job="webserver1_ldap"} != ignoring(job) openldap_contextCSN{index="002",job="intserver_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_002_WS1_INT"
+
+  - alert: LDAP_UNSYNC_CSN002_WS2_INT
+    expr: openldap_contextCSN{index="002",job="webserver2_ldap"} != ignoring(job) openldap_contextCSN{index="002",job="intserver_ldap"}
+    for: 1m
+    labels:
+      severity: high 
+    annotations:
+      summary: "LDAP_UNSYNC_CSN002_WS2_INT"
 
 {% endraw %}
