@@ -54,7 +54,7 @@
     - "nextcloud-index-worker.sh"
 
 - name: start nextcloud docker
-  docker_service:
+  docker_compose:
     project_src: /srv/nextcloud/
     state: present
 
