@@ -60,6 +60,7 @@
     - conf/items/homematic.items
     - conf/items/weather.items
     - conf/persistence/influxdb.persist
+    - conf/persistence/rrd4j.persist
     - conf/rules/notifications.rules
     - conf/rules/rfswitches.rules
     - conf/services/addons.cfg
