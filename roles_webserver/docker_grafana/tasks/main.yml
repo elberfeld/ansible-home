@@ -2,7 +2,7 @@
 # Get secrets 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: /srv/ldap/secret/ldap_readonly_pass, length: 24 }
+    - { path: /srv/ldap/secret/ldap_readonly_pass, length: -1 }
     - { path: /srv/grafana/grafana_admin_pass, length: 12 }
 
 
