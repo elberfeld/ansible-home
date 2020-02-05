@@ -82,6 +82,7 @@
     - { role: roles_webserver/docker_nginxssh, tags: nginxssh }
     - { role: roles_webserver/docker_alerta, tags: alerta }
     - { role: roles_webserver/docker_grafana, tags: grafana }
+    - { role: roles_webserver/docker_icinga, tags: icinga }
 
 
 - hosts: webserver2

@@ -1,0 +1,7 @@
+---
+
+- name: restart icinga docker
+  docker_compose:
+    project_src: /srv/icinga/
+    state: present
+    restarted: yes

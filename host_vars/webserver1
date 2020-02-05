@@ -41,6 +41,7 @@ webserver_domains:
   - "alerta"
   - "connectiv"
   - "grafana"
+  - "icinga"
   - "ldap"
   - "www"
   

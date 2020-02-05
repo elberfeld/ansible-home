@@ -1,0 +1,82 @@
+---
+
+- include: ../functions/get_secret.yml
+  with_items:
+    - { path: /srv/ldap/secret/ldap_readonly_pass, length: -1 }
+    - { path: /srv/icinga/icinga_admin_pass,  length: 12 }
+    - { path: /srv/icinga/icinga_api_user,  length: 8 }
+    - { path: /srv/icinga/icinga_api_pass,  length: 8 }
+    - { path: /srv/icinga/mysql_admin_pass,  length: 12 }
+    - { path: /srv/icinga/mysql_user_pass,  length: 12 }
+#   - { path: /srv/icinga/pushover_token,  length: -1 }
+#   - { path: /srv/icinga/pushover_userkey,  length: -1 }
+#   - { path: /srv/icinga/telegram_token,  length: -1 }
+#   - { path: /srv/icinga/telegram_chatid,  length: -1 }
+ 
+- name: pakete installieren
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items:
+    - logrotate
+
+- name: icinga LogRotate config erstellen 
+  template: 
+    src: logrotate 
+    dest: /etc/logrotate.d/icinga
+
+- name: create folder struct for icinga
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - /srv/icinga/
+    - /srv/icinga/data/
+    - /srv/icinga/etc/
+    - /srv/icinga/log/
+    - /srv/icinga/db/
+    - /srv/icinga/graphite-conf/
+    - /srv/icinga/graphite-storage/
+
+- stat:
+    path: /srv/icinga/etc/icingaweb2/CONFIGURED
+  register: configured
+
+- name: start icinga docker (init)
+  docker_compose:
+    project_src: /srv/icinga/
+    state: present
+  when: configured.stat.exists == False
+
+- name: wait for icinga docker (init)
+  wait_for:
+    path: /srv/icinga/etc/icingaweb2/CONFIGURED
+  
+- name: stop icinga docker (init)
+  docker_compose:
+    project_src: /srv/icinga/
+    state: absent
+  when: configured.stat.exists == False
+
+- name: Konfig-Dateien erstellen
+  template:
+    src: "{{ item }}"
+    dest: "/srv/icinga/{{ item }}"
+  with_items:
+    - docker-compose.yml
+    - etc/locale.gen
+    - etc/icinga/conf.d/api-users.conf
+    - etc/icinga/conf.d/commands2.conf
+    - etc/icinga/conf.d/hosts.conf
+    - etc/icinga/conf.d/services.conf
+    - etc/icingaweb2/authentication.ini
+    - etc/icingaweb2/groups.ini
+    - etc/icingaweb2/resources.ini
+    - etc/icingaweb2/roles.ini
+  notify: restart icinga docker
+
+- name: start icinga docker
+  docker_compose:
+    project_src: /srv/icinga/
+    state: present

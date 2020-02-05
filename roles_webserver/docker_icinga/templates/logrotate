@@ -1,0 +1,28 @@
+/srv/icinga/log/apache2/*.log {
+  rotate 12
+  monthly
+  compress
+  missingok
+  notifempty
+}
+/srv/icinga/log/icinga2/*.log {
+  rotate 12
+  monthly
+  compress
+  missingok
+  notifempty
+}
+/srv/icinga/log/icingaweb2/*.log {
+  rotate 12
+  monthly
+  compress
+  missingok
+  notifempty
+}
+/srv/icinga/graphite-log/*.log {
+  rotate 12
+  monthly
+  compress
+  missingok
+  notifempty
+}
