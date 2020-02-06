@@ -77,7 +77,6 @@
 - hosts: webserver1 
   remote_user: root
   roles:
-    - { role: roles_common/docker_keycloak, tags: keycloak }
     - { role: roles_webserver/docker_wordpress, tags: wordpress }
     - { role: roles_webserver/docker_nginxssh, tags: nginxssh }
     - { role: roles_webserver/docker_alerta, tags: alerta }
