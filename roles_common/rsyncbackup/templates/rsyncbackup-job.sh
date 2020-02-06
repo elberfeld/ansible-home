@@ -33,8 +33,4 @@ sed -i '/rsyncbackup_lastbackup{repo="{{ job.key }}"}/d' $LAST_BACKUPS_PROM \
 && \
 echo "rsyncbackup_lastbackup{repo=\"{{ job.key }}\"} $(date +%s)" >> $LAST_BACKUPS_PROM \
 && \
-echo "===[ send alerta heartbeat ]===" \
-&& \
-/srv/alerta_heartbeat/send_service_heartbeat.sh {{ job.value.heartbeat_timeout }} rsync@{{ job.key }} \
-&& \
 echo "===[ DONE ]===" 

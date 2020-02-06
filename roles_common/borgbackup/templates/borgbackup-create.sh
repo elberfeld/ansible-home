@@ -41,8 +41,4 @@ sed -i '/borgbackup_lastbackup{repo="{{ item.key }}"}/d' $LAST_BACKUPS_PROM \
 && \
 echo "borgbackup_lastbackup{repo=\"{{ item.key }}\"} $(date +%s)" >> $LAST_BACKUPS_PROM \
 && \
-echo "===[ send alerta heartbeat ]===" \
-&& \
-/srv/alerta_heartbeat/send_service_heartbeat.sh {{ item.value.heartbeat_timeout }} borg@{{ item.key }} \
-&& \
 echo "===[ DONE ]===" 

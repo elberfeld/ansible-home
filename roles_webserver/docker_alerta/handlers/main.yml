@@ -1,7 +1,0 @@
----
-
-- name: restart alerta docker
-  docker_service:
-    project_src: /srv/alerta/
-    state: present
-    restarted: yes

@@ -1,7 +1,0 @@
-/var/log/alerta_heartbeat/*.log {
-  rotate 12
-  weekly 
-  compress
-  missingok
-  notifempty
-}

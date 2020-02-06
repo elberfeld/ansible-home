@@ -1,9 +1,0 @@
-{% raw %}
-{% if customer %}Customer: `{{customer}}` {% endif %}
-*[{{ status.capitalize() }}] {{ environment }} {{ severity.capitalize() }}*
-{{ event | replace("_","\_") }} {{ resource.capitalize() }}
-```
-{{ text }}
-```
-https://alerta.void.ms/#/alert/{{ id }}
-{% endraw %}

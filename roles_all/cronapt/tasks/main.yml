@@ -17,11 +17,3 @@
     src: 5-upgrade
     dest: /etc/cron-apt/action.d/5-upgrade
    
-- name: Reboot Cronjob 
-  cron: 
-    name: "reboot_if_needed" 
-    weekday: "*" 
-    hour: "*" 
-    minute: "42" 
-    job: "/bin/bash -c needrestart -p > /dev/null; if [[ $? -eq 0 ]]; then /srv/alerta_heartbeat/send_service_heartbeat.sh 10800 SYSTEM_REBOOT; fi"
-  
