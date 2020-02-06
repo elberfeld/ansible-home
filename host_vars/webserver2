@@ -9,6 +9,12 @@ debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
 
 
+# Monitoring aktivieren 
+alert:  
+  containers: 13
+  disks: 
+    - "/"
+    - "/srv"
 
 # Primäre IP Adressen des Hosts 
 ext_ip4: 116.203.41.76
@@ -89,6 +95,13 @@ rsyncbackup:
     hour: "*"
     minute: "00"
 
+    # Überwachung aktivieren 
+    alert: true
+
+    # Alermlevel für das Backup-Alter in Stunden 
+    warning_age: 6  
+    critical_age: 12
+    
     # Alerta Heartbeat Timeout 
     heartbeat_timeout: "{{ 3 * 12 * 60 * 60 }}"
 
@@ -115,6 +128,17 @@ borgbackup_repos:
     weekday: "*"
     hour: "*/4"
     minute: "20"
+
+    # Überwachung aktivieren 
+    alert: true
+
+    # Alermlevel für das Backup-Alter in Stunden 
+    warning_age: 6  
+    critical_age: 12
+
+    # Alermlevel für die Anzahl der Backups 
+    warning_count: 5  
+    critical_count: 1
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichert werden sollen 
     # directories:

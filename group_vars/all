@@ -7,6 +7,11 @@ ldap_global:
   readonly_dn: cn=readonly,dc=void,dc=ms
   group_active_dn: cn=active,ou=groups,dc=void,dc=ms
 
+# zentraler Prometheus Server 
+prometheus:
+  ip: 10.5.0.111
+  port: 9090
+
 # zentrales Logging 
 loki:
   server: http://10.5.0.111:3100

@@ -52,6 +52,7 @@
 - name: wait for icinga docker (init)
   wait_for:
     path: /srv/icinga/etc/icingaweb2/CONFIGURED
+  when: configured.stat.exists == False
   
 - name: stop icinga docker (init)
   docker_compose:
@@ -64,12 +65,19 @@
     src: "{{ item }}"
     dest: "/srv/icinga/{{ item }}"
   with_items:
+    - Dockerfile
     - docker-compose.yml
     - etc/locale.gen
     - etc/icinga/conf.d/api-users.conf
     - etc/icinga/conf.d/commands2.conf
     - etc/icinga/conf.d/hosts.conf
+    - etc/icinga/conf.d/hosts_manual.conf
     - etc/icinga/conf.d/services.conf
+    - etc/icinga/conf.d/services_backup.conf
+    - etc/icinga/conf.d/services_domains.conf
+    - etc/icinga/conf.d/services_global.conf
+    - etc/icinga/conf.d/services_manual.conf
+    - etc/icinga/conf.d/services_system.conf
     - etc/icingaweb2/authentication.ini
     - etc/icingaweb2/groups.ini
     - etc/icingaweb2/resources.ini

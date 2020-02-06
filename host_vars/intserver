@@ -11,6 +11,12 @@ debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
 
 
+# Monitoring aktivieren 
+alert:  
+  containers: 10
+  disks: 
+    - "/"
+    - "/srv"
 
 
 # Primäre IP Adressen des Hosts 
