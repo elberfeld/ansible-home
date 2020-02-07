@@ -54,23 +54,26 @@
     - raspberry-remote-send.sh
     - conf/items/gpio.items
     - conf/items/groups.items
+    - conf/items/homematic.items
+    - conf/items/mqtt.items
     - conf/items/network.items
     - conf/items/rfswitches.items
     - conf/items/tradfri.items
-    - conf/items/homematic.items
     - conf/items/weather.items
     - conf/persistence/influxdb.persist
     - conf/persistence/rrd4j.persist
     - conf/rules/notifications.rules
     - conf/rules/rfswitches.rules
     - conf/services/addons.cfg
+    - conf/services/gpio.cfg
+    - conf/services/influxdb.cfg
+    - conf/services/mqtt.cfg
+    - conf/services/network.cfg
     - conf/services/openhabcloud.cfg
     - conf/services/pushover.cfg
     - conf/services/runtime.cfg
-    - conf/services/gpio.cfg
-    - conf/services/influxdb.cfg
-    - conf/services/network.cfg
     - conf/things/homematic.things
+    - conf/things/mqtt.things
     - conf/things/network.things
     - conf/things/tradfri.things
     - conf/things/weather.things

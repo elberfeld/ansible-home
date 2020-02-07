@@ -1,0 +1,3 @@
+
+Number MQTT_Kueche_Temp "Küche Temp [%.1f °C]" <temperature> { channel="mqtt:topic:temp:kueche" }
+

@@ -1,0 +1,9 @@
+
+Bridge mqtt:broker:mosquitto [ host="{{hostvars['intserver'].int_ip4}}", secure=false ]
+{
+    Thing mqtt:topic:temp {
+    Channels:
+        Type number : kueche "Küche Temp" [ stateTopic="temp/kueche" ]
+    }
+}
+
