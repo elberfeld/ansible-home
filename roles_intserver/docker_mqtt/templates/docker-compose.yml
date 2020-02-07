@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: eclipse-mosquitto:1.6.8
+    restart: always
+    ports:
+      - 1883:1883 
+      - 9001:9001
+    volumes:
+      - /srv/mqtt/data:/mosquitto/data
+      - /srv/mqtt/log:/mosquitto/log
+

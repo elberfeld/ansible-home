@@ -55,6 +55,7 @@
     - { role: roles_common/prometheus-node, tags: prometheus-node }
     - { role: roles_intserver/docker_hibiscus, tags: hibiscus }
     - { role: roles_intserver/docker_loki, tags: loki }
+    - { role: roles_intserver/docker_mqtt, tags: mqtt }
     - { role: roles_intserver/docker_prometheus, tags: prometheus }
 
 
