@@ -5,6 +5,7 @@ RUN apt-get update \
     git \
     curl \ 
     jq \
+    dig \
  && apt-get autoremove -y \
  && apt-get clean \
  && rm -rf /tmp/* /var/lib/apt/lists/* /var/cache/debconf/*-old

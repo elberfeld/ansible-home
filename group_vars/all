@@ -20,7 +20,15 @@ loki:
 alerta:
   url: "https://alerta.void.ms"
 
-
+# Monitoring 
+monitoring:
+  internal_dns_servers:
+    - webserver1
+    - webserver2
+  external_dns_servers:
+    - 8.8.8.8
+    - 9.9.9.9
+    - 46.182.19.48
 
 homematic_rauchmelder:
   - { id: "NEQ0442083", name: "Rauchmelder Wohnzimmer" }
