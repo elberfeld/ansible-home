@@ -52,7 +52,6 @@ webserver_domains:
   - "ldap2"
   - "mail"
   - "mailadmin"
-  - "matrix"
   - "office"
   - "rspamd"
   - "www2"  
