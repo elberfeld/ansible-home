@@ -60,6 +60,15 @@
     state: absent
   when: configured.stat.exists == False
 
+- name: Script Helper erstellen
+  template: 
+    src: "{{ item }}" 
+    dest: "/srv/icinga/{{ item }}"
+    mode: u+x
+  with_items:
+    - debuglog_enable.sh
+    - debuglog_disable.sh
+
 - name: Konfig-Dateien erstellen
   template:
     src: "{{ item }}"
