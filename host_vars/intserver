@@ -65,8 +65,6 @@ rsyncbackup:
     hour: "*"
     minute: "45"
 
-    # Alerta Heartbeat Timeout 
-    heartbeat_timeout: "{{ 3 * 12 * 60 * 60 }}"
 
 
 # Definition von Borgbackup Repositories 
@@ -94,9 +92,6 @@ borgbackup_repos:
 
     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
     # directories:
-
-    # Alerta Heartbeat Timeout 
-    heartbeat_timeout: "{{ 12 * 60 * 60 }}"
 
 
 

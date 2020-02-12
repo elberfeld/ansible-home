@@ -61,10 +61,6 @@ rsyncbackup:
     hour: "*"
     minute: "15"
 
-    # Alerta Heartbeat Timeout 
-    heartbeat_timeout: "{{ 3 * 12 * 60 * 60 }}"
-
-
 
 ## Sample, curently not used 
 
