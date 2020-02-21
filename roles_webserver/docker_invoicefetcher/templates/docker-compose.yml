@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: atmoz/sftp:alpine
+    restart: always
+    command: invoicefetcher:{{ sftp_user_pass }}:1001
+    ports:
+      - 0.0.0.0:42022:22
+    volumes:
+      - /srv/invoicefetcher/upload/:/home/invoicefetcher/upload
+      
