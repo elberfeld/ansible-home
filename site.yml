@@ -9,6 +9,7 @@
     - { role: roles_all/cronapt, tags: cronapt }
     - { role: roles_all/packages, tags: packages }
     - { role: roles_all/sshd, tags: sshd }
+    - { role: roles_all/sysctl, tags: sysctl }
 
 
 - hosts: infoscreen1

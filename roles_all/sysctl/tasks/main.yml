@@ -1,0 +1,12 @@
+---
+
+# set general sysctl.conf settings
+# the module will reload the setting so they are applied without reboot
+
+# minimize usage of swap 
+- sysctl:
+    name: vm.swappiness
+    value: '0'
+    state: present
+       
+    
