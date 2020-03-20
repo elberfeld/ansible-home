@@ -10,8 +10,9 @@
 
 - include: ../functions/get_secret.yml
   with_items:
-   - { path: /srv/nextcloud/mysql_admin_pass,  length: 24 }
-   - { path: /srv/nextcloud/mysql_user_pass,  length: 12 }
+    - { path: /srv/nextcloud/nextcloud_admin_pass,  length: 24 }
+    - { path: /srv/nextcloud/mysql_admin_pass,  length: 24 }
+    - { path: /srv/nextcloud/mysql_user_pass,  length: 12 }
 
 - name: create folder struct for nextcloud
   file: 
@@ -41,8 +42,6 @@
   with_items:
     - "docker-compose.yml"
     - "memory-limit.ini"
-    - "Dockerfile-elasticsearch"
-    - "Dockerfile-nextcloud"
 
 - name: Script Helper erstellen
   template: 
