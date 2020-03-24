@@ -6,26 +6,6 @@
    - { path: /srv/ldap/secret/ldap_config_pass,  length: 24 }
    - { path: /srv/ldap/secret/ldap_readonly_pass,  length: 12 }
 
-
-# Einige Secrets sind auf dem Server lokal gespeichert und werden von dort gelesen
-# Auslesen der Dateien vom Server, zwischengespeicert wird in der Variable gitlab_secrets
-# Anschließend müssen die entsprechenden Einträge aus gitlab_secrets extrahiert werden
-# Die Daten, die von Slurp gelesen werden sind Base64 codiert
-# Zur Sicherheit werden Whitespace-Zeichen entfert, damit z.B. Zeilenumbrüche nicht übernommen werden
-
-
-- name: get secrets from server 1
-  slurp: src={{ item }}
-  with_items:
-    - /srv/ldap/secret/ldap_admin_pass
-    - /srv/ldap/secret/ldap_readonly_pass
-  register: ldap_secrets
-
-- name: get secrets from server 2
-  set_fact:
-    ldap_admin_pass: "{{ ldap_secrets.results | selectattr('item', 'equalto', '/srv/ldap/secret/ldap_admin_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}"
-    ldap_readonly_pass: "{{ ldap_secrets.results | selectattr('item', 'equalto', '/srv/ldap/secret/ldap_readonly_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}"
-
 - name: create folder struct for ldap
   file:
     path: "/srv/ldap/{{ item.path }}"
@@ -45,6 +25,6 @@
     - syncrepl_exporter.yml 
 
 - name: start openldap docker
-  docker_service:
+  docker_compose:
     project_src: /srv/ldap/
     state: present

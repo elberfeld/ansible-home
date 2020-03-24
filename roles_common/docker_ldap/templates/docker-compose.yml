@@ -17,7 +17,6 @@ services:
       - /srv/ldap/config:/etc/ldap/slapd.d
     ports:
       - {{ int_ip4 }}:389:389
-      - {{ int_ip4 }}:636:636
     environment:
       - HOSTNAME={{ inventory_hostname }}-sync
       - LDAP_ORGANISATION={{ ldap_global.organization }}
