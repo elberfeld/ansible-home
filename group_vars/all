@@ -4,6 +4,7 @@ ldap_global:
   organization: VOID
   domain: void.ms
   search_base: dc=void,dc=ms
+  admin_dn: cn=admin,dc=void,dc=ms
   readonly_dn: cn=readonly,dc=void,dc=ms
   group_active_dn: cn=active,ou=groups,dc=void,dc=ms
 
@@ -22,6 +23,10 @@ alerta:
 
 # Monitoring 
 monitoring:
+  internal_ldap_servers:
+    - webserver1
+    - webserver2
+    - intserver
   internal_dns_servers:
     - webserver1
     - webserver2
