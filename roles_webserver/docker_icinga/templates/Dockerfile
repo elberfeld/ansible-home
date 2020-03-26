@@ -1,4 +1,4 @@
-FROM jordan/icinga2:2.11.0
+FROM jordan/icinga2:2.11.2
 
 RUN apt-get update \
  && apt-get install -y -q --no-install-recommends \
