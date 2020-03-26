@@ -36,14 +36,14 @@ monitoring:
     - 46.182.19.48
 
 homematic_rauchmelder:
-  - { id: "NEQ0442083", name: "Rauchmelder Wohnzimmer" }
-  - { id: "OEQ2615046", name: "Rauchmelder Schlafzimmer" }
+  - { id: "NEQ0442083", name: "Rauchmelder Wohnzimmer",   check_state="OFF" }
+  - { id: "OEQ2615046", name: "Rauchmelder Schlafzimmer", check_state="OFF" }
 
 homematic_heizung:
-  - { id: "MEQ0806347", name: "Heizung Schlafzimmer" }
-  - { id: "MEQ0251087", name: "Heizung Wohnzimmer" }
-  - { id: "MEQ0250029", name: "Heizung Schreibtisch" }
-  - { id: "MEQ0805830", name: "Heizung Badezimmer" }
+  - { id: "MEQ0806347", name: "Heizung Schlafzimmer", check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
+  - { id: "MEQ0251087", name: "Heizung Wohnzimmer",   check_controlmode="MANU-MODE" }
+  - { id: "MEQ0250029", name: "Heizung Schreibtisch", check_controlmode="MANU-MODE" }
+  - { id: "MEQ0805830", name: "Heizung Badezimmer",   check_controlmode="MANU-MODE" }
 
 homematic_sensor:
   - { id: "OEQ0160159", name: "Sensor Badezimmer" }
