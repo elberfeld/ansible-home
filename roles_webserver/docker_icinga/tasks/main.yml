@@ -88,6 +88,7 @@
     - etc/icinga/conf.d/services_global.conf
     - etc/icinga/conf.d/services_ldap.conf
     - etc/icinga/conf.d/services_manual.conf
+    - etc/icinga/conf.d/services_openhab.conf
     - etc/icinga/conf.d/services_system.conf
     - etc/icingaweb2/authentication.ini
     - etc/icingaweb2/groups.ini
