@@ -76,12 +76,14 @@
   with_items:
     - Dockerfile
     - docker-compose.yml
+    - notify_by_pushover.sh
     - etc/locale.gen
     - etc/icinga/conf.d/api-users.conf
     - etc/icinga/conf.d/commands2.conf
-    - etc/icinga/conf.d/hosts.conf
     - etc/icinga/conf.d/hosts_manual.conf
-    - etc/icinga/conf.d/services.conf
+    - etc/icinga/conf.d/hosts.conf
+    - etc/icinga/conf.d/notifications_pushover.conf
+    - etc/icinga/conf.d/notifications.conf
     - etc/icinga/conf.d/services_backup.conf
     - etc/icinga/conf.d/services_config.conf
     - etc/icinga/conf.d/services_domains.conf
@@ -90,6 +92,9 @@
     - etc/icinga/conf.d/services_manual.conf
     - etc/icinga/conf.d/services_openhab.conf
     - etc/icinga/conf.d/services_system.conf
+    - etc/icinga/conf.d/services.conf
+    - etc/icinga/conf.d/users_groups.conf
+    - etc/icinga/conf.d/users_sample.conf
     - etc/icingaweb2/authentication.ini
     - etc/icingaweb2/groups.ini
     - etc/icingaweb2/resources.ini

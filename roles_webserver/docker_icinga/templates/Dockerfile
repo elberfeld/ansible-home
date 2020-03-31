@@ -5,11 +5,14 @@ RUN apt-get update \
     git \
     curl \ 
     jq \
-    dig \
+    dnsutils \
     python-requests \
  && apt-get autoremove -y \
  && apt-get clean \
  && rm -rf /tmp/* /var/lib/apt/lists/* /var/cache/debconf/*-old
+
+COPY notify_by_pushover.sh /opt 
+RUN chmod +x /opt/notify_by_pushover.sh
 
 RUN cd /opt/ && git clone https://github.com/prometheus/nagios_plugins.git
 
