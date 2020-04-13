@@ -21,6 +21,7 @@ services:
       - /srv/icinga/log/icingaweb2:/var/log/icingaweb2
     depends_on:
       - db
+      - graphite
     environment:
       APACHE2_HTTP: BOTH
       MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"

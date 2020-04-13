@@ -8,10 +8,7 @@
     - { path: /srv/icinga/icinga_api_pass,  length: 8 }
     - { path: /srv/icinga/mysql_admin_pass,  length: 12 }
     - { path: /srv/icinga/mysql_user_pass,  length: 12 }
-#   - { path: /srv/icinga/pushover_token,  length: -1 }
-#   - { path: /srv/icinga/pushover_userkey,  length: -1 }
-#   - { path: /srv/icinga/telegram_token,  length: -1 }
-#   - { path: /srv/icinga/telegram_chatid,  length: -1 }
+
  
 - name: pakete installieren
   apt:
@@ -69,6 +66,7 @@
     - debuglog_enable.sh
     - debuglog_disable.sh
 
+
 - name: Konfig-Dateien erstellen
   template:
     src: "{{ item }}"
@@ -93,14 +91,19 @@
     - etc/icinga/conf.d/services_openhab.conf
     - etc/icinga/conf.d/services_system.conf
     - etc/icinga/conf.d/services.conf
+    - etc/icinga/conf.d/templates.conf
     - etc/icinga/conf.d/users_groups.conf
     - etc/icinga/conf.d/users_sample.conf
     - etc/icingaweb2/authentication.ini
     - etc/icingaweb2/groups.ini
     - etc/icingaweb2/resources.ini
     - etc/icingaweb2/roles.ini
+    - etc/icingaweb2/modules/grafana/config.ini
+    - etc/icingaweb2/modules/grafana/graphs.ini
+    - graphite-conf/storage-schemas.conf
   notify: restart icinga docker
 
+  
 - name: start icinga docker
   docker_compose:
     project_src: /srv/icinga/
