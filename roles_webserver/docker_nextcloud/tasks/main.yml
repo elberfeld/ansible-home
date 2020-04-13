@@ -10,22 +10,22 @@
 
 - include: ../functions/get_secret.yml
   with_items:
-    - { path: /srv/nextcloud/nextcloud_admin_pass,  length: 24 }
-    - { path: /srv/nextcloud/mysql_admin_pass,  length: 24 }
-    - { path: /srv/nextcloud/mysql_user_pass,  length: 12 }
+    - { path: "{{ basedir }}/nextcloud_admin_pass",  length: 24 }
+    - { path: "{{ basedir }}/mysql_admin_pass",  length: 24 }
+    - { path: "{{ basedir }}/mysql_user_pass",  length: 12 }
 
-- name: create folder struct for nextcloud
+- name: "create folder struct for {{ servicename }}"
   file: 
     path: "{{ item }}"
     state: "directory"
     owner: www-data
     group: root
   with_items:
-    - "/srv/nextcloud/"
-    - "/srv/nextcloud/data/"
-    - "/srv/nextcloud/db/"
-    - "/srv/nextcloud/tmp/"
-    - "/srv/nextcloud/elasticsearch_data/"
+    - "{{ basedir }}"
+    - "{{ basedir }}/data/"
+    - "{{ basedir }}/db/"
+    - "{{ basedir }}/tmp/"
+    - "{{ basedir }}/elasticsearch_data/"
 
 - name: Get a timestamp
   command: "date +%Y%m%d%H%M%S"
@@ -38,7 +38,9 @@
     sysctl_file: /etc/sysctl.d/90-dstk-max_map_count.conf
 
 - name: Docker Compose Konfig-Datei erstellen
-  template: src="{{ item }}" dest="/srv/nextcloud/{{ item }}"
+  template: 
+    src: "{{ item }}" 
+    dest: "{{ basedir }}/{{ item }}"
   with_items:
     - "docker-compose.yml"
     - "memory-limit.ini"
@@ -46,13 +48,13 @@
 - name: Script Helper erstellen
   template: 
     src: "{{ item }}" 
-    dest: "/srv/nextcloud/{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
     mode: u+x
   with_items:
     - "occ.sh"
     - "nextcloud-index-worker.sh"
 
-- name: start nextcloud docker
+- name: "start {{ servicename }} docker"
   docker_compose:
     project_src: /srv/nextcloud/
     state: present

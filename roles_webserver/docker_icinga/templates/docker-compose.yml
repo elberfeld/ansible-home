@@ -9,16 +9,15 @@ services:
     build: .
     restart: always
     ports:
-      - 127.0.0.1:42017:80
       - 0.0.0.0:5665:5665
     volumes:
-      - /srv/icinga/data:/var/lib/icinga2
-      - /srv/icinga/etc/locale.gen:/etc/locale.gen
-      - /srv/icinga/etc/icinga:/etc/icinga2
-      - /srv/icinga/etc/icingaweb2:/etc/icingaweb2
-      - /srv/icinga/log/apache2:/var/log/apache2
-      - /srv/icinga/log/icinga2:/var/log/icinga2
-      - /srv/icinga/log/icingaweb2:/var/log/icingaweb2
+      - "{{ basedir }}/data:/var/lib/icinga2"
+      - "{{ basedir }}/etc/locale.gen:/etc/locale.gen"
+      - "{{ basedir }}/etc/icinga:/etc/icinga2"
+      - "{{ basedir }}/etc/icingaweb2:/etc/icingaweb2"
+      - "{{ basedir }}/log/apache2:/var/log/apache2"
+      - "{{ basedir }}/log/icinga2:/var/log/icinga2"
+      - "{{ basedir }}/log/icingaweb2:/var/log/icingaweb2"
     depends_on:
       - db
       - graphite
@@ -36,26 +35,36 @@ services:
       ICINGA2_FEATURE_GRAPHITE_HOST: graphite
       ICINGA2_FEATURE_GRAPHITE_PORT: 2003
       ICINGA2_FEATURE_DIRECTOR: 0
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80      
+    networks:
+      - default
+      - web
 
   db:
 
     image: mariadb:10.1.44
     restart: always
     volumes:
-      - /srv/icinga/db:/var/lib/mysql
+      - "{{ basedir }}/db:/var/lib/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
       MYSQL_PASSWORD: "{{ mysql_user_pass }}"
       MYSQL_DATABASE: icinga
       MYSQL_USER: icinga
-
+    networks:
+      - default
+  
   graphite:
     
     image: graphiteapp/graphite-statsd:1.1.6-1
     restart: always
     volumes:
-      - /srv/icinga/graphite-conf:/opt/graphite/conf
-      - /srv/icinga/graphite-storage:/opt/graphite/storage
+      - "{{ basedir }}/graphite-conf:/opt/graphite/conf"
+      - "{{ basedir }}/graphite-storage:/opt/graphite/storage"
     environment:
       GRAPHITE_TIME_ZONE: "Europe/Berlin"
       GRAPHITE_DATE_FORMAT: "%d.%m.%y"
@@ -63,3 +72,9 @@ services:
       GRAPHITE_LOG_FILE_EXCEPTION: "-"
       GRAPHITE_LOG_FILE_CACHE: "-"
       GRAPHITE_LOG_FILE_RENDERING: "-"
+    networks:
+      - default
+  
+networks:
+  web:
+    external: true    

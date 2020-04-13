@@ -2,7 +2,7 @@
 # ------------------
 app:
   # url used to access commafeed
-  publicUrl: https://commafeed.void.ms/
+  publicUrl: https://{{ domain }}/
   
   # whether to allow user registrations
   allowRegistrations: false

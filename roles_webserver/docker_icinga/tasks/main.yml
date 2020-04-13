@@ -3,11 +3,11 @@
 - include: ../functions/get_secret.yml
   with_items:
     - { path: /srv/ldap/secret/ldap_readonly_pass, length: -1 }
-    - { path: /srv/icinga/icinga_admin_pass,  length: 12 }
-    - { path: /srv/icinga/icinga_api_user,  length: 8 }
-    - { path: /srv/icinga/icinga_api_pass,  length: 8 }
-    - { path: /srv/icinga/mysql_admin_pass,  length: 12 }
-    - { path: /srv/icinga/mysql_user_pass,  length: 12 }
+    - { path: "{{ basedir }}/icinga_admin_pass",  length: 12 }
+    - { path: "{{ basedir }}/icinga_api_user",  length: 8 }
+    - { path: "{{ basedir }}/icinga_api_pass",  length: 8 }
+    - { path: "{{ basedir }}/mysql_admin_pass",  length: 12 }
+    - { path: "{{ basedir }}/mysql_user_pass",  length: 12 }
 
  
 - name: pakete installieren
@@ -23,44 +23,44 @@
     src: logrotate 
     dest: /etc/logrotate.d/icinga
 
-- name: create folder struct for icinga
+- name: "create folder struct for {{ servicename }}"
   file: 
     path: "{{ item }}"
     state: "directory"
   with_items:
-    - /srv/icinga/
-    - /srv/icinga/data/
-    - /srv/icinga/etc/
-    - /srv/icinga/log/
-    - /srv/icinga/db/
-    - /srv/icinga/graphite-conf/
-    - /srv/icinga/graphite-storage/
+    - "{{ basedir }}"
+    - "{{ basedir }}/data/"
+    - "{{ basedir }}/etc/"
+    - "{{ basedir }}/log/"
+    - "{{ basedir }}/db/"
+    - "{{ basedir }}/graphite-conf/"
+    - "{{ basedir }}/graphite-storage/"
 
 - stat:
-    path: /srv/icinga/etc/icingaweb2/CONFIGURED
+    path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
   register: configured
 
-- name: start icinga docker (init)
+- name: "start {{ servicename }} docker (init)"
   docker_compose:
-    project_src: /srv/icinga/
+    project_src: "{{ basedir }}"
     state: present
   when: configured.stat.exists == False
 
-- name: wait for icinga docker (init)
+- name: "wait for {{ servicename }} docker (init)"
   wait_for:
-    path: /srv/icinga/etc/icingaweb2/CONFIGURED
+    path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
   when: configured.stat.exists == False
   
-- name: stop icinga docker (init)
+- name: "stop {{ servicename }} docker (init)"
   docker_compose:
-    project_src: /srv/icinga/
+    project_src: "{{ basedir }}"
     state: absent
   when: configured.stat.exists == False
 
 - name: Script Helper erstellen
   template: 
     src: "{{ item }}" 
-    dest: "/srv/icinga/{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
     mode: u+x
   with_items:
     - debuglog_enable.sh
@@ -70,7 +70,7 @@
 - name: Konfig-Dateien erstellen
   template:
     src: "{{ item }}"
-    dest: "/srv/icinga/{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
   with_items:
     - Dockerfile
     - docker-compose.yml
@@ -104,7 +104,7 @@
   notify: restart icinga docker
 
   
-- name: start icinga docker
+- name: "start {{ servicename }} docker"
   docker_compose:
-    project_src: /srv/icinga/
+    project_src: "{{ basedir }}"
     state: present

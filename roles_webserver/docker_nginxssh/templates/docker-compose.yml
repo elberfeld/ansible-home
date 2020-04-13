@@ -9,10 +9,19 @@ services:
     restart: always
     hostname: nginxssh-connectiv
     ports:
-      - 127.0.0.1:42004:80
-      - 0.0.0.0:444:22
+      - "{{ sshport }}:22"
     volumes:
-      - /srv/nginxssh_connectiv/ssh:/etc/ssh/keys/
-      - /srv/nginxssh_connectiv/html/:/var/www/html/
-      - /srv/nginxssh_connectiv/authorized_keys:/var/www/.ssh/authorized_keys
-      
+      - "{{ basedir }}/ssh:/etc/ssh/keys/"
+      - "{{ basedir }}/html/:/var/www/html/"
+      - "{{ basedir }}/authorized_keys:/var/www/.ssh/authorized_keys"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80      
+    networks:
+      - web
+  
+networks:
+  web:
+    external: true      

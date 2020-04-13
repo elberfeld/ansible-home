@@ -1,0 +1,42 @@
+       
+- include: ../functions/get_secret.yml
+  with_items:
+    - { path: "{{ basedir }}/letsencrypt_notification_email",  length: -1 }
+
+- name: "create folder struct for {{ servicename }}"
+  file:
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/dynamic"
+
+- name: "Create CertStore if needed and set permissions {{ basedir }}/acme.json"
+  file:
+    path: "{{ basedir }}/acme.json"
+    owner: root
+    group: root
+    mode: '600'
+    state: touch
+
+- name: Docker Compose Konfig-Datei erstellen
+  template:
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - docker-compose.yml
+    - traefik.yml 
+    - dynamic/tls.yml
+  register: config
+
+- name: "stop {{ servicename}} docker"
+  docker_service:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config.changed
+
+- name: "start {{ servicename}} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present
+    

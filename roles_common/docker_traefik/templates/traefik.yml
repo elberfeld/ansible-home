@@ -1,0 +1,71 @@
+
+# Global settings
+global:
+    checkNewVersion: true
+
+    
+# Entrypoints 
+entryPoints:
+
+    # HTTP, redirect all to HTTPS
+    web:
+        address: ":80"
+        http:
+            redirections:
+                entryPoint:
+                    to: "websecure"
+                    scheme: "https"
+                    permanent: true   
+
+    # HTTPS, get certificates from letsencrypt
+    websecure:
+        address: ":443"
+        http:
+            tls:
+                certResolver: "letsencrypt"
+
+
+# Discover configuration via docker 
+# use network 'web' for interconnect  
+providers:
+    docker:
+        watch: true
+        endpoint: "unix:///var/run/docker.sock"
+        network: "web"
+        exposedByDefault: false
+    file:
+        directory: "/etc/traefik/dynamic"
+        watch: true
+
+
+# Traefik API and dashboard 
+api:
+    insecure: true
+    dashboard: true
+    debug: false
+
+
+# Enable Ping endpoint for docker healthcheck 
+ping: {}
+
+
+# Enable prometheus metrics
+metrics: 
+    prometheus: 
+        addEntryPointsLabels: true 
+        addServicesLabels: true 
+
+
+# Logging 
+log:
+    level: "INFO"
+    format: "common"
+
+
+# get certificates from letsEncrypt 
+certificatesResolvers:
+    letsencrypt:
+        acme:
+            email: "{{ letsencrypt_notification_email }}"
+            storage: "/acme.json"
+            tlsChallenge: true

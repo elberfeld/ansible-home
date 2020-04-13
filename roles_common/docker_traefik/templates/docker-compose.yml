@@ -1,0 +1,37 @@
+version: '2.4'
+
+services:
+    traefik:
+        image: traefik:v2.2
+        restart: always
+        ports:
+            - "80:80"
+            - "443:443"
+            - "{{ int_ip4 }}:8080:8080"
+        volumes:
+            - "{{ basedir }}/traefik.yml:/etc/traefik/traefik.yml:ro"
+            - "{{ basedir }}/dynamic:/etc/traefik/dynamic:ro"
+            - "{{ basedir }}/acme.json:/acme.json"
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            - default
+            - web
+        healthcheck:
+            test: ['CMD', 'traefik', 'healthcheck']
+            interval: 30s
+            timeout: 10s
+            retries: 3
+    
+    whoami:
+        image: containous/whoami
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+            - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+            - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80
+        networks:
+            - web
+
+networks:
+    web:
+        external: true

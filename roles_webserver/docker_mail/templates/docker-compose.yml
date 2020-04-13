@@ -7,7 +7,7 @@ services:
     image: redis:5.0.3
     restart: always
     volumes:
-      - /srv/mail/redis:/data
+      - "{{ basedir }}/redis:/data"
 
 
   mailserver:
@@ -30,20 +30,27 @@ services:
       - DEBUG_MODE=true                        
       - ENABLE_FETCHMAIL=true                  
     volumes:
-      - /srv/mail/data:/var/mail
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-      - /srv/mail/postfix-custom.cf:/var/mail/postfix/custom.conf:ro
-      - /srv/mail/ldap_virtual_alias_maps.cf:/etc/postfix/ldap_virtual_alias_maps.cf
-      - /srv/mail/ldap_virtual_domains_maps.cf:/etc/postfix/ldap_virtual_domains_maps.cf
-      - /srv/mail/ldap_virtual_mailbox_maps.cf:/etc/postfix/ldap_virtual_mailbox_maps.cf
-      - /srv/mail/dovecot-10-auth.conf:/etc/dovecot/conf.d/10-auth.conf
-      - /srv/mail/dovecot-10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
-      - /srv/mail/dovecot-90-quota.conf:/etc/dovecot/conf.d/90-quota.conf
-      - /srv/mail/dovecot-auth-ldap.conf.ext:/etc/dovecot/conf.d/auth-ldap.conf.ext
-      - /srv/mail/dovecot-ldap.conf.ext:/etc/dovecot/conf.d/dovecot-ldap.conf.ext
+      - "{{ basedir }}/data:/var/mail"
+      - "/etc/letsencrypt:/etc/letsencrypt:ro"
+      - "{{ basedir }}/postfix-custom.cf:/var/mail/postfix/custom.conf:ro"
+      - "{{ basedir }}/ldap_virtual_alias_maps.cf:/etc/postfix/ldap_virtual_alias_maps.cf"
+      - "{{ basedir }}/ldap_virtual_domains_maps.cf:/etc/postfix/ldap_virtual_domains_maps.cf"
+      - "{{ basedir }}/ldap_virtual_mailbox_maps.cf:/etc/postfix/ldap_virtual_mailbox_maps.cf"
+      - "{{ basedir }}/dovecot-10-auth.conf:/etc/dovecot/conf.d/10-auth.conf"
+      - "{{ basedir }}/dovecot-10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf"
+      - "{{ basedir }}/dovecot-90-quota.conf:/etc/dovecot/conf.d/90-quota.conf"
+      - "{{ basedir }}/dovecot-auth-ldap.conf.ext:/etc/dovecot/conf.d/auth-ldap.conf.ext"
+      - "{{ basedir }}/dovecot-ldap.conf.ext:/etc/dovecot/conf.d/dovecot-ldap.conf.ext"
     depends_on:
       - redis
-
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8082
+    networks:
+        - default
+        - web
 
 
   autodiscover:
@@ -64,3 +71,7 @@ services:
       SMTP_PORT: "587" 
       SMTP_SOCKET: "STARTTLS"
   
+networks:
+  web:
+    external: true
+    

@@ -50,3 +50,8 @@
 - name: force systemd to reread configs 
   systemd:
     daemon_reload: yes
+
+- name: Create internal Network 'web'
+  docker_network:
+    name: web
+    internal: yes

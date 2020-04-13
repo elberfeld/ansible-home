@@ -1,4 +1,0 @@
-
-    location / {
-      rewrite     ^(.*)   https://www.void.ms$1 permanent;
-    }

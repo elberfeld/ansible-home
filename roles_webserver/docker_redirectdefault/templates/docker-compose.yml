@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+
+  app:
+
+    redirect:
+      image: schmunk42/nginx-redirect:1.0.0-rc1
+      environment:
+          - SERVER_REDIRECT={{ redirect-to }}
+      labels:
+          - traefik.enable=true
+          - traefik.http.routers.redirect-default.rule=Host(`{{ domain }}`)
+          - traefik.http.routers.redirect-default.entrypoints=websecure
+      networks:
+          - default
+          - web
+
+networks:
+  web:
+    external: true

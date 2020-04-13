@@ -8,7 +8,7 @@ services:
     restart: always
     command: invoicefetcher:{{ sftp_user_pass }}:1001
     ports:
-      - 0.0.0.0:42022:22
+      - "{{ sshport }}:22"
     volumes:
-      - /srv/invoicefetcher/upload/:/home/invoicefetcher/upload
+      - "{{ basedir }}/upload/:/home/invoicefetcher/upload"
       

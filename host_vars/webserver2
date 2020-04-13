@@ -34,25 +34,12 @@ docker:
   service_blocker_file: /srv/cryptdisk_mounted
 
 
-# Letseccrypt config 
-letsencrypt_mail: elberfeld@web.de
-letsencrypt_tos_sha256: 6373439b9f29d67a5cd4d18cbc7f264809342dbf21cb2ba2fc7588df987a6221
-
-
-# Webserver settings 
-webserver_defaultdomain: www2
-
 webserver_domains:
-  - "autoconfig"
-  - "autodiscover" 
   - "cloud"
   - "commafeed"
   - "ldap2"
   - "mail"
-  - "mailadmin"
-  - "rspamd"
-  - "www2"  
-
+  - "traefik-ws2"
 
 
 # Definition von RSync Backup Jobs 

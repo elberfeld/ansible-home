@@ -6,13 +6,22 @@ services:
 
     image: grafana/grafana:6.7.2
     restart: always
-    ports:
-      - 127.0.0.1:42011:3000
     volumes:
-      - /srv/grafana/config/grafana.ini:/etc/grafana/grafana.ini
-      - /srv/grafana/config/ldap.toml:/etc/grafana/ldap.toml
-      - /srv/grafana/data/:/var/lib/grafana
+      - "{{ basedir }}/config/grafana.ini:/etc/grafana/grafana.ini"
+      - "{{ basedir }}/config/ldap.toml:/etc/grafana/ldap.toml"
+      - "{{ basedir }}/data/:/var/lib/grafana"
     environment:
-      GF_SERVER_ROOT_URL: "http://grafana.void.ms"
+      GF_SERVER_ROOT_URL: "https://{{ domain }}"
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_pass }}"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=3000
+    networks:
+        - default
+        - web
 
+networks:
+  web:
+    external: true

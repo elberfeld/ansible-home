@@ -2,13 +2,13 @@
 
 - include: ../functions/get_secret.yml
   with_items:
-   - { path: /srv/ldap/secret/ldap_admin_pass,  length: 24 }
-   - { path: /srv/ldap/secret/ldap_config_pass,  length: 24 }
-   - { path: /srv/ldap/secret/ldap_readonly_pass,  length: 12 }
+   - { path: "{{ basedir }}/secret/ldap_admin_pass",  length: 24 }
+   - { path: "{{ basedir }}/secret/ldap_config_pass",  length: 24 }
+   - { path: "{{ basedir }}/secret/ldap_readonly_pass",  length: 12 }
 
-- name: create folder struct for ldap
+- name: "create folder struct for {{ servicename }}"
   file:
-    path: "/srv/ldap/{{ item.path }}"
+    path: "{{ basedir }}/{{ item.path }}"
     state: "directory"
     recurse: yes
   with_items:
@@ -18,13 +18,13 @@
 - name: Docker Compose Konfig-Datei erstellen
   template:
     src: "{{ item }}"
-    dest: "/srv/ldap/{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
   with_items:
     - docker-compose.yml
     - Dockerfile 
     - syncrepl_exporter.yml 
 
-- name: start openldap docker
+- name: "start {{ servicename }} docker"
   docker_compose:
-    project_src: /srv/ldap/
+    project_src: "{{ basedir }}"
     state: present

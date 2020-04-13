@@ -7,8 +7,17 @@ services:
 
     image: agross/commafeed:latest
     restart: always
-    ports:
-      - 127.0.0.1:42015:8082
     volumes:
-      - /srv/commafeed/config.yml:/config/config.yml
-      - /srv/commafeed/db:/home/commafeed/
+      - "{{ basedir }}/config.yml:/config/config.yml"
+      - "{{ basedir }}/db:/home/commafeed/"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8082
+    networks:
+        - web
+
+networks:
+  web:
+    external: true
