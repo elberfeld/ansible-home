@@ -28,8 +28,6 @@ ldap_local:
 
 # Docker konfigurationen 
 docker:
-  # Loki Log-Driver aktivieren 
-  loki_logging: yes
   # Prometheus Metriken aktivieren 
   prometheus_metrics: yes
   # Docker Start unterbinden fals diese Datei nicht existiert 
