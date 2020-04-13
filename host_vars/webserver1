@@ -40,7 +40,6 @@ webserver_domains:
   - "icinga"
   - "ldap"
   - "www"
-  - "traefik-ws1"
 
 
 # Definition von RSync Backup Jobs 

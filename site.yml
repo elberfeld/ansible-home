@@ -92,8 +92,7 @@
     - { 
         role: roles_common/docker_traefik, tags: traefik,
         servicename: traefik, 
-        basedir: /srv/traefik, 
-        domain: traefik-ws1.void.ms
+        basedir: /srv/traefik
       }
     - { 
         role: roles_webserver/docker_redirectdefault, tags: redirectdefault, 
@@ -141,8 +140,7 @@
     - { 
         role: roles_common/docker_traefik, tags: traefik,
         servicename: traefik, 
-        basedir: /srv/traefik, 
-        domain: traefik-ws2.void.ms
+        basedir: /srv/traefik
       }
     - { 
         role: roles_webserver/docker_commafeed, tags: commafeed,
