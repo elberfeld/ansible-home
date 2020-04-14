@@ -38,7 +38,8 @@ webserver_domains:
   - "cloud"
   - "commafeed"
   - "ldap2"
-  - "mail"
+
+#  - "mail"
 
 
 # Definition von RSync Backup Jobs 
