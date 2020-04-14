@@ -27,7 +27,7 @@ services:
 #        image: containous/whoami
 #        labels:
 #            - traefik.enable=true
-#            - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+#            - traefik.http.routers.{{ servicename }}.rule=Host(`{ domain }`)
 #            - traefik.http.routers.{{ servicename }}.entrypoints=websecure
 #            - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80
 #        networks:
