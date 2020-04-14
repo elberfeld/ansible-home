@@ -1,7 +1,8 @@
 version: '2.4'
 
 services:
-    traefik:
+
+    app:
         image: traefik:v2.2
         restart: always
         ports:
