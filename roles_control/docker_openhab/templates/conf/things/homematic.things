@@ -1,4 +1,4 @@
 
 // Homematic Hardware Konfiguration 
 
-Bridge homematic:bridge:OEQ1046187 [ gatewayAddress="10.5.0.252", callbackHost="{{int_ip4}}", bindAddress="{{int_ip4}}" ]
+Bridge homematic:bridge:{{ homematic_ccu.id }} [ gatewayAddress="{{ homematic_ccu.ip }}", callbackHost="{{int_ip4}}", bindAddress="{{int_ip4}}" ]

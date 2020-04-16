@@ -35,22 +35,31 @@ monitoring:
     - 9.9.9.9
     - 46.182.19.48
 
+homematic_ccu: 
+  id: "OEQ1046187"
+  ip: "10.5.0.252"
+
+homematic_smoketeam: 
+  id: "T-NEQ0442083"
+  type: "HM-Sec-SD-2-Team"
+
 homematic_rauchmelder:
-  - { id: "NEQ0442083", name: "Rauchmelder Wohnzimmer",   check_state="OFF" }
-  - { id: "OEQ2615046", name: "Rauchmelder Schlafzimmer", check_state="OFF" }
+  - { id: "NEQ0442083", type: "HM-Sec-SD-2", name: "Rauchmelder Wohnzimmer",   check_state="OFF" }
+  - { id: "OEQ2615046", type: "HM-Sec-SD-2", name: "Rauchmelder Schlafzimmer", check_state="OFF" }
 
 homematic_heizung:
-  - { id: "MEQ0806347", name: "Heizung Schlafzimmer", check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
-  - { id: "MEQ0251087", name: "Heizung Wohnzimmer",   check_controlmode="MANU-MODE" }
-  - { id: "MEQ0250029", name: "Heizung Schreibtisch", check_controlmode="MANU-MODE" }
-  - { id: "MEQ0805830", name: "Heizung Badezimmer",   check_controlmode="MANU-MODE" }
+  - { id: "MEQ0806347", type: "HM-CC-RT-DN", name: "Heizung Schlafzimmer", check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
+  - { id: "MEQ0251087", type: "HM-CC-RT-DN", name: "Heizung Wohnzimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
+  - { id: "MEQ0250029", type: "HM-CC-RT-DN", name: "Heizung Schreibtisch", check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
+  - { id: "MEQ0805830", type: "HM-CC-RT-DN", name: "Heizung Badezimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40"}
 
-homematic_sensor:
-  - { id: "OEQ0160159", name: "Sensor Badezimmer" }
+homematic_tempsensor:
+  - { id: "OEQ0160159", type: "HM-WDS40-TH-I-2", name: "Sensor Badezimmer" }
 
-#homematic_fenster:
-#  - { id: "MEQ1136898", name: "Fenster unten Badezimmer" }
-#  - { id: "NEQ1833602", name: "Fenster oben Badezimmer" }
+homematic_openclosesensor:
+  - { id: "QEQ0014557", type: "HM-Sec-TiS", name: "Sensor Garagentor" }
+#  - { id: "MEQ1136898", type: "HM-Sec-SC-2", name: "Fenster unten Badezimmer" }
+#  - { id: "NEQ1833602", type: "HM-Sec-SC-2", name: "Fenster oben Badezimmer" }
 
 rfswitches:
   - { id: "LichtDvdRegal",    name: "DVD Regal",   code: "11001 1",  groups: "gAlles,gLampen" }
