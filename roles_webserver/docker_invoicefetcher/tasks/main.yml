@@ -3,7 +3,8 @@
     
 - include: ../functions/get_secret.yml
   with_items:
-  - { path: /srv/invoicefetcher/sftp_user_pass, length: 24 }
+    - { path: /srv/invoicefetcher/sftp_user_pass, length: 24 }
+    - { path: /srv/invoicefetcher/nextcloud_user_pass, length: -1 }
 
 - name: "create folder struct for {{ servicename }} container"
   file: 
@@ -13,9 +14,12 @@
     
 - name: "create folder struct for {{ servicename }} container"
   file: 
-    path: "{{ basedir }}/upload/" 
+    path: "{{ basedir }}/{{ item }}/" 
     state: "directory"
     owner: 1001
+  with_items:
+    - upload
+    - upload/processed
 
 - name: copy container files  
   template: 
@@ -23,6 +27,7 @@
     dest: "{{ basedir }}/{{ item }}"
   with_items: 
     - docker-compose.yml
+    - Dockerfile
 
 - name: "start {{ servicename }} docker"
   docker_service:

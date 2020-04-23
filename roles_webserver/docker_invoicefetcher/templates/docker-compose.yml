@@ -2,7 +2,7 @@ version: "3"
 
 services:
 
-  app:
+  sftpserver:
 
     image: atmoz/sftp:alpine
     restart: always
@@ -11,4 +11,19 @@ services:
       - "{{ sshport }}:22"
     volumes:
       - "{{ basedir }}/upload/:/home/invoicefetcher/upload"
-      
+
+  uploader:
+
+    build: .
+    restart: always
+    volumes:
+      - "{{ basedir }}/upload/:/upload/"
+    environment:
+      NEXTCLOUD_USERNAME: "invoicefetcher"
+      NEXTCLOUD_PASSWORD: "{{ nextcloud_user_pass }}"
+      NEXTCLOUD_URL: "https://cloud.void.ms/remote.php/webdav"
+      NEXTCLOUD_BASEFOLDER: "/Rechnungen"
+      NEXTCLOUD_SOURCE_TAG: "Invoicefetcher-SFTP-Upload"
+      FOLDER_IN: "/upload/"
+      FOLDER_PROCESSED: "/upload/processed/"
+      CRON_SCHEDULE: "*/5 * * * *"
