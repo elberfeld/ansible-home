@@ -5,6 +5,8 @@
   with_items:
     - { path: /srv/invoicefetcher/sftp_user_pass, length: 24 }
     - { path: /srv/invoicefetcher/nextcloud_user_pass, length: -1 }
+    - { path: /srv/invoicefetcher/mysql_admin_pass, length: 24 }
+    - { path: /srv/invoicefetcher/mysql_user_pass, length: 12 }
 
 - name: "create folder struct for {{ servicename }} container"
   file: 
@@ -18,6 +20,7 @@
     state: "directory"
     owner: 1001
   with_items:
+    - db
     - upload
     - upload/processed
 
@@ -30,6 +33,8 @@
     - Dockerfile
 
 - name: "start {{ servicename }} docker"
-  docker_service:
+  docker_compose:
     project_src: "{{ basedir }}"
     state: present
+    recreate: always
+    build: yes

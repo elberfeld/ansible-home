@@ -8,10 +8,10 @@ RUN apk update \
 WORKDIR /app
 RUN git clone https://github.com/elberfeld/nextcloud-uploader.git \
     && cd /app/nextcloud-uploader \
-    && git checkout b15c5d97acea24c952e8b8c265e572203f98490d
+    && git checkout 940523c14018030242f9d7d661d604dfbd2ca673
 
 WORKDIR /app/nextcloud-uploader
-RUN npm install  @types/node node-cron fs date-format glob nextcloud-node-client
+RUN npm install  @types/node node-cron fs date-format glob sync-mysql nextcloud-node-client
 RUN tsc app.ts
 
 CMD [ "node", "app.js" ]
