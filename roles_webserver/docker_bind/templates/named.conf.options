@@ -5,7 +5,7 @@ options {
 
         recursion yes;
         allow-query { any; };
-        allow-recursion { localnets; localhost; 10.5.0.0/24; 2001:470:1f0b:7ce::/64; };
+        allow-recursion { localnets; localhost; 10.5.0.0/24; 10.51.1.0/24; 10.51.2.0/24; };
 
         auth-nxdomain no;    # conform to RFC1035
         listen-on-v6 { any; };
