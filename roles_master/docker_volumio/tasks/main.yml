@@ -1,0 +1,26 @@
+---
+
+- name: "create folder struct for {{ servicename }} container"
+  file: 
+    path: "{{ basedir }}" 
+    state: "directory"
+
+- name: "create folder struct for {{ servicename }} container"
+  file: 
+    path: "{{ item }}/" 
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/data"
+
+- name: copy container files  
+  template: 
+    src: "{{ item }}" 
+    dest: "{{ basedir }}/{{ item }}"
+  with_items: 
+    - docker-compose.yml
+
+- name: "start {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present

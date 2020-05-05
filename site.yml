@@ -36,6 +36,12 @@
     - { role: roles_common/rsyncbackup, tags: rsyncbackup }
     - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
+    - { 
+        role: roles_master/docker_volumio, tags: volumio,
+        servicename: volumio, 
+        basedir: /srv/volumio,
+        volumioport: 3000 
+      }
     - { role: roles_master/nostandby, tags: nostandby }
     - { role: roles_master/proxmox, tags: proxmox }
 
