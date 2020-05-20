@@ -3,12 +3,12 @@
 
 {% for device in rfswitches %}
 
-rule "{{ device.id }}"
-        when
-            Item {{ device.id }} received command
-        then
-            logInfo("default.rules", "{{ device.id }} command: " + receivedCommand + " code: {{ device.code }}")
-            var String result = executeCommandLine("/opt/raspberry-remote-send.sh {{ device.code }} " + receivedCommand,10000)   
+rule "{{ device.id }}_sendCommand"
+when
+    Item {{ device.id }} received command
+then
+    logInfo("default.rules", "{{ device.id }} command: " + receivedCommand + " code: {{ device.code }}")
+    var String result = executeCommandLine("/opt/raspberry-remote-send.sh {{ device.code }} " + receivedCommand,10000)   
                      
 end
 
