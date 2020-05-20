@@ -43,7 +43,7 @@
     - /srv/openhab/conf/things/
     - /srv/openhab/userdata/
 
-- name: Konfig-Dateien erstellen
+- name: Docker-Konfig-Dateien erstellen
   template:
     src: "{{ item }}"
     dest: "/srv/openhab/{{ item }}"
@@ -52,18 +52,28 @@
     - docker-compose.yml
     - promtail-config.yaml
     - raspberry-remote-send.sh
+  register: docker_config_files
+
+- name: Openhab-Konfig-Dateien erstellen
+  template:
+    src: "{{ item }}"
+    dest: "/srv/openhab/{{ item }}"
+  with_items:
     - conf/items/gpio.items
     - conf/items/groups.items
     - conf/items/homematic.items
     - conf/items/mqtt.items
     - conf/items/network.items
+    - conf/items/other.items
     - conf/items/rfswitches.items
     - conf/items/tradfri.items
     - conf/items/weather.items
     - conf/persistence/influxdb.persist
     - conf/persistence/rrd4j.persist
+    - conf/rules/astro.rules
     - conf/rules/notifications.rules
     - conf/rules/rfswitches.rules
+    - conf/rules/tvstatus.rules
     - conf/services/addons.cfg
     - conf/services/gpio.cfg
     - conf/services/influxdb.cfg
@@ -72,6 +82,7 @@
     - conf/services/openhabcloud.cfg
     - conf/services/pushover.cfg
     - conf/services/runtime.cfg
+    - conf/things/astro.things
     - conf/things/homematic.things
     - conf/things/mqtt.things
     - conf/things/network.things
@@ -82,6 +93,7 @@
   docker_compose:
     project_src: /srv/openhab/
     state: absent
+  when: docker_config_files.changed 
 
 - name: start openhab docker
   docker_compose:

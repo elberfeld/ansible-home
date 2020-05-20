@@ -1,0 +1,27 @@
+
+rule "Sunset_Rule"
+when
+	Channel "astro:sun:home:set#event" triggered START
+then
+    logInfo("default.rules", "Sunset_Rule ")
+	
+	if (HandyPrivat.state == ON) {
+
+		LampeStehlampe.sendCommand(ON)
+
+	} else {
+		
+        LampeCouchColor.sendCommand(ON)
+	}
+end
+
+
+rule "Sunrise_Rule"
+when
+	Channel "astro:sun:home:rise#event" triggered START
+then
+    logInfo("default.rules", "Sunrise_Rule ")
+	LampeCouchColor.sendCommand(OFF)
+	LampeRegalColor.sendCommand(OFF)
+	LampeStehlampe.sendCommand(OFF)
+end

@@ -1,0 +1,29 @@
+rule "TV_Wohnzimmer_getStatus"
+when
+    Time cron "0 * * * * ?"
+then
+    var url = "http://10.5.0.95/sony/system"
+    var contenttype = "application/json"
+    var payload = "{'method': 'getPowerStatus', 'params': [], 'id': 50, 'version': '1.0'}"
+
+    var output = sendHttpPostRequest(url, contenttype, payload)
+    logInfo("default.rules", "Sony_TV: " + output)
+
+    if (output.toString.contains("active")) { 
+
+        TV_Wohnzimmer.sendCommand(ON)
+        
+        if (Sun_Elevation.state < 0) {
+            
+            LampeCouchColor.sendCommand(ON)
+	        LampeRegalColor.sendCommand(ON)
+        }
+
+    } else {
+
+        TV_Wohnzimmer.sendCommand(OFF)
+	    LampeCouchColor.sendCommand(OFF)
+	    LampeRegalColor.sendCommand(OFF) 
+
+    }
+end

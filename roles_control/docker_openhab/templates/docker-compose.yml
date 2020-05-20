@@ -7,7 +7,7 @@ services:
   app:
 
     build: .
-    image: "openhab-{{ timestamp.stdout }}"
+    image: "openhab"
     restart: always
     privileged: true
     network_mode: host

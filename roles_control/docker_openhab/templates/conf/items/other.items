@@ -1,0 +1,7 @@
+
+// Sonne über Horizont (positiv) bzw. unter Horizint (negativ)
+// Check in Regeln: if(Sun_Elevation.state < 0)
+Number   Sun_Elevation  "Sun Elevation"   { channel="astro:sun:local:position#elevation" }
+
+// Status Fernseher (wird über Rule gesetzt)
+Switch TV_Wohnzimmer "TV Wohnzimmer" 
