@@ -1,4 +1,4 @@
-FROM openhab/openhab:2.5.3-armhf-debian 
+FROM openhab/openhab:2.5.5-debian 
 
 # Add Rapbian repositories 
 RUN apt-get update && \
