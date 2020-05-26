@@ -4,6 +4,7 @@ debian_sources:
   - "deb http://ftp.halifax.rwth-aachen.de/debian/ buster-updates main contrib non-free"
   - "deb http://security.debian.org/ buster/updates main contrib non-free"
   - "deb https://download.docker.com/linux/debian buster stable"
+  - "deb http://deb.debian.org/debian buster-backports main"
 
 debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
