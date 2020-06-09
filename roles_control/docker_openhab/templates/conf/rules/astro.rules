@@ -1,27 +1,24 @@
 
-rule "Sunset_Rule"
+rule "Sunlight_Rule"
 when
-	Channel "astro:sun:home:set#event" triggered START
+	Item Sun_Elevation changed or Item HandyPrivat changed
 then
-    logInfo("default.rules", "Sunset_Rule ")
-	
-	if (HandyPrivat.state == ON) {
+    logInfo("default.rules", "Sunlight_Rule // Sun_Elevation: " + Sun_Elevation.state)	
 
-		LampeStehlampe.sendCommand(ON)
+	if (Sun_Elevation.state > 0) {
 
-	} else {
+		// Tagsüber Lampen ausschalten 
 		
-        LampeCouchColor.sendCommand(ON)
+		if (LampeStehlampe.state != OFF) LampeStehlampe.sendCommand(OFF)
+	
+	} else {
+
+		// Lampen bei Dukelheit an 
+
+
+		// Lampem bei Dunkelheit und Anwesenheit an
+
+		if (HandyPrivat.state == ON && LampeStehlampe.state != ON) LampeStehlampe.sendCommand(ON)
+
 	}
-end
-
-
-rule "Sunrise_Rule"
-when
-	Channel "astro:sun:home:rise#event" triggered START
-then
-    logInfo("default.rules", "Sunrise_Rule ")
-	LampeCouchColor.sendCommand(OFF)
-	LampeRegalColor.sendCommand(OFF)
-	LampeStehlampe.sendCommand(OFF)
 end
