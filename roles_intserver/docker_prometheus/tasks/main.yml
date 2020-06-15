@@ -1,9 +1,5 @@
 ---
 
-- include: ../functions/get_secret.yml
-  with_items:
-   - { path: /srv/prometheus/alerta_api_key,  length: -1 }
- 
 - name: create folder struct for prometheus
   file: 
     path: "{{ item }}"
@@ -13,14 +9,11 @@
     - /srv/prometheus/db/
     - /srv/prometheus/config/
     - /srv/prometheus/data/
-    - /srv/prometheus/alert-data/
 
 - name: create config files
   template: src={{ item }} dest=/srv/prometheus/config/{{ item }}
   with_items: 
-    - alertmanager.yml
     - prometheus.yml
-    - alertrules.yml
   register: config
 
 - name: Docker Compose Konfig-Datei erstellen
