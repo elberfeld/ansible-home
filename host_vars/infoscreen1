@@ -1,4 +1,6 @@
 
+# Infoscreen based on https://github.com/guysoft/FullPageOS
+
 debian_sources: 
   - "deb http://raspbian.raspberrypi.org/raspbian/ stretch main contrib non-free rpi"
 

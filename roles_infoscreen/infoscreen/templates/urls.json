@@ -8,37 +8,22 @@
     [
 
         {
-            "title":"ol",
-            "url":"{{ outlook_url }}"
-        },
-
-        {
-            "title":"al",
-            "url":"https:\/\/alerta.void.ms\/#\/alerts?status=open&status=ack&status=assign"
-        },
-
-        {
-            "title":"ov",
-            "url":"https:\/\/grafana.void.ms\/d\/JO_3axImz\/multi-host-overview?orgId=1&var-host=intserver&var-host=webserver1&var-host=webserver2&from=now-24h&to=now"
-        },
-
-        {
-            "title":"fw",
-            "url":"https:\/\/grafana.void.ms\/d\/hdCO0viik\/pfsense?panelId=17&orgId=1&from=now-15m&to=now&refresh=5s"
+            "title":"IC",
+            "url":"https:\/\/icinga.void.ms\/icingaweb2\/dashboard"
         },
         
-        {% for host in ['master', 'intserver', 'webserver1', 'webserver2'] %}
+        {% for host in ['10.100.1.1:9100', '10.100.1.2:9100', '10.5.0.101:9100', '10.5.0.111:9100', '10.5.0.250:9100'] %}
 
         {
-            "title":"s-{{ host }}",
-            "url":"https:\/\/grafana.void.ms\/d\/p_abDv0mk\/telegraf-sysstats?orgId=1&var-host={{ host }}&var-interval=10s&from=now-6h&to=now"
+            "title":"SRV {{ host }}",
+            "url":"https:\/\/grafana.void.ms\/d\/Xy9yA3iMk\/system-status?orgId=1&var-node={{ host }}&from=now-24h&to=now&kiosk=tv"
         },
         
         {% endfor %}
 
         {
-            "title":"ping",
-            "url":"https:\/\/grafana.void.ms\/d\/5NErdDAmk\/ping?from=now-1h&to=now&orgId=1&var-host=intserver&var-url=10.100.1.1&var-url=10.100.1.2&var-url=10.5.0.254&var-url=8.8.8.8&var-url=9.9.9.10"
+            "title":"BAK",
+            "url":"https:\/\/grafana.void.ms\/d\/0q-DsRtWz/backup-status?orgId=1&var-host=All&from=now-6h&to=now&kiosk=tv"
         }
 
     ]
