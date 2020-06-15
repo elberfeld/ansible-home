@@ -2,28 +2,36 @@
     "options":
     {
         "version":"0.1",
-        "speed":180
+        "speed":60
     },
     "urls":
     [
 
+        {% set common_params = "orgId=1&from=now-24h&to=now&refresh=1d&kiosk" %}
+
         {
-            "title":"IC",
+            "title":"ICINGA",
             "url":"https:\/\/icinga.void.ms\/icingaweb2\/dashboard"
         },
         
-        {% for host in ['10.100.1.1:9100', '10.100.1.2:9100', '10.5.0.101:9100', '10.5.0.111:9100', '10.5.0.250:9100'] %}
+        {
+            "title":"SRV Overwiew",
+            "url":"https:\/\/grafana.void.ms\/d\/AtA9geiMk\/system-status-overview?var-node=All&{{ common_params }}"
+        },
+
+
+        {% for item in [ { "name":"webserver1", "node":"10.100.1.1:9100" }, { "name":"webserver2", "node":"10.100.1.2:9100" }, { "name":"master", "node":"10.5.0.101:9100" }, { "name":"intserver", "node":"10.5.0.111:9100" }, { "name":"control", "node":"10.5.0.250:9100" }] %}
 
         {
-            "title":"SRV {{ host }}",
-            "url":"https:\/\/grafana.void.ms\/d\/Xy9yA3iMk\/system-status?orgId=1&var-node={{ host }}&from=now-24h&to=now&kiosk=tv"
+            "title":"SRV {{ item.name }}",
+            "url":"https:\/\/grafana.void.ms\/d\/Xy9yA3iMk\/system-status?var-node={{ item.node }}&{{ common_params }}"
         },
         
         {% endfor %}
 
         {
-            "title":"BAK",
-            "url":"https:\/\/grafana.void.ms\/d\/0q-DsRtWz/backup-status?orgId=1&var-host=All&from=now-6h&to=now&kiosk=tv"
+            "title":"BACKUP",
+            "url":"https:\/\/grafana.void.ms\/d\/0q-DsRtWz/backup-status?var-host=All&&{{ common_params }}"
         }
 
     ]
