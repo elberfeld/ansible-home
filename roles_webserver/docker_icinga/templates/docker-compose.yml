@@ -9,7 +9,7 @@ services:
     build: .
     restart: always
     ports:
-      - 0.0.0.0:5665:5665
+      - "0.0.0.0:{{ api_port }}:5665"
     volumes:
       - "{{ basedir }}/data:/var/lib/icinga2"
       - "{{ basedir }}/etc/locale.gen:/etc/locale.gen"
@@ -48,6 +48,8 @@ services:
 
     image: mariadb:10.1.44
     restart: always
+    ports:
+      - "{{ int_ip4 }}:{{mysql_port}}:3306"
     volumes:
       - "{{ basedir }}/db:/var/lib/mysql"
     environment:
