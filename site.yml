@@ -80,7 +80,11 @@
         basedir: /srv/pihole,
         web_port: 8080 
       }
-    - { role: roles_intserver/docker_prometheus, tags: prometheus }
+    - { 
+        role: roles_intserver/docker_prometheus, tags: prometheus, 
+        servicename: prometheus,
+        basedir: /srv/prometheus/
+      }
 
 
 - hosts: webserver1,webserver2 

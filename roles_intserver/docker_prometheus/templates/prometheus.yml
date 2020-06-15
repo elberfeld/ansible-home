@@ -5,13 +5,6 @@ global:
 
 scrape_configs:
 
-  - job_name: 'firewall'
-
-    static_configs:
-      - targets: ['10.5.0.254:9100']
-        labels:
-          group: 'network'
-
 {% for item in groups['server'] %}
 
   - job_name: '{{ item }}'
@@ -57,8 +50,10 @@ scrape_configs:
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
+      - target_label: __address__
+        replacement: snmp_exporter:9116
 
-
+        
   - job_name: 'hpswitch'
 
     metrics_path: /snmp
@@ -70,4 +65,19 @@ scrape_configs:
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
+      - target_label: __address__
+        replacement: snmp_exporter:9116
 
+
+  - job_name: 'firewall'
+
+    static_configs:
+      - targets:
+        - 10.5.0.254  
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: edgemax_exporter:9132

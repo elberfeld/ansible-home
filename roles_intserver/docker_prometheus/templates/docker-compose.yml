@@ -4,19 +4,29 @@ services:
 
   app:
 
-    image: prom/prometheus:v2.13.1
+    image: prom/prometheus:v2.19.0
     restart: always
     ports:
       - 0.0.0.0:9090:9090
     volumes:
-      - /srv/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
-      - /srv/prometheus/config/alertrules.yml:/etc/prometheus/alertrules.yml
-      - /srv/prometheus/data/:/prometheus
+      - "{{ basedir }}/config/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "{{ basedir }}/config/alertrules.yml:/etc/prometheus/alertrules.yml"
+      - "{{ basedir }}/data/:/prometheus"
 
 
-  snmp-exporter:
+  snmp_exporter:
 
-    image: prom/snmp-exporter:v0.15.0
+    image: prom/snmp-exporter:v0.18.0
     restart: always
     ports:
       - 0.0.0.0:9116:9116
+
+
+  edgemax_exporter:
+     
+    image: b3vis/edgemax_exporter
+    restart: always
+    ports:
+      - 0.0.0.0:9132:9132
+    environment:
+      ARGUMENTS: "-edgemax.addr https://10.5.0.254 -edgemax.username exporter -edgemax.password {{ ubnt_exporter_pass }} -edgemax.insecure"

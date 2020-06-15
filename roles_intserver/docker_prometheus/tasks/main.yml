@@ -1,17 +1,23 @@
 ---
 
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+  - { path: "{{ basedir }}/ubnt_exporter_pass", length: 12 }
+
 - name: create folder struct for prometheus
   file: 
     path: "{{ item }}"
     state: "directory"
   with_items:
-    - /srv/prometheus/
-    - /srv/prometheus/db/
-    - /srv/prometheus/config/
-    - /srv/prometheus/data/
+    - "{{ basedir }}"
+    - "{{ basedir }}/db/"
+    - "{{ basedir }}/config/"
+    - "{{ basedir }}/data/"
 
 - name: create config files
-  template: src={{ item }} dest=/srv/prometheus/config/{{ item }}
+  template: 
+    src: "{{ item }}" 
+    dest: "{{ basedir }}/config/{{ item }}"
   with_items: 
     - prometheus.yml
   register: config
@@ -19,15 +25,15 @@
 - name: Docker Compose Konfig-Datei erstellen
   template:
     src: "docker-compose.yml"
-    dest: "/srv/prometheus/docker-compose.yml"
+    dest: "{{ basedir }}/docker-compose.yml"
 
 - name: stop prometheus docker
   docker_service:
-    project_src: /srv/prometheus/
+    project_src: "{{ basedir }}"
     state: absent
   when: config.changed
 
 - name: start prometheus docker
   docker_service:
-    project_src: /srv/prometheus/
+    project_src: "{{ basedir }}"
     state: present
