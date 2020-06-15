@@ -1,9 +1,5 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
-  with_items:
-  - { path: "{{ basedir }}/ubnt_exporter_pass", length: 12 }
-
 - name: create folder struct for prometheus
   file: 
     path: "{{ item }}"

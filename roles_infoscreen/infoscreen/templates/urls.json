@@ -15,6 +15,11 @@
         },
         
         {
+            "title":"FIREWALL",
+            "url":"https:\/\/grafana.void.ms\/d\/HX7Gh6mGz\/firewall-traffic?{{ common_params }}"
+        },
+
+        {
             "title":"SRV Overwiew",
             "url":"https:\/\/grafana.void.ms\/d\/AtA9geiMk\/system-status-overview?var-node=All&{{ common_params }}"
         },

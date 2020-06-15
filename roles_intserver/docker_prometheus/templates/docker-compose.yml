@@ -21,12 +21,3 @@ services:
     ports:
       - 0.0.0.0:9116:9116
 
-
-  edgemax_exporter:
-     
-    image: b3vis/edgemax_exporter
-    restart: always
-    ports:
-      - 0.0.0.0:9132:9132
-    environment:
-      ARGUMENTS: "-edgemax.addr https://10.5.0.254 -edgemax.username exporter -edgemax.password {{ ubnt_exporter_pass }} -edgemax.insecure"
