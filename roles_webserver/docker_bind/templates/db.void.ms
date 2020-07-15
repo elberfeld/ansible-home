@@ -67,7 +67,4 @@ _submission._tcp        SRV 0 1 587     mail.void.ms.
 _autodiscover._tcp      SRV 0 0 443     autodiscover.void.ms.
 
 
-; Matrix Server federation 
-; <yourdomain.com> <ttl> IN SRV 10 0 <port> <synapse.server.name>
-_matrix._tcp.void.ms.   3600    IN      SRV     10  0   8448    void.ms.
 
