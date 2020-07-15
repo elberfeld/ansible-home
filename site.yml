@@ -180,7 +180,9 @@
         role: roles_webserver/docker_mail, tags: mail,
         servicename: mail, 
         basedir: /srv/mail, 
-        domain: mail.void.ms 
+        domain: mail.void.ms, 
+        autoconfig: autoconfig.void.ms,
+        autodiscover: autodiscover.void.ms
       }
     - { 
         role: roles_webserver/docker_nextcloud, tags: nextcloud,

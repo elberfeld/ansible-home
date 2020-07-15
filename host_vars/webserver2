@@ -36,11 +36,12 @@ docker:
 
 
 webserver_domains:
+  - "autoconfig"
+  - "autodiscover"
   - "cloud"
   - "commafeed"
   - "ldap2"
-
-#  - "mail"
+  - "mail"
 
 
 # Definition von RSync Backup Jobs 

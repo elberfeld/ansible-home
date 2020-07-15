@@ -1,44 +1,72 @@
 ---
 - include: ../functions/get_secret.yml
   with_items:
-   - { path: /srv/ldap/secret/ldap_readonly_pass,  length: 12 }
-   - { path: "{{ basedir }}/rspamd_admin_pass",  length: 24 }
+   - { path: "{{ basedir }}/mysql_admin_pass",  length: 24 }
+   - { path: "{{ basedir }}/mysql_user_pass",  length: 12 }
+   - { path: "{{ basedir }}/mailcow_admin_pass",  length: 24 }
+   - { path: "{{ basedir }}/mailcow_api_key",  length: 64 }
+   - { path: "{{ basedir }}/mailcow_api_key_readonly",  length: 64 }
 
-- name: create folder struct for {{ servicename }}
+- set_fact:
+    TZ: "Europe/Berlin"
+    docker_ipv4_network: "175.19.199"
+    docker_ipv6_network: "fd4d:5169:6c63:6f77::/64" 
+    watchdog_notify_mail: "postmaster@void.ms"
+
+- name: "create folder struct for {{ servicename }}"
   file: 
     path: "{{ item }}"
     state: "directory"
   with_items:
     - "{{ basedir }}"
+    - "{{ basedir }}/git"
+    - "{{ basedir }}/conf"
+    - "{{ basedir }}/conf/rspamd/"
+    - "{{ basedir }}/conf/rspamd/custom/"
+    - "{{ basedir }}/conf/unbound/"
+    - "{{ basedir }}/certdump/"
+    - "{{ basedir }}/mail/"
+    - "{{ basedir }}/mail-crypt/"
+    - "{{ basedir }}/mail-attachments/"
+    - "{{ basedir }}/postfix/"
+
+- name: "create folder struct for {{ servicename }} 2"
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+    owner: "999"
+    group: "999"
+  with_items:
+    - "{{ basedir }}/mailcow-db/"
+    - "{{ basedir }}/mailcow-db-socket/"
     - "{{ basedir }}/redis/"
-    - "{{ basedir }}/data/"
-  
-- name: Docker Compose Konfig-Datei erstellen
+
+- name: create config files
   template: 
     src: "{{ item }}" 
     dest: "{{ basedir }}/{{ item }}"
-  with_items:
-    - "Dockerfile"
-    - "docker-compose.yml"
-    - "postfix-custom.cf"
-    - "dovecot-10-auth.conf"
-    - "dovecot-10-ssl.conf"
-    - "dovecot-90-quota.conf"
-    - "dovecot-auth-ldap.conf.ext"
-    - "dovecot-ldap.conf.ext"
-    - "ldap_virtual_domains_maps.cf"
-    - "ldap_virtual_mailbox_maps.cf"
-    - "ldap_virtual_alias_maps.cf"
-  register: config 
+  with_items: 
+    - docker-compose.yml
+    - conf/rspamd/custom/dovecot_trusted.map
+    - conf/rspamd/custom/mailcow_networks.map 
+    - conf/unbound/unbound.conf
+  register: configfiles 
 
-- name: "stop {{ servicename }} docker"
-  docker_service:
-    project_src: "{{ basedir }}"
-    state: absent
-  when: config.changed 
+- name: "clone mailcow-dockerized git"
+  git:
+    repo: "https://github.com/mailcow/mailcow-dockerized.git"
+    dest: "{{ basedir }}/git"
+    version: "eff907bf906cc3a0affe9de394f8c10bb98e44ca" # Stand 15.07.2020
+    depth: 1
+    force: yes
 
-- name: "start {{ servicename }} docker"
-  docker_service:
-    project_src: "{{ basedir }}"
-    state: present
+#- name: "stop {{ servicename }} docker"
+#  docker_compose:
+#    project_src: "{{ basedir }}"
+#    state: absent
+#  when: configfiles.changed
 
+#- name: "start {{ servicename }} docker"
+#  docker_compose:
+#    project_src: "{{ basedir }}"
+#    state: present

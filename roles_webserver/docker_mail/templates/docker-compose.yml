@@ -1,77 +1,474 @@
-version: "3"
-
+version: '2.1'
 services:
 
-  redis:
-
-    image: redis:5.0.3
-    restart: always
-    volumes:
-      - "{{ basedir }}/redis:/data"
-
-
-  mailserver:
-
-    build: . 
-    restart: always
-    domainname: void.ms   
-    hostname: mail
-    ports:
-      - "25:25"       
-      - "587:587"     
-      - "993:993"     
-      - "4190:4190"   
-      - "127.0.0.1:42013:11334"
-    environment:    
-      - DBPASS=none
-      - DBHOST=localhost       
-      - RSPAMD_PASSWORD={{ rspamd_admin_pass }}   
-      - REDIS_HOST=redis
-      - DEBUG_MODE=true                        
-      - ENABLE_FETCHMAIL=true                  
-    volumes:
-      - "{{ basedir }}/data:/var/mail"
-      - "/etc/letsencrypt:/etc/letsencrypt:ro"
-      - "{{ basedir }}/postfix-custom.cf:/var/mail/postfix/custom.conf:ro"
-      - "{{ basedir }}/ldap_virtual_alias_maps.cf:/etc/postfix/ldap_virtual_alias_maps.cf"
-      - "{{ basedir }}/ldap_virtual_domains_maps.cf:/etc/postfix/ldap_virtual_domains_maps.cf"
-      - "{{ basedir }}/ldap_virtual_mailbox_maps.cf:/etc/postfix/ldap_virtual_mailbox_maps.cf"
-      - "{{ basedir }}/dovecot-10-auth.conf:/etc/dovecot/conf.d/10-auth.conf"
-      - "{{ basedir }}/dovecot-10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf"
-      - "{{ basedir }}/dovecot-90-quota.conf:/etc/dovecot/conf.d/90-quota.conf"
-      - "{{ basedir }}/dovecot-auth-ldap.conf.ext:/etc/dovecot/conf.d/auth-ldap.conf.ext"
-      - "{{ basedir }}/dovecot-ldap.conf.ext:/etc/dovecot/conf.d/dovecot-ldap.conf.ext"
-    depends_on:
-      - redis
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
-      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
-      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8082
-    networks:
-        - default
-        - web
+    traefik-certdumper:
+        image: humenius/traefik-certs-dumper
+        network_mode: none
+        command: --restart-containers dovecot,postfix,nginx,watchdog
+        volumes:
+          # mount the folder which contains Traefik's `acme.json' file
+          - /srv/traefik/acme.json:/traefik/acme.json:ro
+          # mount mailcow's SSL folder
+          - "{{ basedir }}/certdump/:/output:rw"
+          # Docker API for Container restart
+          - /var/run/docker.sock:/var/run/docker.sock:ro
+        environment:
+          # only change this, if you're using another domain for mailcow's web frontend compared to the standard config
+          - DOMAIN={{ domain }}
 
 
-  autodiscover:
+    unbound-mailcow:
+      image: mailcow/unbound:1.12
+      command: /usr/sbin/unbound
+      environment:
+        - TZ={{ TZ }}
+      volumes:
+        - "{{ basedir }}/conf/unbound/unbound.conf:/etc/unbound/unbound.conf:ro"
+      restart: always
+      tty: true
+      networks:
+        mailcow-network:
+          ipv4_address: "{{ docker_ipv4_network }}.254"
+          aliases:
+            - unbound
 
-    image: jsmitsnl/docker-email-autodiscover:release-v1.1.0
-    domainname: void.ms
-    restart: always
-    ports:
-      - 127.0.0.1:42014:80
-    environment:
-      COMPANY_NAME: "void.ms"
-      SUPPORT_URL: "https://www.void.ms"
-      DOMAIN: "void.ms"
-      IMAP_HOST: "mail.void.ms"
-      IMAP_PORT: "993"
-      IMAP_SOCKET: "SSL"
-      SMTP_HOST: "mail.void.ms"
-      SMTP_PORT: "587" 
-      SMTP_SOCKET: "STARTTLS"
-  
+
+    mysql-mailcow:   
+      image: mariadb:10.5
+      stop_grace_period: 45s
+      volumes:
+        - "{{ basedir }}/mailcow-db/:/var/lib/mysql/"
+        - "{{ basedir }}/mailcow-db-socket/:/var/run/mysqld/"
+        - "{{ basedir }}/git/data/conf/mysql/:/etc/mysql/conf.d/:ro"
+      environment:
+        - TZ={{ TZ }}
+        - MYSQL_ROOT_PASSWORD={{ mysql_admin_pass }}
+        - MYSQL_DATABASE=mailcow
+        - MYSQL_USER=mailcow
+        - MYSQL_PASSWORD={{ mysql_user_pass }}
+        - MYSQL_INITDB_SKIP_TZINFO=1
+      restart: always
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      networks:
+        mailcow-network:
+          aliases:
+            - mysql 
+
+            
+    redis-mailcow:
+      image: redis:5-alpine
+      volumes:
+        - "{{ basedir }}/redis/:/data/"
+      restart: always
+      environment:
+        - TZ={{ TZ }}
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      networks:
+        mailcow-network:
+          ipv4_address: "{{ docker_ipv4_network }}.249"
+          aliases:
+            - redis
+
+    clamd-mailcow:
+      image: mailcow/clamd:1.36
+      restart: always
+      environment:
+        - TZ={{ TZ }}
+        - SKIP_CLAMD=n
+      volumes:
+        - "{{ basedir }}/git/data/conf/clamav/:/etc/clamav/"
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      networks:
+        mailcow-network:
+          aliases:
+            - clamd
+
+
+    rspamd-mailcow:
+      image: mailcow/rspamd:1.68
+      stop_grace_period: 30s
+      depends_on:
+        - redis-mailcow
+        - php-fpm-mailcow
+      environment:
+        - TZ={{ TZ }}
+        - IPV4_NETWORK={{ docker_ipv4_network }}
+        - IPV6_NETWORK={{ docker_ipv6_network }}
+      volumes:
+        - "{{ basedir }}/git/data/conf/rspamd/custom/:/etc/rspamd/custom"
+        - "{{ basedir }}/conf/rspamd/custom/dovecot_trusted.map:/etc/rspamd/custom/dovecot_trusted.map"
+        - "{{ basedir }}/conf/rspamd/custom/mailcow_networks.map:/etc/rspamd/custom/mailcow_networks.map"
+        - "{{ basedir }}/git/data/conf/rspamd/override.d/:/etc/rspamd/override.d"
+        - "{{ basedir }}/git/data/conf/rspamd/local.d/:/etc/rspamd/local.d"
+        - "{{ basedir }}/git/data/conf/rspamd/plugins.d/:/etc/rspamd/plugins.d"
+        - "{{ basedir }}/git/data/conf/rspamd/lua/:/etc/rspamd/lua/:ro"
+        - "{{ basedir }}/git/data/conf/rspamd/rspamd.conf.local:/etc/rspamd/rspamd.conf.local"
+        - "{{ basedir }}/git/data/conf/rspamd/rspamd.conf.override:/etc/rspamd/rspamd.conf.override"
+        - "{{ basedir }}/rspamd/:/var/lib/rspamd"
+      restart: always
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      hostname: rspamd
+      networks:
+        mailcow-network:
+          aliases:
+            - rspamd
+
+
+    php-fpm-mailcow:
+      image: mailcow/phpfpm:1.65
+      command: "php-fpm -d date.timezone={{ TZ }} -d expose_php=0"
+      depends_on:
+        - mysql-mailcow
+      volumes:
+        - "{{ basedir }}/git/data/web:/web:rw"
+        - "{{ basedir }}/git/data/conf/rspamd/dynmaps:/dynmaps:ro"
+        - "{{ basedir }}/git/data/conf/rspamd/custom/:/rspamd_custom_maps"
+        - "{{ basedir }}/conf/rspamd/custom/dovecot_trusted.map:/rspamd_custom_maps/dovecot_trusted.map"
+        - "{{ basedir }}/conf/rspamd/custom/mailcow_networks.map:/rspamd_custom_maps/mailcow_networks.map"
+        - "{{ basedir }}/rspamd/:/var/lib/rspamd"
+        - "{{ basedir }}/mailcow-db-socket/:/var/run/mysqld/"
+        - "{{ basedir }}/git/data/conf/sogo/:/etc/sogo/"
+        - "{{ basedir }}/git/conf/rspamd/meta_exporter:/meta_exporter:ro"
+        - "{{ basedir }}/git/data/conf/phpfpm/sogo-sso/:/etc/sogo-sso/"
+        - "{{ basedir }}/git/data/conf/phpfpm/php-fpm.d/pools.conf:/usr/local/etc/php-fpm.d/z-pools.conf"
+        - "{{ basedir }}/git/data/conf/phpfpm/php-conf.d/opcache-recommended.ini:/usr/local/etc/php/conf.d/opcache-recommended.ini"
+        - "{{ basedir }}/git/data/conf/phpfpm/php-conf.d/upload.ini:/usr/local/etc/php/conf.d/upload.ini"
+        - "{{ basedir }}/git/data/conf/phpfpm/php-conf.d/other.ini:/usr/local/etc/php/conf.d/zzz-other.ini"
+        - "{{ basedir }}/git/dovecot/global_sieve_before:/global_sieve/before"
+        - "{{ basedir }}/git/data/conf/dovecot/global_sieve_after:/global_sieve/after"
+        - "{{ basedir }}/git/data/assets/templates:/tpls"
+      environment:
+        - LOG_LINES=9999
+        - TZ={{ TZ }}
+        - DBNAME=mailcow
+        - DBUSER=mailcow
+        - DBPASS={{ mysql_user_pass }}
+        - MAILCOW_HOSTNAME={{ domain }}
+        - IMAP_PORT=143
+        - IMAPS_PORT=993
+        - POP_PORT=110
+        - POPS_PORT=995
+        - SIEVE_PORT=4190
+        - IPV4_NETWORK={{ docker_ipv4_network }}
+        - IPV6_NETWORK={{ docker_ipv6_network }}
+        - SUBMISSION_PORT=587
+        - SMTPS_PORT=465
+        - SMTP_PORT=25
+        - API_KEY={{ mailcow_api_key }}
+        - API_KEY_READ_ONLY={{ mailcow_api_key_readonly }}
+        - API_ALLOW_FROM={{ int_ip4 }}
+        - COMPOSE_PROJECT_NAME={{ servicename }}
+        - SKIP_SOLR=y
+        - SKIP_CLAMD=n
+        - SKIP_SOGO=y
+        - ALLOW_ADMIN_EMAIL_LOGIN=n
+        - MASTER=y
+      restart: always
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      networks:
+        mailcow-network:
+          aliases:
+            - phpfpm
+
+
+    dovecot-mailcow:
+      image: mailcow/dovecot:1.128
+      depends_on:
+        - mysql-mailcow
+        - traefik-certdumper
+      cap_add:
+        - NET_BIND_SERVICE
+      volumes:
+        - "{{ basedir }}/git/data/conf/dovecot:/etc/dovecot"
+        - "{{ basedir }}/certdump/:/etc/ssl/mail/:ro"
+        - "{{ basedir }}/git/data/conf/sogo/:/etc/sogo/"
+        - "{{ basedir }}/git/data/conf/phpfpm/sogo-sso/:/etc/phpfpm/"
+        - "{{ basedir }}/mail/:/var/vmail"
+        - "{{ basedir }}/mail-attachments/:/var/attachments"
+        - "{{ basedir }}/mail-crypt/:/mail_crypt/"
+        - "{{ basedir }}/git/data/conf/rspamd/custom/:/etc/rspamd/custom"
+        - "{{ basedir }}/git/data/assets/templates:/templates"
+        - "{{ basedir }}/rspamd/:/var/lib/rspamd"
+        - "{{ basedir }}/mailcow-db-socket/:/var/run/mysqld/"
+      environment:
+        - LOG_LINES=9999
+        - DBNAME=mailcow
+        - DBUSER=mailcow
+        - DBPASS={{ mysql_user_pass }}
+        - TZ={{ TZ }}
+        - MAILCOW_HOSTNAME={{ domain }}
+        - IPV4_NETWORK={{ docker_ipv4_network }}
+        - ALLOW_ADMIN_EMAIL_LOGIN=n
+        - MAILDIR_GC_TIME=1440
+        - ACL_ANYONE=disallow
+        - SKIP_SOLR=y
+        - MAILDIR_SUB=Maildir
+        - MASTER=y
+      ports:
+        - "0.0.0.0:143:143"  # imap
+        - "0.0.0.0:993:993"  # imaps
+#        - "0.0.0.0:110:110"  # pop3
+#        - "0.0.0.0:995:995"  # pop3s
+#        - "0.0.0.0:4190:4190"  # sieve
+      restart: always
+      tty: true
+      ulimits:
+        nproc: 65535
+        nofile:
+          soft: 20000
+          hard: 40000
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      hostname: {{ domain }}
+      networks:
+        mailcow-network:
+          ipv4_address: "{{ docker_ipv4_network }}.250"
+          aliases:
+            - dovecot
+
+
+    postfix-mailcow:
+      image: mailcow/postfix:1.51
+      depends_on:
+        - mysql-mailcow
+        - traefik-certdumper
+      volumes:
+        - "{{ basedir }}/git/data/conf/postfix/:/opt/postfix/conf/"
+        - "{{ basedir }}/certdump/:/etc/ssl/mail/:ro"
+        - "{{ basedir }}/postfix/:/var/spool/postfix"
+        - "{{ basedir }}/mail-crypt/:/var/lib/zeyple"
+        - "{{ basedir }}/rspamd/:/var/lib/rspamd"
+        - "{{ basedir }}/mailcow-db-socket/:/var/run/mysqld/"
+      environment:
+        - LOG_LINES=9999
+        - TZ={{ TZ }}
+        - DBNAME=mailcow
+        - DBUSER=mailcow
+        - DBPASS={{ mysql_user_pass }}
+      cap_add:
+        - NET_BIND_SERVICE
+      ports:
+        - "0.0.0.0:25:25"  # smtp
+        - "0.0.0.0:465:465"  # smtps
+        - "0.0.0.0:587:587"  # submission
+      restart: always
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      hostname: {{ domain }}
+      networks:
+        mailcow-network:
+          aliases:
+            - postfix
+
+
+    memcached-mailcow:
+      image: memcached:alpine
+      environment:
+        - TZ={{ TZ }}
+      restart: always
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      networks:
+        mailcow-network:
+          aliases: 
+            - memcached
+
+
+    nginx-mailcow:
+      image: nginx:mainline-alpine
+      depends_on:
+        - php-fpm-mailcow
+        - rspamd-mailcow
+        - redis-mailcow
+      command: /bin/sh -c "envsubst < /etc/nginx/conf.d/templates/listen_plain.template > /etc/nginx/conf.d/listen_plain.active &&
+        envsubst < /etc/nginx/conf.d/templates/listen_ssl.template > /etc/nginx/conf.d/listen_ssl.active &&
+        envsubst < /etc/nginx/conf.d/templates/server_name.template > /etc/nginx/conf.d/server_name.active &&
+        envsubst < /etc/nginx/conf.d/templates/sogo.template > /etc/nginx/conf.d/sogo.active &&
+        . /etc/nginx/conf.d/templates/sogo.auth_request.template.sh > /etc/nginx/conf.d/sogo_proxy_auth.active &&
+        . /etc/nginx/conf.d/templates/sites.template.sh > /etc/nginx/conf.d/sites.active &&
+        . /etc/nginx/conf.d/templates/sogo_eas.template.sh > /etc/nginx/conf.d/sogo_eas.active &&
+        nginx -qt &&
+        until ping phpfpm -c1 > /dev/null; do sleep 1; done &&
+        until ping redis -c1 > /dev/null; do sleep 1; done &&
+        until ping rspamd -c1 > /dev/null; do sleep 1; done &&
+        exec nginx -g 'daemon off;'"
+      environment:
+        - HTTPS_PORT=443
+        - HTTP_PORT=80
+        - MAILCOW_HOSTNAME={{ domain }}
+        - IPV4_NETWORK={{ docker_ipv4_network }}
+        - TZ={{ TZ }}
+        - ALLOW_ADMIN_EMAIL_LOGIN=n
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+        - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+        - traefik.http.routers.{{ servicename }}.service={{ servicename }}
+        - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80
+        - traefik.http.routers.{{ servicename }}-ac.rule=Host(`{{ autoconfig }}`)
+        - traefik.http.routers.{{ servicename }}-ac.entrypoints=websecure
+        - traefik.http.routers.{{ servicename }}-ac.service={{ servicename }}-ac
+        - traefik.http.services.{{ servicename }}-ac.loadbalancer.server.port=80
+        - traefik.http.routers.{{ servicename }}-ad.rule=Host(`{{ autodiscover }}`)
+        - traefik.http.routers.{{ servicename }}-ad.entrypoints=websecure
+        - traefik.http.routers.{{ servicename }}-ad.service={{ servicename }}-ad
+        - traefik.http.services.{{ servicename }}-ad.loadbalancer.server.port=80
+      volumes:
+        - "{{ basedir }}/git/data/web:/web:ro"
+        - "{{ basedir }}/git/data/conf/rspamd/dynmaps:/dynmaps:ro"
+        - "{{ basedir }}/certdump/:/etc/ssl/mail/:ro"
+        - "{{ basedir }}/git/data/conf/nginx/:/etc/nginx/conf.d/:rw"
+        - "{{ basedir }}/git/data/conf/rspamd/meta_exporter:/meta_exporter:ro"
+      restart: always
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      networks:
+        mailcow-network:
+          aliases:
+            - nginx
+        web:
+ 
+
+    netfilter-mailcow:
+      image: mailcow/netfilter:1.36
+      stop_grace_period: 30s
+      depends_on:
+        - redis-mailcow
+      environment:
+        - TZ={{ TZ }}
+        - IPV4_NETWORK={{ docker_ipv4_network }}
+        - IPV6_NETWORK={{ docker_ipv6_network }}
+        - SNAT_TO_SOURCE=n
+        - SNAT6_TO_SOURCE=n
+      restart: always
+      privileged: true
+      network_mode: "host"
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      volumes:
+        - /lib/modules:/lib/modules:ro
+
+
+    watchdog-mailcow:
+      image: mailcow/watchdog:1.81
+      # Debug
+      #command: /watchdog.sh
+      volumes:
+        - "{{ basedir }}/rspamd/:/var/lib/rspamd"
+        - "{{ basedir }}/mailcow-db-socket/:/var/run/mysqld/"
+        - "{{ basedir }}/postfix/:/var/spool/postfix"
+        - "{{ basedir }}/certdump/:/etc/ssl/mail/:ro"
+      environment:
+        - IPV6_NETWORK={{ docker_ipv6_network }}
+        - LOG_LINES=9999
+        - TZ={{ TZ }}
+        - DBNAME=mailcow
+        - DBUSER=mailcow
+        - DBPASS={{ mysql_user_pass }}
+        - DBROOT={{ mysql_admin_pass }}
+        - USE_WATCHDOG=y
+        - WATCHDOG_NOTIFY_EMAIL={{ watchdog_notify_mail }}
+        - WATCHDOG_NOTIFY_BAN=y
+        - WATCHDOG_EXTERNAL_CHECKS=n
+        - WATCHDOG_MYSQL_REPLICATION_CHECKS=n
+        - MAILCOW_HOSTNAME={{ domain }}
+        - IPV4_NETWORK={{ docker_ipv4_network }}
+        - IP_BY_DOCKER_API=0
+        - CHECK_UNBOUND=1
+        - SKIP_CLAMD=n
+        - SKIP_LETS_ENCRYPT=y
+        - SKIP_SOGO=y
+        - HTTPS_PORT=443
+        - EXTERNAL_CHECKS_THRESHOLD=1
+        - NGINX_THRESHOLD=5
+        - UNBOUND_THRESHOLD=5
+        - REDIS_THRESHOLD=5
+        - MYSQL_THRESHOLD=5
+        - MYSQL_REPLICATION_THRESHOLD=1
+        - SOGO_THRESHOLD=3
+        - POSTFIX_THRESHOLD=8
+        - CLAMD_THRESHOLD=15
+        - DOVECOT_THRESHOLD=12
+        - DOVECOT_REPL_THRESHOLD=2
+        - PHPFPM_THRESHOLD=5
+        - RATELIMIT_THRESHOLD=1
+        - FAIL2BAN_THRESHOLD=1
+        - ACME_THRESHOLD=1
+        - IPV6NAT_THRESHOLD=1
+        - RSPAMD_THRESHOLD=5
+        - OLEFY_THRESHOLD=5
+        - MAILQ_THRESHOLD=3
+        - MAILQ_CRIT=30
+      restart: always
+      dns:
+        - "{{ docker_ipv4_network }}.254"
+      networks:
+        mailcow-network:
+          aliases:
+            - watchdog        
+
+
+    dockerapi-mailcow:
+      image: mailcow/dockerapi:1.37
+      oom_kill_disable: true
+      environment:
+        - DBROOT={{ mysql_admin_pass }}
+        - TZ={{ TZ }}
+      volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      restart: always
+      networks:
+        mailcow-network:
+          aliases:
+            - dockerapi
+
+
+    olefy-mailcow:
+      image: mailcow/olefy:1.3
+      environment:
+        - TZ={{ TZ }}
+        - OLEFY_BINDADDRESS=0.0.0.0
+        - OLEFY_BINDPORT=10055
+        - OLEFY_TMPDIR=/tmp
+        - OLEFY_PYTHON_PATH=/usr/bin/python3
+        - OLEFY_OLEVBA_PATH=/usr/bin/olevba3
+        - OLEFY_LOGLVL=20
+        - OLEFY_MINLENGTH=500
+        - OLEFY_DEL_TMP=1
+      restart: always
+      networks:
+        mailcow-network:
+          aliases:
+            - olefy
+
+
+    ipv6nat:
+      image: robbertkl/ipv6nat
+      environment:
+        - TZ={{ TZ }}
+      restart: always
+      privileged: true
+      network_mode: "host"
+      volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock:ro"
+        - "/lib/modules:/lib/modules:ro"
+
+
 networks:
   web:
     external: true
-    
+  mailcow-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-mailnet
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: "{{ docker_ipv4_network }}.0/24"
+        - subnet: "{{ docker_ipv6_network }}"
