@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 
 services:
 
@@ -55,10 +55,13 @@ services:
 
     image: dsteinkopf/elasticsearch-ingest-attachment:latest 
     restart: always
+    mem_limit: 256m
     volumes:
       - "{{ basedir }}/elasticsearch_data:/usr/share/elasticsearch/data"
       - "/etc/localtime:/etc/localtime:ro"
       - "/etc/timezone:/etc/timezone:ro"
+    environment:
+      ES_JAVA_OPTS: "-Xms128m -Xmx256m"
     networks:
       - default
     
