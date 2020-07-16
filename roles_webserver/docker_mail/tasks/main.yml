@@ -12,7 +12,7 @@
     docker_ipv4_network: "175.19.199"
     docker_ipv6_network: "fd4d:5169:6c63:6f77::/64" 
     watchdog_notify_mail: "postmaster@void.ms"
-
+    
 - name: "create folder struct for {{ servicename }}"
   file: 
     path: "{{ item }}"
@@ -25,12 +25,20 @@
     - "{{ basedir }}/conf/rspamd/custom/"
     - "{{ basedir }}/conf/unbound/"
     - "{{ basedir }}/certdump/"
-    - "{{ basedir }}/mail/"
-    - "{{ basedir }}/mail-crypt/"
-    - "{{ basedir }}/mail-attachments/"
     - "{{ basedir }}/postfix/"
 
 - name: "create folder struct for {{ servicename }} 2"
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+    owner: "5000"
+    group: "5000"
+  with_items:
+    - "{{ basedir }}/mail/"
+    - "{{ basedir }}/mail-crypt/"
+    - "{{ basedir }}/mail-attachments/"
+
+- name: "create folder struct for {{ servicename }} 3"
   file: 
     path: "{{ item }}"
     state: "directory"
@@ -60,13 +68,22 @@
     depth: 1
     force: yes
 
-#- name: "stop {{ servicename }} docker"
-#  docker_compose:
-#    project_src: "{{ basedir }}"
-#    state: absent
-#  when: configfiles.changed
+- name: Generate Diffie-Hellman parameters (check)
+  stat:
+    path: "{{ basedir }}/certdump/dhparams.pem"
+  register: dhparams
 
-#- name: "start {{ servicename }} docker"
-#  docker_compose:
-#    project_src: "{{ basedir }}"
-#    state: present
+- name: Generate Diffie-Hellman parameters (genrate)
+  command: "openssl dhparam -out {{ basedir }}/certdump/dhparams.pem 2048"
+  when: not dhparams.stat.exists 
+
+- name: "stop {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: configfiles.changed
+
+- name: "start {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present
