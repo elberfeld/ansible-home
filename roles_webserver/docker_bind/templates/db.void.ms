@@ -52,15 +52,17 @@ gw-um     IN      A       130.180.13.105
 
 ; E-Mail Konfiguration 
 @         IN      MX      10 mail.void.ms.
-@         IN      TXT     "v=spf1 mx a ~all"
+@         IN      TXT     "v=spf1 mx a -all"
 
 _autodiscover._tcp      SRV 0 0 443     mail.void.ms.
 _imaps._tcp             SRV 0 1 993     mail.void.ms.
 _smtps._tcp             SRV 0 1 465     mail.void.ms.
 _submission._tcp        SRV 0 1 587     mail.void.ms.
 
-_domainkey         IN TXT "o=~"
-dkim1._domainkey   IN TXT "v=DKIM1;k=rsa;t=s;s=email;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC7L/+hbz3M6mSI+xU6gmgkwdR/neOMpy19KfPkRkjAnjfSRigZnWD1rubjXv+rZxmbKS6GmBNovtgR1xYeox7ezkMtWMOTPaDmL/X04cJsMxxFgRvMj4rMRHGZR6Icb8KsLUZEHnn7n/qBKFrRm1Tw1nH6dudZr7/lPshoxW99owIDAQAB"
+_dmarc.void.ms.             IN TXT "v=DMARC1; p=none;"  
+_domainkey.void.ms.         IN TXT "o=-"
+
+dkim1._domainkey.void.ms.   IN TXT "v=DKIM1;k=rsa;t=s;s=email;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC7L/+hbz3M6mSI+xU6gmgkwdR/neOMpy19KfPkRkjAnjfSRigZnWD1rubjXv+rZxmbKS6GmBNovtgR1xYeox7ezkMtWMOTPaDmL/X04cJsMxxFgRvMj4rMRHGZR6Icb8KsLUZEHnn7n/qBKFrRm1Tw1nH6dudZr7/lPshoxW99owIDAQAB"
 
 
 
