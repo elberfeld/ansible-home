@@ -17,6 +17,8 @@ RUN apt-get update \
     jq \
     dnsutils \
     python-requests \
+    python3 \
+    python3-paho-mqtt \
  && apt-get autoremove -y \
  && apt-get clean \
  && rm -rf /tmp/* /var/lib/apt/lists/* /var/cache/debconf/*-old
@@ -30,3 +32,6 @@ RUN cd /opt/ && git clone https://github.com/prometheus/nagios_plugins.git
 
 # check_openhab2 Script 
 RUN cd /opt/ && git clone https://github.com/elberfeld/icinga2-plugin-openhab2.git
+
+# check_mqtt
+RUN cd /opt/ && git clone https://github.com/jpmens/check-mqtt.git

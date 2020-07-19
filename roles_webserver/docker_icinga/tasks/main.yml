@@ -88,6 +88,7 @@
     - etc/icinga/conf.d/services_global.conf
     - etc/icinga/conf.d/services_ldap.conf
     - etc/icinga/conf.d/services_manual.conf
+    - etc/icinga/conf.d/services_mqttsensors.conf
     - etc/icinga/conf.d/services_openhab.conf
     - etc/icinga/conf.d/services_system.conf
     - etc/icinga/conf.d/services.conf

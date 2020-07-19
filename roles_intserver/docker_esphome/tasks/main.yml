@@ -1,0 +1,39 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+  - { path: "{{ basedir }}/wlan_pass", length: -1 }
+
+- name: "create folder struct for {{ servicename }}"
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}/"
+    - "{{ basedir }}/config/"
+
+- name: "create config files for {{ servicename }}"
+  template: 
+    src: "{{ item }}" 
+    dest: "{{ basedir }}/{{ item }}"
+  with_items: 
+    - docker-compose.yml
+    - compile.sh
+    - config/badezimmer.yaml
+    - config/kueche.yaml
+    - config/schlafzimmer.yaml
+    - config/schreibtisch.yaml
+    - config/wohnzimmer.yaml
+    - config/technikraum.yaml
+  register: config
+
+- name: "stop {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config.changed
+
+- name: "start {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present

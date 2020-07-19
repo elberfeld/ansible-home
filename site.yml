@@ -71,6 +71,12 @@
       }
     - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
+    - { 
+        role: roles_intserver/docker_esphome, tags: esphome,
+        servicename: esphome, 
+        basedir: /srv/esphome,
+        web_port: 6052 
+      } 
     - { role: roles_intserver/docker_hibiscus, tags: hibiscus }
     - { role: roles_intserver/docker_loki, tags: loki }
     - { role: roles_intserver/docker_mqtt, tags: mqtt }

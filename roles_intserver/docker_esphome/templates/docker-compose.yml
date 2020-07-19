@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: esphome/esphome:0afa41d
+    restart: always
+    network_mode: "host"
+    volumes:
+      - "{{ basedir }}/config/:/config"

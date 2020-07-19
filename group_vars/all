@@ -8,6 +8,10 @@ ldap_global:
   readonly_dn: cn=readonly,dc=void,dc=ms
   group_active_dn: cn=active,ou=groups,dc=void,dc=ms
 
+# zentraler MQTT Broker
+mqtt:
+  ip: 10.5.0.111
+
 # zentraler Prometheus Server 
 prometheus:
   ip: 10.5.0.111
@@ -72,3 +76,10 @@ rfswitches:
   - { id: "LampeStehlampe",   name: "Stehlampe",   code: "11010 3",  groups: "gAlles,gLampen" }
   - { id: "PowerFernseher",   name: "Fernseher",   code: "11010 5",  groups: "gAlles",        }
 
+mqtt_sensors:
+  - { id: "badezimmer",   name: "Badezimmer" }
+  - { id: "kueche",       name: "Küche" }
+  - { id: "schlafzimmer", name: "Schlafzimmer" }
+  - { id: "schreibtisch", name: "Schreibtisch" }
+  - { id: "technikraum",  name: "Technikraum" }
+  - { id: "wohnzimmer",   name: "Wohnzimmer" }
