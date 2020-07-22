@@ -25,6 +25,7 @@
     - "{{ basedir }}/conf/rspamd/custom/"
     - "{{ basedir }}/conf/unbound/"
     - "{{ basedir }}/certdump/"
+    - "{{ basedir }}/dovecot-run/"
     - "{{ basedir }}/postfix/"
 
 - name: "create folder struct for {{ servicename }} 2"

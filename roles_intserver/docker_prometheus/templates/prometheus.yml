@@ -38,6 +38,13 @@ scrape_configs:
 
 {% endfor %}
 
+  - job_name: 'postfix'
+
+    static_configs:
+      - targets: ['10.100.1.2:9154']
+        labels:
+          group: 'service'
+
 
   - job_name: 'storage'
 
@@ -82,3 +89,5 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: snmp_exporter:9116
+
+

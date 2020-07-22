@@ -1,6 +1,16 @@
 version: '2.1'
 services:
 
+    postfix-exporter:
+      image: unikum/postfix_exporter:latest
+      depends_on: 
+        - postfix-mailcow
+      ports:
+        - "{{ int_ip4 }}:9154:9154"
+      volumes:
+        - "{{ basedir }}/postfix/:/var/spool/postfix"
+
+ 
     traefik-certdumper:
         image: humenius/traefik-certs-dumper
         network_mode: none
