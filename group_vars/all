@@ -1,4 +1,13 @@
 
+# Globale Mail konfiguration 
+mail_global:
+  mxserver: mail.void.ms
+  spf: v=spf1 mx a -all
+  dmarc: v=DMARC1; p=none;
+  domainkey: o=-
+  dkim:
+    - { selector: "dkim1", value: "v=DKIM1;k=rsa;t=s;s=email;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC7L/+hbz3M6mSI+xU6gmgkwdR/neOMpy19KfPkRkjAnjfSRigZnWD1rubjXv+rZxmbKS6GmBNovtgR1xYeox7ezkMtWMOTPaDmL/X04cJsMxxFgRvMj4rMRHGZR6Icb8KsLUZEHnn7n/qBKFrRm1Tw1nH6dudZr7/lPshoxW99owIDAQAB" }
+
 # Globale LDAP Settings   
 ldap_global:
   organization: VOID

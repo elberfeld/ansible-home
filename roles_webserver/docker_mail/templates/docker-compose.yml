@@ -211,7 +211,7 @@ services:
         - MASTER=y
         - COMPOSE_PROJECT_NAME={{ basedir | basename }}
       ports:
-        - "0.0.0.0:143:143"  # imap
+#        - "0.0.0.0:143:143"  # imap
         - "0.0.0.0:993:993"  # imaps
 #        - "0.0.0.0:110:110"  # pop3
 #        - "0.0.0.0:995:995"  # pop3s
