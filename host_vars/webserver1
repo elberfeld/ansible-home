@@ -17,7 +17,7 @@ int_ip4: 10.100.1.1
 
 # Monitoring aktivieren 
 alert:  
-  containers: 12
+  containers: 11
   disks: 
     - "/"
     - "/srv"
