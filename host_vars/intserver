@@ -13,7 +13,7 @@ debian_keys:
 
 # Monitoring aktivieren 
 alert:  
-  containers: 11
+  containers: 12
   disks: 
     - "/"
     - "/srv"
