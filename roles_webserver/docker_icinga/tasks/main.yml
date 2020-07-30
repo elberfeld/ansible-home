@@ -78,6 +78,7 @@
     - etc/locale.gen
     - etc/icinga/conf.d/api-users.conf
     - etc/icinga/conf.d/commands2.conf
+    - etc/icinga/conf.d/groups.conf
     - etc/icinga/conf.d/hosts_manual.conf
     - etc/icinga/conf.d/hosts.conf
     - etc/icinga/conf.d/notifications_pushover.conf
@@ -89,6 +90,7 @@
     - etc/icinga/conf.d/services_exporters.conf
     - etc/icinga/conf.d/services_global.conf
     - etc/icinga/conf.d/services_ldap.conf
+    - etc/icinga/conf.d/services_mail.conf
     - etc/icinga/conf.d/services_manual.conf
     - etc/icinga/conf.d/services_mqttsensors.conf
     - etc/icinga/conf.d/services_openhab.conf
