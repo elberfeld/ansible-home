@@ -42,6 +42,7 @@ alert:
     - { name: "nextcloud_app_1" }
     - { name: "nextcloud_redis_1" }
     - { name: "nextcloud_mysql_1" }
+    - { name: "nextcloud_elasticsearch_1" }
     - { name: "traefik_app_1" }
     - { name: "promtail_app_1" }
   disks: 

@@ -55,7 +55,7 @@ services:
 
     image: dsteinkopf/elasticsearch-ingest-attachment:latest 
     restart: always
-    mem_limit: 256m
+    mem_limit: 1024m
     volumes:
       - "{{ basedir }}/elasticsearch_data:/usr/share/elasticsearch/data"
       - "/etc/localtime:/etc/localtime:ro"
