@@ -13,7 +13,20 @@ debian_keys:
 
 # Monitoring aktivieren 
 alert:  
-  containers: 12
+  containers:
+    - { name: "dockerstats_app_1" }
+    - { name: "esphome_app_1" }
+    - { name: "hibisus_db_1" }
+    - { name: "influx_openhab_1" }
+    - { name: "ldap_openldap_1" }
+    - { name: "ldap_phpldapadmin_1" }
+    - { name: "ldap_syncreplexporter_1" }
+    - { name: "loki_app_1" }
+    - { name: "mqtt_app_1" }
+    - { name: "pihole_app_1" }
+    - { name: "prometheus_app_1" }
+    - { name: "prometheus_snmp_exporter_1" }
+    - { name: "promtail_app_1" }
   disks: 
     - "/"
     - "/srv"
@@ -31,6 +44,8 @@ ldap_local:
 docker:
   # Prometheus Metriken aktivieren 
   prometheus_metrics: yes
+  # Prometheus Stats aktivieren
+  prometheus_stats: yes
 
 
 

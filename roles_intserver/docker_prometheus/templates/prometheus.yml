@@ -36,6 +36,17 @@ scrape_configs:
   
   {% endif %}
 
+  {% if hostvars[item]['docker']['prometheus_stats'] is defined %}        
+          
+  - job_name: '{{ item }}_dockerstats'
+
+    static_configs:
+      - targets: ['{{ hostvars[item]['int_ip4'] }}:9487']
+        labels:
+          group: 'docker'
+  
+  {% endif %}
+
 {% endfor %}
 
   - job_name: 'postfix'

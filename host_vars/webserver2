@@ -12,7 +12,38 @@ debian_keys:
 
 # Monitoring aktivieren 
 alert:  
-  containers: 30
+  containers: 
+    - { name: "bind_app_1" }
+    - { name: "commafeed_app_1" }
+    - { name: "dockerstats_app_1" }
+    - { name: "invoicefetcher_mysql_1" }
+    - { name: "invoicefetcher_uploader_1" }
+    - { name: "invoicefetcher_sftpserver_1" }
+    - { name: "ldap_openldap_1" }
+    - { name: "ldap_phpldapadmin_1" }
+    - { name: "ldap_syncreplexporter_1" }
+    - { name: "mail_postfix-exporter_1" }
+    - { name: "mail_traefik-certdumper_1" }
+    - { name: "mail_unbound-mailcow_1" }
+    - { name: "mail_mysql-mailcow_1" }
+    - { name: "mail_redis-mailcow_1" }
+    - { name: "mail_clamd-mailcow_1" }
+    - { name: "mail_rspamd-mailcow_1" }
+    - { name: "mail_php-fpm-mailcow_1" }
+    - { name: "mail_dovecot-mailcow_1" }
+    - { name: "mail_postfix-mailcow_1" }
+    - { name: "mail_memcached-mailcow_1" }
+    - { name: "mail_nginx-mailcow_1" }
+    - { name: "mail_netfilter-mailcow_1" }
+    - { name: "mail_watchdog-mailcow_1" }
+    - { name: "mail_dockerapi-mailcow_1" }
+    - { name: "mail_olefy-mailcow_1" }
+    - { name: "mail_ipv6nat-mailcow_1" }
+    - { name: "nextcloud_app_1" }
+    - { name: "nextcloud_redis_1" }
+    - { name: "nextcloud_mysql_1" }
+    - { name: "traefik_app_1" }
+    - { name: "promtail_app_1" }
   disks: 
     - "/"
     - "/srv"
@@ -31,6 +62,8 @@ ldap_local:
 docker:
   # Prometheus Metriken aktivieren 
   prometheus_metrics: yes
+  # Prometheus Stats aktivieren
+  prometheus_stats: yes
   # Docker Start unterbinden fals diese Datei nicht existiert 
   service_blocker_file: /srv/cryptdisk_mounted
 

@@ -10,7 +10,11 @@ debian_keys:
 
 # Monitoring aktivieren 
 alert:  
-  containers: 3
+  containers:
+    - { name: "dockerstats_app_1" }
+    - { name: "openhab_app_1" }
+    - { name: "openhab_promtail_1" }
+    - { name: "promtail_1" }
   disks: 
     - "/"
 
@@ -23,6 +27,8 @@ int_ip4: 10.5.0.250
 docker:
   # Prometheus Metriken aktivieren 
   prometheus_metrics: yes
+  # Prometheus Stats aktivieren
+  prometheus_stats: yes
 
 
 # Definition von RSync Backup Jobs 

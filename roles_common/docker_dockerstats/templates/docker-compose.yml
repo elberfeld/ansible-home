@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: elberfeld/docker_stats_exporter:2020.07.30
+    restart: always
+    ports:
+      - "{{ int_ip4 }}:9487:9487" 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+
