@@ -84,7 +84,9 @@
     - etc/icinga/conf.d/notifications.conf
     - etc/icinga/conf.d/services_backup.conf
     - etc/icinga/conf.d/services_config.conf
+    - etc/icinga/conf.d/services_container.conf
     - etc/icinga/conf.d/services_domains.conf
+    - etc/icinga/conf.d/services_exporters.conf
     - etc/icinga/conf.d/services_global.conf
     - etc/icinga/conf.d/services_ldap.conf
     - etc/icinga/conf.d/services_manual.conf
