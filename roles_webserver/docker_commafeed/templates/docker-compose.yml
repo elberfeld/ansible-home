@@ -7,7 +7,7 @@ services:
 
     image: agross/commafeed:latest
     restart: always
-    mem_limit: 512m
+    mem_limit: 1024m
     volumes:
       - "{{ basedir }}/config.yml:/config/config.yml"
       - "{{ basedir }}/db:/home/commafeed/"
