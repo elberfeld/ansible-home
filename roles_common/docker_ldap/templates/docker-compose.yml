@@ -52,7 +52,6 @@ services:
 
   syncreplexporter:
     build: . 
-    image: "syncreplexporter--{{ ansible_date_time.date }}--{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}"
     restart: always
     depends_on:
       - openldap

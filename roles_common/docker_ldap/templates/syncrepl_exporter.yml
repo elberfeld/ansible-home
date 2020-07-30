@@ -1,10 +1,9 @@
 ---
 
     ldap:
-      host: 'openldap'
-      port: '389'
+      uri: 'ldap://openldap'
       basedn: '{{ ldap_global.search_base }}'
       starttls: false
       bind: true
-      bindcn: '{{ ldap_global.readonly_dn }}'
+      binddn: '{{ ldap_global.readonly_dn }}'
       bindpass: '{{ ldap_readonly_pass }}'
