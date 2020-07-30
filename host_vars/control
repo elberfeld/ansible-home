@@ -14,7 +14,7 @@ alert:
     - { name: "dockerstats_app_1" }
     - { name: "openhab_app_1" }
     - { name: "openhab_promtail_1" }
-    - { name: "promtail_1" }
+    - { name: "promtail_app_1" }
   disks: 
     - "/"
 
