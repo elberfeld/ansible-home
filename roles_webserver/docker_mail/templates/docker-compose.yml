@@ -85,7 +85,6 @@ services:
     clamd-mailcow:
       image: mailcow/clamd:1.36
       restart: always
-      mem_limit: 1024m
       environment:
         - TZ={{ TZ }}
         - SKIP_CLAMD=n
@@ -102,7 +101,6 @@ services:
     rspamd-mailcow:
       image: mailcow/rspamd:1.68
       stop_grace_period: 30s
-      mem_limit: 1024m
       depends_on:
         - redis-mailcow
         - php-fpm-mailcow
