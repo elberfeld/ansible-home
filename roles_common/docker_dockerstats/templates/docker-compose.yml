@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: elberfeld/docker_stats_exporter:2020.07.30
+    build: .
     restart: always
     ports:
       - "{{ int_ip4 }}:9487:9487" 
