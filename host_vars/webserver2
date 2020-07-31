@@ -43,8 +43,11 @@ alert:
     - { name: "nextcloud_redis_1" }
     - { name: "nextcloud_mysql_1" }
     - { name: "nextcloud_elasticsearch_1" }
+    - { name: "nginxssh_connectiv_app_1" }
     - { name: "traefik_app_1" }
     - { name: "promtail_app_1" }
+    - { name: "wordpress_app_1" }
+    - { name: "wordpress_db_1" }
   disks: 
     - "/"
     - "/srv"
@@ -72,10 +75,12 @@ docker:
 webserver_domains:
   - "autoconfig"
   - "autodiscover"
+  - "connectiv"
   - "cloud"
   - "commafeed"
   - "ldap2"
   - "mail"
+  - "www"
 
 
 # Definition von RSync Backup Jobs 
