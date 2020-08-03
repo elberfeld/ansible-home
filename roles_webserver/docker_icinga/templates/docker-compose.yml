@@ -1,6 +1,6 @@
 
 
-version: "3"
+version: "2"
 
 services:
   
@@ -8,6 +8,7 @@ services:
 
     build: .
     restart: always
+    mem_limit: 512m
     ports:
       - "0.0.0.0:{{ api_port }}:5665"
     volumes:
@@ -48,6 +49,7 @@ services:
 
     image: mariadb:10.1.44
     restart: always
+    mem_limit: 256m
     ports:
       - "{{ int_ip4 }}:{{mysql_port}}:3306"
     volumes:
@@ -64,6 +66,7 @@ services:
     
     image: graphiteapp/graphite-statsd:1.1.6-1
     restart: always
+    mem_limit: 256m
     volumes:
       - "{{ basedir }}/graphite-conf:/opt/graphite/conf"
       - "{{ basedir }}/graphite-storage:/opt/graphite/storage"
