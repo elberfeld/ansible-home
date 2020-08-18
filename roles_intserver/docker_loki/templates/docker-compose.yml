@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: grafana/loki:master-7072ed7
+    image: grafana/loki:1.6.0
     restart: always
     command: -config.file=/etc/loki/local-config.yaml 
     ports:
@@ -13,11 +13,13 @@ services:
       - /srv/loki/local-config.yaml:/etc/loki/local-config.yaml:ro
       - /srv/loki/data:/data
     
-#
-#  pastash:
-#    image: qxip/pastash-loki:latest
-#    command: pastash --config_file=/pastash.conf --log_level=info
-#    ports:
-#      - 5140:5140/udp
-#    volumes:
-#      - /srv/loki/pastash.json:/pastash.conf
+  vector:
+
+    image: timberio/vector:0.10.0-alpine
+    restart: always
+    depends_on: 
+      - app
+    ports:
+      - "514:514/udp"
+    volumes:
+      - /srv/loki/vector.toml:/etc/vector/vector.toml

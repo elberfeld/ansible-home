@@ -4,7 +4,7 @@ services:
 
   app:
   
-    image: grafana/promtail:master-61be4c9
+    image: grafana/promtail:1.6.0
     restart: always
     volumes:
       - /srv/promtail/docker-config.yaml:/etc/promtail/docker-config.yaml

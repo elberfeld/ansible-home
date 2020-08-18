@@ -7,7 +7,7 @@ positions:
   filename: /tmp/positions.yaml
 
 client:
-  url: {{ loki.server }}/api/prom/push
+  url: {{ loki.server }}/loki/api/v1/push
 
 scrape_configs:
 

@@ -22,6 +22,7 @@ alert:
     - { name: "ldap_phpldapadmin_1" }
     - { name: "ldap_syncreplexporter_1" }
     - { name: "loki_app_1" }
+    - { name: "loki_vector_1" }
     - { name: "mqtt_app_1" }
     - { name: "pihole_app_1" }
     - { name: "prometheus_app_1" }

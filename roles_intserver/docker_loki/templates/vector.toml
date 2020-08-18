@@ -1,0 +1,20 @@
+
+{% raw %}
+
+[sources.in]
+  address = "0.0.0.0:514" # required, required when mode = "tcp" or mode = "udp"
+  mode = "udp" # required
+  path = "/path/to/socket" # required, required when mode = "unix"
+  type = "syslog" # required
+
+[sinks.out]
+  # General
+  endpoint = "http://app:3100" # required
+  inputs = ["in"] # required
+  type = "loki" # required
+
+  # Labels
+  labels.job = "syslog" 
+  labels.host = "{{ hostname }}" 
+
+{% endraw %}

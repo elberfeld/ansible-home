@@ -12,7 +12,7 @@
   template: src={{ item }} dest=/srv/loki/{{ item }}
   with_items: 
     - local-config.yaml
-    - pastash.json
+    - vector.toml
   register: config
 
 - name: Docker Compose Konfig-Datei erstellen
@@ -21,12 +21,12 @@
     dest: "/srv/loki/docker-compose.yml"
 
 - name: stop loki docker
-  docker_service:
+  docker_compose:
     project_src: /srv/loki/
     state: absent
   when: config.changed
 
 - name: start loki docker
-  docker_service:
+  docker_compose:
     project_src: /srv/loki/
     state: present
