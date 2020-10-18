@@ -40,7 +40,7 @@
   when: config.changed
 
 - name: "start {{ servicename }} docker"
-  docker_service:
+  docker_compose:
     project_src: "{{ basedir }}"
     state: present
 
