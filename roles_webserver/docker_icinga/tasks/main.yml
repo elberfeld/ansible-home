@@ -12,11 +12,10 @@
  
 - name: pakete installieren
   apt:
-    pkg: "{{ item }}"
-    update_cache: yes
+    update_cache: no
     state: present
-  with_items:
-    - logrotate
+    name: 
+      - logrotate
 
 - name: icinga LogRotate config erstellen 
   template: 

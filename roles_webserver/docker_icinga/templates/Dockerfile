@@ -1,4 +1,4 @@
-FROM jordan/icinga2:2.11.2
+FROM jordan/icinga2:2.12.1
 
 # Add IcigaWeb2 Grafana Module 
 RUN mkdir -p /usr/local/share/icingaweb2/modules/ \
