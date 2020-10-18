@@ -63,7 +63,7 @@ services:
       - app
     environment:
       OPTIONS: "http://app/cron.php"
-      CRON_SCHEDULE: "*/15 * * * *"
+      CRON_SCHEDULE: "*/5 * * * *"
     networks:
       - default
 
