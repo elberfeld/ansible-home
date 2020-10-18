@@ -2,8 +2,8 @@
 #ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@webserver1.void.ms"'
 
 debian_sources: 
-  - "deb http://ftp.halifax.rwth-aachen.de/debian/ buster main contrib non-free"
-  - "deb http://ftp.halifax.rwth-aachen.de/debian/ buster-updates main contrib non-free"
+  - "deb http://ftp2.de.debian.org/debian/ buster main contrib non-free"
+  - "deb http://ftp2.de.debian.org/debian/ buster-updates main contrib non-free"
   - "deb http://security.debian.org/ buster/updates main contrib non-free"
   - "deb https://download.docker.com/linux/debian buster stable"
 

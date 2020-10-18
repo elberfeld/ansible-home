@@ -1,6 +1,6 @@
 
 debian_sources: 
-  - "deb http://deb.debian.org/debian/ buster main"
+  - "deb http://ftp2.de.debian.org/debian/ buster main"
   - "deb http://security.debian.org/debian-security buster/updates main"
   - "deb http://download.proxmox.com/debian/pve buster pve-no-subscription"
   - "deb http://packages.icinga.com/debian icinga-buster main"
