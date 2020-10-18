@@ -1,7 +1,0 @@
----
-
-- name: restart docker_telegraf 
-  docker_service:
-    project_src: /srv/telegraf/
-    state: present
-    restarted: yes
