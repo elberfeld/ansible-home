@@ -2,11 +2,10 @@
 # Pakete installieren
 - name: pakete installieren
   apt:
-    pkg: "{{ item }}"
-    update_cache: yes
+    update_cache: no
     state: present
-  with_items:
-    - curl
+    name:
+      - curl
 
 - include: ../functions/get_secret.yml
   with_items:
@@ -58,9 +57,6 @@
   docker_compose:
     project_src: /srv/nextcloud/
     state: present
-
-- name: Cronjob für nextcloud cron
-  cron: name="nextcloud-cron" weekday="*" hour="*" minute="*/15" job="curl --silent http://127.0.0.1:42005/cron.php"
 
 - name: Fulltext Worker Systemd Unit 
   template: src="{{ item }}" dest="/etc/systemd/system/{{ item }}"
