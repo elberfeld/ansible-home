@@ -68,9 +68,11 @@ homematic_heizung:
 
 homematic_tempsensor:
   - { id: "OEQ0160159", type: "HM-WDS40-TH-I-2", name: "Sensor Badezimmer" }
+  - { id: "QEQ1859960", type: "HM-WDS10-TH-O", name: "Sensor Wetter" }
 
 homematic_openclosesensor:
   - { id: "QEQ0014557", type: "HM-Sec-TiS", name: "Sensor Garagentor" }
+  - { id: "OEQ1478962", type: "HM-Sec-SC-2", name: "Sensor2 Garagentor" }
 #  - { id: "MEQ1136898", type: "HM-Sec-SC-2", name: "Fenster unten Badezimmer" }
 #  - { id: "NEQ1833602", type: "HM-Sec-SC-2", name: "Fenster oben Badezimmer" }
 
