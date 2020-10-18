@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: pihole/pihole:beta-v5.0
+    image: pihole/pihole:v5.1.2
     restart: always
     ports:
       - "53:53/tcp"
