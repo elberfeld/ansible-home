@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: eclipse-mosquitto:1.6.8
+    image: eclipse-mosquitto:1.6.12
     restart: always
     ports:
       - 1883:1883 
