@@ -20,12 +20,22 @@
     - docker-compose.yml
     - compile.sh
     - config/badezimmer.yaml
+    - config/esp-test.yaml
     - config/kueche.yaml
     - config/schlafzimmer.yaml
     - config/schreibtisch.yaml
     - config/wohnzimmer.yaml
     - config/technikraum.yaml
   register: config
+
+- name: download config includes files 
+  get_url:
+    url: "https://esphome.io/_static/{{ item }}" 
+    dest: "{{ basedir }}/config/{{ item }}"
+  with_items:
+    - webserver-v1.min.css
+    - webserver-v1.min.js
+
 
 - name: "stop {{ servicename }} docker"
   docker_compose:

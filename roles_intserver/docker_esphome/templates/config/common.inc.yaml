@@ -1,0 +1,35 @@
+
+# WiFi settings 
+wifi:
+  ssid: "VOID"
+  password: "{{ wlan_pass }}"
+  
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "ESPHomeFallback"
+    
+# WLAN selection in fallback mode
+captive_portal:
+  
+# Enable OTA
+ota:
+   
+# Enable logging
+logger:
+  level: DEBUG 
+  
+# Enable integrated WebServer 
+web_server:
+  port: 80
+  css_include: "webserver-v1.min.css"
+  css_url: ""
+  js_include: "webserver-v1.min.js"
+  js_url: ""
+  
+# Activates prometheus /metrics endpoint
+prometheus:
+        
+# MQTT config 
+mqtt:
+  broker: {{mqtt.ip}}
+  discovery: false 
