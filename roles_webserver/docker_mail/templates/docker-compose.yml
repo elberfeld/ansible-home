@@ -14,7 +14,7 @@ services:
     traefik-certdumper:
         image: humenius/traefik-certs-dumper
         network_mode: none
-        command: --restart-containers dovecot,postfix,nginx,watchdog
+        command: --restart-containers mail_dovecot_1,mail_postfix_1,mail_nginx_1,mail_watchdog_1
         volumes:
           # mount the folder which contains Traefik's `acme.json' file
           - /srv/traefik/acme.json:/traefik/acme.json:ro
