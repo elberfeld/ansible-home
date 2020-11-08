@@ -136,14 +136,9 @@
     - { 
         role: roles_common/docker_traefik, tags: traefik,
         servicename: traefik, 
-        basedir: /srv/traefik
-      }
-    - { 
-        role: roles_webserver/docker_redirectdefault, tags: redirectdefault, 
-        servicename: redirectdefault, 
-        basedir: /srv/redirectdefault, 
-        domain: void.ms, 
-        redirect-to: www.void.ms 
+        basedir: /srv/traefik,
+        domain: "void.ms",
+        domain-default: "www.void.ms"
       }
     - { 
         role: roles_webserver/docker_grafana, tags: grafana, 

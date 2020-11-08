@@ -26,6 +26,7 @@
   with_items:
     - docker-compose.yml
     - traefik.yml 
+    - dynamic/redirect-default.yml
     - dynamic/tls.yml
   register: config
 

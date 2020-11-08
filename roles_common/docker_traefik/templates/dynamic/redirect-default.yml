@@ -1,0 +1,21 @@
+http:
+    routers:
+        router-default:
+            entrypoints:
+                - websecure
+            rule: "Host(`{{ domain }}`)"
+            middlewares: 
+                - redirect-default
+            service: service-default
+
+    services:
+        service-default:
+            loadBalancer:
+                servers: 
+                    - url: http://noop-dummy
+                            
+    middlewares:
+        redirect-default:
+            redirectRegex:
+                regex: "^https://{{ domain }}/(.*)"
+                replacement: "https://{{ domain-default }}/$1"
