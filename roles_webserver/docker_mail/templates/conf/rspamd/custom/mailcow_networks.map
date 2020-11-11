@@ -1,2 +1,0 @@
-{{ docker_ipv4_network }}.0/24
-{{ docker_ipv6_network }}

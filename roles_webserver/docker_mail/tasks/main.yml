@@ -4,87 +4,86 @@
    - { path: "{{ basedir }}/mysql_admin_pass",  length: 24 }
    - { path: "{{ basedir }}/mysql_user_pass",  length: 12 }
    - { path: "{{ basedir }}/mailcow_admin_pass",  length: 24 }
-   - { path: "{{ basedir }}/mailcow_api_key",  length: 64 }
-   - { path: "{{ basedir }}/mailcow_api_key_readonly",  length: 64 }
+   - { path: "{{ basedir }}/watchdog_notify_mail",  length: -1 }
 
-- set_fact:
-    TZ: "Europe/Berlin"
-    docker_ipv4_network: "175.19.199"
-    docker_ipv6_network: "fd4d:5169:6c63:6f77::/64" 
-    watchdog_notify_mail: "postmaster@void.ms"
-    
 - name: "create folder struct for {{ servicename }}"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
-    - "{{ basedir }}"
-    - "{{ basedir }}/git"
-    - "{{ basedir }}/conf"
-    - "{{ basedir }}/conf/rspamd/"
-    - "{{ basedir }}/conf/rspamd/custom/"
-    - "{{ basedir }}/conf/unbound/"
-    - "{{ basedir }}/certdump/"
-    - "{{ basedir }}/dovecot-run/"
-    - "{{ basedir }}/postfix/"
+    - "{{ basedir }}/data"
+    - "{{ basedir }}/data/mysql"
+    - "{{ basedir }}/data/mysql-socket"
+    - "{{ basedir }}/data/redis"
+    - "{{ basedir }}/data/rspamd"
+    - "{{ basedir }}/data/solr"
+    - "{{ basedir }}/data/postfix"
+    - "{{ basedir }}/data/sogo-web"
+    - "{{ basedir }}/data/sogo-userdata-backup"
+
 
 - name: "create folder struct for {{ servicename }} 2"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
     owner: "5000"
     group: "5000"
+    mode: "ugo+rwx"
   with_items:
-    - "{{ basedir }}/mail/"
-    - "{{ basedir }}/mail-crypt/"
-    - "{{ basedir }}/mail-attachments/"
+  - "{{ basedir }}/data/crypt"
+  - "{{ basedir }}/data/vmail"
+  - "{{ basedir }}/data/vmail-index"   
+
+
+- name: Git checkout mailcow
+  git:
+    repo: 'https://github.com/mailcow/mailcow-dockerized.git'
+    dest: "{{ basedir }}/mailcow-dockerized"
+    version: 08396dc63a3299f4fd35c7eaf163c805292bb27c
+    # current version 2020-11-11
+
 
 - name: "create folder struct for {{ servicename }} 3"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
-    owner: "999"
-    group: "999"
   with_items:
-    - "{{ basedir }}/mailcow-db/"
-    - "{{ basedir }}/mailcow-db-socket/"
-    - "{{ basedir }}/redis/"
+    - "{{ basedir }}/mailcow-dockerized/data/assets/ssl/"
 
-- name: create config files
-  template: 
-    src: "{{ item }}" 
-    dest: "{{ basedir }}/{{ item }}"
-  with_items: 
-    - docker-compose.yml
-    - conf/rspamd/custom/dovecot_trusted.map
-    - conf/rspamd/custom/mailcow_networks.map 
-    - conf/unbound/unbound.conf
-  register: configfiles 
 
-- name: "clone mailcow-dockerized git"
-  git:
-    repo: "https://github.com/mailcow/mailcow-dockerized.git"
-    dest: "{{ basedir }}/git"
-    version: "eff907bf906cc3a0affe9de394f8c10bb98e44ca" # Stand 15.07.2020
-    depth: 1
-    force: yes
-
-- name: Generate Diffie-Hellman parameters (check)
+# DH Parameter erzeugen
+- name: check if DH Params exists
   stat:
-    path: "{{ basedir }}/certdump/dhparams.pem"
+    path: "{{ basedir }}/mailcow-dockerized/data/assets/ssl/dhparams.pem"
   register: dhparams
 
-- name: Generate Diffie-Hellman parameters (genrate)
-  command: "openssl dhparam -out {{ basedir }}/certdump/dhparams.pem 2048"
-  when: not dhparams.stat.exists 
+- name: generate new DH Params
+  command: "openssl dhparam -out {{ basedir }}/mailcow-dockerized/data/assets/ssl/dhparams.pem 2048"
+  when: dhparams.stat.exists == False
 
+
+# Copy config files
+- name: deploy mailcow config
+  template:
+    dest:  "{{ basedir }}/{{ item }}"
+    src: "{{ item }}"
+    mode: 0644
+  with_items:
+    - mailcow-dockerized/mailcow.conf
+    - mailcow-dockerized/docker-compose.override.yml
+  register: config
+
+
+# Start containers
 - name: "stop {{ servicename }} docker"
   docker_compose:
-    project_src: "{{ basedir }}"
+    project_src: "{{ basedir }}/mailcow-dockerized"
     state: absent
-  when: configfiles.changed
+  when: config.changed
+
 
 - name: "start {{ servicename }} docker"
   docker_compose:
-    project_src: "{{ basedir }}"
+    project_src: "{{ basedir }}/mailcow-dockerized"
     state: present
+
