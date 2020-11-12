@@ -5,6 +5,7 @@ mail_domains:
     name: VOID
     maildomain: void.ms 
     mxserver: mail.void.ms
+    mxhostname: webserver2
     autodiscover: autodiscover.void.ms
     autoconfig: autoconfig.void.ms
     mailconf: mailconf=https://autoconfig.void.ms/mail/config-v1.1.xml
