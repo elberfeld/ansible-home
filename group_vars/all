@@ -1,4 +1,9 @@
 
+# Globale Domains
+global_domains:
+  voidms:
+    domain: void.ms
+
 # Globale Mail konfiguration 
 mail_domains:
   voidms:
