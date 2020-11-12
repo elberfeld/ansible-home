@@ -171,6 +171,13 @@
         basedir: /srv/traefik
       }
     - { 
+        role: roles_webserver/docker_autodiscover, tags: autodiscover,
+        servicename: autodiscover, 
+        basedir: /srv/autodiscover, 
+        autoconfig: autoconfig.void.ms,
+        autodiscover: autodiscover.void.ms
+      }
+    - { 
         role: roles_webserver/docker_commafeed, tags: commafeed,
         servicename: commafeed, 
         basedir: /srv/commafeed, 
@@ -188,8 +195,6 @@
         servicename: mail, 
         basedir: /srv/mail, 
         domain: mail.void.ms, 
-        autoconfig: autoconfig.void.ms,
-        autodiscover: autodiscover.void.ms
       }
     - { 
         role: roles_webserver/docker_nextcloud, tags: nextcloud,

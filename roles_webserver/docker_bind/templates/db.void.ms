@@ -51,23 +51,22 @@ gw-um     IN      A       130.180.13.105
 
 
 ; E-Mail Konfiguration 
-@         IN      MX      10 {{ mail_global.mxserver }}.
-@         IN      TXT     "{{ mail_global.spf }}"
+@         IN      MX      10 {{ mail_domains.voidms.mxserver }}.
+@         IN      TXT     "{{ mail_domains.voidms.spf }}"
+@         IN      TXT     "{{ mail_domains.voidms.mailconf }}"
 
-_autodiscover._tcp      SRV 0 0 443     {{ mail_global.mxserver }}.
-_imaps._tcp             SRV 0 1 993     {{ mail_global.mxserver }}.
-_smtps._tcp             SRV 0 1 465     {{ mail_global.mxserver }}.
-_submission._tcp        SRV 0 1 587     {{ mail_global.mxserver }}.
+_autodiscover._tcp      SRV 0 0 443     {{ mail_domains.voidms.mxserver }}.
+_imaps._tcp             SRV 0 1 993     {{ mail_domains.voidms.mxserver }}.
+_pop3s._tcp             SRV 0 1 995     {{ mail_domains.voidms.mxserver }}.
+_smtps._tcp             SRV 0 1 465     {{ mail_domains.voidms.mxserver }}.
+_submission._tcp        SRV 0 1 587     {{ mail_domains.voidms.mxserver }}.
 
-_dmarc.void.ms.             IN TXT "{{ mail_global.dmarc }}"  
-_domainkey.void.ms.         IN TXT "{{ mail_global.domainkey }}"
+_dmarc.void.ms.             IN TXT "{{ mail_domains.voidms.dmarc }}"  
+_domainkey.void.ms.         IN TXT "{{ mail_domains.voidms.domainkey }}"
 
-{% for entry in mail_global.dkim %}
+{% for entry in mail_domains.voidms.dkim %}
 
 {{entry.selector}}._domainkey.void.ms.   IN TXT "{{ entry.value }}"
 
 {% endfor %}
-
-
-
 

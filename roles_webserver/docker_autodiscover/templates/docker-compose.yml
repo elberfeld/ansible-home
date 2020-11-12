@@ -1,0 +1,34 @@
+version: '2.1'
+
+services:
+
+{% for domain in mail_domains %}
+
+  {{ domain }}:
+    image: monogramm/autodiscover-email-settings:1.4.0
+    environment:
+      - DOMAIN={{ mail_domains[domain].maildomain }}
+      - IMAP_HOST={{ mail_domains[domain].mxserver }}
+      - IMAP_PORT=993
+      - IMAP_SOCKET=SSL
+      - POP_HOST={{ mail_domains[domain].mxserver }}
+      - POP_PORT=995
+      - POP_SOCKET=SSL
+      - SMTP_HOST={{ mail_domains[domain].mxserver }}
+      - SMTP_PORT=587
+      - SMTP_SOCKET=STARTTLS
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}-{{ domain }}.rule=Host(`{{ mail_domains[domain].autodiscover }}`) || Host(`{{ mail_domains[domain].autoconfig }}`)
+      - traefik.http.routers.{{ servicename }}-{{ domain }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}-{{ domain }}.loadbalancer.server.port=8000
+    networks:
+      - default 
+      - web
+
+{% endfor %}
+
+networks:
+  web:
+    external: true
+
