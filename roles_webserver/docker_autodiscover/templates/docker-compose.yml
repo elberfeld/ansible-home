@@ -19,7 +19,7 @@ services:
       - SMTP_SOCKET=STARTTLS
     labels:
       - traefik.enable=true
-      - traefik.http.routers.{{ servicename }}-{{ domain }}.rule=Host(`{{ mail_domains[domain].autodiscover }}`) || Host(`{{ mail_domains[domain].autoconfig }}`)
+      - traefik.http.routers.{{ servicename }}-{{ domain }}.rule=Host(`autodiscover.{{ mail_domains[domain].maildomain }}`) || Host(`autoconfig.{{ mail_domains[domain].maildomain }}`)
       - traefik.http.routers.{{ servicename }}-{{ domain }}.entrypoints=websecure
       - traefik.http.services.{{ servicename }}-{{ domain }}.loadbalancer.server.port=8000
     networks:

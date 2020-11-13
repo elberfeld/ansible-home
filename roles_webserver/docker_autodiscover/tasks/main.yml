@@ -8,7 +8,7 @@
     - "{{ basedir }}"
 
 
-- name: deploy mailcow config
+- name: deploy {{ servicename }} config
   template:
     dest:  "{{ basedir }}/{{ item }}"
     src: "{{ item }}"

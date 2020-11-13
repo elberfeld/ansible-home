@@ -55,7 +55,7 @@ gw-um     IN      A       130.180.13.105
 @         IN      TXT     "{{ mail_domains.voidms.spf }}"
 @         IN      TXT     "{{ mail_domains.voidms.mailconf }}"
 
-_autodiscover._tcp      SRV 0 0 443     {{ mail_domains.voidms.mxserver }}.
+_autodiscover._tcp      SRV 0 0 443     autodiscover.{{ mail_domains.voidms.maildomain }}.
 _imaps._tcp             SRV 0 1 993     {{ mail_domains.voidms.mxserver }}.
 _pop3s._tcp             SRV 0 1 995     {{ mail_domains.voidms.mxserver }}.
 _smtps._tcp             SRV 0 1 465     {{ mail_domains.voidms.mxserver }}.
