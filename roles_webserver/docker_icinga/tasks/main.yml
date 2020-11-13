@@ -73,6 +73,7 @@
   with_items:
     - Dockerfile
     - docker-compose.yml
+    - check_rbl_helper.sh
     - notify_by_pushover.sh
     - etc/locale.gen
     - etc/icinga/conf.d/api-users.conf
