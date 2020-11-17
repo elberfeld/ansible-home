@@ -6,6 +6,7 @@ services:
 
   {{ domain }}:
     image: monogramm/autodiscover-email-settings:1.4.0
+    restart: always
     environment:
       - DOMAIN={{ mail_domains[domain].maildomain }}
       - IMAP_HOST={{ mail_domains[domain].mxserver }}

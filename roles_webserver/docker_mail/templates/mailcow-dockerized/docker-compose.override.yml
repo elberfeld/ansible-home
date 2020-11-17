@@ -13,6 +13,7 @@ services:
 
     postfix-exporter:
         image: unikum/postfix_exporter:latest
+        restart: always
         depends_on: 
           - postfix-mailcow
         ports:
@@ -25,6 +26,7 @@ services:
 
     traefik-certdumper:
         image: humenius/traefik-certs-dumper
+        restart: always
         network_mode: none
         command: --restart-containers mail_dovecot-mailcow_1,mail_postfix-mailcow_1,mail_nginx-mailcow_1,mail_watchdog-mailcow_1
         volumes:
