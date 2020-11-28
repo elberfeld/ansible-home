@@ -28,6 +28,7 @@ alert:
     - { name: "prometheus_app_1" }
     - { name: "prometheus_snmp_exporter_1" }
     - { name: "promtail_app_1" }
+    - { name: "unifi_app_1" }
   disks: 
     - "/"
     - "/srv"

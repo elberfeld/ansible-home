@@ -99,12 +99,17 @@
         role: roles_intserver/docker_pihole, tags: pihole,
         servicename: pihole, 
         basedir: /srv/pihole,
-        web_port: 8080 
+        web_port: 8081 
       }
     - { 
         role: roles_intserver/docker_prometheus, tags: prometheus, 
         servicename: prometheus,
         basedir: /srv/prometheus/
+      }
+    - { 
+        role: roles_intserver/docker_unifi, tags: unifi, 
+        servicename: unifi,
+        basedir: /srv/unifi/
       }
 
 
