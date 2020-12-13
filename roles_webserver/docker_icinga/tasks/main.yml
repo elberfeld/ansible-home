@@ -103,8 +103,6 @@
     - etc/icingaweb2/groups.ini
     - etc/icingaweb2/resources.ini
     - etc/icingaweb2/roles.ini
-    - etc/icingaweb2/modules/grafana/config.ini
-    - etc/icingaweb2/modules/grafana/graphs.ini
     - graphite-conf/storage-schemas.conf
   notify: restart icinga docker
 
