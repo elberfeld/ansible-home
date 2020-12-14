@@ -68,7 +68,7 @@ services:
     restart: always
     mem_limit: 256m
     volumes:
-      - "{{ basedir }}/graphite-conf:/opt/graphite/conf"
+      - "{{ basedir }}/graphite-conf/storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf"
       - "{{ basedir }}/graphite-storage:/opt/graphite/storage"
     environment:
       GRAPHITE_TIME_ZONE: "Europe/Berlin"

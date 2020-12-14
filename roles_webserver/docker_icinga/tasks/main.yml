@@ -35,6 +35,20 @@
     - "{{ basedir }}/graphite-conf/"
     - "{{ basedir }}/graphite-storage/"
 
+
+- name: Konfig-Dateien erstellen (base)
+  template:
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - Dockerfile
+    - docker-compose.yml
+    - check_rbl_helper.sh
+    - notify_by_pushover.sh
+    - etc/locale.gen
+  notify: restart icinga docker
+
+
 - stat:
     path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
   register: configured
@@ -66,16 +80,11 @@
     - debuglog_disable.sh
 
 
-- name: Konfig-Dateien erstellen
+- name: Konfig-Dateien erstellen (icinga,icingaweb2,graphite)
   template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
-    - Dockerfile
-    - docker-compose.yml
-    - check_rbl_helper.sh
-    - notify_by_pushover.sh
-    - etc/locale.gen
     - etc/icinga/conf.d/api-users.conf
     - etc/icinga/conf.d/commands2.conf
     - etc/icinga/conf.d/groups.conf
