@@ -26,6 +26,7 @@ ldap_global:
   admin_dn: cn=admin,dc=void,dc=ms
   readonly_dn: cn=readonly,dc=void,dc=ms
   group_active_dn: cn=active,ou=groups,dc=void,dc=ms
+  group_admin_dn: cn=admin,ou=groups,dc=void,dc=ms
 
 # zentraler MQTT Broker
 mqtt:

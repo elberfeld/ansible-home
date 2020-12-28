@@ -25,6 +25,10 @@
     - "{{ basedir }}/db/"
     - "{{ basedir }}/tmp/"
     - "{{ basedir }}/elasticsearch_data/"
+    - "/srv/paperless/"
+    - "/srv/paperless/media/"
+    - "/srv/paperless/media/documents/"
+    - "/srv/paperless/media/documents/archive/"
 
 - name: Get a timestamp
   command: "date +%Y%m%d%H%M%S"

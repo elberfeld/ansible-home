@@ -46,6 +46,9 @@ alert:
     - { name: "nextcloud_webcron_1" }
     - { name: "nextcloud_elasticsearch_1" }
     - { name: "nginxssh_connectiv_app_1" }
+    - { name: "paperless_app_1" }
+    - { name: "paperless_broker_1" }
+    - { name: "paperless_db_1" }
     - { name: "traefik_app_1" }
     - { name: "promtail_app_1" }
     - { name: "wordpress_app_1" }
@@ -80,6 +83,7 @@ webserver_domains:
   - "connectiv"
   - "cloud"
   - "commafeed"
+  - "docs"
   - "ldap2"
   - "mail"
   - "www"

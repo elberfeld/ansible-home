@@ -1,0 +1,74 @@
+version: "3.4"
+
+services:
+
+  broker:
+    image: redis:6.0
+    restart: always
+    networks:
+      - default
+
+
+  db:
+    image: postgres:13.1
+    restart: always
+    volumes:
+      - "{{ basedir }}/db:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: {{ postgres_user_pass }}
+    networks:
+      - default
+
+
+  app:
+    build: .
+    restart: always
+    depends_on:
+      - db
+      - broker
+    volumes:
+      - "{{ basedir }}/local_settings.py:/usr/src/paperless/src/paperless/local_settings.py"
+      - "{{ basedir }}/data:/usr/src/paperless/data"
+      - "{{ basedir }}/media:/usr/src/paperless/media:z"
+      - "{{ basedir }}/consume:/usr/src/paperless/consume"
+      - "{{ basedir }}/export:/usr/src/paperless/export"
+    environment:
+      USERMAP_UID: 1000
+      USERMAP_GID: 1000
+      DJANGO_SETTINGS_MODULE: paperless.local_settings
+      PAPERLESS_DEBUG: 0
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: {{ postgres_user_pass }}
+      PAPERLESS_OCR_MODE: skip
+      PAPERLESS_OCR_OUTPUT_TYPE: pdfa
+      PAPERLESS_OCR_LANGUAGES: deu eng
+      PAPERLESS_OCR_LANGUAGE: deu
+      PAPERLESS_TIME_ZONE: Europe/Berlin
+      PAPERLESS_SECRET_KEY: {{ paperless_secret_key }}
+      PAPERLESS_TASK_WORKERS: 2
+      PAPERLESS_OPTIMIZE_THUMBNAILS: 1
+      PAPERLESS_FILENAME_FORMAT: "{correspondent}/{created_year}/{created_year}-{created_month}-{created_day}_{correspondent}_{document_type}_{title}"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8000
+      - traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120
+    networks:
+      - default
+      - web
+
+
+networks:
+  web:
+    external: true

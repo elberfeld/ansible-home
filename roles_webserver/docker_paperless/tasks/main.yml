@@ -1,0 +1,46 @@
+---
+- include: ../functions/get_secret.yml
+  with_items:
+   - { path: "{{ basedir }}/postgres_user_pass",  length: 12 }
+   - { path: "{{ basedir }}/paperless_secret_key",  length: 24 }
+   - { path: "/srv/ldap/secret/ldap_readonly_pass",  length: -1 }
+
+
+- name: "create folder struct for {{ servicename }}"
+  file:
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}/db"
+    - "{{ basedir }}/data"
+    - "{{ basedir }}/media"
+    - "{{ basedir }}/consume"
+    - "{{ basedir }}/export"
+
+
+# Copy config files
+- name: deploy {{ servicename }} config
+  template:
+    dest:  "{{ basedir }}/{{ item }}"
+    src: "{{ item }}"
+    mode: 0644
+  with_items:
+    - local_settings.py
+    - Dockerfile
+    - docker-compose.yml
+  register: config
+
+
+# Start containers
+- name: "stop {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config.changed
+
+
+- name: "start {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present
+

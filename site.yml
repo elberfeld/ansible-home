@@ -192,7 +192,7 @@
         basedir: /srv/invoicefetcher,
         sshport: 2222,
         mysqlport: 13306
-     }
+      }
     - { 
         role: roles_webserver/docker_mail, tags: mail,
         servicename: mail, 
@@ -204,6 +204,12 @@
         servicename: nextcloud, 
         basedir: /srv/nextcloud, 
         domain: cloud.void.ms 
+      }
+    - { 
+        role: roles_webserver/docker_paperless, tags: paperless,
+        servicename: paperless, 
+        basedir: /srv/paperless,
+        domain: docs.void.ms
       }
     - { 
         role: roles_webserver/docker_wordpress, tags: wordpress, 
