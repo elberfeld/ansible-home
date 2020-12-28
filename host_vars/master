@@ -52,7 +52,6 @@ rsyncbackup:
     # Includes 
     includes:
       - "etc**"
-      - "srv**"
       - "var/log**"
 
     # Includes 
