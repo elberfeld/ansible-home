@@ -13,6 +13,7 @@
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
+    - database_shell.sh
     - docker-compose.yml
     - config.yml
   notify: "restart {{ servicename }} docker"
