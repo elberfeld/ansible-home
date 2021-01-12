@@ -1,16 +1,30 @@
 ---
 
-- name: Add hosts file entry 
+- name: Add hosts file entry 1
   lineinfile:
     path: /etc/hosts
     state: present
-    regexp: '^(.*)master.master(.*)$'
-    line: "{{ int_ip4 }} master.master master pvelocalhost"
+    regexp: '^(.*)127.0.1.1(.*)$'
+    line: "#removed: 127.0.1.1"
+
+- name: Add hosts file entry 2
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    regexp: '^(.*){{ inventory_hostname }}(.*)$'
+    line: "127.0.0.1 {{ inventory_hostname }} pvelocalhost"
 
 - name: Remove PVE Enterprise Repos 
   file:
     path: /etc/apt/sources.list.d/pve-enterprise.list
     state: absent
+
+- name: Install Proxmox Packages
+  apt: 
+    state: present
+    name:
+      - proxmox-ve 
+      - nginx-light
 
 - name: Remove conflicting Packages 
   apt: 
@@ -20,21 +34,11 @@
       - resolvconf 
       - rdnssd
 
-- name: Install Proxmox Packages
-  apt: 
-    state: present
-    name:
-      - proxmox-ve 
-      - nginx-light
-
 - name: Remove PVE Enterprise Repos 
   file:
     path: /etc/apt/sources.list.d/pve-enterprise.list
     state: absent
-
-#- name: Subscription Popup entfernen  
-#  shell: "sed -i.bak 's/NotFound/Active/g' /usr/share/perl5/PVE/API2/Subscription.pm && systemctl restart pveproxy.service" 
-  
+ 
 - name: Nginx Config 
   template:
     src: "nginx"
