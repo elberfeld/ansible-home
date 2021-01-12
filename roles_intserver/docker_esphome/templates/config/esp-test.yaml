@@ -1,7 +1,7 @@
 
 # Konfiguration der Platform 
 esphome:
-  name: esp-test
+  name: esp_test
   platform: ESP32
   board: nodemcu-32s
 
@@ -27,18 +27,33 @@ switch:
   name: "Stehlampe"
   optimistic: true
   assumed_state: true
+  restore_state: true
   turn_on_action:
-    remote_transmitter.transmit_rc_switch_type_a:
-      group: '11010'
-      device: '00100'
-      state: off
-      protocol: 1
+    - remote_transmitter.transmit_rc_switch_type_a:
+        group: '11010'
+        device: '00001'
+        state: on
+        protocol: 
+          pulse_length: 175
+          sync: [1, 31]
+          zero: [1, 3]
+          one: [3, 1]
+          inverted: False
+        repeat:
+          times: 3
   turn_off_action:
-    remote_transmitter.transmit_rc_switch_type_a:
-      group: '11010'
-      device: '00011'
-      state: off
-      protocol: 1
+    - remote_transmitter.transmit_rc_switch_type_a:
+        group: '11010'
+        device: '00001'
+        state: off
+        protocol: 
+          pulse_length: 175
+          sync: [1, 31]
+          zero: [1, 3]
+          one: [3, 1]
+          inverted: False
+        repeat:
+          times: 3
 
 # Sensor configs 
 sensor:

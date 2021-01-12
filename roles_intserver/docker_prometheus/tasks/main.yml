@@ -24,12 +24,12 @@
     dest: "{{ basedir }}/docker-compose.yml"
 
 - name: stop prometheus docker
-  docker_service:
+  docker_compose:
     project_src: "{{ basedir }}"
     state: absent
   when: config.changed
 
 - name: start prometheus docker
-  docker_service:
+  docker_compose:
     project_src: "{{ basedir }}"
     state: present

@@ -2,11 +2,10 @@
 # Pakete installieren
 - name: pakete installieren
   apt:
-    pkg: "{{ item }}"
     update_cache: yes
-    state: installed
-  with_items:
-    - prometheus-node-exporter
+    state: present
+    name:
+      - prometheus-node-exporter
 
 - name: remove old directories 
   file: 

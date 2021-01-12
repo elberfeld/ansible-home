@@ -5,6 +5,7 @@
     update_cache: no
     state: present
     name: 
+    - aptitude
     - debian-archive-keyring
     - apt-transport-https
     - ca-certificates

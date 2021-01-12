@@ -23,6 +23,6 @@
 
 
 - name: start influx {{ influx_instance }} docker
-  docker_service:
+  docker_compose:
     project_src: /srv/influx_{{ influx_instance }}/
     state: present

@@ -2,12 +2,11 @@
 # Pakete installieren
 - name: pakete installieren
   apt:
-    pkg: "{{ item }}"
     update_cache: yes
     state: present
-  with_items:
-    - cron-apt
-    - needrestart
+    name:
+      - cron-apt
+      - needrestart
 
 # Cron-Apt runs with default configuration 
 # Daily update at 4am 

@@ -19,6 +19,6 @@
   notify: "restart {{ servicename }} docker"
 
 - name: "start {{ servicename }} docker"
-  docker_service:
+  docker_compose:
     project_src: "{{ basedir }}"
     state: present

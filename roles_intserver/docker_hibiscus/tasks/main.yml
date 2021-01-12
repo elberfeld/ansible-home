@@ -26,7 +26,7 @@
     dest: "/srv/hibiscus/docker-compose.yml"
 
 - name: start hibiscus docker
-  docker_service:
+  docker_compose:
     project_src: /srv/hibiscus/
     state: present
 

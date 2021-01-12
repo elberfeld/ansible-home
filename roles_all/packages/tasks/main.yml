@@ -2,13 +2,12 @@
 
 - name: install common packages
   apt:
-    pkg: "{{ item }}"
     update_cache: yes
     state: present
-  with_items:
-    - acpid 
-    - dnsutils 
-    - psmisc
-    - tree
-    - vim
-    - wget
+    name:
+      - acpid 
+      - dnsutils 
+      - psmisc
+      - tree
+      - vim
+      - wget
