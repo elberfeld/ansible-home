@@ -34,12 +34,11 @@
     - { role: roles_control/docker_openhab, tags: openhab }
 
 
-- hosts: master 
+- hosts: hpserver 
   remote_user: root
   roles:
     - { role: roles_common/docker, tags: docker }
     - { role: roles_common/cronapt, tags: cronapt }
-    - { role: roles_common/rsyncbackup, tags: rsyncbackup }
     - { 
         role: roles_common/docker_dockerstats, tags: dockerstats, 
         servicename: dockerstats, 
@@ -47,17 +46,7 @@
       }
     - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
-    - { 
-        role: roles_master/docker_volumio, tags: volumio,
-        servicename: volumio, 
-        basedir: /srv/volumio,
-        volumioport: 3000 
-      }
-    - { role: roles_master/nostandby, tags: nostandby }
-    - { role: roles_master/proxmox, tags: proxmox }
-
-#    - { role: roles_master/nfsexports, tags: nfsexports }
-#    - { role: roles_master/nfsimports, tags: nfsimports }
+    - { role: roles_hpserver/proxmox, tags: proxmox }
 
 
 - hosts: intserver 

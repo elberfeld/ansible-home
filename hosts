@@ -1,12 +1,12 @@
 
 [server]
-master 		ansible_ssh_host=10.5.0.101
+hpserver    ansible_ssh_host=10.5.0.200 
 intserver	ansible_ssh_host=10.5.0.111
 control		ansible_ssh_host=10.5.0.250
 
 webserver1  ansible_ssh_host=159.69.194.128
 webserver2  ansible_ssh_host=116.203.41.76
 
-[raspi-infoscreens]
+[raspi_infoscreens]
 infoscreen1 ansible_ssh_host=10.5.0.99 
 
