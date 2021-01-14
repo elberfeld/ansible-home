@@ -18,7 +18,7 @@
     url: "{{ item }}"
     state: present
   with_items: "{{ debian_keys }}"
-  when: debian_keys is defined and debian_keys > 0
+  when: debian_keys is defined and debian_keys|length > 0
 
 #- name: get_docker repository key
 #  shell: "curl {{ item }} | apt-key add -"
