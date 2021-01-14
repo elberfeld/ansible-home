@@ -6,7 +6,7 @@
 # minimize usage of swap 
 - sysctl:
     name: vm.swappiness
-    value: '0'
+    value: '1'
     state: present
        
     
