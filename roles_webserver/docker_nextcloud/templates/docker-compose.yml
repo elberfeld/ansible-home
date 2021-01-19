@@ -37,6 +37,7 @@ services:
       - "{{ basedir }}/tmp/:/tmp/nextcloudtemp/"
       - "{{ basedir }}/memory-limit.ini:/usr/local/etc/php/conf.d/memory-limit.ini:ro"
       - "/srv/paperless/media/documents/archive/:/paperless-archive/:ro,z"
+      - "/srv/paperless/consume/:/paperless-consume/:ro,z"
     environment:
       REDIS_HOST: "redis"
       MYSQL_DATABASE: "nextcloud"
