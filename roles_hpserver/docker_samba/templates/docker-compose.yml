@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  app:
+
+    image: elswork/samba:3.2.1
+    restart: always
+    command: '-u "1000:1000:admin:admin:{{ samba_admin_pass }}" {% for share in samba_shares %} -s "{{ share }}" {% endfor %} '
+    ports:
+      - "{{ int_ip4 }}:137:137/udp" 
+      - "{{ int_ip4 }}:138:138/udp" 
+      - "{{ int_ip4 }}:139:139" 
+      - "{{ int_ip4 }}:445:445" 
+    volumes:
+      - /mnt/:/mnt/
+    environment:
+      - TZ=Europe/Berlin    
+
