@@ -10,13 +10,8 @@ services:
     ports:
       - "{{ int_ip4 }}:137:137/udp" 
       - "{{ int_ip4 }}:138:138/udp" 
-<<<<<<< HEAD
       - "{{ int_ip4 }}:139:139" 
       - "{{ int_ip4 }}:445:445" 
-=======
-      - "{{ int_ip4 }}:139:139/udp" 
-      - "{{ int_ip4 }}:445:445/tcp" 
->>>>>>> 36545da9b3471bd17cbe82ac2c738ce5532eded0
     volumes:
       - /mnt/:/mnt/
     environment:
