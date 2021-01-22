@@ -32,4 +32,7 @@ docker:
   prometheus_stats: yes
 
 
-
+# SAMBA Freigaben 
+samba_shares:
+  - "Disk1Private:/mnt/disk1/share-private:rw:admin"
+  - "Disk1Public:/mnt/disk1/share-public:rw"

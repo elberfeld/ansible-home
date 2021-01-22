@@ -47,6 +47,11 @@
     - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
     - { role: roles_hpserver/proxmox, tags: proxmox }
+    - { 
+        role: roles_hpserver/docker_samba, tags: samba, 
+        servicename: samba,
+        basedir: /srv/samba 
+      }
 
 
 - hosts: intserver 
