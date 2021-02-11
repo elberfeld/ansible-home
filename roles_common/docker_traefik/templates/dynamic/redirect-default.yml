@@ -3,7 +3,7 @@ http:
         router-default:
             entrypoints:
                 - websecure
-            rule: "Host(`{{ domain }}`)"
+            rule: "Host(`{{ domain_base }}`)"
             middlewares: 
                 - redirect-default
             service: service-default
@@ -17,5 +17,5 @@ http:
     middlewares:
         redirect-default:
             redirectRegex:
-                regex: "^https://{{ domain }}/(.*)"
-                replacement: "https://{{ domain-default }}/$1"
+                regex: "^https://{{ domain_base }}/(.*)"
+                replacement: "https://{{ domain_default }}/$1"

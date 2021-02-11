@@ -136,8 +136,8 @@
         role: roles_common/docker_traefik, tags: traefik,
         servicename: traefik, 
         basedir: /srv/traefik,
-        domain: "void.ms",
-        domain-default: "www.void.ms"
+        domain_base: "void.ms",
+        domain_default: "www.void.ms"
       }
     - { 
         role: roles_webserver/docker_grafana, tags: grafana, 
@@ -167,7 +167,9 @@
     - { 
         role: roles_common/docker_traefik, tags: traefik,
         servicename: traefik, 
-        basedir: /srv/traefik
+        basedir: /srv/traefik,
+        domain_base: "void.ms",
+        domain_default: "www.void.ms"
       }
     - { 
         role: roles_webserver/docker_autodiscover, tags: autodiscover,

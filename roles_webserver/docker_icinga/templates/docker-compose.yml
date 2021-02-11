@@ -1,6 +1,5 @@
 
-
-version: "2"
+version: "2.4"
 
 services:
   
@@ -10,7 +9,7 @@ services:
     restart: always
     mem_limit: 512m
     ports:
-      - "0.0.0.0:{{ api_port }}:5665"
+      - "{{ api_port }}:5665"
     volumes:
       - "{{ basedir }}/data:/var/lib/icinga2"
       - "{{ basedir }}/etc/locale.gen:/etc/locale.gen"
@@ -83,3 +82,11 @@ services:
 networks:
   web:
     external: true    
+  default:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        # must be a ULA range
+        - subnet: fd00:dead:beef:{{ api_port }}::/64

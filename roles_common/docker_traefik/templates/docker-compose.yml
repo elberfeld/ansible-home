@@ -35,5 +35,13 @@ services:
 #            - web
 
 networks:
-    web:
-        external: true
+  web:
+    external: true    
+  default:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        # must be a ULA range
+        - subnet: fd00:dead:beef:80::/64
