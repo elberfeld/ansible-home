@@ -8,6 +8,7 @@ services:
     build: .
     restart: always
     mem_limit: 512m
+    hostname: {{ domain }}
     ports:
       - "{{ api_port }}:5665"
     volumes:
