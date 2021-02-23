@@ -27,6 +27,8 @@ int_ip4: 10.5.0.200
 
 # Docker konfigurationen 
 docker:
+  # Interne Docker-Netzwerke 
+  internal_networks: {}
   # Prometheus Metriken aktivieren 
   prometheus_metrics: yes
   # Prometheus Stats aktivieren

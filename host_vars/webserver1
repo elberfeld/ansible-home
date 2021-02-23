@@ -40,6 +40,10 @@ ldap_local:
 
 # Docker konfigurationen 
 docker:
+  # Interne Docker-Netzwerke 
+  internal_networks:
+    - ldap
+    - web
   # Prometheus Metriken aktivieren 
   prometheus_metrics: yes
   # Prometheus Stats aktivieren

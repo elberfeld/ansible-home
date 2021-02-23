@@ -51,7 +51,9 @@
   systemd:
     daemon_reload: yes
 
-- name: Create internal Network 'web'
+- name: "Create internal Networks: {{ docker.internal_networks }}"
   docker_network:
-    name: web
+    name: "{{ item }}"
     internal: yes
+  with_items: "{{ docker.internal_networks }}"
+  when: docker.internal_networks is defined and docker.internal_networks|length > 0
