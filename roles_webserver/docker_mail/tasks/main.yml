@@ -20,6 +20,8 @@
     - "{{ basedir }}/data/postfix"
     - "{{ basedir }}/data/sogo-web"
     - "{{ basedir }}/data/sogo-userdata-backup"
+    - "{{ basedir }}/data/xmpp-vol-1"
+    - "{{ basedir }}/data/xmpp-upload-vol-1"
 
 
 - name: "create folder struct for {{ servicename }} 2"
@@ -39,8 +41,8 @@
   git:
     repo: 'https://github.com/mailcow/mailcow-dockerized.git'
     dest: "{{ basedir }}/mailcow-dockerized"
-    version: 08396dc63a3299f4fd35c7eaf163c805292bb27c
-    # current version 2020-11-11
+    version: a5eec3569eac1ddb33375ffde5df8b868f38c908
+    # current version 2021-02-22
 
 
 - name: "create folder struct for {{ servicename }} 3"

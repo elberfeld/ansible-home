@@ -40,6 +40,7 @@ services:
           # only change this, if you're using another domain for mailcow's web frontend compared to the standard config
           - DOMAIN={{ domain }}
 
+
 # Labels für traefik Konfiguration
 # Der Container nginx-mailcow benötigt zusätzlich den Alias sogo, damit der Container wegfallen kann 
 
@@ -54,9 +55,19 @@ services:
           aliases:
             - nginx
             - sogo
+            - ejabberd
         web:
           aliases:
             - mailcow
+
+
+# postfix ans mail netzwerk um mit anderen containern zu kommunizieren
+
+    postfix-mailcow:
+      networks:
+        mail:
+          aliases:
+            - postfix
 
 # Container anpassen um start zu unterbinden
 
@@ -72,10 +83,16 @@ services:
       image: stakater/exit-container
       restart: 'no'
 
+    ejabberd-mailcow:
+      image: stakater/exit-container
+      restart: 'no'
+
 
 # Externes Netzwerk 
 
 networks:
+  mail:
+    external: true
   web:
     external: true
 
