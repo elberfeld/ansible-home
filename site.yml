@@ -52,6 +52,12 @@
         servicename: samba,
         basedir: /srv/samba 
       }
+    - { 
+        role: roles_hpserver/rsyncd, tags: rsyncd, 
+        servicename: rsyncd,
+        basedir: /srv/rsyncd, 
+        datadir: /data/disk1/rsyncd-backup
+      }
 
 
 - hosts: intserver 

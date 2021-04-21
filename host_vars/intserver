@@ -57,10 +57,10 @@ docker:
 # Definition von RSync Backup Jobs 
 rsyncbackup:
 
-  storage: 
+  hpserver: 
 
     # URL des Repos   
-    target: "rsync://rsync@10.5.0.100/RSyncBackup/intserver/"
+    target: "rsync://rsyncbackup@{{ hostvars['hpserver'].int_ip4 }}/backup/{{ inventory_hostname }}/"
     
     # zusätzliche RSync Optionen
     options: ""

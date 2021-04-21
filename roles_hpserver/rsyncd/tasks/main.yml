@@ -1,0 +1,56 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+    - { path: "{{ basedir }}/rsyncbackup_user_pass", length: 12 }
+
+- name: Install Packages for {{ servicename }}
+  apt: 
+    state: present
+    name:
+      - rsync
+      - logrotate
+
+- name: create folder struct for {{ servicename }}
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+    - "{{ datadir }}"
+    - "/var/log/rsyncd/"
+
+- name: Config files for {{ servicename }}
+  template:
+    src: "{{ item }}"
+    dest: "/etc/{{ item }}"
+  with_items:
+    - "rsyncd.conf"
+    - "rsyncd.secrets"
+    - "logrotate.d/rsyncd"
+  register: config
+
+- name: set rsyncd.secrets file permissions
+  file:
+    path: /etc/rsyncd.secrets 
+    owner: root
+    group: root 
+    mode: 0400
+
+- name: Enable and start systemd service for {{ servicename }}
+  systemd:
+    name: rsync
+    state: started
+    enabled: yes
+
+- name: Restart systemd service for {{ servicename }}
+  systemd:
+    name: rsync
+    state: restarted
+  when: config.changed 
+
+
+#- name: start {{ servicename }} docker
+#  docker_compose:
+#    project_src: "{{ basedir }}"
+#    state: present
