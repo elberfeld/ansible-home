@@ -18,7 +18,7 @@ alert:
     - { name: "samba_app_1" }
   disks: 
     - "/"
-    - "/mnt/disk1"
+    - "/data/disk1"
 
 
 # Primäre IP Adressen des Hosts 
