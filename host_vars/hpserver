@@ -37,5 +37,5 @@ docker:
 
 # SAMBA Freigaben 
 samba_shares:
-  - "Disk1Private:/mnt/disk1/share-private:rw:admin"
-  - "Disk1Public:/mnt/disk1/share-public:rw"
+  - "Disk1Private:/data/disk1/share-private:rw:admin"
+  - "Disk1Public:/data/disk1/share-public:rw"

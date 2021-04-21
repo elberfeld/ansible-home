@@ -1,0 +1,44 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+    - { path: "{{ basedir }}/samba_admin_pass", length: 12 }
+
+- name: Install Packages for {{ servicename }}
+  apt: 
+    state: present
+    name:
+      - samba
+      - logrotate
+
+- name: Konfig-Dateien erstellen
+  template:
+    src: "{{ item }}"
+    dest: "/etc/samba/{{ item }}"
+  with_items:
+    - smb.conf
+  register: config
+
+- name: Enable and start smbd service for {{ servicename }}
+  systemd:
+    name: smbd
+    state: started
+    enabled: yes
+
+- name: Restart smbd service for {{ servicename }}
+  systemd:
+    name: smbd
+    state: restarted
+  when: config.changed 
+
+- name: Enable and start nmbd service for {{ servicename }}
+  systemd:
+    name: nmbd
+    state: started
+    enabled: yes
+
+- name: Restart nmbd service for {{ servicename }}
+  systemd:
+    name: nmbd
+    state: restarted
+  when: config.changed 
