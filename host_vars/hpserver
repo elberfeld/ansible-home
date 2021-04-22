@@ -35,6 +35,9 @@ docker:
 
 
 # SAMBA Freigaben 
-samba_shares:
-  - "Disk1Private:/data/disk1/share-private:rw:admin"
-  - "Disk1Public:/data/disk1/share-public:rw"
+samba_shares_public:
+  - { name: Disk1Public, path: /data/disk1/share-public }
+
+# SAMBA Freigaben 
+samba_shares_private:
+  - { name: Disk1Private, path: /data/disk1/share-private }  
