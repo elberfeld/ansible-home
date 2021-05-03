@@ -13,11 +13,9 @@
 
 - name: pakete installieren
   apt:
-    pkg: "{{ item }}"
-    update_cache: yes
     state: present
-  with_items:
-    - logrotate
+    name:
+      - logrotate
 
 - name: openhab LogRotate config erstellen 
   template: 
