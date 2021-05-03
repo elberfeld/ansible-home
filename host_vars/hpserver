@@ -18,6 +18,7 @@ alert:
   disks: 
     - "/"
     - "/data/disk1"
+    - "/data/mirror1"
 
 
 # Primäre IP Adressen des Hosts 
@@ -36,7 +37,7 @@ docker:
 
 # SAMBA Freigaben 
 samba_shares_public:
-  - { name: Disk1Public, path: /data/disk1/share-public }
+  - { name: Mirror1Public, path: /data/mirror1/share-public }
 
 # SAMBA Freigaben 
 samba_shares_private:
