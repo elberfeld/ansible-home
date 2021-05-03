@@ -57,7 +57,6 @@
     src: "{{ item }}"
     dest: "/srv/openhab/{{ item }}"
   with_items:
-    - conf/items/gpio.items
     - conf/items/groups.items
     - conf/items/homematic.items
     - conf/items/mqtt.items
@@ -73,7 +72,6 @@
     - conf/rules/rfswitches.rules
     - conf/rules/tvstatus.rules
     - conf/services/addons.cfg
-    - conf/services/gpio.cfg
     - conf/services/influxdb.cfg
     - conf/services/mqtt.cfg
     - conf/services/network.cfg

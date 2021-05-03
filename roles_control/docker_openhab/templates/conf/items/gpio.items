@@ -1,4 +1,0 @@
-
-// GPIO Kontakte, die als Inputs verwendet werden
-
-Contact WohnungTuer "Wohnung Tür" { gpio="pin:24 activelow:yes force:yes" }

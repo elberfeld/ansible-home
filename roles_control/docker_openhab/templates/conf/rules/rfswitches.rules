@@ -8,8 +8,7 @@ when
     Item {{ device.id }} received command
 then
     logInfo("default.rules", "{{ device.id }} command: " + receivedCommand + " code: {{ device.code }}")
-    var String result = executeCommandLine("/opt/raspberry-remote-send.sh {{ device.code }} " + receivedCommand,10000)   
-                     
+    executeCommandLine("/opt/raspberry-remote-send.sh", "{{ device.code.split(" ")[0] }}", "{{ device.code.split(" ")[1] }}", ""+receivedCommand)  
 end
 
 {% endfor %}
