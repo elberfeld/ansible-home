@@ -20,7 +20,8 @@
     - docker-compose.yml
     - compile.sh
     - config/badezimmer.yaml
-    - config/esp-test.yaml
+    - config/test-esp32.yaml
+    - config/test-esp8266.yaml
     - config/kueche.yaml
     - config/schlafzimmer.yaml
     - config/schreibtisch.yaml
@@ -30,7 +31,7 @@
 
 - name: download config includes files 
   get_url:
-    url: "https://esphome.io/_static/{{ item }}" 
+    url: "https://raw.githubusercontent.com/esphome/esphome-docs/current/_static/{{ item }}" 
     dest: "{{ basedir }}/config/{{ item }}"
   with_items:
     - webserver-v1.min.css

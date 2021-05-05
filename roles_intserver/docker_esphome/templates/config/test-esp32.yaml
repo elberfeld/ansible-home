@@ -1,0 +1,76 @@
+
+# Konfiguration der Platform 
+esphome:
+  name: test_esp32
+  platform: ESP32
+  board: nodemcu-32s
+
+{% include "/config/common.inc.yaml" %}
+
+#i2c:
+#  sda: 21
+#  scl: 22
+#  scan: True
+#  id: bus_a
+
+
+
+# 433 Remote transmitter 
+# https://docs.openmqttgateway.com/setitup/rf.html#esp32-hardware-setup
+#remote_transmitter:
+#  pin: 26
+#  carrier_duty_percent: 100%
+
+        
+# Switches RF
+# switch:  
+# - platform: restart
+#   name: "Restart device"
+# - platform: template
+#   name: "Stehlampe"
+#   optimistic: true
+#   assumed_state: true
+#   restore_state: true
+#   turn_on_action:
+#     - remote_transmitter.transmit_rc_switch_type_a:
+#         group: '11010'
+#         device: '00001'
+#         state: on
+#         protocol: 
+#           pulse_length: 175
+#           sync: [1, 31]
+#           zero: [1, 3]
+#           one: [3, 1]
+#           inverted: False
+#         repeat:
+#           times: 3
+#   turn_off_action:
+#     - remote_transmitter.transmit_rc_switch_type_a:
+#         group: '11010'
+#         device: '00001'
+#         state: off
+#         protocol: 
+#           pulse_length: 175
+#           sync: [1, 31]
+#           zero: [1, 3]
+#           one: [3, 1]
+#           inverted: False
+#         repeat:
+#           times: 3
+
+# Sensor configs 
+sensor:
+  - platform: uptime
+    name: Uptime Sensor
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor"
+    update_interval: 60s
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"  
+  - platform: wifi_info
+    ip_address:
+      name: IP
+    ssid:
+      name: SSID 

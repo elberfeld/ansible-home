@@ -13,7 +13,7 @@ captive_portal:
   
 # Enable OTA
 ota:
-   
+
 # Enable logging
 logger:
   level: DEBUG 
@@ -28,7 +28,7 @@ web_server:
   
 # Activates prometheus /metrics endpoint
 prometheus:
-        
+
 # MQTT config 
 mqtt:
   broker: {{mqtt.ip}}
