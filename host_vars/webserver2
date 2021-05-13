@@ -23,6 +23,8 @@ alert:
     - { name: "invoicefetcher_mysql_1" }
     - { name: "invoicefetcher_uploader_1" }
     - { name: "invoicefetcher_sftpserver_1" }
+    - { name: "keycloak_app_1" }
+    - { name: "keycloak_db_1" }
     - { name: "ldap_openldap_1" }
     - { name: "ldap_phpldapadmin_1" }
     - { name: "ldap_syncreplexporter_1" }
@@ -95,6 +97,7 @@ webserver_domains:
   - "docs"
   - "ldap2"
   - "mail"
+  - "keycloak"
   - "www"
 
 
