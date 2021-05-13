@@ -11,6 +11,8 @@ services:
     restart: always
     depends_on:
       - db
+    volumes:
+      - /srv/keycloak/welcome-content:/opt/jboss/keycloak/welcome-content
     environment:
       KEYCLOAK_USER: "keycloakadmin"
       KEYCLOAK_PASSWORD: "{{ keycloak_admin_pass }}"

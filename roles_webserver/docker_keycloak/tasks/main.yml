@@ -13,6 +13,7 @@
   with_items:
     - /srv/keycloak/
     - /srv/keycloak/db/
+    - /srv/keycloak/welcome-content/
 
 
 - name: Konfig-Dateien erstellen
@@ -21,6 +22,8 @@
     dest: "/srv/keycloak/{{ item }}"
   with_items:
     - docker-compose.yml
+    - welcome-content/index.html
+    - welcome-content/robots.txt
   register: config
 
 
