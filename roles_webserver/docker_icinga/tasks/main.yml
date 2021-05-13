@@ -47,7 +47,7 @@
     - notify_by_pushover.sh
     - etc/locale.gen
   notify: restart icinga docker
-
+  register: dockerconfig
 
 - stat:
     path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
@@ -120,3 +120,4 @@
   docker_compose:
     project_src: "{{ basedir }}"
     state: present
+    build: "{{ dockerconfig.changed }}"
