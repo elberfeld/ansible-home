@@ -7,7 +7,6 @@ services:
 
     build: .
     restart: always
-    mem_limit: 512m
     ports:
       - "{{ api_port }}:5665"
     volumes:
@@ -48,7 +47,6 @@ services:
 
     image: mariadb:10.5.6
     restart: always
-    mem_limit: 256m
     ports:
       - "{{ int_ip4 }}:{{mysql_port}}:3306"
     volumes:
@@ -65,7 +63,6 @@ services:
     
     image: graphiteapp/graphite-statsd:1.1.7-6
     restart: always
-    mem_limit: 256m
     volumes:
       - "{{ basedir }}/graphite-conf/storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf"
       - "{{ basedir }}/graphite-storage:/opt/graphite/storage"
