@@ -50,7 +50,6 @@ alert:
     - { name: "nextcloud_mysql_1" }
     - { name: "nextcloud_webcron_1" }
     - { name: "nextcloud_elasticsearch_1" }
-    - { name: "nginxssh_connectiv_app_1" }
     - { name: "paperless_app_1" }
     - { name: "paperless_broker_1" }
     - { name: "paperless_db_1" }
@@ -91,7 +90,6 @@ docker:
 webserver_domains:
   - "autoconfig"
   - "autodiscover"
-  - "connectiv"
   - "cloud"
   - "commafeed"
   - "docs"

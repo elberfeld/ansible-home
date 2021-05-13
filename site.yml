@@ -225,11 +225,4 @@
         basedir: /srv/wordpress, 
         domain: www.void.ms 
       }
-    - { 
-        role: roles_webserver/docker_nginxssh, tags: nginxssh, 
-        servicename: nginxssh, 
-        basedir: /srv/nginxssh_connectiv, 
-        domain: connectiv.void.ms,
-        sshport: 444 
-      }
 
