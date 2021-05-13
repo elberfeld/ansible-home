@@ -17,6 +17,9 @@ int_ip4: 10.100.1.1
 
 # Monitoring aktivieren 
 alert:  
+  load:
+    warn: 4
+    crit: 8
   containers:
     - { name: "bind_app_1" }
     - { name: "dockerstats_app_1" }
@@ -30,8 +33,9 @@ alert:
     - { name: "promtail_app_1" }
     - { name: "traefik_app_1" }
   disks: 
-    - "/"
-    - "/srv"
+    - { mountpoint: "/", warn: "3 GB", crit: "1 GB" }
+    - { mountpoint: "/srv", warn: "3 GB", crit: "1 GB" } 
+    - { mountpoint: "/var/lib/docker", warn: "5 GB", crit: "2 GB" }
 
 # Lokale LDAP Settings   
 ldap_local:

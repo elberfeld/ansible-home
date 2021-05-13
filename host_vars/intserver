@@ -13,6 +13,9 @@ debian_keys:
 
 # Monitoring aktivieren 
 alert:  
+  load:
+    warn: 4
+    crit: 8
   containers:
     - { name: "dockerstats_app_1" }
     - { name: "esphome_app_1" }
@@ -30,8 +33,8 @@ alert:
     - { name: "promtail_app_1" }
     - { name: "unifi_app_1" }
   disks: 
-    - "/"
-    - "/srv"
+    - { mountpoint: "/", warn: "3 GB", crit: "1 GB" }
+    - { mountpoint: "/srv", warn: "3 GB", crit: "1 GB" }
 
 
 # Primäre IP Adressen des Hosts 

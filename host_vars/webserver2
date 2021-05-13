@@ -12,6 +12,9 @@ debian_keys:
 
 # Monitoring aktivieren 
 alert:  
+  load:
+    warn: 4
+    crit: 8
   containers: 
     - { name: "autodiscover_voidms_1" }
     - { name: "bind_app_1" }
@@ -54,8 +57,9 @@ alert:
     - { name: "wordpress_app_1" }
     - { name: "wordpress_db_1" }
   disks: 
-    - "/"
-    - "/srv"
+    - { mountpoint: "/", warn: "3 GB", crit: "1 GB" }
+    - { mountpoint: "/srv", warn: "3 GB", crit: "1 GB" }
+
 
 # Primäre IP Adressen des Hosts 
 ext_ip4: 116.203.41.76

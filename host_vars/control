@@ -10,13 +10,16 @@ debian_keys:
 
 # Monitoring aktivieren 
 alert:  
+  load:
+    warn: 4
+    crit: 6
   containers:
     - { name: "dockerstats_app_1" }
     - { name: "openhab_app_1" }
     - { name: "openhab_promtail_1" }
     - { name: "promtail_app_1" }
   disks: 
-    - "/"
+    - { mountpoint: "/", warn: "5 GB", crit: "1 GB" }
 
 
 # Primäre IP Adressen des Hosts 
