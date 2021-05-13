@@ -146,6 +146,11 @@
         domain_default: "www.void.ms"
       }
     - { 
+        role: roles_webserver/docker_autodiscover, tags: autodiscover,
+        servicename: autodiscover, 
+        basedir: /srv/autodiscover
+      }
+    - { 
         role: roles_webserver/docker_grafana, tags: grafana, 
         servicename: grafana, 
         basedir: /srv/grafana, 
@@ -176,11 +181,6 @@
         basedir: /srv/traefik,
         domain_base: "void.ms",
         domain_default: "www.void.ms"
-      }
-    - { 
-        role: roles_webserver/docker_autodiscover, tags: autodiscover,
-        servicename: autodiscover, 
-        basedir: /srv/autodiscover
       }
     - { 
         role: roles_webserver/docker_commafeed, tags: commafeed,
