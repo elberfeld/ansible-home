@@ -46,10 +46,8 @@
     src: "{{ item }}"
     dest: "/srv/openhab/{{ item }}"
   with_items:
-    - Dockerfile
     - docker-compose.yml
     - promtail-config.yaml
-    - raspberry-remote-send.sh
   register: docker_config_files
 
 - name: Openhab-Konfig-Dateien erstellen

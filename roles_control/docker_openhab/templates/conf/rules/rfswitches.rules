@@ -7,8 +7,19 @@ rule "{{ device.id }}_sendCommand"
 when
     Item {{ device.id }} received command
 then
-    logInfo("default.rules", "{{ device.id }} command: " + receivedCommand + " code: {{ device.code }}")
-    executeCommandLine("/opt/raspberry-remote-send.sh", "{{ device.code.split(" ")[0] }}", "{{ device.code.split(" ")[1] }}", ""+receivedCommand)  
+    val topic = "OpenMQTTGateway/RF433/commands/MQTTto433"
+
+    val code = if (receivedCommand == ON) {{ device.code_on }} else {{ device.code_off }}
+    val message = "{ \"value\":" + code + ", \"protocol\":1, \"length\":24, \"delay\":313 }"
+
+    logInfo("default.rules", "{{ device.id }} command: " + receivedCommand + ", message: " + message)
+    val mqttActions = getActions("mqtt", "mqtt:broker:mosquitto")
+
+    mqttActions.publishMQTT(topic, message)
+    Thread::sleep(500)
+    mqttActions.publishMQTT(topic, message)
+    Thread::sleep(500)
+    mqttActions.publishMQTT(topic, message)
 end
 
 {% endfor %}

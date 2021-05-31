@@ -6,8 +6,7 @@ services:
   
   app:
 
-    build: .
-    image: "openhab"
+    image: openhab/openhab:3.0.2-debian
     restart: always
     privileged: true
     network_mode: host

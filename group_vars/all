@@ -91,15 +91,14 @@ homematic_openclosesensor:
 #  - { id: "NEQ1833602", type: "HM-Sec-SC-2", name: "Fenster oben Badezimmer" }
 
 rfswitches:
-  - { id: "LichtDvdRegal",    name: "DVD Regal",   code: "11001 1",  groups: "gAlles,gLampen" }
-  - { id: "LampeTetris",      name: "Tetris",      code: "11001 2",  groups: "gAlles,gLampen" }
-  - { id: "LichtFlur",        name: "Licht Flur",  code: "11001 3",  groups: "gAlles,gLampen" }
-  - { id: "LampeLeselampe",   name: "Leselampe",   code: "11001 4",  groups: "gAlles,gLampen" }
-  - { id: "LichtVitrine",     name: "Vitrine",     code: "11001 5",  groups: "gAlles,gLampen" }
-  - { id: "LichtSideboard",   name: "Sideboard",   code: "11010 1",  groups: "gAlles,gLampen" }
-  - { id: "PowerAudiosystem", name: "Audiosystem", code: "11010 2",  groups: "gAlles",        }
-  - { id: "LampeStehlampe",   name: "Stehlampe",   code: "11010 3",  groups: "gAlles,gLampen" }
-  - { id: "PowerFernseher",   name: "Fernseher",   code: "11010 5",  groups: "gAlles",        }
+  - { id: "LichtDvdRegal",    name: "DVD Regal",   code: "11001 A", code_on: "329041", code_off: "329044",  groups: "gAlles,gLampen" }
+  - { id: "LampeTetris",      name: "Tetris",      code: "11001 B", code_on: "332113", code_off: "332116",  groups: "gAlles,gLampen" }
+  - { id: "LichtFlur",        name: "Licht Flur",  code: "11001 C", code_on: "332881", code_off: "332884",  groups: "gAlles,gLampen" }
+  - { id: "LampeLeselampe",   name: "Leselampe",   code: "11001 D", code_on: "333073", code_off: "333076",  groups: "gAlles,gLampen" }
+  - { id: "LichtVitrine",     name: "Vitrine",     code: "11001 E", code_on: "333121", code_off: "333124",  groups: "gAlles,gLampen" }
+  - { id: "LichtSideboard",   name: "Sideboard",   code: "11010 A", code_on: "279903", code_off: "279892",  groups: "gAlles,gLampen" }
+  - { id: "PowerAudiosystem", name: "Audiosystem", code: "11010 B", code_on: "282961", code_off: "282964",  groups: "gAlles",        }
+  - { id: "LampeStehlampe",   name: "Stehlampe",   code: "11010 C", code_on: "283729", code_off: "283732",  groups: "gAlles,gLampen" }
 
 mqtt_sensors:
   - { id: "badezimmer",   name: "Badezimmer" }
