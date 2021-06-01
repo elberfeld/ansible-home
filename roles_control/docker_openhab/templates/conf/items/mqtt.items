@@ -1,10 +1,9 @@
 
-
 {% for device in mqtt_sensors %}
 
-Number MQTT_{{ device.id }}_temp     "Sensor {{ device.name }} Temp [%.1f °C]"  <temperature> { channel="mqtt:topic:{{ device.id }}:temp" }
-Number MQTT_{{ device.id }}_pressure "Sensor {{ device.name }} Temp [%.1f hPa]" <pressure>    { channel="mqtt:topic:{{ device.id }}:pressure" }
-Number MQTT_{{ device.id }}_humidity "Sensor {{ device.name }} Temp [%.1f %%]"  <humidity>    { channel="mqtt:topic:{{ device.id }}:humidity" }
+Number MQTT_{{ device.id }}_temp     "Sensor {{ device.name }} Temp [%.1f °C]"  <temperature> { channel="mqtt:topic:mosquitto:{{ device.id }}:temp" }
+Number MQTT_{{ device.id }}_pressure "Sensor {{ device.name }} Temp [%.1f hPa]" <pressure>    { channel="mqtt:topic:mosquitto:{{ device.id }}:pressure" }
+Number MQTT_{{ device.id }}_humidity "Sensor {{ device.name }} Temp [%.1f %%]"  <humidity>    { channel="mqtt:topic:mosquitto:{{ device.id }}:humidity" }
 
 {% endfor %}
 

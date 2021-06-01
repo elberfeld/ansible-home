@@ -1,11 +1,10 @@
 
-# Konfiguration der Platform 
-esphome:
-  name: test_esp8266
-  platform: ESP8266
-  board: d1_mini
+{% set devicename = "test_esp8266"  %}
+
+{% include "/config/device.d1_mini.inc.yaml" %}
 
 {% include "/config/common.inc.yaml" %}
+
 
 #i2c:
 #  sda: 21

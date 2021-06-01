@@ -1,0 +1,9 @@
+
+rule "openMQTTGateway433toMQTT"
+when
+    Channel "mqtt:topic:openMQTTGateway433toMQTT:value" triggered
+then
+    val event = receivedEvent.getEvent()
+    logInfo("default.rules", "openMQTTGateway433toMQTT event: " + event)
+
+end

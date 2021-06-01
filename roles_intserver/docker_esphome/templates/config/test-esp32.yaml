@@ -1,11 +1,10 @@
 
-# Konfiguration der Platform 
-esphome:
-  name: test_esp32
-  platform: ESP32
-  board: nodemcu-32s
+{% set devicename = "test_esp32"  %}
+
+{% include "/config/device.nodemcu-32s.inc.yaml" %}
 
 {% include "/config/common.inc.yaml" %}
+
 
 #i2c:
 #  sda: 21

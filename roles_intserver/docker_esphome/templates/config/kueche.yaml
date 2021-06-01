@@ -1,10 +1,8 @@
 
-# Konfiguration der Platform 
-esphome:
-  name: kueche
-  platform: ESP8266
-  board: d1_mini
-  
+{% set devicename = "kueche"  %}
+
+{% include "/config/device.d1_mini.inc.yaml" %}
+
 {% include "/config/common.inc.yaml" %}
   
   

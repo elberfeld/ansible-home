@@ -1,9 +1,7 @@
 
-# Konfiguration der Platform 
-esphome:
-  name: technikraum
-  platform: ESP8266
-  board: d1_mini
+{% set devicename = "technikraum"  %}
+
+{% include "/config/device.d1_mini.inc.yaml" %}
 
 {% include "/config/common.inc.yaml" %}
   

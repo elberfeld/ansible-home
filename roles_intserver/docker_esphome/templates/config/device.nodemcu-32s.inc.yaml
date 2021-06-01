@@ -1,0 +1,5 @@
+
+esphome:
+  name: test_esp32
+  platform: ESP32
+  board: nodemcu-32s

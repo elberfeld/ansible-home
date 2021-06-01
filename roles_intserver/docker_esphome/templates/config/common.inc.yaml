@@ -6,7 +6,7 @@ wifi:
   
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "ESPHomeFallback"
+    ssid: "ESPHomeFallback-{{ devicename }}"
     
 # WLAN selection in fallback mode
 captive_portal:
@@ -33,3 +33,4 @@ prometheus:
 mqtt:
   broker: {{mqtt.ip}}
   discovery: false 
+  topic_prefix: "ESPHome/{{ devicename }}"

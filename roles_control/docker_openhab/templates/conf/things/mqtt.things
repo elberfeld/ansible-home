@@ -1,14 +1,14 @@
 
-Bridge mqtt:broker:mosquitto [ host="{{mqtt.ip}}", secure=false ]
+Bridge mqtt:broker:mosquitto [ host="{{mqtt.ip}}", secure=false, enableDiscovery=false ]
 {
 
 {% for device in mqtt_sensors %}
 
-    Thing mqtt:topic:{{ device.id }} {
+    Thing topic {{ device.id }} {
     Channels:
-        Type number : temp     "Sensor {{ device.name }} Temp"     [ stateTopic="{{ device.id }}/sensor/temp/state" ]
-        Type number : pressure "Sensor {{ device.name }} Pressure" [ stateTopic="{{ device.id }}/sensor/pressure/state" ]
-        Type number : humidity "Sensor {{ device.name }} Humidity" [ stateTopic="{{ device.id }}/sensor/humidity/state" ]
+        Type number : temp     "Sensor {{ device.name }} Temp"     [ stateTopic="ESPHome/{{ device.id }}/sensor/temp/state" ]
+        Type number : pressure "Sensor {{ device.name }} Pressure" [ stateTopic="ESPHome/{{ device.id }}/sensor/pressure/state" ]
+        Type number : humidity "Sensor {{ device.name }} Humidity" [ stateTopic="ESPHome/{{ device.id }}/sensor/humidity/state" ]
     }
 
 
