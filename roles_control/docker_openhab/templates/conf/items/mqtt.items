@@ -1,4 +1,6 @@
 
+String OpenMQTTGateway_433toMQTT { channel="mqtt:topic:mosquitto:openMQTTGateway433toMQTT:value" }
+
 {% for device in mqtt_sensors %}
 
 Number MQTT_{{ device.id }}_temp     "Sensor {{ device.name }} Temp [%.1f °C]"  <temperature> { channel="mqtt:topic:mosquitto:{{ device.id }}:temp" }

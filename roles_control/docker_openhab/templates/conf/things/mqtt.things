@@ -2,6 +2,11 @@
 Bridge mqtt:broker:mosquitto [ host="{{mqtt.ip}}", secure=false, enableDiscovery=false ]
 {
 
+    Thing topic openMQTTGateway433toMQTT {
+    Channels: 
+        Type string : value "OpenMQTTGateway433toMQTT" [ stateTopic="OpenMQTTGateway/RF433/433toMQTT", transformationPattern="JSONPATH:$.value" ]
+    }
+
 {% for device in mqtt_sensors %}
 
     Thing topic {{ device.id }} {

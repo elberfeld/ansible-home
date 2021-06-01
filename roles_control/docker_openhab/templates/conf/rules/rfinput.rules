@@ -1,9 +1,60 @@
 
-rule "openMQTTGateway433toMQTT"
+rule "openMQTTGateway433toMQTTitem"
 when
-    Channel "mqtt:topic:openMQTTGateway433toMQTT:value" triggered
+    Item OpenMQTTGateway_433toMQTT changed
 then
-    val event = receivedEvent.getEvent()
-    logInfo("default.rules", "openMQTTGateway433toMQTT event: " + event)
+    logInfo("default.rules", "openMQTTGateway433toMQTT receive raw: " + OpenMQTTGateway_433toMQTT.state.toString)
+
+    switch (OpenMQTTGateway_433toMQTT.state.toString) {
+
+        // 10011 A ON 
+        case "1312081": {
+            logInfo("default.rules", "openMQTTGateway433toMQTT receive: LampeStehlampe ON")
+            LampeStehlampe.sendCommand(ON)
+        } 
+
+        // 10011 A OFF
+        case "1312084": {
+            logInfo("default.rules", "openMQTTGateway433toMQTT receive: LampeStehlampe OFF")
+            LampeStehlampe.sendCommand(OFF)
+        } 
+
+        // 10011 B ON 
+        case "1315153": {
+            logInfo("default.rules", "openMQTTGateway433toMQTT receive: LichtDvdRegal ON")
+            LichtDvdRegal.sendCommand(ON)
+        } 
+
+        // 10011 B OFF 
+        case "1315156": {
+            logInfo("default.rules", "openMQTTGateway433toMQTT receive: LichtDvdRegal OFF")
+            LichtDvdRegal.sendCommand(OFF)
+        } 
+
+        // 10011 C ON
+        case "1315921": {
+            logInfo("default.rules", "openMQTTGateway433toMQTT receive: LampeCouchColor ON")
+            LampeCouchColor.sendCommand(ON)
+        } 
+
+        // 10011 C OFF 
+        case "1315924": {
+            logInfo("default.rules", "openMQTTGateway433toMQTT receive: LampeCouchColor OFF")
+            LampeCouchColor.sendCommand(OFF)
+        } 
+
+        // 10011 D ON 
+        case "1316113": {
+            logInfo("default.rules", "openMQTTGateway433toMQTT receive: LampeLeselampe ON")
+            LampeLeselampe.sendCommand(ON)
+        } 
+
+        // 10011 D OFF
+        case "1316116": {
+            logInfo("default.rules", "openMQTTGateway433toMQTT receive: LampeLeselampe OFF")
+            LampeLeselampe.sendCommand(OFF)
+        } 
+
+    }
 
 end

@@ -68,6 +68,7 @@
     - conf/rules/astro.rules
     - conf/rules/notifications.rules
     - conf/rules/rfswitches.rules
+    - conf/rules/rfinput.rules
     - conf/rules/tvstatus.rules
     - conf/services/addons.cfg
     - conf/services/influxdb.cfg
