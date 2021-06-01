@@ -14,59 +14,18 @@ esphome:
 #  id: bus_a
 
 # IR transmitter 
-remote_transmitter:
-  pin: D1
-  carrier_duty_percent: 50%
+#remote_transmitter:
+#  pin: D1
+#  carrier_duty_percent: 50%
 
-switch:
-  - platform: template
-    name: "Panasonic TV Off"
-    turn_on_action:
-      remote_transmitter.transmit_panasonic:
-        address: 0x4004
-        command: 0x100BCBD
+#switch:
+#  - platform: template
+#    name: "Panasonic TV Off"
+#    turn_on_action:
+#      remote_transmitter.transmit_panasonic:
+#        address: 0x4004
+#        command: 0x100BCBD
 
-# # 433 Remote transmitter 
-# # https://docs.openmqttgateway.com/setitup/rf.html#esp32-hardware-setup
-# remote_transmitter:
-#   pin: 26
-#   carrier_duty_percent: 100%
-
-# # Switches
-# switch:  
-# - platform: restart
-#   name: "Restart device"
-# - platform: template
-#   name: "Stehlampe"
-#   optimistic: true
-#   assumed_state: true
-#   restore_state: true
-#   turn_on_action:
-#     - remote_transmitter.transmit_rc_switch_type_a:
-#         group: '11010'
-#         device: '00001'
-#         state: on
-#         protocol: 
-#           pulse_length: 175
-#           sync: [1, 31]
-#           zero: [1, 3]
-#           one: [3, 1]
-#           inverted: False
-#         repeat:
-#           times: 3
-#   turn_off_action:
-#     - remote_transmitter.transmit_rc_switch_type_a:
-#         group: '11010'
-#         device: '00001'
-#         state: off
-#         protocol: 
-#           pulse_length: 175
-#           sync: [1, 31]
-#           zero: [1, 3]
-#           one: [3, 1]
-#           inverted: False
-#         repeat:
-#           times: 3
 
 # Sensor configs 
 sensor:
