@@ -14,7 +14,7 @@ debian_keys:
 alert:  
   load:
     warn: 4
-    crit: 8
+    crit: 10
   containers:
     - { name: "dockerstats_app_1" }
     - { name: "promtail_app_1" }

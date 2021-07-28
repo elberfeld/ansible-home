@@ -19,7 +19,7 @@ int_ip4: 10.100.1.1
 alert:  
   load:
     warn: 4
-    crit: 8
+    crit: 10
   containers:
     - { name: "autodiscover_voidms_1" }
     - { name: "bind_app_1" }
