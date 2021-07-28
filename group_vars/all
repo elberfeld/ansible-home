@@ -69,41 +69,42 @@ homematic_ccu:
 homematic_smoketeam: 
   id: "T-NEQ0442083"
   type: "HM-Sec-SD-2-Team"
+  groups: "gWohnzimmer,gSchlafzimmer"
 
 homematic_rauchmelder:
-  - { id: "NEQ0442083", type: "HM-Sec-SD-2", name: "Rauchmelder Wohnzimmer",   check_state="OFF" }
-  - { id: "OEQ2615046", type: "HM-Sec-SD-2", name: "Rauchmelder Schlafzimmer", check_state="OFF" }
+  - { id: "NEQ0442083", type: "HM-Sec-SD-2", name: "Rauchmelder Wohnzimmer",   groups: "gWohnzimmer",   check_state="OFF" }
+  - { id: "OEQ2615046", type: "HM-Sec-SD-2", name: "Rauchmelder Schlafzimmer", groups: "gSchlafzimmer", check_state="OFF" }
 
 homematic_heizung:
-  - { id: "MEQ0806347", type: "HM-CC-RT-DN", name: "Heizung Schlafzimmer", check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
-  - { id: "MEQ0251087", type: "HM-CC-RT-DN", name: "Heizung Wohnzimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
-  - { id: "MEQ0250029", type: "HM-CC-RT-DN", name: "Heizung Schreibtisch", check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
-  - { id: "MEQ0805830", type: "HM-CC-RT-DN", name: "Heizung Badezimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40"}
+  - { id: "MEQ0806347", type: "HM-CC-RT-DN", name: "Heizung Schlafzimmer", groups: "gSchlafzimmer", check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
+  - { id: "MEQ0251087", type: "HM-CC-RT-DN", name: "Heizung Wohnzimmer",   groups: "gWohnzimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
+  - { id: "MEQ0250029", type: "HM-CC-RT-DN", name: "Heizung Schreibtisch", groups: "gWohnzimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
+  - { id: "MEQ0805830", type: "HM-CC-RT-DN", name: "Heizung Badezimmer",   groups: "gBadezimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40"}
 
 homematic_tempsensor:
-  - { id: "OEQ0160159", type: "HM-WDS40-TH-I-2", name: "Sensor Badezimmer" }
-  - { id: "QEQ1859960", type: "HM-WDS10-TH-O", name: "Sensor Wetter" }
+  - { id: "OEQ0160159", type: "HM-WDS40-TH-I-2", name: "Sensor Garage",  groups: "gGarage" }
+  - { id: "QEQ1859960", type: "HM-WDS10-TH-O", name: "Sensor Wetter",  groups: "gAussen" }
 
 homematic_openclosesensor:
 #  - { id: "QEQ0014557", type: "HM-Sec-TiS", name: "Sensor Garagentor" }
-  - { id: "OEQ1478962", type: "HM-Sec-SC-2", name: "Sensor2 Garagentor" }
+  - { id: "OEQ1478962", type: "HM-Sec-SC-2", name: "Sensor2 Garagentor",  groups: "gGarage" }
 #  - { id: "MEQ1136898", type: "HM-Sec-SC-2", name: "Fenster unten Badezimmer" }
 #  - { id: "NEQ1833602", type: "HM-Sec-SC-2", name: "Fenster oben Badezimmer" }
 
 rfswitches:
-  - { id: "LichtDvdRegal",    name: "DVD Regal",   code: "11001 A", code_on: "329041", code_off: "329044",  groups: "gAlles,gLampen" }
-  - { id: "LampeTetris",      name: "Tetris",      code: "11001 B", code_on: "332113", code_off: "332116",  groups: "gAlles,gLampen" }
-  - { id: "LichtFlur",        name: "Licht Flur",  code: "11001 C", code_on: "332881", code_off: "332884",  groups: "gAlles,gLampen" }
-  - { id: "LampeLeselampe",   name: "Leselampe",   code: "11001 D", code_on: "333073", code_off: "333076",  groups: "gAlles,gLampen" }
-  - { id: "LichtVitrine",     name: "Vitrine",     code: "11001 E", code_on: "333121", code_off: "333124",  groups: "gAlles,gLampen" }
-  - { id: "LichtSideboard",   name: "Sideboard",   code: "11010 A", code_on: "279903", code_off: "279892",  groups: "gAlles,gLampen" }
-  - { id: "PowerAudiosystem", name: "Audiosystem", code: "11010 B", code_on: "282961", code_off: "282964",  groups: "gAlles",        }
-  - { id: "LampeStehlampe",   name: "Stehlampe",   code: "11010 C", code_on: "283729", code_off: "283732",  groups: "gAlles,gLampen" }
+  - { id: "LichtDvdRegal",    name: "DVD Regal",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 A", code_on: "329041", code_off: "329044" }
+  - { id: "LampeTetris",      name: "Tetris",      icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 B", code_on: "332113", code_off: "332116" }
+  - { id: "LichtFlur",        name: "Licht Flur",  icon: "lightbulb",  groups: "gFlur",        code: "11001 C", code_on: "332881", code_off: "332884" }
+  - { id: "LampeLeselampe",   name: "Leselampe",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 D", code_on: "333073", code_off: "333076" }
+  - { id: "LichtVitrine",     name: "Vitrine",     icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 E", code_on: "333121", code_off: "333124" }
+  - { id: "LichtSideboard",   name: "Sideboard",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11010 A", code_on: "279903", code_off: "279892" }
+  - { id: "PowerAudiosystem", name: "Audiosystem", icon: "receiver",   groups: "gWohnzimmer",  code: "11010 B", code_on: "282961", code_off: "282964" }
+  - { id: "LampeStehlampe",   name: "Stehlampe",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11010 C", code_on: "283729", code_off: "283732" }
 
 mqtt_sensors:
-  - { id: "badezimmer",   name: "Badezimmer" }
-  - { id: "kueche",       name: "Küche" }
-  - { id: "schlafzimmer", name: "Schlafzimmer" }
-  - { id: "schreibtisch", name: "Schreibtisch" }
-  - { id: "technikraum",  name: "Technikraum" }
-  - { id: "wohnzimmer",   name: "Wohnzimmer" }
+  - { id: "badezimmer",   name: "Badezimmer",    groups: "gBadezimmer" }
+  - { id: "kueche",       name: "Küche",         groups: "gKueche" }
+  - { id: "schlafzimmer", name: "Schlafzimmer",  groups: "gSchlafzimmer" }
+  - { id: "schreibtisch", name: "Schreibtisch",  groups: "gWohnzimmer" }
+  - { id: "technikraum",  name: "Technikraum",   groups: "gTechnikraum" }
+  - { id: "wohnzimmer",   name: "Wohnzimmer",    groups: "gWohnzimmer" }

@@ -3,9 +3,9 @@ String OpenMQTTGateway_433toMQTT { channel="mqtt:topic:mosquitto:openMQTTGateway
 
 {% for device in mqtt_sensors %}
 
-Number MQTT_{{ device.id }}_temp     "Sensor {{ device.name }} Temp [%.1f °C]"  <temperature> { channel="mqtt:topic:mosquitto:{{ device.id }}:temp" }
-Number MQTT_{{ device.id }}_pressure "Sensor {{ device.name }} Temp [%.1f hPa]" <pressure>    { channel="mqtt:topic:mosquitto:{{ device.id }}:pressure" }
-Number MQTT_{{ device.id }}_humidity "Sensor {{ device.name }} Temp [%.1f %%]"  <humidity>    { channel="mqtt:topic:mosquitto:{{ device.id }}:humidity" }
+Number MQTT_{{ device.id }}_temp     "Sensor {{ device.name }} Temp [%.1f °C]"      <temperature> ({{ device.groups }}) ["Measurement", "Temperature"]  { channel="mqtt:topic:mosquitto:{{ device.id }}:temp" }
+Number MQTT_{{ device.id }}_pressure "Sensor {{ device.name }} Pressure [%.1f hPa]" <pressure>    ({{ device.groups }}) ["Measurement", "Pressure"]     { channel="mqtt:topic:mosquitto:{{ device.id }}:pressure" }
+Number MQTT_{{ device.id }}_humidity "Sensor {{ device.name }} Humidity [%.1f %%]"  <humidity>    ({{ device.groups }}) ["Measurement", "Humidity"]     { channel="mqtt:topic:mosquitto:{{ device.id }}:humidity" }
 
 {% endfor %}
 

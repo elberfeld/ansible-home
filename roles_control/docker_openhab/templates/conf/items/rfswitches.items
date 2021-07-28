@@ -4,6 +4,6 @@
 
 {% for device in rfswitches %}
 
-Switch {{ device.id }} "{{ device.name }}" ({{ device.groups }}) [ "Switchable" ] { autoupdate="true" }
+Switch {{ device.id }} "{{ device.name }}" <{{ device.icon }}> ({{ device.groups }}) [ "Switch","Light" ] { autoupdate="true" }
 
 {% endfor %}

@@ -2,7 +2,7 @@
 // IKEA Tradfri Geräte 
 // Tradfri Gateway muss in der PaperUI eingerichet werden (Thng => Eingabe Security Code)
 
-Color  LampeCouchColor   "Lampe Couch"        (gAlles,gLampen) [ "Lighting" ] { channel="tradfri:0210:gw4491602c1227:65537:color"}
-Color  LampeRegalColor   "Lampe Regal"        (gAlles,gLampen) [ "Lighting" ] { channel="tradfri:0210:gw4491602c1227:65538:color" }
-Dimmer LampeSchreibtisch "Lampe Schreibtisch" (gAlles,gLampen) [ "Lighting" ] { channel="tradfri:0100:gw4491602c1227:65539:brightness" }
+Color  LampeCouchColor   "Lampe Couch"        <colorlight>    (gWohnzimmer) [ "Switch","Light" ] { channel="tradfri:0210:gw4491602c1227:65537:color"}
+Color  LampeRegalColor   "Lampe Regal"        <colorlight>    (gWohnzimmer) [ "Switch","Light" ] { channel="tradfri:0210:gw4491602c1227:65538:color" }
+Dimmer LampeSchreibtisch "Lampe Schreibtisch" <colorlight>    (gWohnzimmer) [ "Switch","Light" ] { channel="tradfri:0100:gw4491602c1227:65539:brightness" }
 
