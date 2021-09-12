@@ -1,4 +1,4 @@
-FROM jonaswinkler/paperless-ng:0.9.9
+FROM jonaswinkler/paperless-ng:1.5.0
 
 RUN apt-get update && apt-get install -y \ 	
     gcc \
