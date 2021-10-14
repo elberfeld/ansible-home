@@ -35,11 +35,6 @@ ldap_global:
 mqtt:
   ip: 10.5.0.111
 
-# zentraler Prometheus Server 
-prometheus:
-  ip: 10.5.0.111
-  port: 9090
-
 # zentrales Logging 
 loki:
   server: http://10.5.0.111:3100

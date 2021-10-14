@@ -102,11 +102,6 @@
         web_port: 8081 
       }
     - { 
-        role: roles_intserver/docker_prometheus, tags: prometheus, 
-        servicename: prometheus,
-        basedir: /srv/prometheus/
-      }
-    - { 
         role: roles_intserver/docker_unifi, tags: unifi, 
         servicename: unifi,
         basedir: /srv/unifi/
