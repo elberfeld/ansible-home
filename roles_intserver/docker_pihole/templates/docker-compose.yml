@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: pihole/pihole:v5.6
+    image: pihole/pihole:2022.01.1
     restart: always
     ports:
       - "53:53/tcp"
@@ -18,10 +18,14 @@ services:
       WEBPASSWORD: "{{ pihole_admin_pass }}"
       DNSSEC: "true"
       DNSMASQ_LISTENING: "all"
+      DHCP_ACTIVE: "false"
       DNS_BOGUS_PRIV: "true"
       DNS_FQDN_REQUIRED: "false"
+      PIHOLE_DNS_: "{{ hostvars['webserver1'].int_ip4 }};{{ hostvars['webserver2'].int_ip4 }}"
+      QUERY_LOGGING: "true"
       WEB_PORT: "{{ web_port }}"
-      ServerIPv6: "fd00:dead:beef:53::2"
+      ServerIP: "{{ ansible_facts['ens18']['ipv4']['address'] }}"
+      ServerIPv6: "{{ ansible_facts['ens18']['ipv6'][0]['address'] }}"
 
 networks:
   default:
