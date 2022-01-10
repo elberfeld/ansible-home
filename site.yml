@@ -96,12 +96,6 @@
     - { role: roles_intserver/docker_loki, tags: loki }
     - { role: roles_intserver/docker_mqtt, tags: mqtt }
     - { 
-        role: roles_intserver/docker_pihole, tags: pihole,
-        servicename: pihole, 
-        basedir: /srv/pihole,
-        web_port: 8081 
-      }
-    - { 
         role: roles_intserver/docker_unifi, tags: unifi, 
         servicename: unifi,
         basedir: /srv/unifi/
