@@ -53,9 +53,9 @@ monitoring:
     - webserver1
     - webserver2
   external_dns_servers:
-    - { ip: "8.8.8.8",      name: "Google" }
-    - { ip: "9.9.9.9",      name: "Quad9" }
-    - { ip: "46.182.19.48", name: "Digitalcourage" }
+    - { ip: "8.8.8.8", name: "Google" }
+    - { ip: "9.9.9.9", name: "Quad9" }
+    - { ip: "1.1.1.1", name: "Cloudflare" }
 
 homematic_ccu: 
   id: "OEQ1046187"
