@@ -1,0 +1,103 @@
+---
+
+- include: ../functions/get_secret.yml
+  with_items:
+   - { path: /srv/openhab/influxdb_password,     length: 32 }
+   - { path: /srv/openhab/influxdb_token,        length: 32 }
+   - { path: /srv/openhab/tradfri_code,          length: -1 }
+   - { path: /srv/openhab/tradfri_code,          length: -1 }
+   - { path: /srv/openhab/tradfri_identity,      length: -1 }
+   - { path: /srv/openhab/tradfri_key,           length: -1 }
+   - { path: /srv/openhab/location_latitude,     length: -1 }
+   - { path: /srv/openhab/location_longitude,    length: -1 }
+   - { path: /srv/openhab/openweathermap_apikey, length: -1 }
+   - { path: /srv/openhab/pushover_token,        length: -1 }
+   - { path: /srv/openhab/pushover_userkey,      length: -1 }
+
+- name: pakete installieren
+  apt:
+    state: present
+    name:
+      - logrotate
+
+- name: "{{ servicename }} LogRotate config erstellen"
+  template: 
+    src: logrotate 
+    dest: /etc/logrotate.d/openhab
+
+- name: Get a timestamp
+  command: "date +%Y%m%d%H%M%S"
+  register: timestamp
+
+- name: "create folder struct for {{ servicename }}"
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/addons/"
+    - "{{ basedir }}/conf/"
+    - "{{ basedir }}/conf/items/"
+    - "{{ basedir }}/conf/services/"
+    - "{{ basedir }}/conf/persistence/"
+    - "{{ basedir }}/conf/rules/"
+    - "{{ basedir }}/conf/things/"
+    - "{{ basedir }}/userdata/"
+    - "{{ basedir }}/influxdb-data/"
+    - "{{ basedir }}/influxdb-conf/"
+
+- name: "create {{ servicename }} config files 1"
+  template:
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - docker-compose.yml
+    - promtail-config.yaml
+  register: docker_config_files
+
+- name: "create {{ servicename }} config files 2"
+  template:
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - conf/items/groups.items
+    - conf/items/homematic.items
+    - conf/items/mqtt.items
+    - conf/items/network.items
+    - conf/items/other.items
+    - conf/items/rfswitches.items
+    - conf/items/tradfri.items
+    - conf/items/weather.items
+    - conf/persistence/influxdb.persist
+    - conf/persistence/rrd4j.persist
+    - conf/rules/astro.rules
+    - conf/rules/notifications.rules
+    - conf/rules/rfswitches.rules
+    - conf/rules/rfinput.rules
+    - conf/rules/tvstatus.rules
+    - conf/services/addons.cfg
+    - conf/services/influxdb.cfg
+    - conf/services/mqtt.cfg
+    - conf/services/network.cfg
+    - conf/services/openhabcloud.cfg
+    - conf/services/pushover.cfg
+    - conf/services/runtime.cfg
+    - conf/things/astro.things
+    - conf/things/homematic.things
+    - conf/things/mqtt.things
+    - conf/things/network.things
+    - conf/things/tradfri.things
+    - conf/things/weather.things
+
+- name: "stop {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: docker_config_files.changed 
+
+- name: "start {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present
+
+
