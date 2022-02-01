@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: ventz/bind:9.12.2_p1-r0
+    image: ventz/bind:9.16.15-r0
     restart: always
     ports:
       - "53:53"

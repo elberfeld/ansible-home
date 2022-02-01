@@ -1,4 +1,4 @@
-FROM wordpress:5.5.1-apache
+FROM wordpress:5.9.0-apache
 
 # install the PHP extensions we need
 RUN set -x \
