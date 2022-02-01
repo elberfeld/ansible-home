@@ -1,20 +1,24 @@
 ---
 
-- name: create folder struct for mqtt
+- name: "create folder struct for {{ servicename }}"
   file: 
     path: "{{ item }}"
     state: "directory"
   with_items:
-    - /srv/mqtt/
-    - /srv/mqtt/data/
-    - /srv/mqtt/log/
+    - "{{ basedir }}"
+    - "{{ basedir }}/config/"
+    - "{{ basedir }}/data/"
+    - "{{ basedir }}/log/"
 
-- name: create config files
-  template: src={{ item }} dest=/srv/mqtt/{{ item }}
+- name: "create config files for {{ servicename }}"
+  template: 
+    src: "{{ item }}" 
+    dest: "{{ basedir }}"
   with_items: 
+    - mosquitto.conf
     - docker-compose.yml
 
-- name: start mqtt docker
+- name: "start {{ servicename }} docker"
   docker_compose:
-    project_src: /srv/mqtt/
+    project_src: "{{ basedir }}"
     state: present

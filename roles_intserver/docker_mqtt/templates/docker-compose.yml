@@ -4,12 +4,12 @@ services:
 
   app:
 
-    image: eclipse-mosquitto:1.6.12
+    image: eclipse-mosquitto:2.0.14
     restart: always
     ports:
-      - 1883:1883 
-      - 9001:9001
+      - {{ mqtt_port }}:1883 
     volumes:
-      - /srv/mqtt/data:/mosquitto/data
-      - /srv/mqtt/log:/mosquitto/log
+      - {{ basedir }}/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - {{ basedir }}/data:/mosquitto/data
+      - {{ basedir }}/log:/mosquitto/log
 
