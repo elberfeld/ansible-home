@@ -1,7 +1,7 @@
 
 # WiFi settings 
 wifi:
-  ssid: "VOID"
+  ssid: "VOID-IoT"
   password: "{{ wlan_pass }}"
   
   # Enable fallback hotspot (captive portal) in case wifi connection fails

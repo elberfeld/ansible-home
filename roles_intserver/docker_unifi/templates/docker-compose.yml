@@ -5,7 +5,7 @@ services:
 
   app:
 
-    image: linuxserver/unifi-controller:version-6.2.25
+    image: linuxserver/unifi-controller:6.5.55
     restart: always
     volumes:
       - "{{ basedir }}/data:/config" 
