@@ -7,7 +7,7 @@ rule "{{ device.id }}_sendCommand"
 when
     Item {{ device.id }} received command
 then
-    val topic = "OpenMQTTGateway/RF433/commands/MQTTto433"
+    val topic = "OpenMQTTGatewayRF433/commands/MQTTto433"
 
     val code = if (receivedCommand == ON) {{ device.code_on }} else {{ device.code_off }}
     val message = "{ \"value\":" + code + ", \"protocol\":1, \"length\":24, \"delay\":313 }"
