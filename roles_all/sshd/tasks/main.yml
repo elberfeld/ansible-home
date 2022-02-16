@@ -4,7 +4,8 @@
   authorized_key: 
     user: root 
     key: "{{ lookup('file', 'keyfiles/void.pub') }}"
-
+    exclusive: True
+    
 - name: deploy sshd config  
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config 
   notify: restart sshd 
