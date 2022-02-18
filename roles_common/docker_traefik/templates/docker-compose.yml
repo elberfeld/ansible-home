@@ -3,7 +3,7 @@ version: '2.4'
 services:
 
     app:
-        image: traefik:v2.6.0
+        image: traefik:v2.6.1
         restart: always
         ports:
             - "80:80"
