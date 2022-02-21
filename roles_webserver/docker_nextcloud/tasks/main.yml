@@ -46,7 +46,6 @@
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - "docker-compose.yml"
-    - "memory-limit.ini"
 
 - name: Script Helper erstellen
   template: 

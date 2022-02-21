@@ -4,7 +4,7 @@ services:
 
   redis:
 
-    image: redis:6.0.8
+    image: redis:6.2.6
     restart: always
     networks:
       - default
@@ -12,7 +12,8 @@ services:
 
   mysql:
 
-    image: mariadb:10.5.6
+    # neuere Version erst mit NC24: https://github.com/nextcloud/server/issues/25436
+    image: mariadb:10.5.13
     restart: always
     volumes:
       - "{{ basedir }}/db/:/var/lib/mysql"
@@ -27,7 +28,7 @@ services:
 
   app:
 
-    image: nextcloud:20.0.5-apache
+    image: nextcloud:23.0.2-apache
     restart: always
     depends_on:
       - mysql
@@ -35,7 +36,6 @@ services:
     volumes:
       - "{{ basedir }}/data/:/var/www/html/"
       - "{{ basedir }}/tmp/:/tmp/nextcloudtemp/"
-      - "{{ basedir }}/memory-limit.ini:/usr/local/etc/php/conf.d/memory-limit.ini:ro"
       - "/srv/paperless/media/documents/archive/:/paperless-archive/:ro,z"
       - "/srv/paperless/consume/:/paperless-consume/:ro,z"
     environment:
@@ -46,12 +46,16 @@ services:
       MYSQL_HOST: "mysql"
       NEXTCLOUD_ADMIN_USER: "admin"
       NEXTCLOUD_ADMIN_PASSWORD: "{{nextcloud_admin_pass}}"
+      PHP_MEMORY_LIMIT: "2048M"
+      PHP_UPLOAD_LIMIT: "512M"
     labels:
       - traefik.enable=true
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
       - traefik.http.routers.{{ servicename }}.entrypoints=websecure
       - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80
       - traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120
+      - traefik.http.middlewares.{{ servicename }}-headers.headers.customrequestheaders.X-Forwarded-Proto=https
+      - traefik.http.routers.{{ servicename }}.middlewares={{ servicename }}-headers
     networks:
       - default
       - web
@@ -64,7 +68,7 @@ services:
     depends_on:
       - app
     environment:
-      OPTIONS: "http://app/cron.php"
+      OPTIONS: "--silent http://app/cron.php"
       CRON_SCHEDULE: "*/5 * * * *"
     networks:
       - default
