@@ -55,7 +55,9 @@ services:
       - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80
       - traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120
       - traefik.http.middlewares.{{ servicename }}-headers.headers.customrequestheaders.X-Forwarded-Proto=https
-      - traefik.http.routers.{{ servicename }}.middlewares={{ servicename }}-headers
+      - traefik.http.routers.{{ servicename }}.middlewares={{ servicename }}-headers,{{ servicename }}-dav
+      - traefik.http.middlewares.{{ servicename }}-dav.replacepathregex.regex=^/.well-known/ca(l|rd)dav"
+      - traefik.http.middlewares.{{ servicename }}-dav.replacepathregex.replacement=/remote.php/dav/"
     networks:
       - default
       - web
