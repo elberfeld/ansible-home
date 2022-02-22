@@ -75,7 +75,22 @@ services:
     networks:
       - default
 
-      
+
+  collabora:
+
+    # set collabora url in nextcloud to: http://collabora:9980 
+    image: collabora/code:21.11.2.2.1
+    restart: always
+    cap_add:
+      - MKNOD
+    environment:
+      domain: "{{domain}}" 
+      dictionaries: "de en"
+      extra_params: "--o:ssl.enable=false"
+    networks:
+      - default
+
+
   # Build from Howto: https://nerdblog.steinkopf.net/2018/07/nextcloud-volltext-index-mit-docker-und-elasticsearch/
   elasticsearch:
 

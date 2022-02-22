@@ -58,7 +58,7 @@
 
 - name: "start {{ servicename }} docker"
   docker_compose:
-    project_src: /srv/nextcloud/
+    project_src: "{{ basedir }}"
     state: present
 
 - name: Fulltext Worker Systemd Unit 

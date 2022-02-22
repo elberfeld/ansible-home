@@ -45,6 +45,7 @@ alert:
     - { name: "mail_olefy-mailcow_1" }
     - { name: "mail_ipv6nat-mailcow_1" }
     - { name: "nextcloud_app_1" }
+    - { name: "nextcloud_collabora_1" }
     - { name: "nextcloud_redis_1" }
     - { name: "nextcloud_mysql_1" }
     - { name: "nextcloud_webcron_1" }
