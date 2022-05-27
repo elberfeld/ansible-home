@@ -28,7 +28,7 @@ services:
 
   app:
 
-    image: nextcloud:23.0.2-apache
+    image: nextcloud:23.0.5-apache
     restart: always
     depends_on:
       - mysql
