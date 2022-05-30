@@ -18,6 +18,7 @@ alert:
   containers: 
     - { name: "bind_app_1" }
     - { name: "commafeed_app_1" }
+    - { name: "collabora_app_1" }
     - { name: "dockerstats_app_1" }
     - { name: "invoicefetcher_mysql_1" }
     - { name: "invoicefetcher_uploader_1" }
@@ -45,7 +46,6 @@ alert:
     - { name: "mail_olefy-mailcow_1" }
     - { name: "mail_ipv6nat-mailcow_1" }
     - { name: "nextcloud_app_1" }
-    - { name: "nextcloud_collabora_1" }
     - { name: "nextcloud_redis_1" }
     - { name: "nextcloud_mysql_1" }
     - { name: "nextcloud_webcron_1" }
@@ -90,6 +90,7 @@ docker:
 webserver_domains:
   - "cloud"
   - "commafeed"
+  - "collabora"
   - "docs"
   - "ldap2"
   - "mail"

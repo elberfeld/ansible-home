@@ -172,6 +172,12 @@
         domain: commafeed.void.ms 
       }
     - { 
+        role: roles_webserver/docker_collabora, tags: collabora,
+        servicename: collabora, 
+        basedir: /srv/collabora, 
+        domain: collabora.void.ms 
+      }
+    - { 
         role: roles_webserver/docker_invoicefetcher, tags: invoicefetcher,
         servicename: invoicefetcher, 
         basedir: /srv/invoicefetcher,

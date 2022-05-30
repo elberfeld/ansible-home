@@ -1,0 +1,36 @@
+version: "2"
+
+services:
+
+
+  app:
+
+    image: collabora/code:21.11.5.0.1
+    restart: always
+    tty: true
+    cap_add:
+      - MKNOD
+    environment:
+      domain: "cloud.void.ms" 
+      dictionaries: "de_DE,en_US"
+      extra_params: "--o:ssl.enable=false --o:ssl.termination=true"
+      DONT_GEN_SSL_CERT: "yes"
+      VIRTUAL_PROTO: "http"
+      VIRTUAL_PORT: "9980"
+      VIRTUAL_HOST: "{{domain}}"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=9980
+      - traefik.http.middlewares.{{ servicename }}-headers.headers.customrequestheaders.X-Forwarded-Proto=https
+      - traefik.http.routers.{{ servicename }}.middlewares={{ servicename }}-headers
+    networks:
+      - default
+      - web
+
+
+networks:
+  web:
+    external: true
+    

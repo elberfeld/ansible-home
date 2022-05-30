@@ -28,7 +28,7 @@ services:
 
   app:
 
-    image: nextcloud:23.0.5-apache
+    image: nextcloud:24.0.1-apache
     restart: always
     depends_on:
       - mysql
@@ -72,21 +72,6 @@ services:
     environment:
       OPTIONS: "--silent http://app/cron.php"
       CRON_SCHEDULE: "*/5 * * * *"
-    networks:
-      - default
-
-
-  collabora:
-
-    # set collabora url in nextcloud to: http://collabora:9980 
-    image: collabora/code:21.11.2.2.1
-    restart: always
-    cap_add:
-      - MKNOD
-    environment:
-      domain: "{{domain}}" 
-      dictionaries: "de en"
-      extra_params: "--o:ssl.enable=false"
     networks:
       - default
 
