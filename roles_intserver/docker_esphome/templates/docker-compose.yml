@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: esphome/esphome:2022.1.2
+    image: esphome/esphome:2022.6.3
     restart: always
     network_mode: "host"
     volumes:
