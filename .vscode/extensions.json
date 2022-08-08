@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "redhat.ansible",
+        "oderwat.indent-rainbow",
+        "2gua.rainbow-brackets",
+        "redhat.vscode-yaml",
+        "ms-azuretools.vscode-docker"
+    ]
+}
