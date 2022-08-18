@@ -1,24 +1,14 @@
 
-rule "Sunlight_Rule"
+rule "Homecome_Light_Rule"
 when
-	Item Sun_Elevation changed or Item HandyPrivat changed
+	Item HandyPrivat changed
 then
-    logInfo("default.rules", "Sunlight_Rule // Sun_Elevation: " + Sun_Elevation.state)	
+    logInfo("default.rules", "Homecome_Light_Rule // HandyPrivat: " + HandyPrivat.sate + " // Sun_Elevation: " + Sun_Elevation.state)	
 
-	if (Sun_Elevation.state > 0) {
+    // come home and dark => light on 
+    if (HandyPrivat.state == ON && Sun_Elevation.state < 0) LampeStehlampe.sendCommand(ON)
 
-		// Tagsüber Lampen ausschalten 
-		
-		if (LampeStehlampe.state != OFF) LampeStehlampe.sendCommand(OFF)
-	
-	} else {
+	// leave home and light on => light off
+    if (HandyPrivat.state == OFF && LampeStehlampe.state == ON) LampeStehlampe.sendCommand(OFF)
 
-		// Lampen bei Dukelheit an 
-
-
-		// Lampem bei Dunkelheit und Anwesenheit an
-
-		if (HandyPrivat.state == ON && LampeStehlampe.state != ON) LampeStehlampe.sendCommand(ON)
-
-	}
 end
