@@ -13,7 +13,7 @@ i2c:
   scan: True
 
 sensor:
-  - platform: bme280
+  - platform: bmp280
     temperature:
       name: "Temp"
       oversampling: 16x
@@ -25,15 +25,6 @@ sensor:
           send_first_at: 3
     pressure:
       name: "Pressure"
-      oversampling: 16x
-      accuracy_decimals: 2
-      filters:
-      - sliding_window_moving_average:
-          window_size: 3
-          send_every: 3
-          send_first_at: 3
-    humidity:
-      name: "Humidity"
       oversampling: 16x
       accuracy_decimals: 2
       filters:

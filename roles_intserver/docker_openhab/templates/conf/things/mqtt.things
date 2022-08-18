@@ -11,9 +11,9 @@ Bridge mqtt:broker:mosquitto [ host="{{mqtt.ip}}", secure=false, enableDiscovery
 
     Thing topic {{ device.id }} {
     Channels:
-        Type number : temp     "Sensor {{ device.name }} Temp"     [ stateTopic="ESPHome/{{ device.id }}/sensor/temp/state" ]
-        Type number : pressure "Sensor {{ device.name }} Pressure" [ stateTopic="ESPHome/{{ device.id }}/sensor/pressure/state" ]
-        Type number : humidity "Sensor {{ device.name }} Humidity" [ stateTopic="ESPHome/{{ device.id }}/sensor/humidity/state" ]
+{% if device.temp %}        Type number : temp     "Sensor {{ device.name }} Temp"     [ stateTopic="ESPHome/{{ device.id }}/sensor/temp/state" ] {% endif %}
+{% if device.pressure %}        Type number : pressure "Sensor {{ device.name }} Pressure" [ stateTopic="ESPHome/{{ device.id }}/sensor/pressure/state" ] {% endif %}
+{% if device.humidity %}        Type number : humidity "Sensor {{ device.name }} Humidity" [ stateTopic="ESPHome/{{ device.id }}/sensor/humidity/state" ] {% endif %}
     }
 
 

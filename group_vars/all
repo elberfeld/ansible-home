@@ -97,9 +97,10 @@ rfswitches:
   - { id: "LampeStehlampe",   name: "Stehlampe",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11010 C", code_on: "283729", code_off: "283732" }
 
 mqtt_sensors:
-  - { id: "badezimmer",   name: "Badezimmer",    groups: "gBadezimmer" }
-  - { id: "kueche",       name: "Küche",         groups: "gKueche" }
-  - { id: "schlafzimmer", name: "Schlafzimmer",  groups: "gSchlafzimmer" }
-  - { id: "schreibtisch", name: "Schreibtisch",  groups: "gWohnzimmer" }
-  - { id: "technikraum",  name: "Technikraum",   groups: "gTechnikraum" }
-  - { id: "wohnzimmer",   name: "Wohnzimmer",    groups: "gWohnzimmer" }
+  - { id: "badezimmer",   name: "Badezimmer",    groups: "gBadezimmer",   temp: yes, pressure: yes, humidity: yes }
+  - { id: "kueche",       name: "Küche",         groups: "gKueche",       temp: yes, pressure: yes, humidity: yes }
+  - { id: "schlafzimmer", name: "Schlafzimmer",  groups: "gSchlafzimmer", temp: yes, pressure: yes, humidity: yes }
+  - { id: "schreibtisch", name: "Schreibtisch",  groups: "gWohnzimmer",   temp: yes, pressure: yes, humidity: yes }
+  - { id: "technikraum",  name: "Technikraum",   groups: "gTechnikraum",  temp: yes, pressure: yes, humidity: no  }
+  - { id: "wohnzimmer",   name: "Wohnzimmer",    groups: "gWohnzimmer",   temp: yes, pressure: yes, humidity: yes }
+
