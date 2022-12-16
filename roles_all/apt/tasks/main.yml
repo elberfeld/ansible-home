@@ -10,8 +10,7 @@
     - apt-transport-https
     - ca-certificates
     - curl
-    - gnupg2 
-    - software-properties-common
+    - gnupg
 
 - name: add debian repo keys 
   apt_key:
