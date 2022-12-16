@@ -1,0 +1,83 @@
+---
+
+- name: "create {{ servicename }} dummy secrets"
+  copy: 
+    content: "dummy_freqtrade_test"
+    dest: "{{ item }}"
+  with_items:
+    - "{{ basedir }}/telegram_bot_token"
+    - "{{ basedir }}/telegram_chat_id"
+    - "{{ basedir }}/kraken_api_key"
+    - "{{ basedir }}/kraken_api_secret"
+  when: freqtrade_testserver 
+
+
+- include: ../functions/get_secret.yml
+  with_items:
+   - { path: "{{ basedir }}/jwt_secret_key", length: 32 }
+   - { path: "{{ basedir }}/freqtrade_admin_pass", length: 24 }
+   - { path: "{{ basedir }}/telegram_bot_token",   length: -1 }
+   - { path: "{{ basedir }}/telegram_chat_id",     length: -1 }
+   - { path: "{{ basedir }}/kraken_api_key",       length: -1 }
+   - { path: "{{ basedir }}/kraken_api_secret",    length: -1 }
+
+
+- name: "create folder struct for {{ servicename }}"
+  file:
+    path: "{{ item }}"
+    state: "directory"
+    owner: 1000
+    group: 1000
+    mode: 0700 
+  with_items:
+    - "{{ basedir }}/data"
+    - "{{ basedir }}/data/backtest_results"
+    - "{{ basedir }}/data/data"
+    - "{{ basedir }}/data/freqaimodels"
+    - "{{ basedir }}/data/hyperopts"
+    - "{{ basedir }}/data/logs"
+    - "{{ basedir }}/data/notebooks"
+    - "{{ basedir }}/data/strategies"
+
+
+- name: "deploy {{ servicename }} config"
+  template:
+    dest:  "{{ basedir }}/{{ item }}"
+    src: "{{ item }}"
+    mode: 0644
+  with_items:
+    - "docker-compose.yml"
+    - "copy-histdata.sh"
+    - "download-data.sh"
+    - "hyperopt-strategy.sh"
+    - "backtest-strategy.sh"
+    - "data/config.json"
+    - "data/strategies/Strategy002.json"
+  register: config
+
+
+- name: "download {{ servicename }} strategy files "
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ basedir }}/data/strategies/{{ item.file }}"
+    mode: 0644
+  with_items:
+    - { file: "NostalgiaForInfinityX.py", url: "https://raw.githubusercontent.com/iterativv/NostalgiaForInfinity/main/NostalgiaForInfinityX.py" }
+    - { file: "Strategy002.py",           url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/Strategy002.py" }    
+    - { file: "Supertrend.py",            url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/Supertrend.py"  }
+    - { file: "Scalp.py",                 url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/berlinguyinca/Scalp.py" }
+
+
+- name: "stop {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: (config.changed) or (freqtrade_testserver)
+
+
+- name: "start {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present
+  when: not freqtrade_testserver
+

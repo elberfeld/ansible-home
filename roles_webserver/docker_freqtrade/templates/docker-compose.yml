@@ -1,0 +1,28 @@
+version: "3.4"
+
+services:
+
+  app:
+    image: freqtradeorg/freqtrade:2022.11
+    restart: always
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3.sqlite
+      --config /freqtrade/user_data/config.json
+      --strategy NostalgiaForInfinityX
+    volumes:
+      - "{{ basedir }}/data:/freqtrade/user_data"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8080
+    networks:
+      - default
+      - web
+
+
+networks:
+  web:
+    external: true
