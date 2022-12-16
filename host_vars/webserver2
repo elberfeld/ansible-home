@@ -20,6 +20,7 @@ alert:
     - { name: "commafeed_app_1" }
     - { name: "collabora_app_1" }
     - { name: "dockerstats_app_1" }
+    - { name: "freqtrade_app_1" }
     - { name: "invoicefetcher_mysql_1" }
     - { name: "invoicefetcher_uploader_1" }
     - { name: "invoicefetcher_sftpserver_1" }
@@ -94,10 +95,12 @@ webserver_domains:
   - "commafeed"
   - "collabora"
   - "docs"
+  - "freqtrade"
   - "ldap2"
   - "mail"
   - "n8n"
   - "keycloak"
+  - "uffd"
   - "www"
 
 
