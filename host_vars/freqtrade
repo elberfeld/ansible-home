@@ -1,0 +1,32 @@
+
+debian_sources: 
+  - "deb http://deb.debian.org/debian bullseye main contrib non-free"
+  - "deb http://deb.debian.org/debian bullseye-updates main contrib non-free"
+  - "deb http://security.debian.org/debian-security bullseye-security main contrib non-free"
+  - "deb https://download.docker.com/linux/debian bullseye stable"
+
+debian_keys:
+  - "https://download.docker.com/linux/debian/gpg"
+
+
+
+# Primäre IP Adressen des Hosts 
+ext_ip4: 95.216.195.186
+ext_ip6: 2a01:4f9:c011:54f6::1
+int_ip4: 127.0.0.1
+
+
+# Docker konfigurationen 
+docker:
+  # Interne Docker-Netzwerke 
+  internal_networks:
+    - ldap
+    - mail
+    - web
+  # Prometheus Metriken aktivieren 
+  prometheus_metrics: yes
+  # Prometheus Stats aktivieren
+  prometheus_stats: yes
+  # Docker Start unterbinden fals diese Datei nicht existiert 
+  service_blocker_file: /srv/cryptdisk_mounted
+
