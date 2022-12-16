@@ -1,0 +1,31 @@
+---
+
+- include: ../functions/get_secret.yml
+  with_items:
+    - { path: "{{ basedir }}/mysql_admin_pass",  length: 24 }
+    - { path: "{{ basedir }}/mysql_user_pass",  length: 24 }
+    - { path: "{{ basedir }}/uffd_admin_pass",  length: 24 }
+    - { path: "{{ basedir }}/uffd_secret_key",  length: 64 }
+
+- name: create folder struct for {{servicename}}
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/db/"   
+
+- name: create config files
+  template: 
+    src: "{{ item }}" 
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - "docker-compose.yml"
+    - "Dockerfile"
+    - "entrypoint.sh"
+    - "uffd.cfg"
+
+- name: start {{servicename}} docker
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present

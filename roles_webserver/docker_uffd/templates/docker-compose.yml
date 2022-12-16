@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+
+  db:
+
+    image: mariadb:10.10.2
+    restart: always
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_nopad_bin']
+    volumes:
+      - "{{ basedir }}/db/:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
+      MYSQL_PASSWORD: "{{ mysql_user_pass }}"
+      MYSQL_DATABASE: "uffd"
+      MYSQL_USER: "uffd"
+    networks:
+        - default
+
+  app:
+
+    build: .
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - "{{ basedir }}/uffd.cfg/:/etc/uffd/uffd.cfg"
+    environment:
+      TZ: "Europe/Berlin"
+      UFFD_INITIAL_ADMIN_USER: "uffdadmin"
+      UFFD_INITIAL_ADMIN_PW: "{{ uffd_admin_pass }}"
+      UFFD_INITIAL_ADMIN_MAIL: "uffdadmin@void.ms"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=3031
+    networks:
+        - default
+        - web
+
+networks:
+  web:
+    external: true
