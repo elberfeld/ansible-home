@@ -1,0 +1,21 @@
+---
+- name: create folder struct for {{ servicename }}
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "directory"
+    recurse: yes
+  with_items:
+    - "{{ basedir }}/config"
+
+- name: copy config files for {{ servicename }}
+  ansible.builtin.template:
+    src: "{{ item }}" 
+    dest: "{{ basedir }}/{{ item }}"
+    mode: '0755'
+  with_items:
+    - docker-compose.yml
+
+- name: start {{ servicename }}
+  community.docker.docker_compose:
+    state: present
+    project_src: "{{ basedir }}"
