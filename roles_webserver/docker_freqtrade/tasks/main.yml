@@ -1,26 +1,17 @@
 ---
 
-- name: "create {{ servicename }} dummy secrets"
-  copy: 
-    content: "dummy_freqtrade_test"
-    dest: "{{ item }}"
-  with_items:
-    - "{{ basedir }}/telegram_bot_token"
-    - "{{ basedir }}/telegram_chat_id"
-    - "{{ basedir }}/kraken_api_key"
-    - "{{ basedir }}/kraken_api_secret"
-  when: freqtrade_testserver 
-
-
 - include: ../functions/get_secret.yml
   with_items:
    - { path: "{{ basedir }}/jwt_secret_key", length: 32 }
    - { path: "{{ basedir }}/freqtrade_admin_pass", length: 24 }
-   - { path: "{{ basedir }}/telegram_bot_token",   length: -1 }
-   - { path: "{{ basedir }}/telegram_chat_id",     length: -1 }
    - { path: "{{ basedir }}/kraken_api_key",       length: -1 }
    - { path: "{{ basedir }}/kraken_api_secret",    length: -1 }
 
+- include: ../functions/get_secret.yml
+  with_items:
+   - { path: "{{ basedir }}/telegram_bot_token",   length: -1 }
+   - { path: "{{ basedir }}/telegram_chat_id",     length: -1 }
+  when: not freqtrade_dry_run
 
 - name: "create folder struct for {{ servicename }}"
   file:
@@ -72,12 +63,11 @@
   docker_compose:
     project_src: "{{ basedir }}"
     state: absent
-  when: (config.changed) or (freqtrade_testserver)
+  when: config.changed
 
 
 - name: "start {{ servicename }} docker"
   docker_compose:
     project_src: "{{ basedir }}"
     state: present
-  when: not freqtrade_testserver
 

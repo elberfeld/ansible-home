@@ -5,7 +5,7 @@
     "tradable_balance_ratio": 0.99,
     "fiat_display_currency": "EUR",
     "timeframe": "5m",
-    "dry_run": false,
+    "dry_run": {{ freqtrade_dry_run | lower }},
     "cancel_open_orders_on_exit": false,
     "unfilledtimeout": {
         "entry": 10,
@@ -63,6 +63,13 @@
         "max_trade_duration_minute": 1440,
         "remove_pumps": false
     },
+    {% if freqtrade_dry_run %}
+    "telegram": {
+        "enabled": false,
+        "token": "none",
+        "chat_id": "none"
+    },
+    {% else %}
     "telegram": {
         "enabled": true,
         "token": "{{ telegram_bot_token }}",
@@ -101,17 +108,18 @@
         "reload": true,
         "balance_dust_level": 0.01
     },
+    {% endif %}
     "api_server": {
         "enabled": true,
         "listen_ip_address": "0.0.0.0",
         "listen_port": 8080,
         "verbosity": "error",
         "jwt_secret_key": "{{ jwt_secret_key }}",
-        "CORS_origins": [],
+        "CORS_origins": ["https://freqtrade.void.ms"],
         "username": "freqtradeadmin",
         "password": "{{ freqtrade_admin_pass }}"
     },
-    "bot_name": "freqtrade",
+    "bot_name": "{{ servicename }}",
     "initial_state": "running",
     "force_entry_enable": false,
     "internals": {

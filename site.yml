@@ -22,11 +22,35 @@
   roles:
     - { role: roles_common/docker, tags: docker }
     - { 
+        role: roles_common/docker_traefik, tags: traefik,
+        servicename: traefik, 
+        basedir: /srv/traefik,
+        domain_base: "void.ms",
+        domain_default: "www.void.ms"
+      }
+    - { 
         role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade, 
-        basedir: /srv/freqtrade, 
-        domain: freqtrade.void.ms,
-        freqtrade_testserver: yes
+        servicename: freqtrade1, 
+        basedir: /srv/freqtrade1, 
+        domain: freqtrade1.void.ms,
+        freqtrade_strategy: NostalgiaForInfinityX,
+        freqtrade_dry_run: true
+      }
+    - { 
+        role: roles_webserver/docker_freqtrade, tags: freqtrade,
+        servicename: freqtrade2, 
+        basedir: /srv/freqtrade2, 
+        domain: freqtrade2.void.ms,
+        freqtrade_strategy: Supertrend,
+        freqtrade_dry_run: true
+      }
+    - { 
+        role: roles_webserver/docker_freqtrade, tags: freqtrade,
+        servicename: freqtrade3, 
+        basedir: /srv/freqtrade3, 
+        domain: freqtrade3.void.ms,
+        freqtrade_strategy: Scalp,
+        freqtrade_dry_run: true
       }
 
 
@@ -201,7 +225,8 @@
         servicename: freqtrade, 
         basedir: /srv/freqtrade, 
         domain: freqtrade.void.ms,
-        freqtrade_testserver: no
+        freqtrade_strategy: Strategy002,
+        freqtrade_dry_run: false
       }
     - { 
         role: roles_webserver/docker_invoicefetcher, tags: invoicefetcher,

@@ -5,7 +5,7 @@ intserver	ansible_ssh_host=10.5.0.111
 
 webserver1  ansible_ssh_host=159.69.194.128
 webserver2  ansible_ssh_host=116.203.41.76
-freqtrade   ansible_ssh_host=999.999.999.999
+freqtrade   ansible_ssh_host=159.69.32.247
 
 [raspi_infoscreens]
 infoscreen1 ansible_ssh_host=10.5.0.99 
