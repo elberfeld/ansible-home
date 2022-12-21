@@ -32,17 +32,17 @@ webserver2       IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 gw-um     IN      A       130.180.13.105
 
 
-; Webserver1-Domains 
-{% for domain in hostvars['webserver1'].webserver_domains %}
-{{ domain }}    IN   A       {{ hostvars['webserver1'].ext_ip4 }}    
-{{ domain }}    IN   AAAA    {{ hostvars['webserver1'].ext_ip6 }}
+{% for host in groups['all'] %}
+{% if hostvars[host].webserver_domains is defined %}
+
+; Domains on Server {{ host }} 
+
+{% for domain in hostvars[host].webserver_domains %}
+{{ domain }}    IN   A       {{ hostvars[host].ext_ip4 }}    
+{{ domain }}    IN   AAAA    {{ hostvars[host].ext_ip6 }}
 {% endfor %}
 
-
-; Webserver2-Domains 
-{% for domain in hostvars['webserver2'].webserver_domains %}
-{{ domain }}    IN    A       {{ hostvars['webserver2'].ext_ip4 }}
-{{ domain }}    IN    AAAA    {{ hostvars['webserver2'].ext_ip6 }}
+{% endif %}
 {% endfor %}
 
 
