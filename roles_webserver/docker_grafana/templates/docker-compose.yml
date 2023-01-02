@@ -4,11 +4,10 @@ services:
 
   app:
 
-    image: grafana/grafana:8.3.4
+    image: grafana/grafana:9.3.2
     restart: always
     volumes:
-      - "{{ basedir }}/config/grafana.ini:/etc/grafana/grafana.ini"
-      - "{{ basedir }}/config/ldap.toml:/etc/grafana/ldap.toml"
+      - "{{ basedir }}/grafana.ini:/etc/grafana/grafana.ini"
       - "{{ basedir }}/data/:/var/lib/grafana"
     environment:
       GF_SERVER_ROOT_URL: "https://{{ domain }}"

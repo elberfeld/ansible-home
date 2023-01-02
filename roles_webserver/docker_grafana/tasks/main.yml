@@ -2,8 +2,8 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "/srv/ldap/secret/ldap_readonly_pass", length: -1 }
     - { path: "{{ basedir }}/grafana_admin_pass", length: 12 }
+    - { path: "{{ basedir }}/oauth_client_secret", length: 32 }
 
 - name: create folder struct for grafana
   file: 
@@ -11,21 +11,15 @@
     state: "directory"
   with_items:
     - "{{ basedir }}"
-    - "{{ basedir }}/config/"   
     - "{{ basedir }}/data/"   
 
-- name: create config files
+- name: create config filess
   template: 
     src: "{{ item }}" 
-    dest: "{{ basedir }}/config/{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
   with_items:
+    - docker-compose.yml
     - grafana.ini
-    - ldap.toml
-
-- name: Docker Compose Konfig-Datei erstellen
-  template:
-    src: "docker-compose.yml"
-    dest: "{{ basedir }}/docker-compose.yml"
 
 - name: start grafana docker
   docker_compose:
