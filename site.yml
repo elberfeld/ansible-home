@@ -55,6 +55,24 @@
         freqtrade_timeframe: 1d,
         freqtrade_dry_run: true
       }
+    - { 
+        role: roles_webserver/docker_freqtrade, tags: freqtrade,
+        servicename: freqtrade4, 
+        basedir: /srv/freqtrade4, 
+        domain: freqtrade4.void.ms,
+        freqtrade_strategy: keltnerhopt,
+        freqtrade_timeframe: 1d,
+        freqtrade_dry_run: true
+      }
+    - { 
+        role: roles_webserver/docker_freqtrade, tags: freqtrade,
+        servicename: freqtrade5, 
+        basedir: /srv/freqtrade5, 
+        domain: freqtrade5.void.ms,
+        freqtrade_strategy: slope_is_dope2,
+        freqtrade_timeframe: 4h,
+        freqtrade_dry_run: true
+      }
 
 
 - hosts: hpserver 

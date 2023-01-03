@@ -53,11 +53,28 @@
     dest: "{{ basedir }}/data/strategies/{{ item.file }}"
     mode: 0644
   with_items:
-    - { file: "NostalgiaForInfinityX.py", url: "https://raw.githubusercontent.com/iterativv/NostalgiaForInfinity/main/NostalgiaForInfinityX.py" }
-    - { file: "Strategy002.py",           url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/Strategy002.py" }    
-    - { file: "Supertrend.py",            url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/Supertrend.py"  }
-    - { file: "Scalp.py",                 url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/berlinguyinca/Scalp.py" }
+    - { file: "NostalgiaForInfinityX.py",    url: "https://raw.githubusercontent.com/iterativv/NostalgiaForInfinity/main/NostalgiaForInfinityX.py" }
+    - { file: "Strategy002.py",              url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/Strategy002.py" }    
+    - { file: "Supertrend.py",               url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/Supertrend.py"  }
+    - { file: "Scalp.py",                    url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/berlinguyinca/Scalp.py" }
+    - { file: "keltnerchannel-rsi-files.7z", url: "https://www.dutchalgotrading.com/wp-content/uploads/2022/12/keltnerchannel-rsi-files.7z" }
+    - { file: "Slope-is-dope-files.7z",      url: "https://www.dutchalgotrading.com/wp-content/uploads/2022/12/Slope-is-dope-files.7z" }
 
+- name: "install p7zip "
+  apt:
+    update_cache: no
+    state: present
+    install_recommends: no
+    name:
+      - p7zip-full
+
+- name: "unzip files"
+  ansible.builtin.command:
+    cmd: "/usr/bin/7z e -y {{ item }}"
+    chdir: "{{ basedir }}/data/strategies/"
+  with_items: 
+    - "keltnerchannel-rsi-files.7z"
+    - "Slope-is-dope-files.7z"
 
 - name: "stop {{ servicename }} docker"
   docker_compose:
