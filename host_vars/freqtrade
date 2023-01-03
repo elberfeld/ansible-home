@@ -35,3 +35,8 @@ webserver_domains:
   - "freqtrade3"
   - "freqtrade4"
   - "freqtrade5"
+  - "freqtrade6"
+  - "freqtrade7"
+  - "freqtrade8"
+  - "freqtrade9"
+  - "freqtrade10"
