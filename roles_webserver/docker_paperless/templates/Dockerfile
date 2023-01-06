@@ -1,4 +1,4 @@
-FROM jonaswinkler/paperless-ng:1.5.0
+FROM ghcr.io/paperless-ngx/paperless-ngx:1.11.3
 
 RUN apt-get update && apt-get install -y \ 	
     gcc \

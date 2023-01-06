@@ -3,14 +3,14 @@ version: "3.4"
 services:
 
   broker:
-    image: redis:6.0
+    image: redis:7.0.7
     restart: always
     networks:
       - default
 
 
   db:
-    image: postgres:13.1
+    image: postgres:13.9
     restart: always
     volumes:
       - "{{ basedir }}/db:/var/lib/postgresql/data"
@@ -44,6 +44,7 @@ services:
       PAPERLESS_DBNAME: paperless
       PAPERLESS_DBUSER: paperless
       PAPERLESS_DBPASS: {{ postgres_user_pass }}
+      PAPERLESS_URL: "https://{{ domain }}"
       PAPERLESS_OCR_MODE: skip
       PAPERLESS_OCR_OUTPUT_TYPE: pdfa
       PAPERLESS_OCR_LANGUAGES: deu eng
