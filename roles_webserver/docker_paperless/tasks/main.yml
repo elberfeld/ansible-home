@@ -3,7 +3,8 @@
   with_items:
    - { path: "{{ basedir }}/postgres_user_pass",  length: 12 }
    - { path: "{{ basedir }}/paperless_secret_key",  length: 24 }
-   - { path: "/srv/ldap/secret/ldap_readonly_pass",  length: -1 }
+   - { path: "{{ basedir }}/paperless_forward_auth_secret",  length: 64 }
+   - { path: "{{ basedir }}/paperless_oauth_client_secret",  length: 64 }
 
 
 - name: "create folder struct for {{ servicename }}"
@@ -25,8 +26,6 @@
     src: "{{ item }}"
     mode: 0644
   with_items:
-    - local_settings.py
-    - Dockerfile
     - docker-compose.yml
   register: config
 

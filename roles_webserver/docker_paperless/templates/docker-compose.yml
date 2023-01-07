@@ -22,14 +22,38 @@ services:
       - default
 
 
+  auth:
+    image: thomseddon/traefik-forward-auth:2.2
+    environment: 
+      LOG_LEVEL: info
+      DEFAULT_ACTION: auth
+      DEFAULT_PROVIDER: generic-oauth
+      SECRET: {{ paperless_forward_auth_secret }}
+      PROVIDERS_GENERIC_OAUTH_AUTH_URL: https://uffd.void.ms/oauth2/authorize
+      PROVIDERS_GENERIC_OAUTH_TOKEN_URL: https://uffd.void.ms/oauth2/token
+      PROVIDERS_GENERIC_OAUTH_USER_URL: https://uffd.void.ms/oauth2/userinfo
+      PROVIDERS_GENERIC_OAUTH_CLIENT_ID: paperless
+      PROVIDERS_GENERIC_OAUTH_CLIENT_SECRET: {{ paperless_oauth_client_secret }}
+      PROVIDERS_GENERIC_OAUTH_SCOPE: profile
+      PROVIDERS_GENERIC_OAUTH_TOKEN_STYLE: header
+    labels:
+      - traefik.enable=true
+      - traefik.http.middlewares.{{ servicename }}-auth.forwardauth.address=http://auth:4181
+      - traefik.http.middlewares.{{ servicename }}-auth.forwardauth.authResponseHeaders=X-Forwarded-User
+      - traefik.http.services.{{ servicename }}-auth.loadbalancer.server.port=4181
+    networks:
+      - default
+      - web
+
+
   app:
-    build: .
+    image: ghcr.io/paperless-ngx/paperless-ngx:1.11.3
     restart: always
     depends_on:
       - db
+      - auth
       - broker
     volumes:
-      - "{{ basedir }}/local_settings.py:/usr/src/paperless/src/paperless/local_settings.py"
       - "{{ basedir }}/data:/usr/src/paperless/data"
       - "{{ basedir }}/media:/usr/src/paperless/media:z"
       - "{{ basedir }}/consume:/usr/src/paperless/consume"
@@ -37,9 +61,9 @@ services:
     environment:
       USERMAP_UID: 1000
       USERMAP_GID: 1000
-      DJANGO_SETTINGS_MODULE: paperless.local_settings
       PAPERLESS_DEBUG: 0
       PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBENGINE: postgress
       PAPERLESS_DBHOST: db
       PAPERLESS_DBNAME: paperless
       PAPERLESS_DBUSER: paperless
@@ -54,6 +78,8 @@ services:
       PAPERLESS_TASK_WORKERS: 2
       PAPERLESS_OPTIMIZE_THUMBNAILS: 1
       PAPERLESS_FILENAME_FORMAT: "{correspondent}/{created_year}/{created_year}-{created_month}-{created_day}_{correspondent}_{document_type}_{title}"
+      PAPERLESS_ENABLE_HTTP_REMOTE_USER: "True"
+      PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: "HTTP_X_FORWARDED_USER"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 30s
@@ -61,6 +87,7 @@ services:
       retries: 5
     labels:
       - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.middlewares={{ servicename }}-auth
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
       - traefik.http.routers.{{ servicename }}.entrypoints=websecure
       - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8000
