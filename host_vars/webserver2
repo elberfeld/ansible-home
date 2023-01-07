@@ -54,6 +54,7 @@ alert:
     - { name: "nextcloud_webcron_1" }
     - { name: "nextcloud_elasticsearch_1" }
     - { name: "paperless_app_1" }
+    - { name: "paperless_auth_1" }
     - { name: "paperless_broker_1" }
     - { name: "paperless_db_1" }
     - { name: "traefik_app_1" }
