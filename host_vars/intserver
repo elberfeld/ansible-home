@@ -19,6 +19,7 @@ alert:
   containers:
     - { name: "dockerstats_app_1" }
     - { name: "esphome_app_1" }
+    - { name: "heimdall_app_1" }
     - { name: "hibiscus_db_1" }
     - { name: "ldap_openldap_1" }
     - { name: "ldap_phpldapadmin_1" }
