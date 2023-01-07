@@ -28,12 +28,12 @@ services:
       LOG_LEVEL: info
       DEFAULT_ACTION: auth
       DEFAULT_PROVIDER: generic-oauth
-      SECRET: {{ paperless_forward_auth_secret }}
-      PROVIDERS_GENERIC_OAUTH_AUTH_URL: https://uffd.void.ms/oauth2/authorize
-      PROVIDERS_GENERIC_OAUTH_TOKEN_URL: https://uffd.void.ms/oauth2/token
-      PROVIDERS_GENERIC_OAUTH_USER_URL: https://uffd.void.ms/oauth2/userinfo
-      PROVIDERS_GENERIC_OAUTH_CLIENT_ID: paperless
-      PROVIDERS_GENERIC_OAUTH_CLIENT_SECRET: {{ paperless_oauth_client_secret }}
+      SECRET: {{ forward_auth_secret }}
+      PROVIDERS_GENERIC_OAUTH_AUTH_URL: {{ oauth_global.authorize_url }}
+      PROVIDERS_GENERIC_OAUTH_TOKEN_URL: {{ oauth_global.token_url }}
+      PROVIDERS_GENERIC_OAUTH_USER_URL: {{ oauth_global.userinfo_url }}
+      PROVIDERS_GENERIC_OAUTH_CLIENT_ID: {{ servicename }}
+      PROVIDERS_GENERIC_OAUTH_CLIENT_SECRET: {{ oauth_client_secret }}
       PROVIDERS_GENERIC_OAUTH_SCOPE: profile
       PROVIDERS_GENERIC_OAUTH_TOKEN_STYLE: header
     labels:
@@ -80,6 +80,7 @@ services:
       PAPERLESS_FILENAME_FORMAT: "{correspondent}/{created_year}/{created_year}-{created_month}-{created_day}_{correspondent}_{document_type}_{title}"
       PAPERLESS_ENABLE_HTTP_REMOTE_USER: "True"
       PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: "HTTP_X_FORWARDED_USER"
+      PAPERLESS_LOGOUT_REDIRECT_URL: {{ oauth_global.logout_url }}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 30s

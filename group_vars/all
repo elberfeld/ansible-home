@@ -21,6 +21,14 @@ mail_domains:
     dkim:
       - { selector: "dkim1", value: "v=DKIM1;k=rsa;t=s;s=email;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC7L/+hbz3M6mSI+xU6gmgkwdR/neOMpy19KfPkRkjAnjfSRigZnWD1rubjXv+rZxmbKS6GmBNovtgR1xYeox7ezkMtWMOTPaDmL/X04cJsMxxFgRvMj4rMRHGZR6Icb8KsLUZEHnn7n/qBKFrRm1Tw1nH6dudZr7/lPshoxW99owIDAQAB" }
 
+# Globale OAuth Server Settings
+oauth_global:
+  authorize_url: https://uffd.void.ms/oauth2/authorize
+  token_url: https://uffd.void.ms/oauth2/token
+  userinfo_url: https://uffd.void.ms/oauth2/userinfo
+  logout_url: https://uffd.void.ms/logout
+  metrics_url: https://uffd.void.ms/oauth2/userinfo
+
 # Globale LDAP Settings   
 ldap_global:
   organization: VOID
