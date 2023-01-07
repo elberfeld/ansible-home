@@ -26,6 +26,7 @@ alert:
     - { name: "dockerstats_app_1" }
     - { name: "grafana_app_1" }
     - { name: "icinga_app_1" }
+    - { name: "icinga_auth_1" }
     - { name: "icinga_db_1" }
     - { name: "icinga_graphite_1" }
     - { name: "ldap_openldap_1" }

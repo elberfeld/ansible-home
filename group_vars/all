@@ -27,7 +27,7 @@ oauth_global:
   token_url: https://uffd.void.ms/oauth2/token
   userinfo_url: https://uffd.void.ms/oauth2/userinfo
   logout_url: https://uffd.void.ms/logout
-  metrics_url: https://uffd.void.ms/oauth2/userinfo
+  metrics_url: https://uffd.void.ms/metrics
 
 # Globale LDAP Settings   
 ldap_global:

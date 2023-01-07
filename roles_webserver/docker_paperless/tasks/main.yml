@@ -1,10 +1,15 @@
 ---
 - include: ../functions/get_secret.yml
   with_items:
-   - { path: "{{ basedir }}/postgres_user_pass",  length: 12 }
-   - { path: "{{ basedir }}/paperless_secret_key",  length: 24 }
-   - { path: "{{ basedir }}/paperless_forward_auth_secret",  length: 64 }
-   - { path: "{{ basedir }}/paperless_oauth_client_secret",  length: 64 }
+   - { path: "{{ basedir }}/postgres_user_pass",   length: 12 }
+   - { path: "{{ basedir }}/paperless_secret_key", length: 24 }
+   - { path: "{{ basedir }}/forward_auth_secret",  length: 64 }
+   - { path: "{{ basedir }}/oauth_client_secret",  length: 64 }
+
+
+- name: Setup OAuth Client Info 
+  ansible.builtin.debug:
+    msg: "Client ID: {{ servicename }} // Client Secret: {{ oauth_client_secret }} // Redirect-URI: https://{{ domain }}/_oauth" 
 
 
 - name: "create folder struct for {{ servicename }}"

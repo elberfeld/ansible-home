@@ -12,6 +12,7 @@ services:
     volumes:
       - "{{ basedir }}/data:/var/lib/icinga2"
       - "{{ basedir }}/etc/locale.gen:/etc/locale.gen"
+      - "{{ basedir }}/etc/oauth_header.conf:/etc/apache2/conf-enabled/oauth_header.conf"
       - "{{ basedir }}/etc/icinga:/etc/icinga2"
       - "{{ basedir }}/etc/icingaweb2:/etc/icingaweb2"
       - "{{ basedir }}/log/apache2:/var/log/apache2"
@@ -36,12 +37,38 @@ services:
       ICINGA2_FEATURE_DIRECTOR: 0
     labels:
       - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.middlewares={{ servicename }}-auth
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
       - traefik.http.routers.{{ servicename }}.entrypoints=websecure
       - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80      
     networks:
       - default
       - web
+
+
+  auth:
+    image: thomseddon/traefik-forward-auth:2.2
+    environment: 
+      LOG_LEVEL: info
+      DEFAULT_ACTION: auth
+      DEFAULT_PROVIDER: generic-oauth
+      SECRET: {{ forward_auth_secret }}
+      PROVIDERS_GENERIC_OAUTH_AUTH_URL: {{ oauth_global.authorize_url }}
+      PROVIDERS_GENERIC_OAUTH_TOKEN_URL: {{ oauth_global.token_url }}
+      PROVIDERS_GENERIC_OAUTH_USER_URL: {{ oauth_global.userinfo_url }}
+      PROVIDERS_GENERIC_OAUTH_CLIENT_ID: {{ servicename }}
+      PROVIDERS_GENERIC_OAUTH_CLIENT_SECRET: {{ oauth_client_secret }}
+      PROVIDERS_GENERIC_OAUTH_SCOPE: profile
+      PROVIDERS_GENERIC_OAUTH_TOKEN_STYLE: header
+    labels:
+      - traefik.enable=true
+      - traefik.http.middlewares.{{ servicename }}-auth.forwardauth.address=http://auth:4181
+      - traefik.http.middlewares.{{ servicename }}-auth.forwardauth.authResponseHeaders=X-Forwarded-User
+      - traefik.http.services.{{ servicename }}-auth.loadbalancer.server.port=4181
+    networks:
+      - default
+      - web
+
 
   db:
 
@@ -58,7 +85,8 @@ services:
       MYSQL_USER: icinga
     networks:
       - default
-  
+
+
   graphite:
     
     image: graphiteapp/graphite-statsd:1.1.8-7
@@ -75,7 +103,8 @@ services:
       GRAPHITE_LOG_FILE_RENDERING: "-"
     networks:
       - default
-  
+
+
 networks:
   web:
     external: true    

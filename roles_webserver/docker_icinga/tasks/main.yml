@@ -2,14 +2,20 @@
 
 - include: ../functions/get_secret.yml
   with_items:
-    - { path: /srv/ldap/secret/ldap_readonly_pass, length: -1 }
-    - { path: "{{ basedir }}/icinga_admin_pass",  length: 12 }
-    - { path: "{{ basedir }}/icinga_api_user",  length: 8 }
-    - { path: "{{ basedir }}/icinga_api_pass",  length: 8 }
-    - { path: "{{ basedir }}/mysql_admin_pass",  length: 12 }
-    - { path: "{{ basedir }}/mysql_user_pass",  length: 12 }
+    - { path: "{{ basedir }}/forward_auth_secret", length: 64 }
+    - { path: "{{ basedir }}/oauth_client_secret", length: 64 }
+    - { path: "{{ basedir }}/icinga_admin_pass",   length: 12 }
+    - { path: "{{ basedir }}/icinga_api_user",     length: 8 }
+    - { path: "{{ basedir }}/icinga_api_pass",     length: 8 }
+    - { path: "{{ basedir }}/mysql_admin_pass",    length: 12 }
+    - { path: "{{ basedir }}/mysql_user_pass",     length: 12 }
 
- 
+
+- name: Setup OAuth Client Info 
+  ansible.builtin.debug:
+    msg: "Client ID: {{ servicename }} // Client Secret: {{ oauth_client_secret }} // Redirect-URI: https://{{ domain }}/_oauth" 
+
+
 - name: pakete installieren
   apt:
     update_cache: no
@@ -17,10 +23,12 @@
     name: 
       - logrotate
 
+
 - name: icinga LogRotate config erstellen 
   template: 
     src: logrotate 
     dest: /etc/logrotate.d/icinga
+
 
 - name: "create folder struct for {{ servicename }}"
   file: 
@@ -46,6 +54,7 @@
     - check_rbl_helper.sh
     - notify_by_pushover.sh
     - etc/locale.gen
+    - etc/oauth_header.conf
   notify: restart icinga docker
   register: dockerconfig
 
