@@ -1,7 +1,7 @@
 {
-    "max_open_trades": 10,
+    "max_open_trades": {% if freqtrade_dry_run %}10{% else %}15{% endif %},
     "stake_currency": "EUR",
-    "stake_amount": 100,
+    "stake_amount": {% if freqtrade_dry_run %}100{% else %}200{% endif %},
     "tradable_balance_ratio": 0.99,
     "fiat_display_currency": "EUR",
     "timeframe": "{{ freqtrade_timeframe }}",
@@ -71,7 +71,7 @@
     },
     {% else %}
     "telegram": {
-        "enabled": true,
+        "enabled": false,
         "token": "{{ telegram_bot_token }}",
         "chat_id": "{{ telegram_chat_id }}",
         "keyboard": [
@@ -84,24 +84,24 @@
             "status": "silent",
             "warning": "on",
             "startup": "off",
-            "entry": "silent",
-            "entry_fill": "on",
-            "entry_cancel": "silent",
+            "entry": "off",
+            "entry_fill": "off",
+            "entry_cancel": "off",
             "exit": {
                 "roi": "silent",
-                "emergency_exit": "on",
-                "force_exit": "on",
+                "emergency_exit": "silent",
+                "force_exit": "off",
                 "exit_signal": "silent",
-                "trailing_stop_loss": "on",
-                "stop_loss": "on",
-                "stoploss_on_exchange": "on",
-                "custom_exit": "silent",
-                "partial_exit": "on"
+                "trailing_stop_loss": "off",
+                "stop_loss": "off",
+                "stoploss_on_exchange": "off",
+                "custom_exit": "off",
+                "partial_exit": "off"
             },
-            "exit_cancel": "on",
+            "exit_cancel": "silent",
             "exit_fill": "off",
             "protection_trigger": "off",
-            "protection_trigger_global": "on",
+            "protection_trigger_global": "silent",
             "strategy_msg": "off",
             "show_candle": "off"
         },
