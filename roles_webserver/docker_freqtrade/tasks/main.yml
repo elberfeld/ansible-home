@@ -40,7 +40,7 @@
     - "docker-compose.yml"
     - "copy-histdata.sh"
     - "download-data.sh"
-    - "hyperopt-strategy.sh"
+    - "hyperopt-Supertrend.sh"
     - "backtest-strategy.sh"
     - "data/config.json"
     - "data/strategies/Strategy002.json"
