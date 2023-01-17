@@ -291,8 +291,8 @@
         servicename: freqtrade, 
         basedir: /srv/freqtrade, 
         domain: freqtrade.void.ms,
-        freqtrade_strategy: slope_is_dope2,
-        freqtrade_timeframe: 4h,
+        freqtrade_strategy: keltnerhopt,
+        freqtrade_timeframe: 1d,
         freqtrade_dry_run: false
       }
     - { 
