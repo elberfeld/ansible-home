@@ -66,7 +66,7 @@ monitoring:
     - { ip: "1.1.1.1", name: "Cloudflare" }
 
 homematic_ccu: 
-  id: "OEQ1046187"
+  id: "ccu2"
   ip: "10.5.0.252"
 
 homematic_smoketeam: 
@@ -88,9 +88,9 @@ homematic_tempsensor:
   - { id: "OEQ0160159", type: "HM-WDS40-TH-I-2", name: "Sensor Garage",  groups: "gGarage" }
   - { id: "QEQ1859960", type: "HM-WDS10-TH-O", name: "Sensor Wetter",  groups: "gAussen" }
 
-homematic_openclosesensor:
+# homematic_openclosesensor:
 #  - { id: "QEQ0014557", type: "HM-Sec-TiS", name: "Sensor Garagentor" }
-  - { id: "OEQ1478962", type: "HM-Sec-SC-2", name: "Sensor2 Garagentor",  groups: "gGarage" }
+#  - { id: "OEQ1478962", type: "HM-Sec-SC-2", name: "Sensor2 Garagentor",  groups: "gGarage" }
 #  - { id: "MEQ1136898", type: "HM-Sec-SC-2", name: "Fenster unten Badezimmer" }
 #  - { id: "NEQ1833602", type: "HM-Sec-SC-2", name: "Fenster oben Badezimmer" }
 

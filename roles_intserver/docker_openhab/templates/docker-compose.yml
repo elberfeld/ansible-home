@@ -6,7 +6,7 @@ services:
   
   app:
 
-    image: openhab/openhab:3.2.0-debian
+    image: openhab/openhab:3.4.1-debian
     restart: always
     privileged: true
     network_mode: host
@@ -31,7 +31,7 @@ services:
 
   influxdb:
 
-    image: influxdb:2.0.8
+    image: influxdb:2.6.1
     restart: always
     ports:
       - {{ int_ip4 }}:{{ influxdb_port }}:8086
