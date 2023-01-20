@@ -30,6 +30,7 @@ docker:
 
 
 webserver_domains:
+  - "freqtrade-test"
   - "freqtrade1"
   - "freqtrade2"
   - "freqtrade3"
