@@ -30,29 +30,11 @@
       }
     - { 
         role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade1, 
-        basedir: /srv/freqtrade1, 
-        domain: freqtrade1.void.ms,
-        freqtrade_strategy: NostalgiaForInfinityX,
-        freqtrade_timeframe: 15m,
-        freqtrade_dry_run: true
-      }
-    - { 
-        role: roles_webserver/docker_freqtrade, tags: freqtrade,
         servicename: freqtrade2, 
         basedir: /srv/freqtrade2, 
         domain: freqtrade2.void.ms,
         freqtrade_strategy: Supertrend,
         freqtrade_timeframe: 4h,
-        freqtrade_dry_run: true
-      }
-    - { 
-        role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade3, 
-        basedir: /srv/freqtrade3, 
-        domain: freqtrade3.void.ms,
-        freqtrade_strategy: Scalp,
-        freqtrade_timeframe: 1d,
         freqtrade_dry_run: true
       }
     - { 
@@ -71,42 +53,6 @@
         domain: freqtrade5.void.ms,
         freqtrade_strategy: slope_is_dope2,
         freqtrade_timeframe: 4h,
-        freqtrade_dry_run: true
-      }
-    - { 
-        role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade6, 
-        basedir: /srv/freqtrade6, 
-        domain: freqtrade6.void.ms,
-        freqtrade_strategy: Strategy001,
-        freqtrade_timeframe: 15m,
-        freqtrade_dry_run: true
-      }
-    - { 
-        role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade7, 
-        basedir: /srv/freqtrade7, 
-        domain: freqtrade7.void.ms,
-        freqtrade_strategy: Strategy002,
-        freqtrade_timeframe: 15m,
-        freqtrade_dry_run: true
-      }
-    - { 
-        role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade8, 
-        basedir: /srv/freqtrade8, 
-        domain: freqtrade8.void.ms,
-        freqtrade_strategy: Strategy003,
-        freqtrade_timeframe: 15m,
-        freqtrade_dry_run: true
-      }
-    - { 
-        role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade9, 
-        basedir: /srv/freqtrade9, 
-        domain: freqtrade9.void.ms,
-        freqtrade_strategy: Strategy004,
-        freqtrade_timeframe: 15m,
         freqtrade_dry_run: true
       }
     - { 
