@@ -24,6 +24,7 @@ services:
 
   auth:
     image: thomseddon/traefik-forward-auth:2.2
+    restart: always
     environment: 
       LOG_LEVEL: info
       DEFAULT_ACTION: auth
