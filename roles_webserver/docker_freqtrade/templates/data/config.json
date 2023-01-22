@@ -1,8 +1,8 @@
 {
-    "max_open_trades": {% if freqtrade_dry_run %}10{% else %}15{% endif %},
+    "max_open_trades": 15,
     "stake_currency": "EUR",
-    "stake_amount": {% if freqtrade_dry_run %}100{% else %}200{% endif %},
-    "tradable_balance_ratio": 0.99,
+    "stake_amount": "unlimited",
+    "tradable_balance_ratio": 0.95,
     "fiat_display_currency": "EUR",
     "timeframe": "{{ freqtrade_timeframe }}",
     "dry_run": {{ freqtrade_dry_run | lower }},
@@ -40,7 +40,11 @@
     },
     "pairlists": [
         {
-            "method": "StaticPairList"
+            "method": "VolumePairList",
+            "number_assets": 20,
+            "sort_key": "quoteVolume",
+            "min_value": 0,
+            "refresh_period": 1800
         },
         {
             "method": "AgeFilter", "min_days_listed": 10

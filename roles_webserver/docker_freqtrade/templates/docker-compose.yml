@@ -3,7 +3,7 @@ version: "3.4"
 services:
 
   app:
-    image: freqtradeorg/freqtrade:2022.11
+    image: freqtradeorg/freqtrade:2022.12
     restart: always
     command: >
       trade
