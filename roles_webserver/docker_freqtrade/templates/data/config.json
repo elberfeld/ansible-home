@@ -1,5 +1,5 @@
 {
-    "max_open_trades": 15,
+    "max_open_trades": 20,
     "stake_currency": "EUR",
     "stake_amount": "unlimited",
     "tradable_balance_ratio": 0.95,
