@@ -237,8 +237,8 @@
         servicename: freqtrade, 
         basedir: /srv/freqtrade, 
         domain: freqtrade.void.ms,
-        freqtrade_strategy: keltnerhopt,
-        freqtrade_timeframe: 1d,
+        freqtrade_strategy: Supertrend,
+        freqtrade_timeframe: 4h,
         freqtrade_dry_run: false
       }
     - { 
