@@ -50,18 +50,6 @@ services:
       - default
       - web
 
-  syncreplexporter:
-    build: . 
-    restart: always
-    depends_on:
-      - openldap
-    volumes:
-      - "{{ basedir }}/syncrepl_exporter.yml:/syncrepl_exporter.yml"
-    ports:
-      - {{ int_ip4 }}:9328:9328
-    networks:
-      - default
-  
     
 networks:
   web:

@@ -21,8 +21,6 @@
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - docker-compose.yml
-    - Dockerfile 
-    - syncrepl_exporter.yml 
 
 - name: "start {{ servicename }} docker"
   docker_compose:
