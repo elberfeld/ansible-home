@@ -104,12 +104,6 @@
         servicename: dockerstats, 
         basedir: /srv/dockerstats 
       }
-    - { 
-        role: roles_common/docker_ldap, tags: ldap, 
-        servicename: ldap, 
-        basedir: /srv/ldap, 
-        domain: ldap.void.ms
-      }
     - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
     - { 
@@ -207,12 +201,6 @@
 - hosts: webserver2
   remote_user: root
   roles:
-    - { 
-        role: roles_common/docker_ldap, tags: ldap,
-        servicename: ldap, 
-        basedir: /srv/ldap, 
-        domain: ldap2.void.ms
-      }
     - { 
         role: roles_common/docker_traefik, tags: traefik,
         servicename: traefik, 
