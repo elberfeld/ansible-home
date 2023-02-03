@@ -8,10 +8,6 @@ services:
     restart: always
     command: --loglevel debug
     hostname: {{ inventory_hostname }}-sync
-    extra_hosts:
-      - "webserver1-sync{% if inventory_hostname == "webserver1" %}-dummy{% endif %}:{{ hostvars['webserver1'].int_ip4 }}"
-      - "webserver2-sync{% if inventory_hostname == "webserver2" %}-dummy{% endif %}:{{ hostvars['webserver2'].int_ip4 }}"
-      - "intserver-sync{% if inventory_hostname == "intserver" %}-dummy{% endif %}:{{ hostvars['intserver'].int_ip4 }}"
     volumes:
       - "{{ basedir }}/database:/var/lib/ldap"
       - "{{ basedir }}/config:/etc/ldap/slapd.d"
@@ -27,8 +23,7 @@ services:
       - LDAP_READONLY_USER_USERNAME=readonly
       - LDAP_READONLY_USER_PASSWORD={{ ldap_readonly_pass }}
       - LDAP_TLS_VERIFY_CLIENT=never
-      - LDAP_REPLICATION=true
-      - LDAP_REPLICATION_HOSTS=#PYTHON2BASH:['ldap://webserver1-sync','ldap://webserver2-sync','ldap://intserver-sync']
+      - LDAP_REPLICATION=false
     networks:
       - default
   
