@@ -41,3 +41,4 @@ webserver_domains:
   - "hackmd"
   - "matrix"
   - "nextcloud"
+  - "oauth-test"
