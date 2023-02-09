@@ -31,7 +31,6 @@ alert:
     - { name: "icinga_graphite_1" }
     - { name: "ldap_openldap_1" }
     - { name: "ldap_phpldapadmin_1" }
-    - { name: "ldap_syncreplexporter_1" }
     - { name: "promtail_app_1" }
     - { name: "traefik_app_1" }
   disks: 

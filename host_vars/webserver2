@@ -26,9 +26,6 @@ alert:
     - { name: "invoicefetcher_sftpserver_1" }
     - { name: "keycloak_app_1" }
     - { name: "keycloak_db_1" }
-    - { name: "ldap_openldap_1" }
-    - { name: "ldap_phpldapadmin_1" }
-    - { name: "ldap_syncreplexporter_1" }
     - { name: "mail_postfix-exporter_1" }
     - { name: "mail_traefik-certdumper_1" }
     - { name: "mail_unbound-mailcow_1" }
@@ -97,7 +94,6 @@ webserver_domains:
   - "collabora"
   - "docs"
   - "freqtrade"
-  - "ldap2"
   - "mail"
   - "n8n"
   - "keycloak"
