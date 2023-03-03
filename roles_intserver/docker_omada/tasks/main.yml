@@ -1,0 +1,30 @@
+
+---
+
+- name: "create folder struct for {{ servicename }}"
+  file: 
+    path: "{{ basedir }}" 
+    state: "directory"
+
+- name: "create folder struct for {{ servicename }}"
+  file: 
+    path: "{{ basedir }}/{{ item }}" 
+    state: "directory"
+    owner: 508
+    group: 508
+  with_items:
+    - "data"
+    - "logs"
+
+- name: "create config files for {{ servicename }}"
+  template: 
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - docker-compose.yml 
+
+- name: "start {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present
+

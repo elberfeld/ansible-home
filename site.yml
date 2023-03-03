@@ -135,6 +135,15 @@
         unifi_port_https: 8443
       }
     - { 
+        role: roles_intserver/docker_omada, tags: omada, 
+        servicename: omada,
+        basedir: /srv/omada/,
+        domain: "omada.void.lan",
+        omada_port_http: 8088,
+        omada_port_https: 8043,
+        omada_portal_https: 8843
+      }
+    - { 
         role: roles_intserver/docker_openhab, 
         tags: openhab,
         servicename: openhab,

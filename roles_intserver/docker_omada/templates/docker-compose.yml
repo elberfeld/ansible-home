@@ -1,0 +1,58 @@
+
+version: "3"
+
+services:
+
+  app:
+
+    image: mbentley/omada-controller:5.8.4
+    restart: always
+    ports:
+      - {{ omada_port_http }}:8088
+      - {{ omada_port_https }}:8043
+      - {{ omada_portal_https }}:8843 
+      - 27001:27001/udp 
+      - 29810:29810/udp 
+      - 29811:29811 
+      - 29812:29812 
+      - 29813:29813 
+      - 29814:29814 
+    sysctls:
+      - net.ipv4.ip_unprivileged_port_start=0
+    volumes:
+#      - "{ certFile }:/cert/tls.crt:ro"
+#      - "{ keyFile }:/cert/tls.key:ro"
+      - "{{ basedir }}/data:/opt/tplink/EAPController/data"
+      - "{{ basedir }}/logs:/opt/tplink/EAPController/logs"
+    environment:
+      TZ: Europe/Berlin
+      PUID: 508
+      PGID: 508
+      MANAGE_HTTP_PORT: {{ omada_port_http }}
+      MANAGE_HTTPS_PORT: {{ omada_port_https }}
+      PORTAL_HTTP_PORT: {{ omada_port_http }}
+      PORTAL_HTTPS_PORT: {{ omada_portal_https }}
+      PORT_ADOPT_V1: 29812
+      PORT_APP_DISCOVERY: 27001
+      PORT_DISCOVERY: 29810
+      PORT_MANAGER_V1: 29811
+      PORT_MANAGER_V2: 29814
+      PORT_UPGRADE_V1: 29813
+      SHOW_SERVER_LOGS: "true"
+      SHOW_MONGODB_LOGS: "false"
+      SSL_CERT_NAME: "tls.crt"
+      SSL_KEY_NAME: "tls.key"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - "traefik.http.routers.{{ servicename }}.middlewares={{ servicename }}-redirect"
+      - "traefik.http.middlewares.{{ servicename }}-redirect.redirectregex.regex=(.)*"
+      - "traefik.http.middlewares.{{ servicename }}-redirect.redirectregex.replacement=https://{{ domain }}:{{ omada_port_https }}"
+    networks:
+      - default
+#      - web
+
+#networks:
+#  web:
+#    external: true
