@@ -5,7 +5,7 @@ services:
 
   app:
 
-    image: mbentley/omada-controller:5.8
+    image: mbentley/omada-controller:5.9
     restart: always
     ports:
       - {{ omada_port_http }}:8088
