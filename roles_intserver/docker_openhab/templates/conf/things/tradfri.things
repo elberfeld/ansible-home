@@ -3,6 +3,6 @@
 // identity, preSharedKey können dann aus OpenHAB ausgelesen werden, code muss entfernt werden
 // Rest-API: http://control/rest/things/tradfri%3Agateway%3Agw4491602c1227
 
-//Bridge tradfri:gateway:gw4491602c1227 [ host="10.5.0.251", code="{{ tradfri_code }}" ]
+//Bridge tradfri:gateway:gw4491602c1227 [ host="{{ fixed_ip.tradfri_gateway }}", code="{{ tradfri_code }}" ]
 
-Bridge tradfri:gateway:gw4491602c1227 [ host="10.5.0.251", identity="{{ tradfri_identity }}", preSharedKey="{{ tradfri_key }}" ]
+Bridge tradfri:gateway:gw4491602c1227 [ host="{{ fixed_ip.tradfri_gateway }}", identity="{{ tradfri_identity }}", preSharedKey="{{ tradfri_key }}" ]

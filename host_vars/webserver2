@@ -66,7 +66,7 @@ alert:
 # Primäre IP Adressen des Hosts 
 ext_ip4: 116.203.41.76
 ext_ip6: 2a01:4f8:1c1c:393c::1
-int_ip4: 10.100.1.2
+int_ip4: "{{ fixed_ip.webserver2 }}"
 
 # Lokale LDAP Settings   
 ldap_local:

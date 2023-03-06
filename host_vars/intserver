@@ -34,7 +34,7 @@ alert:
 
 
 # Primäre IP Adressen des Hosts 
-int_ip4: 10.5.0.111
+int_ip4: "{{ fixed_ip.intserver }}"
 
 # Lokale LDAP Settings   
 ldap_local:

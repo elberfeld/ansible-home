@@ -39,17 +39,29 @@ ldap_global:
   group_active_dn: cn=active,ou=groups,dc=void,dc=ms
   group_admin_dn: cn=admin,ou=groups,dc=void,dc=ms
 
+# fest vergabene interne IP Adressen 
+fixed_ip:
+  firewall: 10.5.0.254
+  switch: 10.5.0.253
+  homematic_ccu: 10.5.0.252
+  tradfri_gateway: 10.5.0.251
+  wlan_ap1: 10.5.0.249
+  shelly_pro3em: 10.5.0.248
+  sony_tv: 10.5.0.247 
+  handy_privat: 10.5.0.246 
+  handy_arbeit: 10.5.0.245 
+  hpserver: 10.5.0.200
+  intserver: 10.5.0.111
+  webserver1: 10.100.1.1
+  webserver2: 10.100.1.2
+
 # zentraler MQTT Broker
 mqtt:
-  ip: 10.5.0.111
+  ip: "{{ fixed_ip.intserver }}"
 
 # zentrales Logging 
 loki:
-  server: http://10.5.0.111:3100
-
-# Zentrale Alerta Instanz
-alerta:
-  url: "https://alerta.void.ms"
+  server: "http://{{ fixed_ip.intserver }}:3100"
 
 # Monitoring 
 monitoring:
@@ -67,7 +79,7 @@ monitoring:
 
 homematic_ccu: 
   id: "ccu2"
-  ip: "10.5.0.252"
+  ip: "{{ fixed_ip.sony_tv }}"
 
 homematic_smoketeam: 
   id: "T-NEQ0442083"

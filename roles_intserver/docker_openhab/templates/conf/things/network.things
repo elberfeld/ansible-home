@@ -1,5 +1,5 @@
 
 // Netzwerk Geräte 
 
-network:pingdevice:handy_privat [ hostname="10.5.0.90", retry=1, timeout=5000, refreshInterval=10000, uses_arp_ping="yes" ]
-network:pingdevice:handy_arbeit [ hostname="10.5.0.91", retry=1, timeout=5000, refreshInterval=10000, uses_arp_ping="yes" ]
+network:pingdevice:handy_privat [ hostname="{{ fixed_ip.handy_privat }}", retry=1, timeout=5000, refreshInterval=10000, uses_arp_ping="yes" ]
+network:pingdevice:handy_arbeit [ hostname="{{ fixed_ip.handy_arbeit }}", retry=1, timeout=5000, refreshInterval=10000, uses_arp_ping="yes" ]
