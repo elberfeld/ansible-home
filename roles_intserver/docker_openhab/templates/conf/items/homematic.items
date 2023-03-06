@@ -3,22 +3,22 @@
 
 // Rauchmelder-Team
 Switch SmokeTeam_STATE "Rauchmelder Gruppe Status" <smoke> ({{ homematic_smoketeam.groups }}) ["Measurement","Alarm"] {
-    channel="homematic:{{ homematic_smoketeam.type }}:{{ homematic_ccu.id }}:{{ homematic_smoketeam.id }}:1#STATE"
+    channel="homematic:{{ homematic_smoketeam.type }}:ccu2:{{ homematic_smoketeam.id }}:1#STATE"
 }
 
 {% for device in homematic_rauchmelder %}
 
 // homematic_rauchmelder
 Switch {{ device.id }}_UNREACH "{{ device.name }} Unreach" <network> ({{ device.groups }}) ["Measurement","Status"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:0#UNREACH"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:0#UNREACH"
 }
 
 Switch {{ device.id }}_LOWBAT "{{ device.name }} LowBatt" <batterylevel> ({{ device.groups }}) ["Measurement","LowBattery"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:0#LOWBAT"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:0#LOWBAT"
 }
 
 Switch {{ device.id }}_STATE "{{ device.name }} Status" <smoke> ({{ device.groups }}) ["Measurement","Alarm"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:1#STATE"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:1#STATE"
 }
 
 {% endfor %}
@@ -27,28 +27,28 @@ Switch {{ device.id }}_STATE "{{ device.name }} Status" <smoke> ({{ device.group
 
 // homematic_heizung
 Switch {{ device.id }}_UNREACH "{{ device.name }} Unreach" <network> ({{ device.groups }}) ["Measurement","Status"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:0#UNREACH"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:0#UNREACH"
 }
 
 Switch {{ device.id }}_LOWBAT "{{ device.name }} LowBatt" <batterylevel> ({{ device.groups }}) ["Measurement","LowBattery"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:0#LOWBAT"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:0#LOWBAT"
 }
 
 String {{ device.id }}_CONTROLMODE "{{ device.name }} ControlMode" <settings> ({{ device.groups }}) ["Measurement","Status"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:4#CONTROL_MODE"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:4#CONTROL_MODE"
 }
 
 Number:Temperature {{ device.id }}_SETTEMPERATURE "{{ device.name }}" <heating> ({{ device.groups }}) ["Setpoint","Temperature"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:4#SET_TEMPERATURE", 
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:4#SET_TEMPERATURE", 
     alexa="ThermostatController.targetSetpoint" [scale="Celsius"]
 }
 
 Number:Dimensionless {{ device.id }}_VALVESTATE "{{ device.name }} Leistung" <line> ({{ device.groups }}) ["Measurement","Level"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:4#VALVE_STATE"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:4#VALVE_STATE"
 }
 
 Number:Temperature {{ device.id }}_ACTUALTEMPERATURE "{{ device.name }} Temperatur" <temperature> ({{ device.groups }}) ["Measurement","Temperature","CurrentTemperature"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:4#ACTUAL_TEMPERATURE", 
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:4#ACTUAL_TEMPERATURE", 
     alexa="TemperatureSensor.temperature" [scale="Celsius"]
 } 
 
@@ -58,20 +58,20 @@ Number:Temperature {{ device.id }}_ACTUALTEMPERATURE "{{ device.name }} Temperat
 
 // homematic_sensor
 Switch {{ device.id }}_UNREACH "{{ device.name }} Unreach" <network> ({{ device.groups }}) ["Measurement","Status"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:0#UNREACH"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:0#UNREACH"
 }
 
 Switch {{ device.id }}_LOWBAT "{{ device.name }} LowBatt" <batterylevel> ({{ device.groups }}) ["Measurement","LowBattery"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:0#LOWBAT"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:0#LOWBAT"
 }
 
 Number:Temperature {{ device.id }}_TEMPERATURE "{{ device.name }} Temp" <temperature> ({{ device.groups }}) ["Measurement","Temperature","CurrentTemperature"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:1#TEMPERATURE", 
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:1#TEMPERATURE", 
     alexa="TemperatureSensor.temperature" [scale="Celsius"]
 }
 
 Number:Dimensionless {{ device.id }}_HUMIDITY "{{ device.name }} Humidity" <humidity> ({{ device.groups }}) ["Measurement","Humidity","CurrentHumidity"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:1#HUMIDITY", 
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:1#HUMIDITY", 
     alexa="RangeController.rangeValue" [friendlyNames="@Setting.Humidity", nonControllable=true, supportedRange="0:100:1", unitOfMeasure="Percent"]
 }
 
@@ -82,15 +82,15 @@ Number:Dimensionless {{ device.id }}_HUMIDITY "{{ device.name }} Humidity" <humi
 
 // homematic_fenster
 Switch  {{ device.id }}_UNREACH "{{ device.name }} Unreach" <network> ({{ device.groups }}) ["Measurement","Status"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:0#UNREACH"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:0#UNREACH"
 }
 
 Switch  {{ device.id }}_LOWBAT "{{ device.name }} LowBatt" <batterylevel> ({{ device.groups }}) ["Measurement","LowBattery"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:0#LOWBAT"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:0#LOWBAT"
 }
 
 Switch  {{ device.id }}_State "{{ device.name }} Status" <window> ({{ device.groups }}) ["Measurement", "Status"] {
-    channel="homematic:{{ device.type }}:{{ homematic_ccu.id }}:{{ device.id }}:1#STATE"
+    channel="homematic:{{ device.type }}:ccu2:{{ device.id }}:1#STATE"
 }
 
 {% endfor %}

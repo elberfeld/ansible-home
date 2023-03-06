@@ -50,6 +50,7 @@ fixed_ip:
   sony_tv: 10.5.0.247 
   handy_privat: 10.5.0.246 
   handy_arbeit: 10.5.0.245 
+  open_mqtt_gateway_rf433: 10.5.0.244
   hpserver: 10.5.0.200
   intserver: 10.5.0.111
   webserver1: 10.100.1.1
@@ -77,9 +78,6 @@ monitoring:
     - { ip: "9.9.9.9", name: "Quad9" }
     - { ip: "1.1.1.1", name: "Cloudflare" }
 
-homematic_ccu: 
-  id: "ccu2"
-  ip: "{{ fixed_ip.sony_tv }}"
 
 homematic_smoketeam: 
   id: "T-NEQ0442083"
