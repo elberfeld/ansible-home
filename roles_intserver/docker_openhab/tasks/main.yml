@@ -74,6 +74,7 @@
     - conf/persistence/influxdb.persist
     - conf/persistence/rrd4j.persist
     - conf/rules/astro.rules
+    - conf/rules/mainpower.rules
     - conf/rules/notifications.rules
     - conf/rules/rfswitches.rules
     - conf/rules/rfinput.rules

@@ -7,6 +7,23 @@ Bridge mqtt:broker:mosquitto [ host="{{mqtt.ip}}", secure=false, enableDiscovery
         Type string : value "OpenMQTTGateway433toMQTT" [ stateTopic="OpenMQTTGateway/RF433/433toMQTT", transformationPattern="JSONPATH:$.value" ]
     }
 
+    Thing topic mainpower {
+    Channels:
+       Type number : a_current    "MainPower Current (A)"        [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.a_current" ]
+       Type number : a_voltage    "MainPower Voltage (A)"        [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.a_voltage" ]
+       Type number : a_act_power  "MainPower Actual Power (A)"   [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.a_act_power" ]
+       Type number : a_aprt_power "MainPower Apparent Power (A)" [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.a_aprt_power" ]
+       Type number : b_current    "MainPower Current (B)"        [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.a_current" ]
+       Type number : b_voltage    "MainPower Voltage (B)"        [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.b_voltage" ]
+       Type number : b_act_power  "MainPower Actual Power (B)"   [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.b_act_power" ]
+       Type number : b_aprt_power "MainPower Apparent Power (B)" [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.b_aprt_power" ]
+       Type number : c_current    "MainPower Current (C)"        [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.c_current" ]
+       Type number : c_voltage    "MainPower Voltage (C)"        [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.c_voltage" ]
+       Type number : c_act_power  "MainPower Actual Power (C)"   [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.c_act_power" ]
+       Type number : c_aprt_power "MainPower Apparent Power (C)" [ stateTopic="shellypro3em-c8f09e87a5dc/status/em:0", transformationPattern="JSONPATH:$.c_aprt_power" ]
+    }
+
+
 {% for device in mqtt_sensors %}
 
     Thing topic {{ device.id }} {
