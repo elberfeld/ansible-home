@@ -38,6 +38,7 @@ webserver_domains:
   - "dokuwiki"
   - "gitea"
   - "gitlab"
+  - "gitlab-registry"
   - "hackmd"
   - "matrix"
   - "nextcloud"
