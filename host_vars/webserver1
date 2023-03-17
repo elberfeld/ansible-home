@@ -60,7 +60,6 @@ webserver_domains:
   - "autodiscover"
   - "grafana"
   - "icinga"
-  - "ldap"
 
 
 # Definition von RSync Backup Jobs 
