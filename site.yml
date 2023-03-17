@@ -170,6 +170,7 @@
         basedir: /srv/dockerstats 
       }
 
+
 - hosts: webserver1 
   remote_user: root
   roles:
@@ -268,12 +269,6 @@
         servicename: paperless, 
         basedir: /srv/paperless,
         domain: docs.void.ms
-      }
-    - { 
-        role: roles_webserver/docker_keycloak, tags: keycloak, 
-        servicename: keycloak, 
-        basedir: /srv/keycloak, 
-        domain: keycloak.void.ms
       }
     - { 
         role: roles_webserver/docker_uffd, tags: uffd, 

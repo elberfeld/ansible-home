@@ -24,8 +24,6 @@ alert:
     - { name: "invoicefetcher_mysql_1" }
     - { name: "invoicefetcher_uploader_1" }
     - { name: "invoicefetcher_sftpserver_1" }
-    - { name: "keycloak_app_1" }
-    - { name: "keycloak_db_1" }
     - { name: "mail_postfix-exporter_1" }
     - { name: "mail_traefik-certdumper_1" }
     - { name: "mail_unbound-mailcow_1" }
@@ -54,8 +52,10 @@ alert:
     - { name: "paperless_auth_1" }
     - { name: "paperless_broker_1" }
     - { name: "paperless_db_1" }
-    - { name: "traefik_app_1" }
     - { name: "promtail_app_1" }
+    - { name: "traefik_app_1" }
+    - { name: "uffd_app_1" }
+    - { name: "uffd_db_1" }
     - { name: "wordpress_app_1" }
     - { name: "wordpress_db_1" }
   disks: 
@@ -96,7 +96,6 @@ webserver_domains:
   - "freqtrade"
   - "mail"
   - "n8n"
-  - "keycloak"
   - "uffd"
   - "www"
 
