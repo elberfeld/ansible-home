@@ -128,13 +128,6 @@
         mqtt_port: 1883
       }
     - { 
-        role: roles_intserver/docker_unifi, tags: unifi, 
-        servicename: unifi,
-        basedir: /srv/unifi/,
-        unifi_port_http: 8080,
-        unifi_port_https: 8443
-      }
-    - { 
         role: roles_intserver/docker_omada, tags: omada, 
         servicename: omada,
         basedir: /srv/omada/,
