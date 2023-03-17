@@ -29,16 +29,6 @@ oauth_global:
   logout_url: https://uffd.void.ms/logout
   metrics_url: https://uffd.void.ms/metrics
 
-# Globale LDAP Settings   
-ldap_global:
-  organization: VOID
-  domain: void.ms
-  search_base: dc=void,dc=ms
-  admin_dn: cn=admin,dc=void,dc=ms
-  readonly_dn: cn=readonly,dc=void,dc=ms
-  group_active_dn: cn=active,ou=groups,dc=void,dc=ms
-  group_admin_dn: cn=admin,ou=groups,dc=void,dc=ms
-
 # fest vergabene interne IP Adressen 
 fixed_ip:
   firewall: 10.5.0.254

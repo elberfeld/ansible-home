@@ -168,12 +168,6 @@
   remote_user: root
   roles:
     - { 
-        role: roles_common/docker_ldap, tags: ldap,
-        servicename: ldap, 
-        basedir: /srv/ldap, 
-        domain: ldap.void.ms
-      }
-    - { 
         role: roles_common/docker_traefik, tags: traefik,
         servicename: traefik, 
         basedir: /srv/traefik,

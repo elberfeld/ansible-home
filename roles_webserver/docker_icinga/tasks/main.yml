@@ -107,7 +107,6 @@
     - etc/icinga/conf.d/services_domains.conf
     - etc/icinga/conf.d/services_exporters.conf
     - etc/icinga/conf.d/services_global.conf
-    - etc/icinga/conf.d/services_ldap.conf
     - etc/icinga/conf.d/services_mail.conf
     - etc/icinga/conf.d/services_manual.conf
     - etc/icinga/conf.d/services_mqttsensors.conf
