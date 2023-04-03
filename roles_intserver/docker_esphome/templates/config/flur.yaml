@@ -1,0 +1,60 @@
+
+{% set devicename = "flur"  %}
+
+{% include "/config/device.d1_mini.inc.yaml" %}
+
+{% include "/config/common.inc.yaml" %}
+  
+  
+# Sensor configs 
+i2c:
+  sda: D2
+  scl: D1
+  scan: True
+
+binary_sensor:
+  - platform: gpio
+    name: Tuer
+    pin: 
+      number: D7
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+    filters:
+      - delayed_on: 50ms
+      - delayed_off: 50ms
+
+sensor:
+  - platform: bme280
+    temperature:
+      name: "Temp"
+      oversampling: 16x
+      filters:
+      - offset: 0.635
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 3
+          send_first_at: 3
+    pressure:
+      name: "Pressure"
+      oversampling: 16x
+      accuracy_decimals: 2
+      filters:
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 3
+          send_first_at: 3
+    humidity:
+      name: "Humidity"
+      oversampling: 16x
+      accuracy_decimals: 2
+      filters:
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 3
+          send_first_at: 3
+    address: 0x76
+    update_interval: 10s
+    iir_filter: 16x
+  

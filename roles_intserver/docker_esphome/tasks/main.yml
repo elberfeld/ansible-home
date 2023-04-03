@@ -20,6 +20,7 @@
     - docker-compose.yml
     - compile.sh
     - config/badezimmer.yaml
+    - config/flur.yaml
     - config/test-esp32.yaml
     - config/test-esp8266.yaml
     - config/kueche.yaml
