@@ -1,0 +1,48 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+   - { path: "{{ basedir }}/secrets/mailu_secret_key",  length: 32 }
+   - { path: "{{ basedir }}/secrets/mailu_admin_pass",  length: 32 }
+   - { path: "{{ basedir }}/secrets/mailu_api_token",  length: 32 }
+   - { path: "{{ basedir }}/secrets/mailu_db_pass",  length: 28 }
+   - { path: "{{ basedir }}/secrets/roundcube_db_pass",  length: 28 }
+   - { path: "{{ basedir }}/secrets/mysql_root_pass",  length: 28 }
+
+
+- name: "create folder struct for {{ servicename }}"
+  file:
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/secrets"
+    - "{{ basedir }}/db"
+    - "{{ basedir }}/db-init"
+    - "{{ basedir }}/mailu"
+
+
+- name: "deploy {{ servicename }} config files"
+  template:
+    dest:  "{{ basedir }}/{{ item }}"
+    src: "{{ item }}"
+    mode: 0644
+  with_items:
+    - docker-compose.yml
+    - mailu.env
+    - db-init/roundcube.sql
+  register: config
+
+
+# Start containers
+- name: "stop {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config.changed
+
+- name: "start {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present
+

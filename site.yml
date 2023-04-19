@@ -175,11 +175,6 @@
         domain_default: "www.void.ms"
       }
     - { 
-        role: roles_webserver/docker_autodiscover, tags: autodiscover,
-        servicename: autodiscover, 
-        basedir: /srv/autodiscover
-      }
-    - { 
         role: roles_webserver/docker_grafana, tags: grafana, 
         servicename: grafana, 
         basedir: /srv/grafana, 
@@ -237,7 +232,8 @@
         role: roles_webserver/docker_mail, tags: mail,
         servicename: mail, 
         basedir: /srv/mail, 
-        domain: mail.void.ms, 
+        domain: void.ms, 
+        mailserver: mail.void.ms, 
       }
     - { 
         role: roles_webserver/docker_n8n, tags: n8n,

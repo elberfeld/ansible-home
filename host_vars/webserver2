@@ -24,23 +24,17 @@ alert:
     - { name: "invoicefetcher_mysql_1" }
     - { name: "invoicefetcher_uploader_1" }
     - { name: "invoicefetcher_sftpserver_1" }
-    - { name: "mail_postfix-exporter_1" }
-    - { name: "mail_traefik-certdumper_1" }
-    - { name: "mail_unbound-mailcow_1" }
-    - { name: "mail_mysql-mailcow_1" }
-    - { name: "mail_redis-mailcow_1" }
-    - { name: "mail_clamd-mailcow_1" }
-    - { name: "mail_rspamd-mailcow_1" }
-    - { name: "mail_php-fpm-mailcow_1" }
-    - { name: "mail_dovecot-mailcow_1" }
-    - { name: "mail_postfix-mailcow_1" }
-    - { name: "mail_memcached-mailcow_1" }
-    - { name: "mail_nginx-mailcow_1" }
-    - { name: "mail_netfilter-mailcow_1" }
-    - { name: "mail_watchdog-mailcow_1" }
-    - { name: "mail_dockerapi-mailcow_1" }
-    - { name: "mail_olefy-mailcow_1" }
-    - { name: "mail_ipv6nat-mailcow_1" }
+    - { name: "mail_admin_1" }
+    - { name: "mail_antispam_1" }
+    - { name: "mail_certdumper_1" }
+    - { name: "mail_db_1" }
+    - { name: "mail_front_1" }
+    - { name: "mail_imap_1" }
+    - { name: "mail_oletools_1" }
+    - { name: "mail_redis_1" }
+    - { name: "mail_resolver_1" }
+    - { name: "mail_smtp_1" }
+    - { name: "mail_webmail_1" }
     - { name: "n8n_app_1" }
     - { name: "n8n_db_1" }
     - { name: "nextcloud_app_1" }

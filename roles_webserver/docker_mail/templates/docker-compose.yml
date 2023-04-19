@@ -1,0 +1,181 @@
+version: '2.2'
+
+services:
+
+  # External dependencies
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - "{{ basedir }}/mailu/redis:/data"
+    depends_on:
+      - resolver
+    dns:
+      - 192.168.203.254
+
+  # Certdumper
+  certdumper:
+    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}traefik-certdumper:${MAILU_VERSION:-2.0}
+    restart: always
+    environment:
+      - DOMAIN={{ mailserver }}
+      - TRAEFIK_VERSION=v2
+    volumes:
+      - "/srv/traefik:/traefik"
+      - "{{ basedir }}/mailu/certs:/output"
+
+  # Core services
+  front:
+    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-2.0}
+    restart: always
+    depends_on:
+      - db
+      - resolver
+    env_file: mailu.env
+    ports:
+      - "25:25" #smtp
+      - "465:465" #submissions
+      - "587:587" #submission
+      - "143:143" #imap
+      - "993:993" #imaps
+    volumes:
+      - "{{ basedir }}/mailu/certs:/certs"
+      - "{{ basedir }}/mailu/overrides/nginx:/overrides:ro"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.{{ servicename }}.entrypoints=websecure"
+      - "traefik.http.routers.{{ servicename }}.rule=Host(`{{ mailserver }}`)"
+      - "traefik.http.routers.{{ servicename }}.tls"
+      - "traefik.http.routers.{{ servicename }}.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.{{ servicename }}.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.{{ servicename }}.tls.domains[0].sans={{ mailserver }}"
+      - "traefik.http.routers.{{ servicename }}.service={{ servicename }}"
+      - "traefik.http.services.{{ servicename }}.loadbalancer.server.port=80"
+    networks:
+      - default
+      - web
+    dns:
+      - 192.168.203.254
+
+  resolver:
+    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}unbound:${MAILU_VERSION:-2.0}
+    env_file: mailu.env
+    restart: always
+    networks:
+      default:
+        ipv4_address: 192.168.203.254
+
+  admin:
+    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}admin:${MAILU_VERSION:-2.0}
+    restart: always
+    depends_on:
+      - db
+      - redis
+      - resolver
+    env_file: mailu.env
+    volumes:
+      - "{{ basedir }}/mailu/data:/data"
+      - "{{ basedir }}/mailu/dkim:/dkim"
+    dns:
+      - 192.168.203.254
+
+  imap:
+    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}dovecot:${MAILU_VERSION:-2.0}
+    restart: always
+    depends_on:
+      - db
+      - front
+      - resolver
+    env_file: mailu.env
+    volumes:
+      - "{{ basedir }}/mailu/mail:/mail"
+      - "{{ basedir }}/mailu/overrides/dovecot:/overrides:ro"
+    dns:
+      - 192.168.203.254
+
+  smtp:
+    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}postfix:${MAILU_VERSION:-2.0}
+    restart: always
+    depends_on:
+      - db
+      - front
+      - resolver
+    env_file: mailu.env
+    volumes:
+      - "{{ basedir }}/mailu/mailqueue:/queue"
+      - "{{ basedir }}/mailu/overrides/postfix:/overrides:ro"
+      - "{{ basedir }}/mailman-core/var/data:/opt/mailman:ro"
+    dns:
+      - 192.168.203.254
+
+  oletools:
+    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}oletools:${MAILU_VERSION:-2.0}
+    hostname: oletools
+    restart: always
+    depends_on:
+      - resolver
+    networks:
+      - noinet
+    dns:
+      - 192.168.203.254
+
+  antispam:
+    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}rspamd:${MAILU_VERSION:-2.0}
+    hostname: antispam
+    restart: always
+    depends_on:
+      - front
+      - redis
+      - oletools
+      - resolver
+    env_file: mailu.env
+    volumes:
+      - "{{ basedir }}/mailu/filter:/var/lib/rspamd"
+      - "{{ basedir }}/mailu/overrides/rspamd:/overrides:ro"
+    networks:
+      default:
+        ipv4_address: 192.168.203.253
+      noinet:
+    dns:
+      - 192.168.203.254
+
+  # Optional mailu services: Database
+  db:
+    image: mariadb:10.5
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - "{{ basedir }}/db:/var/lib/mysql"
+      - "{{ basedir }}/db-init:/docker-entrypoint-initdb.d:ro"
+    environment:
+      - MYSQL_DATABASE=mailu
+      - MYSQL_USER=mailu
+      - MYSQL_PASSWORD={{ mailu_db_pass }}
+      - MYSQL_ROOT_PASSWORD={{ mysql_root_pass }}
+
+  # Optional mailu services: Webmail
+  webmail:
+    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}webmail:${MAILU_VERSION:-2.0}
+    restart: always
+    depends_on:
+      - front
+    env_file: mailu.env
+    volumes:
+      - "{{ basedir }}/mailu/webmail:/data"
+      - "{{ basedir }}/mailu/overrides/roundcube:/overrides:ro"
+
+
+networks:
+  default:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        # must be a ULA range
+        - subnet: fd00:dead:beef:25::/64
+        - subnet: 192.168.203.0/24
+  noinet:
+    driver: bridge
+    internal: true
+  web:
+    external: true
