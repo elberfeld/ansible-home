@@ -28,6 +28,7 @@ alert:
     - { name: "mail_antispam_1" }
     - { name: "mail_certdumper_1" }
     - { name: "mail_db_1" }
+    - { name: "mail_fetchmail_1" }
     - { name: "mail_front_1" }
     - { name: "mail_imap_1" }
     - { name: "mail_oletools_1" }
