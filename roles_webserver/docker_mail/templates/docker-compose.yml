@@ -163,6 +163,15 @@ services:
       - "{{ basedir }}/mailu/webmail:/data"
       - "{{ basedir }}/mailu/overrides/roundcube:/overrides:ro"
 
+  # Optional mailu services: Fetchmail
+  fetchmail:
+    image: ghcr.io/mailu/fetchmail:2.0
+    restart: always
+    env_file: mailu.env
+    depends_on:
+      - smtp
+      - imap
+
 
 networks:
   default:
