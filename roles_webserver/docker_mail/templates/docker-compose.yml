@@ -2,9 +2,24 @@ version: '2.2'
 
 services:
 
-  # External dependencies
+  ################################################
+  # Additional Services
+  ################################################
+
+  db:
+    image: mariadb:10.5.19
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - "{{ basedir }}/db:/var/lib/mysql"
+      - "{{ basedir }}/db-init:/docker-entrypoint-initdb.d:ro"
+    environment:
+      - MYSQL_DATABASE=mailu
+      - MYSQL_USER=mailu
+      - MYSQL_PASSWORD={{ mailu_db_pass }}
+      - MYSQL_ROOT_PASSWORD={{ mysql_root_pass }}
+
   redis:
-    image: redis:alpine
+    image: redis:7.0.11:alpine
     restart: always
     volumes:
       - "{{ basedir }}/mailu/redis:/data"
@@ -13,7 +28,10 @@ services:
     dns:
       - 192.168.203.254
 
-  # Certdumper
+  ################################################
+  # Core Mailu Services: Database, Cache, etc.
+  ################################################
+
   certdumper:
     image: ghcr.io/mailu/traefik-certdumper:2.0
     restart: always
@@ -24,7 +42,14 @@ services:
       - "/srv/traefik:/traefik"
       - "{{ basedir }}/mailu/certs:/output"
 
-  # Core services
+  resolver:
+    image: ghcr.io/mailu/unbound:2.0
+    env_file: mailu.env
+    restart: always
+    networks:
+      default:
+        ipv4_address: 192.168.203.254
+
   front:
     image: ghcr.io/mailu/nginx:2.0
     restart: always
@@ -56,14 +81,6 @@ services:
       - web
     dns:
       - 192.168.203.254
-
-  resolver:
-    image: ghcr.io/mailu/unbound:2.0
-    env_file: mailu.env
-    restart: always
-    networks:
-      default:
-        ipv4_address: 192.168.203.254
 
   admin:
     image: ghcr.io/mailu/admin:2.0
@@ -139,20 +156,6 @@ services:
     dns:
       - 192.168.203.254
 
-  # Optional mailu services: Database
-  db:
-    image: mariadb:10.5
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    volumes:
-      - "{{ basedir }}/db:/var/lib/mysql"
-      - "{{ basedir }}/db-init:/docker-entrypoint-initdb.d:ro"
-    environment:
-      - MYSQL_DATABASE=mailu
-      - MYSQL_USER=mailu
-      - MYSQL_PASSWORD={{ mailu_db_pass }}
-      - MYSQL_ROOT_PASSWORD={{ mysql_root_pass }}
-
-  # Optional mailu services: Webmail
   webmail:
     image: ghcr.io/mailu/webmail:2.0
     restart: always
@@ -163,7 +166,6 @@ services:
       - "{{ basedir }}/mailu/webmail:/data"
       - "{{ basedir }}/mailu/overrides/roundcube:/overrides:ro"
 
-  # Optional mailu services: Fetchmail
   fetchmail:
     image: ghcr.io/mailu/fetchmail:2.0
     restart: always
