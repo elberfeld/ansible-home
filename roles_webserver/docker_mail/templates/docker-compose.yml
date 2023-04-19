@@ -15,7 +15,7 @@ services:
 
   # Certdumper
   certdumper:
-    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}traefik-certdumper:${MAILU_VERSION:-2.0}
+    image: ghcr.io/mailu/traefik-certdumper:2.0
     restart: always
     environment:
       - DOMAIN={{ mailserver }}
@@ -26,7 +26,7 @@ services:
 
   # Core services
   front:
-    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}nginx:${MAILU_VERSION:-2.0}
+    image: ghcr.io/mailu/nginx:2.0
     restart: always
     depends_on:
       - db
@@ -58,7 +58,7 @@ services:
       - 192.168.203.254
 
   resolver:
-    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}unbound:${MAILU_VERSION:-2.0}
+    image: ghcr.io/mailu/unbound:2.0
     env_file: mailu.env
     restart: always
     networks:
@@ -66,7 +66,7 @@ services:
         ipv4_address: 192.168.203.254
 
   admin:
-    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}admin:${MAILU_VERSION:-2.0}
+    image: ghcr.io/mailu/admin:2.0
     restart: always
     depends_on:
       - db
@@ -80,7 +80,7 @@ services:
       - 192.168.203.254
 
   imap:
-    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}dovecot:${MAILU_VERSION:-2.0}
+    image: ghcr.io/mailu/dovecot:2.0
     restart: always
     depends_on:
       - db
@@ -94,7 +94,7 @@ services:
       - 192.168.203.254
 
   smtp:
-    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}postfix:${MAILU_VERSION:-2.0}
+    image: ghcr.io/mailu/postfix:2.0
     restart: always
     depends_on:
       - db
@@ -109,7 +109,7 @@ services:
       - 192.168.203.254
 
   oletools:
-    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}oletools:${MAILU_VERSION:-2.0}
+    image: ghcr.io/mailu/oletools:2.0
     hostname: oletools
     restart: always
     depends_on:
@@ -120,7 +120,7 @@ services:
       - 192.168.203.254
 
   antispam:
-    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}rspamd:${MAILU_VERSION:-2.0}
+    image: ghcr.io/mailu/rspamd:2.0
     hostname: antispam
     restart: always
     depends_on:
@@ -154,7 +154,7 @@ services:
 
   # Optional mailu services: Webmail
   webmail:
-    image: ${DOCKER_ORG:-ghcr.io/mailu}/${DOCKER_PREFIX:-}webmail:${MAILU_VERSION:-2.0}
+    image: ghcr.io/mailu/webmail:2.0
     restart: always
     depends_on:
       - front
