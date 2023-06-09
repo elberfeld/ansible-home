@@ -10,7 +10,8 @@
 
     ,
     "metrics-addr": "{{int_ip4}}:9323",
-    "experimental": true
+    "experimental": true,
+    "ip6tables": true
 
 {% endif %}
 
