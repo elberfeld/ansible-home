@@ -4,7 +4,6 @@ tls:
     options:
         default:
             sniStrict: true
-            preferServerCipherSuites: true
             minVersion: "VersionTLS12"
             curvePreferences:
                 - "secp521r1"
