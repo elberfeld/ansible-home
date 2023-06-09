@@ -15,9 +15,9 @@ mail_domains:
     mxserver: mail.void.ms
     mxhostname: webserver2
     mailconf: mailconf=https://mail.void.ms/mail/config-v1.1.xml
-    spf: v=spf1 mx a:mail.void.ms -all
-    dmarc: v=DMARC1; p=none;
-    domainkey: o=-
+    spf: "v=spf1 mx a:{{ mail_domains.voidms.mxserver }} ip4:{{ hostvars['webserver2'].ext_ip4 }} ip6:{{ hostvars['webserver2'].ext_ip6 }} -all"
+    dmarc: "v=DMARC1; p=none;"
+    domainkey: "o=-"
     dkim:
       - { selector: "dkim", value: "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtbxWTtfdZjPI+T/EzsSEg6co2tppHvaPTdkpKzYcA6HM4vuqc0U/y+O1OFEDflYNNbvSLvC3/0Df8Skw9HS1my4JX1JanPRrgfSdXJyOtvdGZXi2npxz9f4Ma8DB0KnWK5XEoo0W4Z6p4+XPrBhKw+u9IMUQeW05jNwjdSVdEwk7KVOM9n1e4XPqA/cz\" \"ytqYxUGolx3Yd0XuUQ10aVyKAr+ZnHG+PgHEnYAVsX0tT/y+ggprIelINi9fDr/0JdQenVBQqx7K+NE5jMrN5CB4upzrmdouG5haE7BY4HMf91EPJpB1qyrr+UxniJ5ALsFKgfVteTe9K6qIUH8jneq5qQIDAQAB" }
 
