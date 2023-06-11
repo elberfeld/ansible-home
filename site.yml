@@ -76,7 +76,7 @@
         servicename: dockerstats, 
         basedir: /srv/dockerstats 
       }
-    - { role: roles_common/docker_promtail, tags: promtail }
+#    - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
     - { role: roles_hpserver/proxmox, tags: proxmox }
     - { 
