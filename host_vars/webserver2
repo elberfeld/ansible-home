@@ -17,7 +17,6 @@ alert:
     crit: 8
   containers: 
     - { name: "bind_app_1" }
-    - { name: "commafeed_app_1" }
     - { name: "collabora_app_1" }
     - { name: "dockerstats_app_1" }
     - { name: "freqtrade_app_1" }
@@ -85,7 +84,6 @@ docker:
 
 webserver_domains:
   - "cloud"
-  - "commafeed"
   - "collabora"
   - "docs"
   - "freqtrade"

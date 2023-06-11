@@ -201,12 +201,6 @@
         domain_default: "www.void.ms"
       }
     - { 
-        role: roles_webserver/docker_commafeed, tags: commafeed,
-        servicename: commafeed, 
-        basedir: /srv/commafeed, 
-        domain: commafeed.void.ms 
-      }
-    - { 
         role: roles_webserver/docker_collabora, tags: collabora,
         servicename: collabora, 
         basedir: /srv/collabora, 
