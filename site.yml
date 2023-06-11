@@ -119,7 +119,7 @@
         heimdall_port: 81 
       }
     - { role: roles_intserver/docker_hibiscus, tags: hibiscus }
-    - { role: roles_intserver/docker_loki, tags: loki }
+#    - { role: roles_intserver/docker_loki, tags: loki }
     - { 
         role: roles_intserver/docker_mqtt, 
         tags: mqtt,

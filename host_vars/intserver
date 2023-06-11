@@ -21,8 +21,8 @@ alert:
     - { name: "esphome_app_1" }
     - { name: "heimdall_app_1" }
     - { name: "hibiscus_db_1" }
-    - { name: "loki_app_1" }
-    - { name: "loki_vector_1" }
+#    - { name: "loki_app_1" }
+#    - { name: "loki_vector_1" }
     - { name: "mqtt_app_1" }
     - { name: "omada_app_1" }
     - { name: "openhab_app_1" }
