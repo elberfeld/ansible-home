@@ -15,7 +15,7 @@ mail_domains:
     mxserver: mail.void.ms
     mxhostname: webserver2
     mailconf: mailconf=https://mail.void.ms/mail/config-v1.1.xml
-    spf: "v=spf1 mx a:{{ mail_domains.voidms.mxserver }} ip4:{{ hostvars['webserver2'].ext_ip4 }} ip6:{{ hostvars['webserver2'].ext_ip6 }} -all"
+    spf: "v=spf1 mx a:mail.void.ms ip4:{{ hostvars['webserver2'].ext_ip4 }} ip6:{{ hostvars['webserver2'].ext_ip6 }} -all"
     dmarc: "v=DMARC1; p=none;"
     domainkey: "o=-"
     dkim:
