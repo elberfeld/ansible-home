@@ -28,7 +28,7 @@ alert:
     - { name: "icinga_auth_1" }
     - { name: "icinga_db_1" }
     - { name: "icinga_graphite_1" }
-    - { name: "promtail_app_1" }
+#    - { name: "promtail_app_1" }
     - { name: "traefik_app_1" }
   disks: 
     - { mountpoint: "/", warn: "3 GB", crit: "1 GB" }
