@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+
+  app:
+    image: ghcr.io/freifunkmuc/wg-access-server:v0.8.4
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv6.conf.all.forwarding: 1
+    volumes:
+      - "{{ basedir }}/data:/data"
+    ports:
+      - "{{ vpn_port }}:{{ vpn_port }}/udp"
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    environment:
+      - "WG_ADMIN_USERNAME=vpnadmin"
+      - "WG_ADMIN_PASSWORD={{ wg_admin_pass }}"
+      - "WG_WIREGUARD_PRIVATE_KEY={{ wg_private_key }}"
+      - "WG_VPN_CIDRV6=0" # to disable IPv6
+      - "WG_EXTERNAL_HOST={{ domain }}"
+      - "WG_DNS_ENABLED=true"
+      - "WG_DNS_UPSTREAM={{ int_ip4 }}"
+      - "WG_LOG_LEVEL=info"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8000
+    networks:
+      - default
+      - web
+
+
+networks:
+  web:
+    external: true

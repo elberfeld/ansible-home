@@ -188,6 +188,13 @@
         api_port: 5665,
         mysql_port: 13306, 
       }
+    - {
+        role: roles_webserver/docker_vpnserver, tags: vpnserver, 
+        servicename: vpnserver, 
+        basedir: /srv/vpnserver, 
+        domain: vpn.void.ms,
+        vpn_port: 51800
+      }
 
 
 - hosts: webserver2
