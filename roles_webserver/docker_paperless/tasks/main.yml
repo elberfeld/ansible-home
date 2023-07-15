@@ -1,5 +1,5 @@
 ---
-- include: ../functions/get_secret.yml
+- include_tasks: ../functions/get_secret.yml
   with_items:
    - { path: "{{ basedir }}/postgres_user_pass",   length: 12 }
    - { path: "{{ basedir }}/paperless_secret_key", length: 24 }

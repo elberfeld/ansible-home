@@ -1,5 +1,5 @@
 ---
-- include: ../functions/get_secret.yml
+- include_tasks: ../functions/get_secret.yml
   with_items:
    - { path: "{{ basedir }}/mysql_admin_pass",  length: 24 }
    - { path: "{{ basedir }}/mysql_user_pass",  length: 12 }

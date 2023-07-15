@@ -1,6 +1,6 @@
 ---
 
-- include: ../functions/get_secret.yml
+- include_tasks: ../functions/get_secret.yml
   with_items:
    - { path: /srv/openhab/influxdb_password,     length: 32 }
    - { path: /srv/openhab/influxdb_token,        length: 32 }
