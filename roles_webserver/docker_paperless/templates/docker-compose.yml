@@ -10,7 +10,7 @@ services:
 
 
   db:
-    image: postgres:13.9
+    image: postgres:15.4
     restart: always
     volumes:
       - "{{ basedir }}/db:/var/lib/postgresql/data"
