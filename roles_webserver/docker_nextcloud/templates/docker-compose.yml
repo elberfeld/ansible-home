@@ -12,8 +12,7 @@ services:
 
   mysql:
 
-    # neuere Version erst mit NC24: https://github.com/nextcloud/server/issues/25436
-    image: mariadb:10.5.13
+    image: mariadb:10.11.5
     restart: always
     volumes:
       - "{{ basedir }}/db/:/var/lib/mysql"
@@ -28,7 +27,7 @@ services:
 
   app:
 
-    image: nextcloud:24.0.1-apache
+    image: nextcloud:27.1.1-apache
     restart: always
     depends_on:
       - mysql

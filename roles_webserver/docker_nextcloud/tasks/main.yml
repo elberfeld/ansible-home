@@ -18,13 +18,29 @@
     path: "{{ item }}"
     state: "directory"
     owner: www-data
-    group: root
+    group: www-data
   with_items:
     - "{{ basedir }}"
     - "{{ basedir }}/data/"
-    - "{{ basedir }}/db/"
     - "{{ basedir }}/tmp/"
     - "{{ basedir }}/elasticsearch_data/"
+
+- name: "create folder struct for {{ servicename }} (db)"
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+    owner: 999
+    group: 999
+  with_items:
+    - "{{ basedir }}/db/"
+
+- name: "create folder struct for {{ servicename }} (paperless)"
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+    owner: 1000
+    group: 1000
+  with_items:
     - "/srv/paperless/"
     - "/srv/paperless/media/"
     - "/srv/paperless/media/documents/"
