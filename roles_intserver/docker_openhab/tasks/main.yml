@@ -85,12 +85,12 @@
     - conf/services/mqtt.cfg
     - conf/services/network.cfg
     - conf/services/openhabcloud.cfg
-    - conf/services/pushover.cfg
     - conf/services/runtime.cfg
     - conf/things/astro.things
     - conf/things/homematic.things
     - conf/things/mqtt.things
     - conf/things/network.things
+    - conf/things/pushover.things
     - conf/things/shelly.things
     - conf/things/tradfri.things
     - conf/things/weather.things

@@ -4,7 +4,10 @@ when
     Item MQTT_flur_tuer changed to OFF 
 then 
     logInfo("default.rules", "Tuer_Status_Change_Open")
-    sendPushoverMessage(pushoverBuilder("Tür offen"))
+
+    val actions = getActions("pushover", "pushover:pushover-account:account")
+    actions.sendMessage("Tür offen", "OpenHAB")
+
 end
 
 rule "Tuer_Status_Change_Close"
@@ -12,7 +15,10 @@ when
     Item MQTT_flur_tuer changed to ON
 then 
     logInfo("default.rules", "Tuer_Status_Change_Close")
-    sendPushoverMessage(pushoverBuilder("Tür zu"))
+
+    val actions = getActions("pushover", "pushover:pushover-account:account")
+    actions.sendMessage("Tür geschlossen", "OpenHAB")
+
 end
 
 
