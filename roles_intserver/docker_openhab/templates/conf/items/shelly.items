@@ -1,0 +1,15 @@
+
+// Shelly Pro 3EM Power Meter 
+// Support in Openhab is pending: https://github.com/openhab/openhab-addons/issues/14346
+
+Number MainPower_1_watts   "M1 Leistung (W)" {channel="shelly:shellypro3em:mainpower:meter1#currentWatts"}
+Number MainPower_1_voltage "M1 Volt (V)" {channel="shelly:shellypro3em:mainpower:meter1#voltage"}
+Number MainPower_1_current "M1 Strom (A)" {channel="shelly:shellypro3em:mainpower:meter1#current"}
+
+Number MainPower_2_watts   "M1 Leistung (W)" {channel="shelly:shellypro3em:mainpower:meter2#currentWatts"}
+Number MainPower_2_voltage "M1 Volt (V)" {channel="shelly:shellypro3em:mainpower:meter2#voltage"}
+Number MainPower_2_current "M1 Strom (A)" {channel="shelly:shellypro3em:mainpower:meter2#current"}
+
+Number MainPower_3_watts   "M1 Leistung (W)" {channel="shelly:shellypro3em:mainpower:meter3#currentWatts"}
+Number MainPower_3_voltage "M1 Volt (V)" {channel="shelly:shellypro3em:mainpower:meter3#voltage"}
+Number MainPower_3_current "M1 Strom (A)" {channel="shelly:shellypro3em:mainpower:meter3#current"}
