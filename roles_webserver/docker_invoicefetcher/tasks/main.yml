@@ -1,7 +1,7 @@
 ---
 
     
-- include: ../functions/get_secret.yml
+- include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: /srv/invoicefetcher/sftp_user_pass, length: 24 }
     - { path: /srv/invoicefetcher/nextcloud_user_pass, length: -1 }
