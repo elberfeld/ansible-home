@@ -33,6 +33,14 @@ Bridge mqtt:broker:mosquitto [ host="{{mqtt.ip}}", secure=false, enableDiscovery
 {% if device.humidity %}        Type number : humidity "Sensor {{ device.name }} Humidity" [ stateTopic="ESPHome/{{ device.id }}/sensor/humidity/state" ] {% endif %}
     }
 
+{% endfor %}
+
+{% for device in mqtt_sensors_binary %}
+
+    Thing topic {{ device.id1 }}{{ device.id2 }} {
+    Channels:
+        Type string : binary "{{ device.name }}"     [ stateTopic="ESPHome/{{ device.id1 }}/binary_sensor/{{ device.id2 }}/state" ]
+    }
 
 {% endfor %}
 

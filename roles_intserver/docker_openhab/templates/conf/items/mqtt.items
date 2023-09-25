@@ -46,3 +46,11 @@ Number MQTT_{{ device.id }}_humidity "Sensor {{ device.name }} Humidity [%.1f %%
 {% endif %}
 
 {% endfor %}
+
+{% for device in mqtt_sensors_binary %}
+
+String MQTT_{{ device.id1 }}_{{ device.id2 }}  "{{ device.name }} [%s]"  ({{ device.groups }}) { 
+    channel="mqtt:topic:mosquitto:{{ device.id1 }}{{ device.id2 }}:binary"
+}
+
+{% endfor %}

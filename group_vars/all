@@ -106,9 +106,12 @@ rfswitches:
 
 mqtt_sensors:
   - { id: "badezimmer",   name: "Badezimmer",    groups: "gBadezimmer",   temp: yes, pressure: yes, humidity: yes }
+  - { id: "flur",         name: "Flur",          groups: "gFlur",         temp: yes, pressure: yes, humidity: yes }
   - { id: "kueche",       name: "Küche",         groups: "gKueche",       temp: yes, pressure: yes, humidity: yes }
   - { id: "schlafzimmer", name: "Schlafzimmer",  groups: "gSchlafzimmer", temp: yes, pressure: yes, humidity: yes }
   - { id: "schreibtisch", name: "Schreibtisch",  groups: "gWohnzimmer",   temp: yes, pressure: yes, humidity: yes }
   - { id: "technikraum",  name: "Technikraum",   groups: "gTechnikraum",  temp: yes, pressure: yes, humidity: no  }
   - { id: "wohnzimmer",   name: "Wohnzimmer",    groups: "gWohnzimmer",   temp: yes, pressure: yes, humidity: yes }
 
+mqtt_sensors_binary:
+  - { id1: "flur", id2: "tuer", name: "Flur Tür", groups: "gFlur" }
