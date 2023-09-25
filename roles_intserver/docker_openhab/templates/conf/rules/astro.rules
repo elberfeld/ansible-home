@@ -1,9 +1,26 @@
 
+rule "Sunrise_LightOff"
+when
+	Channel "astro:sun:home:rise#event" triggered
+then
+    logInfo("default.rules", "Sunrise_LightOff // receivedEvent: " + receivedEvent)
+
+    switch(receivedEvent) {
+      case "START": {
+
+        // Switch Lights off 
+        LampeStehlampe.sendCommand(OFF)
+
+      }
+    }
+
+end
+
 rule "Homecome_Light_Rule"
 when
 	Item HandyPrivat changed
 then
-    logInfo("default.rules", "Homecome_Light_Rule // HandyPrivat: " + HandyPrivat.sate + " // Sun_Elevation: " + Sun_Elevation.state)	
+    logInfo("default.rules", "Homecome_Light_Rule // HandyPrivat: " + HandyPrivat.state + " // Sun_Elevation: " + Sun_Elevation.state)	
 
     // come home and dark => light on 
     if (HandyPrivat.state == ON && Sun_Elevation.state < 0) LampeStehlampe.sendCommand(ON)
