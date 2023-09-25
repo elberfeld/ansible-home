@@ -40,6 +40,10 @@ webserver_domains:
   - "gitlab"
   - "gitlab-registry"
   - "hackmd"
+  - "kanidm"
+  - "lldap"
   - "matrix"
   - "nextcloud"
   - "oauth-test"
+  - "authelia"
+
