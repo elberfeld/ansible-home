@@ -15,7 +15,7 @@ services:
     
   vector:
 
-    image: timberio/vector:0.10.0-alpine
+    image: timberio/vector:0.32.2-alpine
     restart: always
     depends_on: 
       - app
