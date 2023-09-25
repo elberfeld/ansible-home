@@ -69,6 +69,7 @@
     - conf/items/network.items
     - conf/items/other.items
     - conf/items/rfswitches.items
+    - conf/items/shelly.items
     - conf/items/tradfri.items
     - conf/items/weather.items
     - conf/persistence/influxdb.persist
@@ -90,6 +91,7 @@
     - conf/things/homematic.things
     - conf/things/mqtt.things
     - conf/things/network.things
+    - conf/things/shelly.things
     - conf/things/tradfri.things
     - conf/things/weather.things
 
