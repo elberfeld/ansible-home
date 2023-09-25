@@ -22,7 +22,9 @@ end
 
 rule TV_Wohnzimmer_setLights
 when 
-    Item TV_Wohnzimmer changed or Item Sun_Elevation changed 
+    Item TV_Wohnzimmer changed or 
+    Channel "astro:sun:home:rise#event" triggered or
+    Channel "astro:sun:home:set#event" triggered
 then   
     logInfo("default.rules", "TV_Wohnzimmer_setLights // TV_Wohnzimmer: " + TV_Wohnzimmer.state + " // Sun_Elevation: " + Sun_Elevation.state)
 
