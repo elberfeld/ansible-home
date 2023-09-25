@@ -1,6 +1,7 @@
 {
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1,
-    "openhab.host": "control",
-    "openhab.port": 80
+    "openhab.connection.host": "10.5.0.111",
+    "openhab.connection.port": 80,
+    "ansible.python.interpreterPath": "c:\\Python311\\python.exe"
 }
