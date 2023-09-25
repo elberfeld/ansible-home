@@ -5,7 +5,7 @@ services:
 
   app:
 
-    image: collabora/code:21.11.5.0.1
+    image: collabora/code:21.11.5.3.1
     restart: always
     tty: true
     cap_add:
