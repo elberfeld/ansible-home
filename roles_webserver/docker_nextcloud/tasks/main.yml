@@ -7,7 +7,7 @@
     name:
       - curl
 
-- include: ../functions/get_secret.yml
+- include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/nextcloud_admin_pass",  length: 24 }
     - { path: "{{ basedir }}/mysql_admin_pass",  length: 24 }

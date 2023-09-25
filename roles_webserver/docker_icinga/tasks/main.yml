@@ -1,6 +1,6 @@
 ---
 
-- include: ../functions/get_secret.yml
+- include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/forward_auth_secret", length: 64 }
     - { path: "{{ basedir }}/oauth_client_secret", length: 64 }
