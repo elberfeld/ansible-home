@@ -48,6 +48,7 @@ services:
       OVERWRITEPROTOCOL: "https"
       OVERWRITECLIURL: "https://{{ domain }}"
       OVERWRITEHOST: "{{ domain }}"
+      APPIMAGE_EXTRACT_AND_RUN: 1
       PHP_MEMORY_LIMIT: "2048M"
       PHP_UPLOAD_LIMIT: "512M"
     labels:
