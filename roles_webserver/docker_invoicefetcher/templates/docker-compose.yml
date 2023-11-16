@@ -35,7 +35,7 @@ services:
 
   mysql:
 
-    image: mariadb:10.4.10
+    image: mariadb:10.11.6
     restart: always
     ports:
       - "{{ int_ip4 }}:{{ mysqlport }}:3306"
