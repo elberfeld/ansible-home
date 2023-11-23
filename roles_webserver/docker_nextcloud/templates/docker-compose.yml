@@ -4,7 +4,7 @@ services:
 
   redis:
 
-    image: redis:6.2.13
+    image: redis:6.2.14
     restart: always
     networks:
       - default
