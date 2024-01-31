@@ -50,6 +50,7 @@ alert:
     - { name: "traefik_app_1" }
     - { name: "uffd_app_1" }
     - { name: "uffd_db_1" }
+    - { name: "watchtower_app_1" }
     - { name: "wordpress_app_1" }
     - { name: "wordpress_db_1" }
   disks: 

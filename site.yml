@@ -78,6 +78,11 @@
       }
 #    - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
+    - { 
+        role: roles_common/docker_watchtower, tags: watchtower,
+        servicename: watchtower,
+        basedir: /srv/watchtower
+      }
     - { role: roles_hpserver/proxmox, tags: proxmox }
     - { 
         role: roles_hpserver/samba, tags: samba, 
@@ -106,6 +111,11 @@
       }
 #    - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
+    - { 
+        role: roles_common/docker_watchtower, tags: watchtower,
+        servicename: watchtower,
+        basedir: /srv/watchtower,
+      }   
     - { 
         role: roles_intserver/docker_esphome, tags: esphome,
         servicename: esphome, 
@@ -162,6 +172,11 @@
         servicename: dockerstats, 
         basedir: /srv/dockerstats 
       }
+    - { 
+        role: roles_common/docker_watchtower, tags: watchtower,
+        servicename: watchtower,
+        basedir: /srv/watchtower,
+      }   
 
 
 - hosts: webserver1 

@@ -1,0 +1,30 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+    - { path: "{{ basedir }}/pushover_user_token",  length: -1 }
+    - { path: "{{ basedir }}/pushover_token",  length: -1 }
+
+
+- name: "create folder struct for {{ servicename }}"
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+
+
+- name: Konfig-Dateien erstellen (base,graphite)
+  template:
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - docker-compose.yml
+  register: dockerconfig
+
+  
+- name: "start {{ servicename }} docker"
+  docker_compose:
+    project_src: "{{ basedir }}"
+    state: present
+    build: "{{ dockerconfig.changed }}"
