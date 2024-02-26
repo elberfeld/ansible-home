@@ -1,7 +1,6 @@
-
 #!/bin/bash
 
-# Moded to Dockerfile
+# Modded to Dockerfile
 #echo "Copying static files ..."
 #cp -r /usr/share/uffd/uffd/static /var/www/uffd
 
