@@ -48,7 +48,7 @@ services:
 
 
   app:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.3.2
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.5.4
     restart: always
     depends_on:
       - db
