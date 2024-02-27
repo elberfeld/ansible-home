@@ -20,7 +20,7 @@ services:
       - MYSQL_ROOT_PASSWORD={{ mysql_root_pass }}
 
   redis:
-    image: redis:7.0.11-alpine
+    image: redis:7.2.4-alpine
     restart: always
     volumes:
       - "{{ basedir }}/mailu/redis:/data"
