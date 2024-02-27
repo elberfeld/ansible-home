@@ -1,4 +1,0 @@
-- name: Fulltext Worker restart
-  service:
-    name: nextcloud-index-worker
-    state: restarted

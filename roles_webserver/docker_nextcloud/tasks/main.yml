@@ -7,11 +7,15 @@
     name:
       - curl
 
+
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/nextcloud_admin_pass",  length: 24 }
-    - { path: "{{ basedir }}/mysql_admin_pass",  length: 24 }
-    - { path: "{{ basedir }}/mysql_user_pass",  length: 12 }
+    - { path: "{{ basedir }}/nextcloud_admin_pass",  length: 32 }
+    - { path: "{{ basedir }}/nextcloud_oidc_secret",  length: 32 }
+    - { path: "{{ basedir }}/mysql_admin_pass",  length: 32 }
+    - { path: "{{ basedir }}/mysql_user_pass",  length: 24 }
+    - { path: "{{ basedir }}/smtp_user_pass",  length: -1 }
+
 
 - name: "create folder struct for {{ servicename }}"
   file: 
@@ -22,8 +26,9 @@
   with_items:
     - "{{ basedir }}"
     - "{{ basedir }}/data/"
+    - "{{ basedir }}/data/config"
     - "{{ basedir }}/tmp/"
-    - "{{ basedir }}/elasticsearch_data/"
+
 
 - name: "create folder struct for {{ servicename }} (db)"
   file: 
@@ -33,6 +38,7 @@
     group: 999
   with_items:
     - "{{ basedir }}/db/"
+
 
 - name: "create folder struct for {{ servicename }} (paperless)"
   file: 
@@ -46,15 +52,6 @@
     - "/srv/paperless/media/documents/"
     - "/srv/paperless/media/documents/archive/"
 
-- name: Get a timestamp
-  command: "date +%Y%m%d%H%M%S"
-  register: timestamp
-
-- name: set vm.max_map_count for elasticsearch etc.
-  sysctl:
-    name: vm.max_map_count
-    value: 262144
-    sysctl_file: /etc/sysctl.d/90-dstk-max_map_count.conf
 
 - name: Docker Compose Konfig-Datei erstellen
   template: 
@@ -63,6 +60,15 @@
   with_items:
     - "docker-compose.yml"
 
+
+- name: Nextcloud Konfig-Dateien erstellen
+  template: 
+    src: "{{ item }}" 
+    dest: "{{ basedir }}/data/config/{{ item }}"
+  with_items:
+    - "oidc.config.php"
+
+
 - name: Script Helper erstellen
   template: 
     src: "{{ item }}" 
@@ -70,26 +76,9 @@
     mode: u+x
   with_items:
     - "occ.sh"
-    - "nextcloud-index-worker.sh"
+
 
 - name: "start {{ servicename }} docker"
   docker_compose:
     project_src: "{{ basedir }}"
     state: present
-
-- name: Fulltext Worker Systemd Unit 
-  template: src="{{ item }}" dest="/etc/systemd/system/{{ item }}"
-  with_items:
-    - "nextcloud-index-worker.service"
-#  notify: Fulltext Worker restart
-
-- name: Fulltext Worker enableld (currently disabled) 
-  systemd:
-    name: nextcloud-index-worker
-    daemon_reload: yes
-    enabled: no
-
-- name: Fulltext Worker start (currently disabled) 
-  service:
-    name: nextcloud-index-worker
-    state: stopped

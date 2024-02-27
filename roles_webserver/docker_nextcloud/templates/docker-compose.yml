@@ -4,7 +4,7 @@ services:
 
   redis:
 
-    image: redis:6.2.13
+    image: redis:7
     restart: always
     networks:
       - default
@@ -12,7 +12,7 @@ services:
 
   mysql:
 
-    image: mariadb:10.11.5
+    image: mariadb:10
     restart: always
     volumes:
       - "{{ basedir }}/db/:/var/lib/mysql"
@@ -27,7 +27,7 @@ services:
 
   app:
 
-    image: nextcloud:27.1.1-apache
+    image: nextcloud:28-apache
     restart: always
     depends_on:
       - mysql
@@ -45,12 +45,20 @@ services:
       MYSQL_HOST: "mysql"
       NEXTCLOUD_ADMIN_USER: "admin"
       NEXTCLOUD_ADMIN_PASSWORD: "{{nextcloud_admin_pass}}"
+      NEXTCLOUD_INIT_HTACCESS: "true"
       OVERWRITEPROTOCOL: "https"
       OVERWRITECLIURL: "https://{{ domain }}"
       OVERWRITEHOST: "{{ domain }}"
       APPIMAGE_EXTRACT_AND_RUN: 1
       PHP_MEMORY_LIMIT: "2048M"
       PHP_UPLOAD_LIMIT: "512M"
+      SMTP_HOST: "{{ smtp.host }}"
+      SMTP_SECURE: "{{ smtp.authtype }}"
+      SMTP_PORT: "{{ smtp.port }}"
+      SMTP_AUTHTYPE: "{{ smtp.authtype }}"
+      SMTP_NAME: "{{ smtp.username }}"
+      SMTP_PASSWORD: "{{ smtp_user_pass }}"
+      MAIL_FROM_ADDRESS: "{{ smtp.username }}"
     labels:
       - traefik.enable=true
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
@@ -75,24 +83,6 @@ services:
     environment:
       OPTIONS: "--silent http://app/cron.php"
       CRON_SCHEDULE: "*/5 * * * *"
-    networks:
-      - default
-
-
-  # Build from Howto: https://nerdblog.steinkopf.net/2018/07/nextcloud-volltext-index-mit-docker-und-elasticsearch/
-  elasticsearch:
-
-    image: dsteinkopf/elasticsearch-ingest-attachment:latest 
-    restart: always
-    depends_on:
-      - app
-    mem_limit: 1024m
-    volumes:
-      - "{{ basedir }}/elasticsearch_data:/usr/share/elasticsearch/data"
-      - "/etc/localtime:/etc/localtime:ro"
-      - "/etc/timezone:/etc/timezone:ro"
-    environment:
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     networks:
       - default
 

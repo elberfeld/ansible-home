@@ -29,6 +29,11 @@ oauth_global:
   logout_url: https://uffd.void.ms/logout
   metrics_url: https://uffd.void.ms/metrics
 
+oidc_global:
+  provider_url: https://uffd.void.ms
+  logout_url: https://uffd.void.ms/logout
+
+
 # fest vergabene interne IP Adressen 
 fixed_ip:
   firewall: 10.5.0.254
@@ -45,6 +50,17 @@ fixed_ip:
   intserver: 10.5.0.111
   webserver1: 10.100.1.1
   webserver2: 10.100.1.2
+
+# zentraler SMTP Server 
+smtp:
+  domain: "void.ms"
+  host: "mail.void.ms"
+  port: 587
+  security: starttls # ssl or starttls
+  ssl_or_tls: tls # ssl or tls for startrls 
+  authtype: "LOGIN"
+  username: "mailadmin@void.ms"
+
 
 # zentraler MQTT Broker
 mqtt:
