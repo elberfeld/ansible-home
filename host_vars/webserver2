@@ -41,7 +41,6 @@ alert:
     - { name: "nextcloud_redis_1" }
     - { name: "nextcloud_mysql_1" }
     - { name: "nextcloud_webcron_1" }
-    - { name: "nextcloud_elasticsearch_1" }
     - { name: "paperless_app_1" }
     - { name: "paperless_auth_1" }
     - { name: "paperless_broker_1" }
