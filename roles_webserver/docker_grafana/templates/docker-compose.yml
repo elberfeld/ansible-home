@@ -4,7 +4,7 @@ services:
 
   app:
 
-    image: grafana/grafana:10.2.3
+    image: grafana/grafana:latest
     restart: always
     volumes:
       - "{{ basedir }}/grafana.ini:/etc/grafana/grafana.ini"

@@ -4,7 +4,7 @@ services:
 
   db:
 
-    image: mariadb:10.5.6
+    image: mariadb:10
     restart: always
     volumes:
       - "{{ basedir }}/db/:/var/lib/mysql"
@@ -31,6 +31,7 @@ services:
       WORDPRESS_DB_USER: "wordpress"
       WORDPRESS_DB_PASSWORD: "{{ mysql_user_pass }}"
     labels:
+      - com.centurylinklabs.watchtower.enable=false
       - traefik.enable=true
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
       - traefik.http.routers.{{ servicename }}.entrypoints=websecure

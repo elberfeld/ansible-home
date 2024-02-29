@@ -4,7 +4,7 @@ services:
 
   db:
 
-    image: mariadb:10.5.6
+    image: mariadb:10
     restart: always
     volumes:
       - "{{ basedir }}/db/:/var/lib/mysql"
@@ -18,7 +18,7 @@ services:
   
   app:
 
-    image: n8nio/n8n:1.23.0
+    image: n8nio/n8n:latest
     restart: always
     depends_on:
       - db

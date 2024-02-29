@@ -31,6 +31,7 @@ services:
       UFFD_INITIAL_ADMIN_PW: "{{ uffd_admin_pass }}"
       UFFD_INITIAL_ADMIN_MAIL: "uffdadmin@void.ms"
     labels:
+      - com.centurylinklabs.watchtower.enable=false
       - traefik.enable=true
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
       - traefik.http.routers.{{ servicename }}.entrypoints=websecure

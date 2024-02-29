@@ -3,14 +3,14 @@ version: "3.4"
 services:
 
   broker:
-    image: redis:7.2.3
+    image: redis:7-alpine
     restart: always
     networks:
       - default
 
 
   db:
-    image: postgres:13.13
+    image: postgres:13
     restart: always
     volumes:
       - "{{ basedir }}/db:/var/lib/postgresql/data"
@@ -48,7 +48,7 @@ services:
 
 
   app:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.3.2
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: always
     depends_on:
       - db
