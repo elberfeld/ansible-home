@@ -29,7 +29,7 @@ services:
 
     # Do not upgrade to 28 before 28.0.3
     # https://github.com/nextcloud/server/issues/43462
-    image: nextcloud:27-apache
+    image: nextcloud:28-apache
     restart: always
     depends_on:
       - mysql
