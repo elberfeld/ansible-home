@@ -74,7 +74,7 @@ services:
 
   db:
 
-    image: mariadb:10.7.1
+    image: mariadb:10.11.7
     restart: always
     ports:
       - "{{ int_ip4 }}:{{mysql_port}}:3306"
