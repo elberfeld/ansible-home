@@ -36,6 +36,7 @@ services:
       ICINGA2_FEATURE_GRAPHITE_PORT: 2003
       ICINGA2_FEATURE_DIRECTOR: 0
     labels:
+      - com.centurylinklabs.watchtower.enable=false
       - traefik.enable=true
       - traefik.http.routers.{{ servicename }}.middlewares={{ servicename }}-auth
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
