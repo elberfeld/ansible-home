@@ -41,7 +41,6 @@
   template: src="{{ item }}" dest="/srv/bind/{{ item }}"
   with_items:
     - "docker-compose.yml"
-    - "Dockerfile"
 
 
 - name: stop bind docker
@@ -55,4 +54,3 @@
   docker_compose:
     project_src: /srv/bind/
     state: present
-
