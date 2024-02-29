@@ -33,5 +33,5 @@ Only Users with goup nextcloud_access can access Nextcloud
 
 Client-ID: nextcloud 
 Client-Secret: from file nextcloud_oidc_secret on the server
-Redirect-URIs: https://<Nextcloud Server>/apps/oidc_login/oidc
+Redirect-URIs: https://<nextcloud Server Url>/index.php/apps/oidc_login/oidc
 

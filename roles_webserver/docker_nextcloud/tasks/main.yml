@@ -66,6 +66,7 @@
     src: "{{ item }}" 
     dest: "{{ basedir }}/data/config/{{ item }}"
   with_items:
+    - "custom.config.php"
     - "oidc.config.php"
 
 
