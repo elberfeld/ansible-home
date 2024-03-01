@@ -62,7 +62,7 @@ $CONFIG = array (
 
     // Enable authentication with user/password for DAV clients that do not
     // support token authentication (e.g. DAVx⁵)
-    'oidc_login_password_authentication' => false,
+    'oidc_login_password_authentication' => true,
 
     // The time in seconds used to cache public keys from provider.
     // The default value is 1 day.
