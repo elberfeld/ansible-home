@@ -19,27 +19,24 @@ services:
       WATCHTOWER_NOTIFICATION_URL: >
         pushover://:{{ pushover_token }}@{{ pushover_user_token }}/?title=Watchtower%20%40%20{{ inventory_hostname }}
       WATCHTOWER_NOTIFICATION_TEMPLATE: |
-        Watchtower @ {{ inventory_hostname }} {% raw %} {{"\n"}}
         {{- if .Report -}}
           {{- with .Report -}}
+            {{- if ( or .Updated .Failed ) -}}
+        Watchtower @ webserver2  {{"\n"}}
         {{len .Scanned}} Scanned, {{len .Updated}} Updated, {{len .Failed}} Failed
               {{- range .Updated}}
         - {{.Name}} ({{.ImageName}}): {{.CurrentImageID.ShortID}} updated to {{.LatestImageID.ShortID}}
               {{- end -}}
-              {{- range .Fresh}}
-        - {{.Name}} ({{.ImageName}}): {{.State}}
-            {{- end -}}
-            {{- range .Skipped}}
+              {{- range .Skipped}}
         - {{.Name}} ({{.ImageName}}): {{.State}}: {{.Error}}
-            {{- end -}}
-            {{- range .Failed}}
+              {{- end -}}
+              {{- range .Failed}}
         - {{.Name}} ({{.ImageName}}): {{.State}}: {{.Error}}
+              {{- end -}}
             {{- end -}}
           {{- end -}}
-        {{- else -}}
-          {{range .Entries -}}{{.Message}}{{"\n"}}{{- end -}}
         {{- end -}}
-        {% endraw %}
+
 
 
 
