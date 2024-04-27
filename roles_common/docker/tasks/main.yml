@@ -33,7 +33,7 @@
     - "dc"
 
 - name: Cronjob to prune unused images  
-  cron: name="docker-prune" weekday="*" hour="5" minute="5" job="/usr/bin/docker system prune --all -f"  
+  cron: name="docker-prune" weekday="*" hour="5" minute="5" job="/usr/bin/docker system prune --volumes --all -f"  
 
 - name: "Set Docker Server Blocker file: {{ docker.service_blocker_file }}"
   ini_file:
