@@ -4,12 +4,14 @@ services:
 
   app:
 
-    build: .
+    image: wywywywy/docker_stats_exporter
     restart: always
     ports:
-      - "{{ int_ip4 }}:9487:9487" 
+      - "{{ int_ip4 }}:{{ metrics_port }}:{{ metrics_port }}" 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
-    labels:
-      - com.centurylinklabs.watchtower.enable=false
+    environment:
+      DOCKERSTATS_PORT: {{ metrics_port }} 
+      DOCKERSTATS_INTERVAL: 15 
+      DEBUG: 0

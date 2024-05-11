@@ -74,7 +74,8 @@
     - { 
         role: roles_common/docker_dockerstats, tags: dockerstats, 
         servicename: dockerstats, 
-        basedir: /srv/dockerstats 
+        basedir: /srv/dockerstats,
+        metrics_port: 9487 
       }
 #    - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
@@ -107,7 +108,8 @@
     - { 
         role: roles_common/docker_dockerstats, tags: dockerstats, 
         servicename: dockerstats, 
-        basedir: /srv/dockerstats 
+        basedir: /srv/dockerstats, 
+        metrics_port: 9487 
       }
 #    - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
@@ -170,7 +172,8 @@
     - { 
         role: roles_common/docker_dockerstats, tags: dockerstats, 
         servicename: dockerstats, 
-        basedir: /srv/dockerstats 
+        basedir: /srv/dockerstats, 
+        metrics_port: 9487 
       }
     - { 
         role: roles_common/docker_watchtower, tags: watchtower,
