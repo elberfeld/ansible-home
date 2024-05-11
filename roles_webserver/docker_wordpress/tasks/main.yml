@@ -20,18 +20,9 @@
     src: "{{ item }}" 
     dest: "{{ basedir }}/{{ item }}"
   with_items: 
-    - Dockerfile
+    - docker-compose.yml
     - uploads.ini
   register: config 
-
-- name: Get a timestamp
-  command: "date +%Y%m%d%H%M%S"
-  register: timestamp
-
-- name: Docker Compose Konfig-Datei erstellen
-  template:
-    src: "docker-compose.yml"
-    dest: "{{ basedir }}/docker-compose.yml"
 
 - name: "stop {{ servicename }} docker"
   docker_compose:
