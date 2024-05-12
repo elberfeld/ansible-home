@@ -255,12 +255,6 @@
         mailserver: mail.void.ms, 
       }
     - { 
-        role: roles_webserver/docker_n8n, tags: n8n,
-        servicename: n8n, 
-        basedir: /srv/n8n, 
-        domain: n8n.void.ms, 
-      }
-    - { 
         role: roles_webserver/docker_nextcloud, tags: nextcloud,
         servicename: nextcloud, 
         basedir: /srv/nextcloud, 

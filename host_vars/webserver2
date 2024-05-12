@@ -35,8 +35,6 @@ alert:
     - { name: "mail_resolver_1" }
     - { name: "mail_smtp_1" }
     - { name: "mail_webmail_1" }
-#    - { name: "n8n_app_1" }
-#    - { name: "n8n_db_1" }
     - { name: "nextcloud_app_1" }
     - { name: "nextcloud_redis_1" }
     - { name: "nextcloud_mysql_1" }
