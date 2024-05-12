@@ -23,10 +23,13 @@ services:
       - graphite
     environment:
       APACHE2_HTTP: BOTH
+      MYSQL_HOST: db
+      MYSQL_ROOT_USER: "root"
       MYSQL_ROOT_PASSWORD: "{{ mysql_admin_pass }}"
       MYSQL_PASSWORD: "{{ mysql_user_pass }}"
       MYSQL_DATABASE: icinga
       MYSQL_USER: icinga
+      MARIADB_AUTO_UPGRADE: 1
       DEFAULT_MYSQL_HOST: db
       DEFAULT_MYSQL_USER: icinga
       DEFAULT_MYSQL_PASS: "{{ mysql_user_pass }}"
@@ -35,6 +38,8 @@ services:
       ICINGA2_FEATURE_GRAPHITE_HOST: graphite
       ICINGA2_FEATURE_GRAPHITE_PORT: 2003
       ICINGA2_FEATURE_DIRECTOR: 0
+      ICINGA2_IDO_MYSQL_SKIP_DB_CREATION: 1
+      ICINGAWEB2_MYSQL_SKIP_DB_CREATION: 1
     labels:
       - com.centurylinklabs.watchtower.enable=false
       - traefik.enable=true
@@ -74,7 +79,7 @@ services:
 
   db:
 
-    image: mariadb:10.11.7
+    image: mariadb:11
     restart: always
     ports:
       - "{{ int_ip4 }}:{{mysql_port}}:3306"
@@ -85,13 +90,14 @@ services:
       MYSQL_PASSWORD: "{{ mysql_user_pass }}"
       MYSQL_DATABASE: icinga
       MYSQL_USER: icinga
+      MARIADB_AUTO_UPGRADE: 1
     networks:
       - default
 
 
   graphite:
     
-    image: graphiteapp/graphite-statsd:1.1.8-7
+    image: graphiteapp/graphite-statsd:latest
     restart: always
     volumes:
       - "{{ basedir }}/graphite-conf/storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf"

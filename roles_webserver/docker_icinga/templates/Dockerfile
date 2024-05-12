@@ -13,9 +13,9 @@ RUN apt-get update \
     libnet-dns-perl \
     libnet-ip-perl \
     perl \
-    python-requests \
     python3 \
     python3-paho-mqtt \
+    python3-requests \
  && apt-get autoremove -y \
  && apt-get clean \
  && rm -rf /tmp/* /var/lib/apt/lists/* /var/cache/debconf/*-old
@@ -25,7 +25,7 @@ COPY check_rbl_helper.sh /opt
 COPY notify_by_pushover.sh /opt 
 RUN chmod +x /opt/*.sh
 
-# check_openhab2 Script - commit from26.03.2020
+# check_openhab2 Script - commit from 26.03.2020
 RUN cd /opt/ \
  && git clone https://github.com/elberfeld/icinga2-plugin-openhab2.git \
  && cd /opt/icinga2-plugin-openhab2/ \

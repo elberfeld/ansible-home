@@ -35,7 +35,6 @@ alert:
   disks: 
     - { mountpoint: "/", warn: "3 GB", crit: "1 GB" }
     - { mountpoint: "/srv", warn: "3 GB", crit: "1 GB" } 
-    - { mountpoint: "/var/lib/docker", warn: "5 GB", crit: "2 GB" }
 
 # Lokale LDAP Settings   
 ldap_local:
