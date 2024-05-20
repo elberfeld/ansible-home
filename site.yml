@@ -140,6 +140,13 @@
         mqtt_port: 1883
       }
     - { 
+        role: roles_intserver/docker_pihole, 
+        tags: pihole,
+        servicename: pihole,
+        basedir: /srv/pihole,
+        web_port: 82
+      }
+    - { 
         role: roles_intserver/docker_omada, tags: omada, 
         servicename: omada,
         basedir: /srv/omada/,
