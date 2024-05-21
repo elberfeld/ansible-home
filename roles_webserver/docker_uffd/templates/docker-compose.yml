@@ -14,6 +14,7 @@ services:
       MYSQL_PASSWORD: "{{ mysql_user_pass }}"
       MYSQL_DATABASE: "uffd"
       MYSQL_USER: "uffd"
+      MARIADB_AUTO_UPGRADE: 1
     networks:
         - default
 
