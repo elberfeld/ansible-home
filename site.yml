@@ -140,13 +140,6 @@
         mqtt_port: 1883
       }
     - { 
-        role: roles_intserver/docker_pihole, 
-        tags: pihole,
-        servicename: pihole,
-        basedir: /srv/pihole,
-        web_port: 82
-      }
-    - { 
         role: roles_intserver/docker_omada, tags: omada, 
         servicename: omada,
         basedir: /srv/omada/,
@@ -163,6 +156,13 @@
         openhab_port_http: 80,
         openhab_port_http: 443, 
         influxdb_port: 28086
+      }
+    - { 
+        role: roles_intserver/docker_pihole, 
+        tags: pihole,
+        servicename: pihole,
+        basedir: /srv/pihole,
+        web_port: 82
       }
 
 
