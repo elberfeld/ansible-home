@@ -20,9 +20,6 @@ alert:
     - { name: "collabora-app-1" }
     - { name: "dockerstats-app-1" }
     - { name: "freqtrade-app-1" }
-    - { name: "invoicefetcher-mysql-1" }
-    - { name: "invoicefetcher-uploader-1" }
-    - { name: "invoicefetcher-sftpserver-1" }
     - { name: "mail-admin-1" }
     - { name: "mail-antispam-1" }
     - { name: "mail-certdumper-1" }

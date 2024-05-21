@@ -248,13 +248,6 @@
         freqtrade_dry_run: false
       }
     - { 
-        role: roles_webserver/docker_invoicefetcher, tags: invoicefetcher,
-        servicename: invoicefetcher, 
-        basedir: /srv/invoicefetcher,
-        sshport: 2222,
-        mysqlport: 13306
-      }
-    - { 
         role: roles_webserver/docker_mail, tags: mail,
         servicename: mail, 
         basedir: /srv/mail, 
