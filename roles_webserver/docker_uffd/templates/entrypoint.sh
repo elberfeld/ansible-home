@@ -7,7 +7,7 @@
 db_ready="false"
 count=0
 while [ $count -lt 32 ] && [ "$db_ready" != "true" ] ;do
-  if uffd-admin db current >> /dev/null 2>&1 ;then
+  if [ -z "$(uffd-admin db current 2>&1 | grep -o "Error")" ] ;then
     db_ready="true"
   else
     echo "Waiting for db to become ready..."
