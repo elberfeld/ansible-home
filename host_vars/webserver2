@@ -16,40 +16,40 @@ alert:
     warn: 4
     crit: 8
   containers: 
-    - { name: "bind_app_1" }
-    - { name: "collabora_app_1" }
-    - { name: "dockerstats_app_1" }
-    - { name: "freqtrade_app_1" }
-    - { name: "invoicefetcher_mysql_1" }
-    - { name: "invoicefetcher_uploader_1" }
-    - { name: "invoicefetcher_sftpserver_1" }
-    - { name: "mail_admin_1" }
-    - { name: "mail_antispam_1" }
-    - { name: "mail_certdumper_1" }
-    - { name: "mail_db_1" }
-    - { name: "mail_fetchmail_1" }
-    - { name: "mail_front_1" }
-    - { name: "mail_imap_1" }
-    - { name: "mail_oletools_1" }
-    - { name: "mail_redis_1" }
-    - { name: "mail_resolver_1" }
-    - { name: "mail_smtp_1" }
-    - { name: "mail_webmail_1" }
-    - { name: "nextcloud_app_1" }
-    - { name: "nextcloud_redis_1" }
-    - { name: "nextcloud_mysql_1" }
-    - { name: "nextcloud_webcron_1" }
-    - { name: "paperless_app_1" }
-    - { name: "paperless_auth_1" }
-    - { name: "paperless_broker_1" }
-    - { name: "paperless_db_1" }
-#    - { name: "promtail_app_1" }
-    - { name: "traefik_app_1" }
-    - { name: "uffd_app_1" }
-    - { name: "uffd_db_1" }
-    - { name: "watchtower_app_1" }
-    - { name: "wordpress_app_1" }
-    - { name: "wordpress_db_1" }
+    - { name: "bind-app-1" }
+    - { name: "collabora-app-1" }
+    - { name: "dockerstats-app-1" }
+    - { name: "freqtrade-app-1" }
+    - { name: "invoicefetcher-mysql-1" }
+    - { name: "invoicefetcher-uploader-1" }
+    - { name: "invoicefetcher-sftpserver-1" }
+    - { name: "mail-admin-1" }
+    - { name: "mail-antispam-1" }
+    - { name: "mail-certdumper-1" }
+    - { name: "mail-db-1" }
+    - { name: "mail-fetchmail-1" }
+    - { name: "mail-front-1" }
+    - { name: "mail-imap-1" }
+    - { name: "mail-oletools-1" }
+    - { name: "mail-redis-1" }
+    - { name: "mail-resolver-1" }
+    - { name: "mail-smtp-1" }
+    - { name: "mail-webmail-1" }
+    - { name: "nextcloud-app-1" }
+    - { name: "nextcloud-redis-1" }
+    - { name: "nextcloud-mysql-1" }
+    - { name: "nextcloud-webcron-1" }
+    - { name: "paperless-app-1" }
+    - { name: "paperless-auth-1" }
+    - { name: "paperless-broker-1" }
+    - { name: "paperless-db-1" }
+#    - { name: "promtail-app-1" }
+    - { name: "traefik-app-1" }
+    - { name: "uffd-app-1" }
+    - { name: "uffd-db-1" }
+    - { name: "watchtower-app-1" }
+    - { name: "wordpress-app-1" }
+    - { name: "wordpress-db-1" }
   disks: 
     - { mountpoint: "/", warn: "3 GB", crit: "1 GB" }
     - { mountpoint: "/srv", warn: "3 GB", crit: "1 GB" }

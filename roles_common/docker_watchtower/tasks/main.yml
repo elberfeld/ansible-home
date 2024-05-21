@@ -24,7 +24,6 @@
 
   
 - name: "start {{ servicename }} docker"
-  docker_compose:
+  community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present
-    build: "{{ dockerconfig.changed }}"

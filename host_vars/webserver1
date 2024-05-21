@@ -21,17 +21,17 @@ alert:
     warn: 4
     crit: 10
   containers:
-    - { name: "bind_app_1" }
-    - { name: "dockerstats_app_1" }
-    - { name: "grafana_app_1" }
-    - { name: "icinga_app_1" }
-    - { name: "icinga_auth_1" }
-    - { name: "icinga_db_1" }
-    - { name: "icinga_graphite_1" }
-#    - { name: "promtail_app_1" }
-    - { name: "traefik_app_1" }
-    - { name: "vpnserver_app_1" }
-    - { name: "watchtower_app_1" }
+    - { name: "bind-app-1" }
+    - { name: "dockerstats-app-1" }
+    - { name: "grafana-app-1" }
+    - { name: "icinga-app-1" }
+    - { name: "icinga-auth-1" }
+    - { name: "icinga-db-1" }
+    - { name: "icinga-graphite-1" }
+#    - { name: "promtail-app-1" }
+    - { name: "traefik-app-1" }
+    - { name: "vpnserver-app-1" }
+    - { name: "watchtower-app-1" }
   disks: 
     - { mountpoint: "/", warn: "3 GB", crit: "1 GB" }
     - { mountpoint: "/srv", warn: "3 GB", crit: "1 GB" } 

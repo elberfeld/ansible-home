@@ -17,19 +17,19 @@ alert:
     warn: 4
     crit: 10
   containers:
-    - { name: "dockerstats_app_1" }
-    - { name: "esphome_app_1" }
-    - { name: "heimdall_app_1" }
-    - { name: "hibiscus_db_1" }
-#    - { name: "loki_app_1" }
-#    - { name: "loki_vector_1" }
-    - { name: "mqtt_app_1" }
-    - { name: "omada_app_1" }
-    - { name: "openhab_app_1" }
-    - { name: "openhab_influxdb_1" }
-    - { name: "pihole_app_1" }
-#    - { name: "promtail_app_1" }
-    - { name: "watchtower_app_1" }
+    - { name: "dockerstats-app-1" }
+    - { name: "esphome-app-1" }
+    - { name: "heimdall-app-1" }
+    - { name: "hibiscus-db-1" }
+#    - { name: "loki-app-1" }
+#    - { name: "loki-vector-1" }
+    - { name: "mqtt-app-1" }
+    - { name: "omada-app-1" }
+    - { name: "openhab-app-1" }
+    - { name: "openhab-influxdb-1" }
+    - { name: "pihole-app-1" }
+#    - { name: "promtail-app-1" }
+    - { name: "watchtower-app-1" }
   disks: 
     - { mountpoint: "/", warn: "3 GB", crit: "1 GB" }
     - { mountpoint: "/srv", warn: "3 GB", crit: "1 GB" }

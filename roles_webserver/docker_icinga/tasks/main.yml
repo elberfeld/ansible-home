@@ -63,7 +63,7 @@
   register: configured
 
 - name: "start {{ servicename }} docker (init)"
-  docker_compose:
+  community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present
   when: configured.stat.exists == False
@@ -74,7 +74,7 @@
   when: configured.stat.exists == False
   
 - name: "stop {{ servicename }} docker (init)"
-  docker_compose:
+  community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: configured.stat.exists == False
@@ -125,7 +125,7 @@
 
   
 - name: "start {{ servicename }} docker"
-  docker_compose:
+  community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present
     build: "{{ dockerconfig.changed }}"

@@ -16,9 +16,9 @@ alert:
     warn: 4
     crit: 10
   containers:
-    - { name: "dockerstats_app_1" }
-#    - { name: "promtail_app_1" }
-    - { name: "watchtower_app_1" }
+    - { name: "dockerstats-app-1" }
+#    - { name: "promtail-app-1" }
+    - { name: "watchtower-app-1" }
   disks: 
     - { mountpoint: "/", warn: "5 GB", crit: "1 GB" }
     - { mountpoint: "/data/disk1", warn: "5 GB", crit: "1 GB" }

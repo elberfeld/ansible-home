@@ -21,12 +21,12 @@
     dest: "/srv/loki/docker-compose.yml"
 
 - name: stop loki docker
-  docker_compose:
+  community.docker.docker_compose_v2:
     project_src: /srv/loki/
     state: absent
   when: config.changed
 
 - name: start loki docker
-  docker_compose:
+  community.docker.docker_compose_v2:
     project_src: /srv/loki/
     state: present

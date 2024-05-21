@@ -8,29 +8,19 @@
     name:
       - apparmor
       - docker-ce
+      - docker-compose-plugin
+      - gnupg2 
+      - pass 
       - python3 
       - python3-docker
       - python3-pip
       - python3-setuptools
 
-- name: install pip packages
-  pip: 
-    state: present
-    name:
-      - docker
-      - docker-compose
-   
+
 - name: daemon config für docker erstellen 
   template: src=daemon.json dest=/etc/docker/daemon.json
   notify: restart docker
 
-- name: daemon config für docker erstellen 
-  template: 
-    src: "{{item}}.sh" 
-    dest: "/usr/local/bin/{{item}}"
-    mode: u+x
-  with_items:
-    - "dc"
 
 - name: Cronjob to prune unused images  
   cron: name="docker-prune" weekday="*" hour="5" minute="5" job="/usr/bin/docker system prune --volumes --all -f"  
