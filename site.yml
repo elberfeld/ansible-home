@@ -154,7 +154,7 @@
         servicename: openhab,
         basedir: /srv/openhab,
         openhab_port_http: 80,
-        openhab_port_http: 443, 
+        openhab_port_https: 443, 
         influxdb_port: 28086
       }
     - { 
