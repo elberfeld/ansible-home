@@ -3,5 +3,4 @@
 - name: restart icinga docker
   community.docker.docker_compose_v2:
     project_src: /srv/icinga/
-    state: present
-    restarted: yes
+    state: restarted

@@ -78,13 +78,13 @@ docker:
 
 
 webserver_domains:
-  - "cloud"
-  - "collabora"
-  - "docs"
-  - "freqtrade"
-  - "mail"
-  - "uffd"
-  - "www"
+  - "cloud.void.ms"
+  - "collabora.void.ms"
+  - "docs.void.ms"
+  - "freqtrade.void.ms"
+  - "mail.void.ms"
+  - "uffd.void.ms"
+  - "www.void.ms"
 
 
 # Definition von RSync Backup Jobs 

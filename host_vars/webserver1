@@ -56,9 +56,9 @@ docker:
 
 
 webserver_domains:
-  - "grafana"
-  - "icinga"
-  - "vpn"
+  - "grafana.void.ms"
+  - "icinga.void.ms"
+  - "vpn.void.ms"
 
 # Definition von RSync Backup Jobs 
 rsyncbackup:

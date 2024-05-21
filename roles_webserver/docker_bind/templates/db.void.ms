@@ -38,8 +38,10 @@ gw-um     IN      A       130.180.13.105
 ; Domains on Server {{ host }} 
 
 {% for domain in hostvars[host].webserver_domains %}
-{{ domain }}    IN   A       {{ hostvars[host].ext_ip4 }}    
-{{ domain }}    IN   AAAA    {{ hostvars[host].ext_ip6 }}
+{% if domain.endswith('void.ms') %}
+{{ domain | replace('.void.ms','') }}    IN   A       {{ hostvars[host].ext_ip4 }}    
+{{ domain | replace('.void.ms','') }}    IN   AAAA    {{ hostvars[host].ext_ip6 }}
+{% endif %}
 {% endfor %}
 
 {% endif %}
