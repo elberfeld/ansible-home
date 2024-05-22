@@ -1,0 +1,46 @@
+services:
+  
+  app:
+
+    image: homeassistant/home-assistant:latest
+    restart: always
+    ports:
+      - "{{ int_ip4 }}:{{ homematic_callback_port }}:{{ homematic_callback_port }}"
+      - "{{ int_ip4 }}:8123:8123"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ basedir }}/config:/config"
+    environment:
+      TZ: "Europe/Berlin"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8123
+    networks:
+      - default
+      - web
+
+  
+  influxdb:
+
+    image: influxdb:2
+    restart: always
+    ports:
+      - "{{ int_ip4 }}:{{ influxdb_port }}:8086"
+    volumes:
+      - "{{ basedir }}/influxdb:/var/lib/influxdb2"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: homeassistant
+      DOCKER_INFLUXDB_INIT_PASSWORD: {{ influxdb_password }}
+      DOCKER_INFLUXDB_INIT_ORG: homeassistant
+      DOCKER_INFLUXDB_INIT_BUCKET: homeassistant
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: {{ influxdb_token }}
+    networks:
+      - default
+
+
+networks:
+  web:
+    external: true

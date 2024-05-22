@@ -1,0 +1,94 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# includes
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+# https://www.home-assistant.io/docs/configuration/basic/
+homeassistant:  
+  name: "void-home"
+  latitude: 51.961818 
+  longitude: 7.624774
+  elevation: 70
+  unit_system: metric
+  currency: EUR 
+  country: DE
+  time_zone: Europe/Berlin
+  #internal_url: https://{{ domain }}
+  internal_url: http://10.5.0.111:8123
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 10.0.0.0/22
+        - 192.168.0.0/24
+      allow_bypass_login: true
+    - type: homeassistant
+
+# https://www.home-assistant.io/integrations/http/
+http:
+  server_port: 8123
+  ip_ban_enabled: False
+  login_attempts_threshold: 10
+  use_x_forwarded_for: true
+  trusted_proxies: 
+    - 172.0.0.0/8
+
+# https://www.home-assistant.io/integrations/logger
+# log_level= critical, fatal, error, warning, warn, info, debug, notset
+logger:
+  default: info
+
+# https://www.home-assistant.io/integrations/influxdb/
+influxdb:
+  api_version: 2 
+  host: influxdb
+  port: 8086 
+  ssl: false
+  organization: homeassistant
+  bucket: homeassistant
+  token: {{ influxdb_token }}
+  default_measurement: units
+
+# Homematic CCU2
+homematic:
+  interfaces:
+    rf:
+      host: {{ fixed_ip.homematic_ccu }}
+      resolvenames: "xml"
+    wired:
+      host: {{ fixed_ip.homematic_ccu }}
+      port: 2001
+      resolvenames: "xml"
+    ip:
+      host: {{ fixed_ip.homematic_ccu }}
+      port: 2010
+    groups:
+      host: {{ fixed_ip.homematic_ccu }}
+      port: 9292
+      resolvenames: "xml"
+      path: /groups
+  hosts:
+    ccu2:
+      host: {{ fixed_ip.homematic_ccu }}
+      port: 2001
+
+# presence Sensors
+# https://www.home-assistant.io/integrations/ping/
+binary_sensor:
+  - platform: ping
+    host: {{ fixed_ip.handy_privat }}
+    name: "HandyPrivat"
+    count: 3
+    scan_interval: 20 
+
+  - platform: ping
+    host: {{ fixed_ip.handy_arbeit }}
+    name: "HandyArbeit"
+    count: 3
+    scan_interval: 20 

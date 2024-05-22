@@ -132,6 +132,14 @@
       }
     - { role: roles_intserver/docker_hibiscus, tags: hibiscus }
 #    - { role: roles_intserver/docker_loki, tags: loki }
+    - {
+        role: roles_intserver/docker_homeassistant, tags: homeassistant,
+        servicename: homeassistant, 
+        basedir: /srv/homeassistant,
+        domain: "TBD", # Web-Port: 8123
+        homematic_callback_port: 8060,
+        influxdb_port: 18086
+      }
     - { 
         role: roles_intserver/docker_mqtt, 
         tags: mqtt,

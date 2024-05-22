@@ -23,6 +23,8 @@ alert:
     - { name: "hibiscus-db-1" }
 #    - { name: "loki-app-1" }
 #    - { name: "loki-vector-1" }
+    - { name: "homeassistant-app-1" }
+    - { name: "homeassistant-influxdb-1" }
     - { name: "mqtt-app-1" }
     - { name: "omada-app-1" }
     - { name: "openhab-app-1" }
