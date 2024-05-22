@@ -29,6 +29,10 @@ alert:
     - { name: "icinga-db-1" }
     - { name: "icinga-graphite-1" }
 #    - { name: "promtail-app-1" }
+    - { name: "prometheus-app-1" }
+    - { name: "prometheus-auth-1" }
+    - { name: "prometheus-influxdb-1" }
+    - { name: "prometheus-snmp-1" }
     - { name: "traefik-app-1" }
     - { name: "vpnserver-app-1" }
     - { name: "watchtower-app-1" }
@@ -58,6 +62,7 @@ docker:
 webserver_domains:
   - "grafana.void.ms"
   - "icinga.void.ms"
+  - "prometheus.void.ms"
   - "vpn.void.ms"
 
 # Definition von RSync Backup Jobs 

@@ -1,0 +1,56 @@
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 30s
+  # scrape_timeout is set to the global default (10s).
+
+
+remote_write:
+  - url: "http://influxdb:8086/api/v1/prom/write?db=prometheus&u=prometheus&p={{ influxdb_password | urlencode }}"
+
+remote_read:
+  - url: "http://influxdb:8086/api/v1/prom/read?db=prometheus&u=prometheus&p={{ influxdb_password | urlencode }}"
+
+
+scrape_configs:
+
+{% for host in groups['all'] %}
+{% if hostvars[host].alert is defined and hostvars[host].alert %}
+
+  - job_name: {{ host }}-metrics
+    static_configs:
+      - targets: [ "{{ hostvars[host].int_ip4 }}:9100" ]
+        labels:
+          server: {{ host }}
+
+  {% if hostvars[host].alert.containers is defined %}
+
+  - job_name: {{ host }}-docker
+    static_configs:
+      - targets: [ "{{ hostvars[host].int_ip4 }}:9323" ]
+        labels:
+          server: {{ host }}
+
+  {% endif %}
+
+{% endif %}
+{% endfor %}
+
+{% for host in monitoring.external_dns_servers %}
+{% endfor %}
+
+  # - job_name: 'snmp-omada'
+  #   static_configs:
+  #     - targets:
+  #       - 10.111.10.91 
+  #   metrics_path: /snmp
+  #   params:
+  #     module: [if_mib]
+  #   relabel_configs:
+  #     - source_labels: [__address__]
+  #       target_label: __param_target
+  #     - source_labels: [__param_target]
+  #       target_label: instance
+  #     - target_label: __address__
+  #       replacement: snmp:9116  # The SNMP exporter's real hostname:port.
+

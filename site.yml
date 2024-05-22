@@ -222,6 +222,13 @@
         mysql_port: 13306, 
       }
     - {
+        role: roles_webserver/docker_prometheus, tags: prometheus,
+        servicename: prometheus, 
+        basedir: /srv/prometheus,
+        domain: prometheus.void.ms,
+        influxdb_port: 18086
+      }
+    - {
         role: roles_webserver/docker_vpnserver, tags: vpnserver, 
         servicename: vpnserver, 
         basedir: /srv/vpnserver, 

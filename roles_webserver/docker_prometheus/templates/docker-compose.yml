@@ -1,0 +1,76 @@
+services:
+
+  app:
+
+    image: prom/prometheus:latest
+    restart: always
+    volumes:
+      - "{{ basedir }}/data:/prometheus"
+      - "{{ basedir }}/prometheus.yml:/etc/prometheus/prometheus.yml"
+    environment:
+      PGID: 1001
+      PUID: 1001
+      MEM_LIMIT: 256
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.middlewares={{ servicename }}-auth
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=9090
+    networks:
+      - default
+      - web
+
+
+  auth-{{ servicename }}:
+    image: thomseddon/traefik-forward-auth:2.2
+    restart: always
+    environment: 
+      LOG_LEVEL: info
+      DEFAULT_ACTION: auth
+      DEFAULT_PROVIDER: generic-oauth
+      SECRET: {{ forward_auth_secret }}
+      PROVIDERS_GENERIC_OAUTH_AUTH_URL: {{ oauth_global.authorize_url }}
+      PROVIDERS_GENERIC_OAUTH_TOKEN_URL: {{ oauth_global.token_url }}
+      PROVIDERS_GENERIC_OAUTH_USER_URL: {{ oauth_global.userinfo_url }}
+      PROVIDERS_GENERIC_OAUTH_CLIENT_ID: {{ servicename }}
+      PROVIDERS_GENERIC_OAUTH_CLIENT_SECRET: {{ oauth_client_secret }}
+      PROVIDERS_GENERIC_OAUTH_SCOPE: profile
+      PROVIDERS_GENERIC_OAUTH_TOKEN_STYLE: header
+    labels:
+      - traefik.enable=true
+      - traefik.http.middlewares.{{ servicename }}-auth.forwardauth.address=http://auth-{{ servicename }}:4181
+      - traefik.http.middlewares.{{ servicename }}-auth.forwardauth.authResponseHeaders=X-Forwarded-User
+      - traefik.http.services.{{ servicename }}-auth.loadbalancer.server.port=4181
+    networks:
+      - default
+      - web
+
+
+  influxdb:
+
+    image: influxdb:2
+    restart: always
+    ports:
+      - "{{ int_ip4 }}:{{ influxdb_port }}:8086"
+    volumes:
+      - "{{ basedir }}/influxdb:/var/lib/influxdb2"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: prometheus
+      DOCKER_INFLUXDB_INIT_PASSWORD: {{ influxdb_password }}
+      DOCKER_INFLUXDB_INIT_ORG: prometheus
+      DOCKER_INFLUXDB_INIT_BUCKET: prometheus
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: {{ influxdb_token }}
+    networks:
+      - default
+
+
+  snmp:
+    image: quay.io/prometheus/snmp-exporter:latest
+    restart: always
+
+
+networks:
+  web:
+    external: true

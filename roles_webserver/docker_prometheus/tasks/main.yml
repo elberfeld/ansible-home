@@ -1,0 +1,30 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+   - { path: "{{ basedir }}/influxdb_password",    length: 12 }
+   - { path: "{{ basedir }}/influxdb_token",       length: 32 }
+   - { path: "{{ basedir }}/forward_auth_secret",  length: 64 }
+   - { path: "{{ basedir }}/oauth_client_secret",  length: 64 }
+
+- name: "create folder struct for {{ servicename }}"
+  file: 
+    path: "{{ basedir }}" 
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/data"
+
+- name: "create config files for {{ servicename }}"
+  template: 
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+  with_items:
+    - docker-compose.yml 
+    - prometheus.yml 
+
+- name: "start {{ servicename }} docker"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: present
+
