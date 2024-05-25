@@ -30,7 +30,7 @@ alert:
     - { name: "icinga-graphite-1" }
 #    - { name: "promtail-app-1" }
     - { name: "prometheus-app-1" }
-    - { name: "prometheus-auth-1" }
+    - { name: "prometheus-auth-prometheus-1" }
     - { name: "prometheus-influxdb-1" }
     - { name: "prometheus-snmp-1" }
     - { name: "traefik-app-1" }
