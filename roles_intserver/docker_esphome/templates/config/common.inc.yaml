@@ -36,4 +36,6 @@ web_server:
 mqtt:
   broker: {{mqtt.ip}}
   discovery: true 
+  discovery_unique_id_generator: mac
+  discovery_object_id_generator: device_name 
   topic_prefix: "ESPHome/{{ devicename }}"
