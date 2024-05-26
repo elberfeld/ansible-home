@@ -13,7 +13,7 @@ i2c:
   scan: True
 
 sensor:
-  - platform: bme280
+  - platform: bme280_i2c
     temperature:
       name: "Temp"
       oversampling: 16x

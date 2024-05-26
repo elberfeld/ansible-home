@@ -26,7 +26,7 @@ binary_sensor:
       - delayed_off: 50ms
 
 sensor:
-  - platform: bme280
+  - platform: bme280_i2c
     temperature:
       name: "Temp"
       oversampling: 16x
