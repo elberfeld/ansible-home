@@ -6,13 +6,19 @@ wifi:
   
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "ESPHomeFallback-{{ devicename }}"
+    ssid: "ESPHome-{{ devicename }}"
     
 # WLAN selection in fallback mode
 captive_portal:
   
 # Enable OTA
 ota:
+
+# Enable API (for Homeassistant)
+api:
+
+# Activates prometheus /metrics endpoint
+prometheus:
 
 # Enable logging
 logger:
@@ -26,11 +32,8 @@ web_server:
   js_include: "webserver-v1.min.js"
   js_url: ""
   
-# Activates prometheus /metrics endpoint
-prometheus:
-
 # MQTT config 
 mqtt:
   broker: {{mqtt.ip}}
-  discovery: false 
+  discovery: true 
   topic_prefix: "ESPHome/{{ devicename }}"
