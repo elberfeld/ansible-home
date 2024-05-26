@@ -97,7 +97,6 @@ Geräte werden per Autodiscovery gefunden
 
 Die RF433 Schaltsteckdosen werden über den OpenMQTTGateway (https://docs.openmqttgateway.com) angesteuert.
 Zum Schalten muss ein Post in das entsprechende MQTT Topic erfolgen.
-Das Gerät wird in Homeassistant automatisch erkannt.
 
 Der OpenMQTTGateway ist folgendermaßen konfiguriert:
 * Firmware Image: esp32dev-rf
@@ -113,6 +112,13 @@ Der OpenMQTTGateway ist folgendermaßen konfiguriert:
 Das webinterface kann aufgerufen werden über:
 * http://admin:<Gateway Passwort>@<feste ip> 
 
+Das Gerät wird in Homeassistant nicht korrekt empfangen und produziert viele Fehler im Log. 
+Autodiscovery deaktivieren:
+```
+mosquitto_pub -t 'home/OpenMQTTGatewayRF433/commands/MQTTtoSYS/config' -m '{"disc":false}'
+```
+
+
 Vom OpenMQTTGateway empfangene Daten können in dem Topic "home/OpenMQTTGatewayRF433/433toMQTT" ausgelesen werden. 
 
 Um einen Schater zu setzen muss ein MQTT Command gesendet werden.
@@ -123,10 +129,10 @@ Die Werte "protocol, length , delay" sind bei einem Hersteller immer gleich.
 Beispiel für das Gerät mit dem Intertechno-Einstellungscode "11010 C":
 ```
 # Code für An: "283729"
-mosquitto_pub -h <MQTT Broker IP> -t 'home/OpenMQTTGatewayRF433/commands/MQTTto433' -m '{"value":283729,"protocol":1,"length":24,"delay":315}'
+mosquitto_pub -t 'home/OpenMQTTGatewayRF433/commands/MQTTto433' -m '{"value":283729,"protocol":1,"length":24,"delay":315}'
 
 # Code für Aus: "283732"
-mosquitto_pub -h <MQTT Broker IP> -t 'home/OpenMQTTGatewayRF433/commands/MQTTto433' -m '{"value":283732,"protocol":1,"length":24,"delay":315}'
+mosquitto_pub -t 'home/OpenMQTTGatewayRF433/commands/MQTTto433' -m '{"value":283732,"protocol":1,"length":24,"delay":315}'
 ```
 
 ## Shelly Pro3EM Power Meter 
