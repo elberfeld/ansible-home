@@ -56,39 +56,60 @@ influxdb:
   default_measurement: units
 
 # Homematic CCU2
-homematic:
-  interfaces:
-    rf:
-      host: {{ fixed_ip.homematic_ccu }}
-      resolvenames: "xml"
-    wired:
-      host: {{ fixed_ip.homematic_ccu }}
-      port: 2001
-      resolvenames: "xml"
-    ip:
-      host: {{ fixed_ip.homematic_ccu }}
-      port: 2010
-    groups:
-      host: {{ fixed_ip.homematic_ccu }}
-      port: 9292
-      resolvenames: "xml"
-      path: /groups
-  hosts:
-    ccu2:
-      host: {{ fixed_ip.homematic_ccu }}
-      port: 2001
+# In der CCU2 muss für den Admin Benutzer ein Passwort gesetzt werden
+# Die Integration ist scheinbar in der Version 2023.4 defekt: 
+#   https://github.com/home-assistant/core/issues/96902
+#   https://github.com/home-assistant/core/issues/114807
+# homematic:
+#   interfaces:
+#     rf:
+#       host: {{ fixed_ip.homematic_ccu }}
+#       port: 2001
+#       resolvenames: "json"
+#       username: "Admin"
+#       password: "admin"   
+#     # wired:
+#     #   host: {{ fixed_ip.homematic_ccu }}
+#     #   port: 2001
+#     #   resolvenames: "json"
+#     #   username: "Admin"
+#     #   password: "admin"   
+#     # ip:
+#     #   host: {{ fixed_ip.homematic_ccu }}
+#     #   port: 2010
+#     # groups:
+#     #   host: {{ fixed_ip.homematic_ccu }}
+#     #   port: 9292
+#     #   resolvenames: "json"
+#     #   username: "Admin"
+#     #   password: "admin"   
+#     #   path: /groups
+#   hosts:
+#     ccu2:
+#       host: {{ fixed_ip.homematic_ccu }}
+#       port: 2001
+#       username: "Admin"
+#       password: "admin"   
 
-# presence Sensors
-# https://www.home-assistant.io/integrations/ping/
-binary_sensor:
-  - platform: ping
-    host: {{ fixed_ip.handy_privat }}
-    name: "HandyPrivat"
-    count: 3
-    scan_interval: 20 
 
-  - platform: ping
-    host: {{ fixed_ip.handy_arbeit }}
-    name: "HandyArbeit"
-    count: 3
-    scan_interval: 20 
+{% if rfswitches is defined %}
+
+mqtt:
+  switch:
+
+# RF433 Switches
+{% for device in rfswitches %}
+
+    - object_id: {{ device.id }}
+      name: {{ device.name }}
+      icon: {{ device.ha_icon }}
+      command_topic: "home/OpenMQTTGatewayRF433/commands/MQTTto433"
+      value_template: "{% raw %}{{ value_json.value }}{% endraw %}"
+      payload_on: '{"value":{{ device.code_on }},"protocol":1,"length":24,"delay":315}'
+      payload_off: '{"value":{{ device.code_off }},"protocol":1,"length":24,"delay":315}'
+      qos: "0"
+      retain: false
+
+{% endfor %}
+
+{% endif %}

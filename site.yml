@@ -137,7 +137,7 @@
         servicename: homeassistant, 
         basedir: /srv/homeassistant,
         domain: "TBD", # Web-Port: 8123
-        homematic_callback_port: 8060,
+        homematic_callback_port: 12001,
         influxdb_port: 18086
       }
     - { 

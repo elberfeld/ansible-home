@@ -111,14 +111,14 @@ homematic_tempsensor:
 #  - { id: "NEQ1833602", type: "HM-Sec-SC-2", name: "Fenster oben Badezimmer" }
 
 rfswitches:
-  - { id: "LichtDvdRegal",    name: "DVD Regal",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 A", code_on: "329041", code_off: "329044" }
-  - { id: "LampeTetris",      name: "Tetris",      icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 B", code_on: "332113", code_off: "332116" }
-  - { id: "LichtFlur",        name: "Licht Flur",  icon: "lightbulb",  groups: "gFlur",        code: "11001 C", code_on: "332881", code_off: "332884" }
-  - { id: "LampeLeselampe",   name: "Leselampe",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 D", code_on: "333073", code_off: "333076" }
-  - { id: "LichtVitrine",     name: "Vitrine",     icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 E", code_on: "333121", code_off: "333124" }
-  - { id: "LichtSideboard",   name: "Sideboard",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11010 A", code_on: "279903", code_off: "279892" }
-  - { id: "PowerAudiosystem", name: "Audiosystem", icon: "receiver",   groups: "gWohnzimmer",  code: "11010 B", code_on: "282961", code_off: "282964" }
-  - { id: "LampeStehlampe",   name: "Stehlampe",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11010 C", code_on: "283729", code_off: "283732" }
+  - { id: "LichtDvdRegal",    name: "DVD Regal",   ha_icon: "mdi:lightbulb",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 A", code_on: "329041", code_off: "329044" }
+  - { id: "LampeTetris",      name: "Tetris",      ha_icon: "mdi:lightbulb",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 B", code_on: "332113", code_off: "332116" }
+  - { id: "LichtFlur",        name: "Licht Flur",  ha_icon: "mdi:floor-lamp",  icon: "lightbulb",  groups: "gFlur",        code: "11001 C", code_on: "332881", code_off: "332884" }
+  - { id: "LampeLeselampe",   name: "Leselampe",   ha_icon: "mdi:floor-lamp",  icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 D", code_on: "333073", code_off: "333076" }
+  - { id: "LichtVitrine",     name: "Vitrine",     ha_icon: "mdi:lightbulb",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 E", code_on: "333121", code_off: "333124" }
+  - { id: "LichtSideboard",   name: "Sideboard",   ha_icon: "mdi:lightbulb",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11010 A", code_on: "279903", code_off: "279892" }
+  - { id: "PowerAudiosystem", name: "Audiosystem", ha_icon: "mdi:audio-video", icon: "receiver",   groups: "gWohnzimmer",  code: "11010 B", code_on: "282961", code_off: "282964" }
+  - { id: "LampeStehlampe",   name: "Stehlampe",   ha_icon: "mdi:floor-lamp",  icon: "lightbulb",  groups: "gWohnzimmer",  code: "11010 C", code_on: "283729", code_off: "283732" }
 
 mqtt_sensors:
   - { id: "badezimmer",   name: "Badezimmer",    groups: "gBadezimmer",   temp: yes, pressure: yes, humidity: yes }
