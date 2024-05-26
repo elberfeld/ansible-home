@@ -9,5 +9,3 @@ services:
     network_mode: "host"
     volumes:
       - "{{ basedir }}/config/:/config"
-    environment:
-      ESPHOME_DASHBOARD_USE_PING: "true"
