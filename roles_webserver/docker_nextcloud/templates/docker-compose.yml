@@ -12,7 +12,7 @@ services:
 
   mysql:
 
-    image: mariadb:10
+    image: mariadb:11
     restart: always
     volumes:
       - "{{ basedir }}/db/:/var/lib/mysql"
@@ -21,6 +21,7 @@ services:
       MYSQL_PASSWORD: "{{ mysql_user_pass }}"
       MYSQL_DATABASE: "nextcloud"
       MYSQL_USER: "nextcloud"
+      MARIADB_AUTO_UPGRADE: "1"
     networks:
       - default
   
