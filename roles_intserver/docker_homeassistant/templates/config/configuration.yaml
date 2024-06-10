@@ -55,47 +55,6 @@ influxdb:
   token: {{ influxdb_token }}
   default_measurement: units
 
-# # Homematic CCU2
-# # In der CCU2 muss für den Admin Benutzer ein Passwort gesetzt werden
-# # Die Integration ist scheinbar in der Version 2023.4 defekt: 
-# #   https://github.com/home-assistant/core/issues/96902
-# #   https://github.com/home-assistant/core/issues/114807
-# homematic:
-#   interfaces:
-#     rf:
-#       host: {{ fixed_ip.homematic_ccu }}
-#       port: 2001
-#       callback_ip: {{ int_ip4 }}
-#       callback_port: {{ homematic_callback_port }}
-#       resolvenames: "json"
-#       username: "Admin"
-#       password: "admin"   
-#     # wired:
-#     #   host: {{ fixed_ip.homematic_ccu }}
-#     #   port: 2001
-#     #   resolvenames: "json"
-#     #   username: "Admin"
-#     #   password: "admin"   
-#     # ip:
-#     #   host: {{ fixed_ip.homematic_ccu }}
-#     #   port: 2010
-#     groups:
-#       host: {{ fixed_ip.homematic_ccu }}
-#       port: 9292
-#       callback_ip: {{ int_ip4 }}
-#       callback_port: {{ homematic_callback_port }}
-#       resolvenames: "json"
-#       username: "Admin"
-#       password: "admin"   
-#       path: /groups
-#   # hosts:
-#   #   ccu2:
-#   #     host: {{ fixed_ip.homematic_ccu }}
-#   #     port: 2001
-#   #     username: "Admin"
-#   #     password: "admin"   
-
-
 {% if rfswitches is defined %}
 
 mqtt:

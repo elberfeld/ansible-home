@@ -72,11 +72,13 @@ Geräte werden per Autodiscovery gefunden
   * Integration: Homematic(IP) Local
   * Instanzname: HomematicCCU2
   * Host: Feste IP der CCU2
+  * Benutzername: Admin
+  * Passwort: *****
   * TLS: Nein
   * TLS: Überprüfen: Nein
   * Callback Host: IP Des Docker-Hosts 
   * Callback Port: 12001 
-  * JSON-RPC Port: 2001
+  * JSON-RPC Port: 80
   * Aktiver Sysvar Scan: Ja
   * Sysvar Scan Interval: 30
   * Aktive Systembanachrichtigungen: Ja
@@ -86,7 +88,7 @@ Geräte werden per Autodiscovery gefunden
   * HmIP-RF Port: 2010
   * Aktiviere Homematic (Bidcos-RF): Ja
   * HM-RF Port: 2001
-  * Aktiviere Heizgruppen: Ja
+  * Aktiviere Heizgruppen: Nein
   * Gruppen Port: 9292
   * Gruppen-Plan: /groups
   * Aktiviere Homematic-Wired (Bidcos-Wired): Nein
