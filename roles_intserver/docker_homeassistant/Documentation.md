@@ -49,6 +49,18 @@ Nach Installation automatisch vorhanden
 * Port: 80 
 * Umbenennen in: HandyPrivat
 
+## Nous A1T WiFi Smart Socket with Tasmota
+
+* https://nous.technology/product/a1t.html
+* https://templates.blakadder.com/nous_A1T.html
+* https://www.amazon.de/dp/B0054PSI46?psc=1&ref=ppx_yo2ov_dt_b_product_details
+
+* Configure Wifi on Device 
+* Configure Other: Set Device Name and Friendly Name 
+* Configure MQTT Broker 
+  * Device ist automatically detected in Homeassistant 
+
+
 ## Tradfri Gateway 
 
 Geräte werden per Autodiscovery gefunden
