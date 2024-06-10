@@ -35,7 +35,7 @@ $CONFIG = array (
 
     // Attribute map for OIDC response. 
     'oidc_login_attributes' => array (
-        'id' => 'sub',
+        'id' => 'preferred_username',
         'name' => 'name',
         'mail' => 'email',
         'groups' => 'groups',
