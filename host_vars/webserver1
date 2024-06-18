@@ -64,6 +64,7 @@ webserver_domains:
   - "icinga.void.ms"
   - "prometheus.void.ms"
   - "vpn.void.ms"
+  - "vpn-streiner.void.ms"
 
 # Definition von RSync Backup Jobs 
 rsyncbackup:
