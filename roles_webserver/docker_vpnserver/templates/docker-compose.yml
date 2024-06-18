@@ -20,10 +20,14 @@ services:
       - "WG_ADMIN_USERNAME=vpnadmin"
       - "WG_ADMIN_PASSWORD={{ wg_admin_pass }}"
       - "WG_WIREGUARD_PRIVATE_KEY={{ wg_private_key }}"
+      - "WG_WIREGUARD_PORT={{ vpn_port }}"
+      - "WG_VPN_CIDR={{ networks.vpnserver.cdir_v4 }}"
       - "WG_VPN_CIDRV6=0" # to disable IPv6
+      - "WG_VPN_ALLOWED_IPS={{ networks.defaultroute.cdir_v4 }}, {{ networks.vpnserver.cdir_v4 }}, {{ networks.vpnserver.dns.server }}/32, {{ networks.local.cdir_v4 }}, {{ networks.webserver1.cdir_v4 }}, {{ networks.webserver2.cdir_v4 }}" 
       - "WG_EXTERNAL_HOST={{ domain }}"
       - "WG_DNS_ENABLED=true"
-      - "WG_DNS_UPSTREAM={{ int_ip4 }}"
+      - "WG_DNS_DOMAIN={{ networks.vpnserver.dns.domain }}"
+      - "WG_DNS_UPSTREAM={{ networks.vpnserver.dns.server }}"
       - "WG_LOG_LEVEL=info"
     labels:
       - traefik.enable=true

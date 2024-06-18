@@ -2,5 +2,5 @@
 // Shelly Pro 3EM Power Meter 
 // Support in Openhab is pending: https://github.com/openhab/openhab-addons/issues/14346
 
-Thing shelly:shellypro3em:mainpower "Main Power Meter" [deviceIp="{{ fixed_ip.shelly_pro3em}}", userId="", password=""]
+Thing shelly:shellypro3em:mainpower "Main Power Meter" [deviceIp="{{ networks.local.fixed_ip.shelly_pro3em}}", userId="", password=""]
 

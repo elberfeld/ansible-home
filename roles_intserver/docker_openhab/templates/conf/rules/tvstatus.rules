@@ -2,7 +2,7 @@ rule "TV_Wohnzimmer_getStatus"
 when
     Time cron "* * * * * ?"
 then
-    var url = "http://{{ fixed_ip.sony_tv }}/sony/system"
+    var url = "http://{{ networks.local.fixed_ip.sony_tv }}/sony/system"
     var contenttype = "application/json"
     var payload = "{'method': 'getPowerStatus', 'params': [], 'id': 50, 'version': '1.0'}"
 
