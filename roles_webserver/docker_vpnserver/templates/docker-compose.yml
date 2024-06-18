@@ -23,7 +23,7 @@ services:
       - "WG_WIREGUARD_PORT={{ vpn_port }}"
       - "WG_VPN_CIDR={{ networks.vpnserver.cdir_v4 }}"
       - "WG_VPN_CIDRV6=0" # to disable IPv6
-      - "WG_VPN_ALLOWED_IPS={{ networks.defaultroute.cdir_v4 }}, {{ networks.vpnserver.cdir_v4 }}, {{ networks.vpnserver.dns.server }}/32, {{ networks.local.cdir_v4 }}, {{ networks.webserver1.cdir_v4 }}, {{ networks.webserver2.cdir_v4 }}" 
+      - "WG_VPN_ALLOWED_IPS={{ networks.defaultroute.cdir_v4 }}, {{ networks.vpnserver.cdir_v4 }}, {{ networks.vpnserver.dns.server | ansible.utils.ipaddr('host') }}, {{ networks.local.cdir_v4 }}, {{ networks.webserver1.cdir_v4 }}, {{ networks.webserver2.cdir_v4 }}" 
       - "WG_EXTERNAL_HOST={{ domain }}"
       - "WG_DNS_ENABLED=true"
       - "WG_DNS_DOMAIN={{ networks.vpnserver.dns.domain }}"

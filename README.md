@@ -10,6 +10,10 @@ Alle Server sind erfasst
 ## Vorraussetzungen
 Installiertes ansible
 
+```
+apt install python3 python3-pip python3-netaddr ansible ansible-lint
+```
+
 Ausführen von
 
 ```
