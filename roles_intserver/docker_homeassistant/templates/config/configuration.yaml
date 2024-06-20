@@ -38,8 +38,6 @@ http:
   use_x_forwarded_for: true
   trusted_proxies: 
     - 172.0.0.0/8
-  cors_allowed_origins:
-    - "*"
 
 # https://www.home-assistant.io/integrations/api/
 api:
