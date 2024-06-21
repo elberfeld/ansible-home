@@ -25,8 +25,15 @@
     - "Dockerfile"
     - "entrypoint.sh"
     - "uffd.cfg"
+  register: config_files
 
-- name: start {{servicename}} docker
+- name: "stop {{ servicename }} docker"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config_files.changed 
+
+- name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present

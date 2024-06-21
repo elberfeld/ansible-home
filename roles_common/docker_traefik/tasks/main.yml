@@ -28,15 +28,15 @@
     - traefik.yml 
     - dynamic/redirect-default.yml
     - dynamic/tls.yml
-  register: config
+  register: config_files
 
-- name: "stop {{ servicename}} docker"
+- name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config.changed
+  when: config_files.changed 
 
-- name: "start {{ servicename}} docker"
+- name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present

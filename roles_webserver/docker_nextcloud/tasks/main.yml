@@ -59,6 +59,7 @@
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - "docker-compose.yml"
+  register: config_files
 
 
 - name: Nextcloud Konfig-Dateien erstellen
@@ -77,6 +78,13 @@
     mode: u+x
   with_items:
     - "occ.sh"
+
+
+- name: "stop {{ servicename }} docker"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config_files.changed 
 
 
 - name: "start {{ servicename }} docker"

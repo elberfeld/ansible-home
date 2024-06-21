@@ -17,14 +17,15 @@
   template:
     src: "docker-compose.yml"
     dest: "/srv/promtail/docker-compose.yml"
+  register: config_files
 
-- name: stop promtail docker
+- name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
-    project_src: /srv/promtail/
+    project_src: "{{ basedir }}"
     state: absent
-  when: config.changed
+  when: config_files.changed 
 
-- name: start promtail docker
+- name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:
-    project_src: /srv/promtail/
+    project_src: "{{ basedir }}"
     state: present
