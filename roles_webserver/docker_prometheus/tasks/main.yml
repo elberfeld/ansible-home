@@ -7,12 +7,20 @@
     - { path: "{{ basedir }}/forward_auth_secret",  length: 64 }
     - { path: "{{ basedir }}/oauth_client_secret",  length: 64 }
 
-- name: "create folder struct for {{ servicename }}"
+- name: "create folder struct for {{ servicename }} 1"
   file: 
     path: "{{ basedir }}" 
     state: "directory"
   with_items:
     - "{{ basedir }}"
+
+- name: "create folder struct for {{ servicename }} 2"
+  file:
+    path: "{{ item }}"
+    state: "directory"
+    owner: 65534
+    group: 65534
+  with_items:
     - "{{ basedir }}/data"
 
 - name: "create config files for {{ servicename }}"

@@ -5,15 +5,25 @@
     - { path: "{{ basedir }}/grafana_admin_pass", length: 12 }
     - { path: "{{ basedir }}/oauth_client_secret", length: 32 }
 
-- name: create folder struct for grafana
+- name: "create folder struct for {{ servicename }} 1"
   file: 
     path: "{{ item }}"
     state: "directory"
   with_items:
     - "{{ basedir }}"
-    - "{{ basedir }}/data/"   
 
-- name: create config filess
+- name: "create folder struct for {{ servicename }} 2"
+  file:
+    path: "{{ item }}"
+    state: "directory"
+    owner: 472
+    group: 0
+  with_items:
+    - "{{ basedir }}/data/"   
+    - "{{ basedir }}/provisioning/"
+    - "{{ basedir }}/provisioning/datasources/"
+
+- name: "create config files for {{ servicename }}"
   template: 
     src: "{{ item }}" 
     dest: "{{ basedir }}/{{ item }}"
