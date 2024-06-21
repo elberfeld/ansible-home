@@ -8,10 +8,8 @@ services:
     restart: always
     volumes:
       - "{{ basedir }}/grafana.ini:/etc/grafana/grafana.ini"
+      - "{{ basedir }}/provisioning/:/etc/grafana/provisioning/"
       - "{{ basedir }}/data/:/var/lib/grafana"
-    environment:
-      GF_SERVER_ROOT_URL: "https://{{ domain }}"
-      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_pass }}"
     labels:
       - traefik.enable=true
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)

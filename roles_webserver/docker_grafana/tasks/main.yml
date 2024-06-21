@@ -2,6 +2,7 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
+    - { path: "{{ basedir }}/grafana_secret_key", length: 32 }
     - { path: "{{ basedir }}/grafana_admin_pass", length: 12 }
     - { path: "{{ basedir }}/oauth_client_secret", length: 32 }
 
