@@ -24,6 +24,7 @@ services:
       - "WG_VPN_CIDR={{ networks.vpnserver_streiner.cdir_v4 }}"
       - "WG_VPN_CIDRV6=0" # to disable IPv6
       - "WG_VPN_ALLOWED_IPS={{ networks.defaultroute.cdir_v4 }}, {{ networks.vpnserver_streiner.cdir_v4 }}, {{ networks.vpnserver_streiner.dns.server | ansible.utils.ipaddr('host') }}, 192.168.0.0/24, 192.168.0.2/32" 
+      - "WG_VPN_CLIENT_ISOLATION=false"
       - "WG_EXTERNAL_HOST={{ domain }}"
       - "WG_IPV4_NAT_ENABLED=false"
       - "WG_IPV6_NAT_ENABLED=false"
