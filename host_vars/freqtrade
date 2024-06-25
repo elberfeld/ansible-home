@@ -43,7 +43,5 @@ webserver_domains:
   - "hackmd.void.ms"
   - "matrix.void.ms"
   - "nextcloud.void.ms"
-  - "vault1.void.ms"
-  - "vault2.void.ms"
   - "oauth-test.void.ms"
   - "zitadel.void.ms"

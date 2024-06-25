@@ -295,6 +295,12 @@
         domain: uffd.void.ms
       }
     - { 
+        role: roles_webserver/docker_vaultwarden, tags: vaultwarden, 
+        servicename: vaultwarden, 
+        basedir: /srv/vaultwarden, 
+        domain: vault.void.ms
+      }
+    - { 
         role: roles_webserver/docker_wordpress, tags: wordpress, 
         servicename: wordpress, 
         basedir: /srv/wordpress, 

@@ -44,6 +44,8 @@ alert:
     - { name: "traefik-app-1" }
     - { name: "uffd-app-1" }
     - { name: "uffd-db-1" }
+    - { name: "vaultwarden-app-1" }
+    - { name: "vaultwarden-backup-1" }
     - { name: "watchtower-app-1" }
     - { name: "wordpress-app-1" }
     - { name: "wordpress-db-1" }
@@ -84,6 +86,7 @@ webserver_domains:
   - "freqtrade.void.ms"
   - "mail.void.ms"
   - "uffd.void.ms"
+  - "vault.void.ms"
   - "www.void.ms"
 
 

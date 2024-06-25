@@ -1,0 +1,54 @@
+services:
+
+  app:
+
+    image: vaultwarden/server:latest
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80
+    environment:
+      - ADMIN_TOKEN={{ vaultwarden_admin_token }}
+      - DOMAIN=https://{{ domain }}    
+      - INVITATIONS_ALLOWED=false
+      - INVITATION_ORG_NAME=void
+      - LOG_LEVEL=warn
+      - SENDS_ALLOWED=true
+      - SIGNUPS_ALLOWED=false
+      - SMTP_HOST={{ smtp.host }}
+      - SMTP_FROM={{ smtp.username }}
+      - SMTP_PORT={{ smtp.port }}
+      - SMTP_SECURITY={{ smtp.security }}
+      - SMTP_USERNAME={{ smtp.username }}
+      - SMTP_PASSWORD={{ smtp_user_token }}
+      - SIGNUPS_VERIFY=true
+      - SHOW_PASSWORD_HINT=false
+      - TZ=Europe/Berlin
+      - WEBSOCKET_ENABLED=false
+    volumes:
+      - {{ basedir }}/data:/data
+    networks:
+      - web
+      - default
+
+  backup:
+    image: bruceforce/vaultwarden-backup:latest
+    restart: always
+    init: true
+    depends_on:
+      - app
+    volumes:
+      - {{ basedir }}/data:/data/
+      - {{ basedir }}/backup:/backup/
+    environment:
+      - TZ=Europe/Berlin
+      - DELETE_AFTER=30
+      - TIMESTAMP=true
+      - GID=1000
+      - UID=1000
+
+networks:
+  web:
+    external: true

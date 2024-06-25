@@ -1,0 +1,39 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+    - { path: "{{ basedir }}/vaultwarden_admin_token", length: 40 }
+    - { path: "{{ basedir }}/smtp_user_token",  length: -1 }
+
+
+- name: "create folder struct for {{ servicename }}"
+  file:
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/secrets"
+    - "{{ basedir }}/data"
+    - "{{ basedir }}/backup"
+
+
+- name: deploy {{ servicename }} config
+  template:
+    dest:  "{{ basedir }}/{{ item }}"
+    src: "{{ item }}"
+  with_items:
+    - docker-compose.yml
+  register: config
+
+
+- name: "stop {{ servicename }} docker"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config.changed
+
+
+- name: "start {{ servicename }} docker"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: present
