@@ -2,10 +2,10 @@
 #ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@webserver1.void.ms"'
 
 debian_sources: 
-  - "deb http://ftp2.de.debian.org/debian/ buster main contrib non-free"
-  - "deb http://ftp2.de.debian.org/debian/ buster-updates main contrib non-free"
-  - "deb http://security.debian.org/ buster/updates main contrib non-free"
-  - "deb https://download.docker.com/linux/debian buster stable"
+  - "deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware"
+  - "deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware"
+  - "deb http://security.debian.org bookworm-security main contrib non-free non-free-firmware"
+  - "deb https://download.docker.com/linux/debian bookworm stable"
 
 debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
