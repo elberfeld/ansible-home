@@ -28,7 +28,7 @@
     - config/schreibtisch.yaml
     - config/wohnzimmer.yaml
     - config/technikraum.yaml
-  register: config
+  register: config_files
 
 - name: download config includes files 
   get_url:
@@ -37,12 +37,6 @@
   with_items:
     - webserver-v1.min.css
     - webserver-v1.min.js
-
-- name: "stop {{ servicename }} docker"
-  community.docker.docker_compose_v2:
-    project_src: "{{ basedir }}"
-    state: absent
-  register: config_files
 
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
