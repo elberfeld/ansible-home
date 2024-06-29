@@ -1,6 +1,7 @@
 
 [server]
 hpserver    ansible_ssh_host=10.5.0.200 
+master      ansible_ssh_host=10.5.0.100
 intserver	ansible_ssh_host=10.5.0.111
 
 webserver1  ansible_ssh_host=159.69.194.128
