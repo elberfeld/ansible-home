@@ -130,12 +130,12 @@
         basedir: /srv/esphome,
         web_port: 6052 
       }
-    - { 
-        role: roles_intserver/docker_heimdall, tags: heimdall, 
-        servicename: heimdall, 
-        basedir: /srv/heimdall,
-        heimdall_port: 81 
-      }
+    # - { 
+    #     role: roles_intserver/docker_heimdall, tags: heimdall, 
+    #     servicename: heimdall, 
+    #     basedir: /srv/heimdall,
+    #     heimdall_port: 81 
+    #   }
     - { role: roles_intserver/docker_hibiscus, tags: hibiscus }
 #    - { role: roles_intserver/docker_loki, tags: loki }
     - {
@@ -162,15 +162,15 @@
         omada_port_https: 8043,
         omada_portal_https: 8843
       }
-    - { 
-        role: roles_intserver/docker_openhab, 
-        tags: openhab,
-        servicename: openhab,
-        basedir: /srv/openhab,
-        openhab_port_http: 80,
-        openhab_port_https: 443, 
-        influxdb_port: 28086
-      }
+    # - { 
+    #     role: roles_intserver/docker_openhab, 
+    #     tags: openhab,
+    #     servicename: openhab,
+    #     basedir: /srv/openhab,
+    #     openhab_port_http: 80,
+    #     openhab_port_https: 443, 
+    #     influxdb_port: 28086
+    #   }
     - { 
         role: roles_intserver/docker_pihole, 
         tags: pihole,

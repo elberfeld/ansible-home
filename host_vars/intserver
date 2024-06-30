@@ -19,7 +19,7 @@ alert:
   containers:
     - { name: "dockerstats-app-1" }
     - { name: "esphome-app-1" }
-    - { name: "heimdall-app-1" }
+#    - { name: "heimdall-app-1" }
     - { name: "hibiscus-db-1" }
 #    - { name: "loki-app-1" }
 #    - { name: "loki-vector-1" }
@@ -27,8 +27,8 @@ alert:
     - { name: "homeassistant-influxdb-1" }
     - { name: "mqtt-app-1" }
     - { name: "omada-app-1" }
-    - { name: "openhab-app-1" }
-    - { name: "openhab-influxdb-1" }
+#    - { name: "openhab-app-1" }
+#    - { name: "openhab-influxdb-1" }
     - { name: "pihole-app-1" }
 #    - { name: "promtail-app-1" }
     - { name: "watchtower-app-1" }
