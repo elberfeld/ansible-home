@@ -50,7 +50,6 @@ networks:
       firewall: 10.5.0.254
       switch: 10.5.0.253
       homematic_ccu: 10.5.0.252
-      tradfri_gateway: 10.5.0.251
       wlan_ap1: 10.5.0.249
       shelly_pro3em: 10.5.0.248
       sony_tv: 10.5.0.247 

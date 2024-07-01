@@ -10,6 +10,8 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "{{ basedir }}/config:/config"
+    devices:
+      - /dev/ttyNabuCasaSkyConnect
     environment:
       TZ: "Europe/Berlin"
     labels:

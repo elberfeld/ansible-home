@@ -16,7 +16,9 @@ Eine Anmeldung bei GitHub ist hierbei erforderlich.
 Anschließend muss Homeassistant neu gestartet werden.
 Wenn das Icon vom HACS Menüentrag fehlt muss der Broser Cache einmal geleert werden.
 
+
 # Manuell eingerichtete Integrationen / Geräte 
+
 
 ## Sonne 
 
@@ -25,6 +27,7 @@ Nach Installation automatisch vorhanden
 * Integration: Sonne 
 * Umbenennen in: Sun
 
+
 ## Wetter 
 
 Nach Installation automatisch vorhanden
@@ -32,6 +35,7 @@ Nach Installation automatisch vorhanden
 * Integration: Forecast von Met.no 
 * Name: Home
 * Breitengrad, Längengrad, Höhe: <aus configuration.yaml>
+
 
 ## MQTT Broker
 
@@ -42,12 +46,14 @@ Nach Installation automatisch vorhanden
 * Passswort: Leer 
 * Umbenennen in: MQTTBroker
 
+
 ## Anwesenheitserkennung (Handy)
 
 * Integration: Ping (ICMP) 
 * Host: Feste IP des Gerätes
 * Port: 80 
 * Umbenennen in: HandyPrivat
+
 
 ## Nous A1T WiFi Smart Socket with Tasmota
 
@@ -61,14 +67,20 @@ Nach Installation automatisch vorhanden
   * Device ist automatically detected in Homeassistant 
 
 
-## Tradfri Gateway 
+## Zigbee / ZHA
 
-Geräte werden per Autodiscovery gefunden
+Zigbee geräte werde über einen HomeAssistant SkyConnect stick angebunden und über Zigbee2MQTT verwaltet.
+Der Stick ist in den Container als Device /dev/ttyNabuCasaSkyConnect gemountet, dieses device wird in den Homeassistant Container weitergegeben. 
 
-* Integration: Ikea Tradfri
-* Host: Feste IP des Gerätes
-* Sicherheitscode: Code auf dem Gerät 
-* Umbenennen in: TradfriGateway
+ZHA Einrichtung:
+* Radio Type: ezsp
+* Device: /dev/ttyNabuCasaSkyConnect
+* Baudrate: 115200
+
+Weitere Infos:
+* Detailinfos USB in LXC mounten: https://gist.github.com/crundberg/a77b22de856e92a7e14c81f40e7a74bd?permalink_comment_id=4524937
+* Firmware Updates manuell im Browser: https://connectzbt1.home-assistant.io/firmware-update/
+
 
 ## Homematic 
 
@@ -149,12 +161,14 @@ mosquitto_pub -t 'home/OpenMQTTGatewayRF433/commands/MQTTto433' -m '{"value":283
 mosquitto_pub -t 'home/OpenMQTTGatewayRF433/commands/MQTTto433' -m '{"value":283732,"protocol":1,"length":24,"delay":315}'
 ```
 
+
 ## Shelly Pro3EM Power Meter 
 
 * Integration: Shelly 
 * Host: Feste IP des Gerätes
 * Port: 80 
 * Umbenennen in: ShellyPro3EM
+
 
 ## Sony-TV
 
