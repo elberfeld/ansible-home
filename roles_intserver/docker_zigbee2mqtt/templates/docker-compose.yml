@@ -1,0 +1,18 @@
+
+services:
+
+  # Zigbee USB Stick must be Mounted as /dev/ttyNabuCasaSkyConnect
+  # see https://gist.github.com/crundberg/a77b22de856e92a7e14c81f40e7a74bd?permalink_comment_id=4524937
+
+  app:
+    image: koenkk/zigbee2mqtt:latest
+    restart: always
+    ports:
+      - {{ z2m_port }}:{{ z2m_port }}
+    volumes:
+      - {{ basedir }}/data:/app/data
+      - /run/udev:/run/udev:ro
+    devices:
+      - /dev/ttyNabuCasaSkyConnect
+    environment:
+      - TZ=Europe/Berlin
