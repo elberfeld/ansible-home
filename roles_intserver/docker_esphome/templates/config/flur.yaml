@@ -17,7 +17,7 @@ binary_sensor:
     name: Tuer
     pin: 
       number: D7
-      inverted: true
+      inverted: false
       mode:
         input: true
         pullup: true
