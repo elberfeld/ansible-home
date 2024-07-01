@@ -58,6 +58,13 @@ influxdb:
   token: {{ influxdb_token }}
   default_measurement: units
 
+# https://www.home-assistant.io/integrations/mqtt_statestream/
+mqtt_statestream:
+  base_topic: homeassistant
+  publish_attributes: true
+  publish_timestamps: true
+
+
 {% if rfswitches is defined %}
 
 mqtt:
