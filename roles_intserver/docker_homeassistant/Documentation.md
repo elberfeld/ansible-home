@@ -26,6 +26,7 @@ Nach Installation automatisch vorhanden
 
 * Integration: Sonne 
 * Umbenennen in: Sun
+* Alle Entitäten aktivieren
 
 
 ## Wetter 
@@ -46,6 +47,13 @@ Nach Installation automatisch vorhanden
 * Passswort: Leer 
 * Umbenennen in: MQTTBroker
 
+
+## Pushover 
+
+* Integration: Pushover
+* Name: Pushover
+* API-Key: <Pushover API Key> 
+* Benutzer-Token: <Pushover User Token>
 
 ## Anwesenheitserkennung (Handy)
 
