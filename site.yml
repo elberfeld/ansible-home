@@ -150,7 +150,8 @@
         role: roles_intserver/docker_mqtt, tags: mqtt,
         servicename: mqtt,
         basedir: /srv/mqtt,
-        mqtt_port: 1883
+        mqtt_port: 1883,
+        explorer_port: 4000
       }
     - { 
         role: roles_intserver/docker_omada, tags: omada, 

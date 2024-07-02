@@ -13,3 +13,14 @@ services:
       - {{ basedir }}/data:/mosquitto/data
       - {{ basedir }}/log:/mosquitto/log
 
+  explorer:
+
+    image: smeagolworms4/mqtt-explorer
+    restart: always
+    ports:
+      - {{ explorer_port }}:{{ explorer_port }}
+    volumes:
+      - {{ basedir }}/settings.json:/mqtt-explorer/config/settings.json:ro
+    environment:
+      HTTP_PORT: {{ explorer_port }}
+      CONFIG_PATH: "/mqtt-explorer/config"

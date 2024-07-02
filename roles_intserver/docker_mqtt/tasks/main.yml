@@ -17,6 +17,7 @@
   with_items: 
     - mosquitto.conf
     - docker-compose.yml
+    - settings.json
   register: config_files
 
 - name: "stop {{ servicename }} docker"
