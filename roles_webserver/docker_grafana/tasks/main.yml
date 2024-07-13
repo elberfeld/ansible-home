@@ -6,6 +6,11 @@
     - { path: "{{ basedir }}/grafana_admin_pass", length: 12 }
     - { path: "{{ basedir }}/oauth_client_secret", length: 32 }
 
+- include_tasks: ../functions/get_secret.yml
+  host: intserver
+  with_items:
+    - { path: "/srv/homeassistant/homeassistant_influxdb_token", length: -1 }
+
 - name: "create folder struct for {{ servicename }} 1"
   file: 
     path: "{{ item }}"
@@ -31,6 +36,7 @@
   with_items:
     - docker-compose.yml
     - grafana.ini
+    - provisioning/datasources/datasources.yml
   register: config_files
 
 - name: "stop {{ servicename }} docker"
