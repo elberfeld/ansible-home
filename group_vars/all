@@ -75,12 +75,10 @@ networks:
   # Webserver local Networks
   webserver1:
     cdir_v4: 10.100.1.1/32
-    fixed_ip:
-      webserver1: 10.100.1.1
+    int_ip4: 10.100.1.1
   webserver2: 
     cdir_v4: 10.100.1.2/32
-    fixed_ip:
-      webserver2: 10.100.1.2
+    int_ip4: 10.100.1.2
 
 # zentraler SMTP Server 
 smtp:

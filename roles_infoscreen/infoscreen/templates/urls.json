@@ -25,7 +25,7 @@
         },
 
 
-        {% for item in [ { "name":"webserver1", "node":" {{ networks.webserver1.fixed_ip.webserver1 }}:9100" }, { "name":"webserver2", "node":"{{ networks.webserver2.fixed_ip.webserver2 }}:9100" }, { "name":"hpserver", "node":"{{ networks.local.fixed_ip.hpserver }}:9100" }, { "name":"intserver", "node":"{{ networks.local.fixed_ip.intserver }}:9100" }] %}
+        {% for item in [ { "name":"webserver1", "node":" {{ networks.webserver1.int_ip4 }}:9100" }, { "name":"webserver2", "node":"{{ networks.webserver2.fixed_ip.webserver2 }}:9100" }, { "name":"hpserver", "node":"{{ networks.local.fixed_ip.hpserver }}:9100" }, { "name":"intserver", "node":"{{ networks.local.fixed_ip.intserver }}:9100" }] %}
 
         {
             "title":"SRV {{ item.name }}",
