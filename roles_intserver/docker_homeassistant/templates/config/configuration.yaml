@@ -46,6 +46,8 @@ api:
 # log_level= critical, fatal, error, warning, warn, info, debug, notset
 logger:
   default: info
+  logs:
+    zigpy: info
 
 # https://www.home-assistant.io/integrations/influxdb/
 influxdb:
@@ -57,6 +59,10 @@ influxdb:
   bucket: homeassistant
   token: {{ influxdb_token }}
   default_measurement: units
+
+# ZHA Custom Quirks
+zha:
+  custom_quirks_path: /config/custom_zha_quirks/
 
 # https://www.home-assistant.io/integrations/mqtt_statestream/
 mqtt_statestream:
@@ -86,3 +92,22 @@ mqtt:
 {% endfor %}
 
 {% endif %}
+
+# Send IR Codes via Tuya ZS06 
+script ansible: 
+
+  # Turn SonyTV On or Off
+  - alias: IR_SonyTV_OnOff 
+    mode: single
+    sequence:
+      - service: zha.issue_zigbee_cluster_command
+        data:
+          cluster_type: in
+          endpoint_id: 1
+          command: 2
+          ieee: 0c:ae:5f:ff:fe:92:09:ec
+          command_type: server
+          params:
+            code: >-
+              CyAJpwJpBKcCEQKnAuAHB+ADE0ALgAMBwGXg1zMDpwIRAsELAxECpwLgAwtADwERAuHZAwMRAqcC4AP34AMLBRECpwIRAg==
+          cluster_id: 57348
