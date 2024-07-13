@@ -1,7 +1,7 @@
        
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/letsencrypt_notification_email",  length: -1 }
+    - { path: "{{ basedir }}/letsencrypt_notification_email", type: prompt }
 
 - name: "create folder struct for {{ servicename }}"
   file:

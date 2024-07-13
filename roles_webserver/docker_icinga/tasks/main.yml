@@ -2,13 +2,13 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/forward_auth_secret", length: 64 }
-    - { path: "{{ basedir }}/oauth_client_secret", length: 64 }
-    - { path: "{{ basedir }}/icinga_admin_pass",   length: 12 }
-    - { path: "{{ basedir }}/icinga_api_user",     length: 8 }
-    - { path: "{{ basedir }}/icinga_api_pass",     length: 8 }
-    - { path: "{{ basedir }}/mysql_admin_pass",    length: 12 }
-    - { path: "{{ basedir }}/mysql_user_pass",     length: 12 }
+    - { path: "{{ basedir }}/forward_auth_secret", type: create, length: 64 }
+    - { path: "{{ basedir }}/oauth_client_secret", type: create, length: 64 }
+    - { path: "{{ basedir }}/icinga_admin_pass",   type: create, length: 12 }
+    - { path: "{{ basedir }}/icinga_api_user",     type: create, length: 8 }
+    - { path: "{{ basedir }}/icinga_api_pass",     type: create, length: 8 }
+    - { path: "{{ basedir }}/mysql_admin_pass",    type: create, length: 12 }
+    - { path: "{{ basedir }}/mysql_user_pass",     type: create, length: 12 }
 
 
 - name: Setup OAuth Client Info 

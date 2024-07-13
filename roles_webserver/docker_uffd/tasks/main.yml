@@ -2,11 +2,11 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/mysql_admin_pass",  length: 24 }
-    - { path: "{{ basedir }}/mysql_user_pass",  length: 24 }
-    - { path: "{{ basedir }}/uffd_admin_pass",  length: 24 }
-    - { path: "{{ basedir }}/uffd_secret_key",  length: 64 }
-    - { path: "{{ basedir }}/uffd_mail_pass",   length: -1 }
+    - { path: "{{ basedir }}/mysql_admin_pass", type: create, length: 24 }
+    - { path: "{{ basedir }}/mysql_user_pass",  type: create, length: 24 }
+    - { path: "{{ basedir }}/uffd_admin_pass",  type: create, length: 24 }
+    - { path: "{{ basedir }}/uffd_secret_key",  type: create, length: 64 }
+    - { path: "{{ basedir }}/uffd_mail_pass",   type: prompt }
 
 - name: create folder struct for {{servicename}}
   file: 

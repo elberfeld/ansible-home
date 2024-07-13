@@ -2,10 +2,10 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/influxdb_password",    length: 12 }
-    - { path: "{{ basedir }}/influxdb_token",       length: 32 }
-    - { path: "{{ basedir }}/forward_auth_secret",  length: 64 }
-    - { path: "{{ basedir }}/oauth_client_secret",  length: 64 }
+    - { path: "{{ basedir }}/influxdb_password",    type: create, length: 12 }
+    - { path: "{{ basedir }}/influxdb_token",       type: create, length: 32 }
+    - { path: "{{ basedir }}/forward_auth_secret",  type: create, length: 64 }
+    - { path: "{{ basedir }}/oauth_client_secret",  type: create, length: 64 }
 
 - name: "create folder struct for {{ servicename }} 1"
   file: 

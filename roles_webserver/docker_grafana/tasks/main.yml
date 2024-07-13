@@ -2,14 +2,14 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/grafana_secret_key", length: 32 }
-    - { path: "{{ basedir }}/grafana_admin_pass", length: 12 }
-    - { path: "{{ basedir }}/oauth_client_secret", length: 32 }
+    - { path: "{{ basedir }}/grafana_secret_key", type: create, length: 32 }
+    - { path: "{{ basedir }}/grafana_admin_pass", type: create, length: 12 }
+    - { path: "{{ basedir }}/oauth_client_secret", type: create, length: 32 }
 
-- include_tasks: ../functions/get_secret.yml
-  host: intserver
-  with_items:
-    - { path: "/srv/homeassistant/homeassistant_influxdb_token", length: -1 }
+# - host: intserver
+#   include_tasks: ../functions/get_secret.yml
+#   with_items:
+#     - { path: "/srv/homeassistant/homeassistant_influxdb_token", length: -1 }
 
 - name: "create folder struct for {{ servicename }} 1"
   file: 

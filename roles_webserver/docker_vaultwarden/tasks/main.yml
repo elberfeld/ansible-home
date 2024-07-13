@@ -2,8 +2,8 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/vaultwarden_admin_token", length: 40 }
-    - { path: "{{ basedir }}/smtp_user_token",  length: -1 }
+    - { path: "{{ basedir }}/vaultwarden_admin_token", type: create, length: 40 }
+    - { path: "{{ basedir }}/smtp_user_token",  type: prompt }
 
 
 - name: "create folder struct for {{ servicename }}"

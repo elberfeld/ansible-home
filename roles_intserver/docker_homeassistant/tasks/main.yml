@@ -2,9 +2,9 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-   - { path: "{{ basedir }}/homeassistant_admin_password", length: 12 }
-   - { path: "{{ basedir }}/influxdb_password",            length: 12 }
-   - { path: "{{ basedir }}/influxdb_token",               length: 32 }
+   - { path: "{{ basedir }}/homeassistant_admin_password", type: create, length: 12 }
+   - { path: "{{ basedir }}/influxdb_password",            type: create, length: 12 }
+   - { path: "{{ basedir }}/influxdb_token",               type: create, length: 32 }
 
 
 - name: "create folder struct for {{ basedir }}"

@@ -10,11 +10,11 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/nextcloud_admin_pass",  length: 32 }
-    - { path: "{{ basedir }}/nextcloud_oidc_secret",  length: 32 }
-    - { path: "{{ basedir }}/mysql_admin_pass",  length: 32 }
-    - { path: "{{ basedir }}/mysql_user_pass",  length: 24 }
-    - { path: "{{ basedir }}/smtp_user_pass",  length: -1 }
+    - { path: "{{ basedir }}/nextcloud_admin_pass",  type: create, length: 32 }
+    - { path: "{{ basedir }}/nextcloud_oidc_secret",  type: create, length: 32 }
+    - { path: "{{ basedir }}/mysql_admin_pass", type: create,  length: 32 }
+    - { path: "{{ basedir }}/mysql_user_pass",  type: create, length: 24 }
+    - { path: "{{ basedir }}/smtp_user_pass",  type: prompt }
 
 
 - name: "create folder struct for {{ servicename }}"

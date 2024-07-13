@@ -2,7 +2,7 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/samba_admin_pass", length: 12 }
+    - { path: "{{ basedir }}/samba_admin_pass", type: create, length: 12 }
 
 - name: Install Packages for {{ servicename }}
   apt: 

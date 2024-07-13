@@ -2,17 +2,17 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-   - { path: /srv/openhab/influxdb_password,     length: 32 }
-   - { path: /srv/openhab/influxdb_token,        length: 32 }
-   - { path: /srv/openhab/tradfri_code,          length: -1 }
-   - { path: /srv/openhab/tradfri_code,          length: -1 }
-   - { path: /srv/openhab/tradfri_identity,      length: -1 }
-   - { path: /srv/openhab/tradfri_key,           length: -1 }
-   - { path: /srv/openhab/location_latitude,     length: -1 }
-   - { path: /srv/openhab/location_longitude,    length: -1 }
-   - { path: /srv/openhab/openweathermap_apikey, length: -1 }
-   - { path: /srv/openhab/pushover_token,        length: -1 }
-   - { path: /srv/openhab/pushover_userkey,      length: -1 }
+   - { path: /srv/openhab/influxdb_password,     type: create, length: 32 }
+   - { path: /srv/openhab/influxdb_token,        type: create, length: 32 }
+   - { path: /srv/openhab/tradfri_code,          type: prompt }
+   - { path: /srv/openhab/tradfri_code,          type: prompt }
+   - { path: /srv/openhab/tradfri_identity,      type: prompt }
+   - { path: /srv/openhab/tradfri_key,           type: prompt }
+   - { path: /srv/openhab/location_latitude,     type: prompt }
+   - { path: /srv/openhab/location_longitude,    type: prompt }
+   - { path: /srv/openhab/openweathermap_apikey, type: prompt }
+   - { path: /srv/openhab/pushover_token,        type: prompt }
+   - { path: /srv/openhab/pushover_userkey,      type: prompt }
 
 - name: pakete installieren
   apt:

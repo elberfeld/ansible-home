@@ -2,15 +2,15 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-   - { path: "{{ basedir }}/jwt_secret_key", length: 32 }
-   - { path: "{{ basedir }}/freqtrade_admin_pass", length: 24 }
-   - { path: "{{ basedir }}/kraken_api_key",       length: -1 }
-   - { path: "{{ basedir }}/kraken_api_secret",    length: -1 }
+   - { path: "{{ basedir }}/jwt_secret_key", type: create, length: 32 }
+   - { path: "{{ basedir }}/freqtrade_admin_pass", type: create, length: 24 }
+   - { path: "{{ basedir }}/kraken_api_key",       type: prompt }
+   - { path: "{{ basedir }}/kraken_api_secret",    type: prompt }
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-   - { path: "{{ basedir }}/telegram_bot_token",   length: -1 }
-   - { path: "{{ basedir }}/telegram_chat_id",     length: -1 }
+   - { path: "{{ basedir }}/telegram_bot_token",   type: prompt }
+   - { path: "{{ basedir }}/telegram_chat_id",     type: prompt }
   when: not freqtrade_dry_run
 
 - name: "create folder struct for {{ servicename }}"

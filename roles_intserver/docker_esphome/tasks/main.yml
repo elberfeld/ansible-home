@@ -2,7 +2,7 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-  - { path: "{{ basedir }}/wlan_pass", length: -1 }
+  - { path: "{{ basedir }}/wlan_pass", type: prompt }
 
 - name: "create folder struct for {{ servicename }}"
   file: 

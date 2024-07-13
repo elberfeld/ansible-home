@@ -2,8 +2,8 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/pushover_user_token",  length: -1 }
-    - { path: "{{ basedir }}/pushover_token",  length: -1 }
+    - { path: "{{ basedir }}/pushover_user_token", type: prompt }
+    - { path: "{{ basedir }}/pushover_token",  type: prompt }
 
 
 - name: "create folder struct for {{ servicename }}"
