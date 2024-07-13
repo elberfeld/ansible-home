@@ -18,6 +18,7 @@
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - docker-compose.yml
+    - dnsmasq/09-localnet.conf
   register: config
 
 - name: "stop {{ servicename}} docker"
