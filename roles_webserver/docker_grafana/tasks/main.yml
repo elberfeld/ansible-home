@@ -6,10 +6,17 @@
     - { path: "{{ basedir }}/grafana_admin_pass", type: create, length: 12 }
     - { path: "{{ basedir }}/oauth_client_secret", type: create, length: 32 }
 
-# - host: intserver
-#   include_tasks: ../functions/get_secret.yml
-#   with_items:
-#     - { path: "/srv/homeassistant/homeassistant_influxdb_token", length: -1 }
+
+- name: "homeassistant_influxdb_token (slurp) @ intserver"
+  delegate_to: intserver
+  slurp: 
+    src: /srv/homeassistant/influxdb_token
+  register: homeassistant_influxdb_token_secretfile
+
+- name: "homeassistant_influxdb_token (decode)"
+  set_fact: 
+    "homeassistant_influxdb_token": "{{ homeassistant_influxdb_token_secretfile.content | b64decode | regex_replace('\\s', '') }}" 
+
 
 - name: "create folder struct for {{ servicename }} 1"
   file: 
