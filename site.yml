@@ -237,6 +237,7 @@
         servicename: prometheus, 
         basedir: /srv/prometheus,
         domain: prometheus.void.ms,
+        prometheus_port: 9090,
         influxdb_port: 18086
       }
     - {

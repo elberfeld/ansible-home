@@ -4,6 +4,8 @@ services:
 
     image: prom/prometheus:latest
     restart: always
+    ports: 
+     - "{{ int_ip4 }}:{{ prometheus_port }}:9090"
     volumes:
       - "{{ basedir }}/data:/prometheus"
       - "{{ basedir }}/prometheus.yml:/etc/prometheus/prometheus.yml"
