@@ -26,7 +26,7 @@ alert:
 
 
 # Primäre IP Adressen des Hosts 
-int_ip4: "{{ networks.local.fixed_ip.hpserver }}"
+int_ip4: 10.5.0.200
 
 
 # Docker konfigurationen 
