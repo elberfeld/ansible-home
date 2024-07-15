@@ -14,12 +14,14 @@ remote_read:
 
 scrape_configs:
 
-{% for host in groups['all'] %}
+
+{% for host in groups['server'] %}
 {% if hostvars[host].alert is defined and hostvars[host].alert %}
 
   - job_name: {{ host }}-metrics
     static_configs:
-      - targets: [ "{{ hostvars[host].int_ip4 }}:9100" ]
+      - targets:
+          - "{{ hostvars[host].int_ip4 }}:9100"
         labels:
           server: {{ host }}
 
@@ -28,6 +30,12 @@ scrape_configs:
   - job_name: {{ host }}-docker
     static_configs:
       - targets: [ "{{ hostvars[host].int_ip4 }}:9323" ]
+        labels:
+          server: {{ host }}
+
+  - job_name: {{ host }}-traefik
+    static_configs:
+      - targets: [ "{{ hostvars[host].int_ip4 }}:8080" ]
         labels:
           server: {{ host }}
 
