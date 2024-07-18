@@ -23,8 +23,7 @@ binary_sensor:
         input: true
         pullup: true
     filters:
-      - delayed_on: 50ms
-      - delayed_off: 50ms
+      - delayed_on_off: 50ms
 
 sensor:
   - platform: bme280_i2c
