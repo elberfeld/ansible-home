@@ -177,12 +177,12 @@
         basedir: /srv/pihole,
         web_port: 82
       }
-    # - { 
-    #     role: roles_intserver/docker_zigbee2mqtt, tags: zigbee2mqtt,
-    #     servicename: zigbee2mqtt,
-    #     basedir: /srv/zigbee2mqtt,
-    #     z2m_port: 8080
-    #   }
+    - { 
+        role: roles_intserver/docker_zigbee2mqtt, tags: [ zigbee2mqtt, z2m ],
+        servicename: zigbee2mqtt,
+        basedir: /srv/zigbee2mqtt,
+        z2m_port: 8080
+      }
 
 
 - hosts: webserver1,webserver2 

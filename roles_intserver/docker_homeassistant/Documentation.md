@@ -75,15 +75,10 @@ Nach Installation automatisch vorhanden
   * Device ist automatically detected in Homeassistant 
 
 
-## Zigbee / ZHA
+## Zigbee / Zigbee2MQTT
 
 Zigbee geräte werde über einen HomeAssistant SkyConnect stick angebunden und über Zigbee2MQTT verwaltet.
-Der Stick ist in den Container als Device /dev/ttyNabuCasaSkyConnect gemountet, dieses device wird in den Homeassistant Container weitergegeben. 
-
-ZHA Einrichtung:
-* Radio Type: ezsp
-* Device: /dev/ttyNabuCasaSkyConnect
-* Baudrate: 115200
+Die weitere Konfiguration erfolgt im Zigbee2MQTT Container, in Homeassistant werden die geräte automatisch erkannt.
 
 Weitere Infos:
 * Detailinfos USB in LXC mounten: https://gist.github.com/crundberg/a77b22de856e92a7e14c81f40e7a74bd?permalink_comment_id=4524937

@@ -14,7 +14,6 @@
   with_items:
     - "{{ basedir }}"
     - "{{ basedir }}/config/"
-    - "{{ basedir }}/config/custom_zha_quirks/"
 
 
 - name: "copy config files for {{ basedir }}"
@@ -27,22 +26,11 @@
   register: config_files
 
 
-# Custom ZHA Quirks
-# For Tuya ZS06 IR Remote Controller see: https://smarthomescene.com/reviews/tuya-zigbee-infrared-ir-remote-zs06-review/
-- name: "Download custom ZHA Quirks"
-  ansible.builtin.get_url:
-    url: "{{ item.url }}"
-    dest: "{{ basedir }}/config/custom_zha_quirks/{{ item.file }}"
-  with_items:
-    - { file: "ts1201.py", url: "https://raw.githubusercontent.com/ferehcarb/zha-device-handlers/dev/zhaquirks/tuya/ts1201.py" }
-  register: quirks_files
-
-
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed or quirks_files.changed
+  when: config_files.changed 
 
 
 - name: "start {{ servicename }} docker"

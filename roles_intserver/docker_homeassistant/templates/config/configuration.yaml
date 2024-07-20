@@ -60,10 +60,6 @@ influxdb:
   token: {{ influxdb_token }}
   default_measurement: units
 
-# ZHA Custom Quirks
-zha:
-  custom_quirks_path: /config/custom_zha_quirks/
-
 # https://www.home-assistant.io/integrations/mqtt_statestream/
 mqtt_statestream:
   base_topic: homeassistant
