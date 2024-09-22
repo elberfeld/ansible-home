@@ -127,7 +127,7 @@ services:
       - 192.168.203.254
 
   oletools:
-    image: ghcr.io/mailu/oletools:2.0
+    image: ghcr.io/mailu/oletools:2024.06
     hostname: oletools
     restart: always
     depends_on:
