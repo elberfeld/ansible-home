@@ -15,4 +15,3 @@
   template: 
     src: 5-upgrade
     dest: /etc/cron-apt/action.d/5-upgrade
-   
