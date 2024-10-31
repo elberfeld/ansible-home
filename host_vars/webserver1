@@ -1,10 +1,9 @@
 
 debian_sources: 
-  - "deb http://ftp2.de.debian.org/debian/ buster main contrib non-free"
-  - "deb http://ftp2.de.debian.org/debian/ buster-updates main contrib non-free"
-  - "deb http://security.debian.org/ buster/updates main contrib non-free"
-  - "deb https://download.docker.com/linux/debian buster stable"
-  - "deb http://ftp2.de.debian.org/debian buster-backports main"
+  - "deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware"
+  - "deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware"
+  - "deb http://security.debian.org bookworm-security main contrib non-free non-free-firmware"
+  - "deb https://download.docker.com/linux/debian bookworm stable"
 
 debian_keys:
   - "https://download.docker.com/linux/debian/gpg"
@@ -145,4 +144,11 @@ borgbackup_repos:
 # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
 borgbackup_directories:
   - "/etc/"
-  - "/srv/"
+
+borgbackup:
+  compression: "zlib,12"
+  repositories:
+    - { label: "bprgbase", path: "ssh://s903yyza@s903yyza.repo.borgbase.com/./repo" }
+  directories: 
+    - "/etc/"
+    - "/srv/"
