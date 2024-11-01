@@ -69,11 +69,7 @@ networks:
       domain: void.lan # cannot reference variable here
       server: 10.5.0.111 # cannot reference fixed_ip here
     cdir_v4: 10.44.0.0/24      
-  vpnserver_streiner:
-    dns:
-      domain: streiner.lan # cannot reference variable here
-      server: 192.168.0.1 # cannot reference fixed_ip here
-    cdir_v4: 10.70.0.0/24      
+    
 
   # Webserver local Networks
   webserver1:
