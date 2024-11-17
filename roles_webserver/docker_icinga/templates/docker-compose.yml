@@ -5,6 +5,7 @@ services:
 
     build: .
     restart: always
+    hostname: icinga
     ports:
       - "{{ api_port }}:5665"
     volumes:
