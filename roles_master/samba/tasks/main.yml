@@ -1,8 +1,6 @@
 ---
-
-- include_tasks: ../functions/get_secret.yml
-  with_items:
-    - { path: "{{ basedir }}/samba_admin_pass", type: create, length: 12 }
+# Notes:
+# Password for local users must be set locally with 'smbpasswd -a <username>' to be accessible by samba'
 
 - name: Install Packages for {{ servicename }}
   apt: 

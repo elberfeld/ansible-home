@@ -66,43 +66,44 @@
       }
 
 
-- hosts: hpserver 
-  remote_user: root
-  roles:
-    - { role: roles_common/docker, tags: docker }
-    - { role: roles_common/cronapt, tags: cronapt }
-    - { 
-        role: roles_common/docker_dockerstats, tags: dockerstats, 
-        servicename: dockerstats, 
-        basedir: /srv/dockerstats,
-        metrics_port: 9487 
-      }
-#    - { role: roles_common/docker_promtail, tags: promtail }
-    - { role: roles_common/prometheus-node, tags: prometheus-node }
-    - { 
-        role: roles_common/docker_watchtower, tags: watchtower,
-        servicename: watchtower,
-        basedir: /srv/watchtower
-      }
-    - { role: roles_hpserver/proxmox, tags: proxmox }
-    - { 
-        role: roles_hpserver/samba, tags: samba, 
-        servicename: samba,
-        basedir: /srv/samba 
-      }
-    - { 
-        role: roles_hpserver/rsyncd, tags: rsyncd, 
-        servicename: rsyncd,
-        basedir: /srv/rsyncd, 
-        datadir: /data/disk1/rsyncd-backup
-      }
+# - hosts: hpserver 
+#   remote_user: root
+#   roles:
+#     - { role: roles_common/docker, tags: docker }
+#     - { role: roles_common/cronapt, tags: cronapt }
+#     - { 
+#         role: roles_common/docker_dockerstats, tags: dockerstats, 
+#         servicename: dockerstats, 
+#         basedir: /srv/dockerstats,
+#         metrics_port: 9487 
+#       }
+# #    - { role: roles_common/docker_promtail, tags: promtail }
+#     - { role: roles_common/prometheus-node, tags: prometheus-node }
+#     - { 
+#         role: roles_common/docker_watchtower, tags: watchtower,
+#         servicename: watchtower,
+#         basedir: /srv/watchtower
+#       }
+#     - { role: roles_hpserver/proxmox, tags: proxmox }
+#     - { 
+#         role: roles_hpserver/samba, tags: samba, 
+#         servicename: samba,
+#         basedir: /srv/samba 
+#       }
+#     - { 
+#         role: roles_hpserver/rsyncd, tags: rsyncd, 
+#         servicename: rsyncd,
+#         basedir: /srv/rsyncd, 
+#         datadir: /data/disk1/rsyncd-backup
+#       }
 
 - hosts: master 
   remote_user: root
   roles:
     - { role: roles_common/cronapt, tags: cronapt }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
-    - { role: roles_hpserver/proxmox, tags: proxmox }
+    - { role: roles_master/proxmox, tags: proxmox }
+    - { role: roles_master/samba, tags: samba }
 
 - hosts: intserver 
   remote_user: root
