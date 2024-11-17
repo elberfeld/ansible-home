@@ -2,5 +2,6 @@
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1,
     "git.autofetch": true,
-    "git.rebaseWhenSync": true
+    "git.rebaseWhenSync": true,
+    "ansible.python.interpreterPath": "/bin/python3"
 }
