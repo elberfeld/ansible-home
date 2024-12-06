@@ -61,6 +61,7 @@ docker:
 
 webserver_domains:
   - "grafana.void.ms"
+  - "ha.void.ms"
   - "icinga.void.ms"
   - "prometheus.void.ms"
   - "vpn.void.ms"

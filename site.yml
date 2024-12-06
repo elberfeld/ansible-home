@@ -226,6 +226,12 @@
         domain: grafana.void.ms 
       }
     - { 
+        role: roles_webserver/docker_homeassistant, tags: homeassistant, 
+        servicename: homeassistant, 
+        basedir: /srv/homeassistant, 
+        domain: ha.void.ms 
+      }
+    - { 
         role: roles_webserver/docker_icinga, tags: icinga, 
         servicename: icinga, 
         basedir: /srv/icinga, 

@@ -13,31 +13,29 @@ frontend:
 # https://www.home-assistant.io/docs/configuration/basic/
 homeassistant:  
   name: "void-home"
-  latitude: 51.961818 
-  longitude: 7.624774
-  elevation: 70
   unit_system: metric
+  #latitude: 51.961818 
+  #longitude: 7.624774
+  #elevation: 70
   currency: EUR 
   country: DE
   time_zone: Europe/Berlin
-  #internal_url: https://{{ domain }}
-  internal_url: http://10.5.0.111:8123
+  internal_url: http://{{ networks.local.fixed_ip.intserver }}:8123
   auth_providers:
     - type: trusted_networks
-      trusted_networks:
-        - 10.0.0.0/22
-        - 192.168.0.0/24
       allow_bypass_login: true
+      trusted_networks:
+        - {{ networks.local.cdir_v4 }}
     - type: homeassistant
 
 # https://www.home-assistant.io/integrations/http/
 http:
   server_port: 8123
-  ip_ban_enabled: False
-  login_attempts_threshold: 10
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
   use_x_forwarded_for: true
   trusted_proxies: 
-    - 172.0.0.0/8
+    - {{ networks.webserver1.cdir_v4 }}
 
 # https://www.home-assistant.io/integrations/api/
 api:
