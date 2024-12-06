@@ -183,3 +183,22 @@ Das Gerät muss bei der Einrichtung eingeschaltet sein.
 * PSK verwenden: Nein
 * Pin Code: Wird auf dem Geät angezeigt 
 * Umbenennen in: TV-Wohnzimmer
+
+
+## Müllkalender 
+
+HACS-Integration: https://github.com/mampfes/hacs_waste_collection_schedule
+Anschließend Integration Waste Collection Schedule hinzufügen
+
+* Land: Germany
+* Quelle: Abfallwirtschaftsbetriebe Münster (muellmax_de)
+* Titel: AWM Münster
+* Service: Awm
+* Ort: <leer>
+* Straße: <Straße>
+* Hausnummer: <leer>
+* Mülltyp Anpassungsmenü Anzeigen: nein
+* Sensor Konfiguration Anzeigen: nein
+
+Für Anzeige im Dashboard: HACS-TrashCard
+
