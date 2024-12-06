@@ -202,3 +202,22 @@ Anschließend Integration Waste Collection Schedule hinzufügen
 
 Für Anzeige im Dashboard: HACS-TrashCard
 
+
+## Nina Warnungen 
+
+* Gerät für Nina Warnungen hinzufügen
+* Im Dashboard eine Markdown Karte erstellen
+
+<ha-alert alert-type="warning">{{ state_attr('binary_sensor.warning_munster_stadt_1', 'headline') }}</ha-alert>
+{% if is_state('binary_sensor.warning_munster_stadt_2', 'on') %}
+<ha-alert alert-type="warning">{{ state_attr('binary_sensor.warning_munster_stadt_2', 'headline') }}</ha-alert>
+{% endif %}
+{% if is_state('binary_sensor.warning_munster_stadt_3', 'on') %}
+<ha-alert alert-type="warning">{{ state_attr('binary_sensor.warning_munster_stadt_3', 'headline') }}</ha-alert>
+{% endif %}
+{% if is_state('binary_sensor.warning_munster_stadt_4', 'on') %}
+<ha-alert alert-type="warning">{{ state_attr('binary_sensor.warning_munster_stadt_4', 'headline') }}</ha-alert>
+{% endif %}
+{% if is_state('binary_sensor.warning_munster_stadt_5', 'on') %}
+<ha-alert alert-type="warning">{{ state_attr('binary_sensor.warning_munster_stadt_5', 'headline') }}</ha-alert>
+{% endif %}
