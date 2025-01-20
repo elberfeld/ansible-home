@@ -56,6 +56,7 @@ networks:
       handy_privat: 10.5.0.246 
       handy_arbeit: 10.5.0.245 
       open_mqtt_gateway_rf433: 10.5.0.244
+      wled_fenster: 10.5.0.243
       hpserver: 10.5.0.200 
       master: 10.5.0.100
       intserver: 10.5.0.111 
