@@ -64,11 +64,6 @@ mqtt_statestream:
   publish_attributes: true
   publish_timestamps: true
 
-# https://www.home-assistant.io/integrations/marytts/
-tts:
-  - platform: marytts
-    language: "de-DE"
-
 
 {% if rfswitches is defined %}
 
