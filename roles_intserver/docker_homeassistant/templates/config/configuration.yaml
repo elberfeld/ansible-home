@@ -64,6 +64,11 @@ mqtt_statestream:
   publish_attributes: true
   publish_timestamps: true
 
+# https://www.home-assistant.io/integrations/picotts/
+tts:
+  - platform: picotts
+    language: "de-DE"
+
 
 {% if rfswitches is defined %}
 
