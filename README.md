@@ -1,4 +1,4 @@
-# Warpzone Infrastruktur Konfiguration
+# Home Infrastruktur Konfiguration
 
 Die Infrastruktur wird nach und nach durch das Konfigurationstool Ansible aufgebaut.
 Diese Konfiguration soll als zentrale Dokumentation dienen.
