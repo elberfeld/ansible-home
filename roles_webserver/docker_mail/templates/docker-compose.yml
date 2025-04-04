@@ -34,7 +34,7 @@ services:
   ################################################
 
   certdumper:
-    image: ghcr.io/mailu/traefik-certdumper:2.0
+    image: ghcr.io/mailu/traefik-certdumper:2024.06
     restart: always
     environment:
       - DOMAIN={{ mailserver }}
