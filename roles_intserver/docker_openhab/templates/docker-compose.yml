@@ -3,7 +3,7 @@ services:
   
   app:
 
-    image: openhab/openhab:4.0.3-debian
+    image: openhab/openhab:4.3.4-debian
     restart: always
     privileged: true
     network_mode: host
