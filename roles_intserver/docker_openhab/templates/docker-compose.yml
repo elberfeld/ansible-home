@@ -28,7 +28,7 @@ services:
 
   influxdb:
 
-    image: influxdb:2.7.1
+    image: influxdb:2.7.11
     restart: always
     ports:
       - {{ int_ip4 }}:{{ influxdb_port }}:8086
