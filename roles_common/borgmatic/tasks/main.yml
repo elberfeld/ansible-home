@@ -1,0 +1,34 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+    - { path: "/etc/borgmatic/repo_passphrase", type: create, length: 64 }
+
+
+- name: generate new repo_sshkey (check)
+  stat:
+    path: /etc/borgmatic/repo_sshkey
+  register: repo_sshkey 
+
+
+- name: generate new repo_sshkey (generate)
+  command: ssh-keygen -N '' -t ed25519 -f /etc/borgmatic/repo_sshkey
+  when: repo_sshkey.stat.exists == False 
+
+
+- name: pakete installieren
+  apt:
+    update_cache: yes
+    state: present
+    name:
+      - borgbackup
+      - borgmatic
+
+
+- name: config files
+  template:
+    src: "{{ item }}"
+    dest: "/etc/borgmatic/{{ item }}"
+  with_items:
+    - config.yaml
+  register: config_files

@@ -190,6 +190,7 @@
   remote_user: root
   roles:
     - { role: roles_common/borgbackup, tags: borgbackup }
+    - { role: roles_common/borgmatic, tags: borgmatic }
     - { role: roles_common/cronapt, tags: cronapt }
     - { role: roles_common/docker, tags: docker }
 #    - { role: roles_common/docker_promtail, tags: promtail }

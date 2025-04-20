@@ -1,0 +1,362 @@
+
+# List of source directories and files to back up. Globs and tildes
+# are expanded. Do not backslash spaces in path names.
+source_directories:
+{% for directory in borgbackup.directories %}
+    - {{ directory }}
+{% endfor %}
+
+# A required list of local or remote repositories with paths and
+# optional labels (which can be used with the --repository flag to
+# select a repository). Tildes are expanded. Multiple repositories are
+# backed up to in sequence. Borg placeholders can be used. See the
+# output of "borg help placeholders" for details. See ssh_command for
+# SSH options like identity file or port. If systemd service is used,
+# then add local repository paths in the systemd service file to the
+# ReadWritePaths list. Prior to borgmatic 1.7.10, repositories was a
+# list of plain path strings.
+repositories:
+{% for repository in borgbackup.repositories %}
+    - path: {{ repository.path }}
+      label: {{ repository.label }}
+{% endfor %}
+
+
+# Any paths matching these patterns are included/excluded from
+# backups. Globs are expanded. (Tildes are not.) See the output of
+# "borg help patterns" for more details. Quote any value if it
+# contains leading punctuation, so it parses correctly. Note that only
+# one of "patterns" and "source_directories" may be used.
+# patterns:
+    # - R /
+    # - '- /home/*/.cache'
+    # - + /home/susan
+    # - '- /home/*'
+
+# Read include/exclude patterns from one or more separate named files,
+# one pattern per line. Note that Borg considers this option
+# experimental. See the output of "borg help patterns" for more
+# details.
+# patterns_from:
+    # - /etc/borgmatic/patterns
+
+# Any paths matching these patterns are excluded from backups. Globs
+# and tildes are expanded. Note that a glob pattern must either start
+# with a glob or be an absolute path. Do not backslash spaces in path
+# names. See the output of "borg help patterns" for more details.
+# exclude_patterns:
+    # - '*.pyc'
+    # - /home/*/.cache
+    # - '*/.vim*.tmp'
+    # - /etc/ssl
+    # - /home/user/path with spaces
+
+# Read exclude patterns from one or more separate named files, one
+# pattern per line. See the output of "borg help patterns" for more
+# details.
+# exclude_from:
+    # - /etc/borgmatic/excludes
+
+# Exclude directories that contain a CACHEDIR.TAG file. See
+# http://www.brynosaurus.com/cachedir/spec.html for details. Defaults
+# to false.
+# exclude_caches: true
+
+# Exclude directories that contain a file with the given filenames.
+# Defaults to not set.
+# exclude_if_present:
+    # - .nobackup
+
+# If true, the exclude_if_present filename is included in backups.
+# Defaults to false, meaning that the exclude_if_present filename is
+# omitted from backups.
+# keep_exclude_tags: true
+
+
+
+
+
+# If true, then source directories must exist, otherwise an error is
+# raised. Defaults to false.
+source_directories_must_exist: true
+
+# The standard output of this command is used to unlock the encryption
+# key. Only use on repositories that were initialized with
+# passcommand/repokey/keyfile encryption. Note that if both
+# encryption_passcommand and encryption_passphrase are set, then
+# encryption_passphrase takes precedence. Defaults to not set.
+# encryption_passcommand: secret-tool lookup borg-repository repo-name
+
+# Passphrase to unlock the encryption key with. Only use on
+# repositories that were initialized with passphrase/repokey/keyfile
+# encryption. Quote the value if it contains punctuation, so it parses
+# correctly. And backslash any quote or backslash literals as well.
+# Defaults to not set.
+encryption_passphrase: "{{ repo_passphrase }}"
+
+
+
+
+# Type of compression to use when creating archives. (Compression
+# level can be added separated with a comma, like "zstd,7".) See
+# http://borgbackup.readthedocs.io/en/stable/usage/create.html for
+# details. Defaults to "lz4".
+compression: {{ borgbackup.compression }}
+
+# Remote network upload rate limit in kiBytes/second. Defaults to
+# unlimited.
+# upload_rate_limit: 100
+
+# Size of network upload buffer in MiB. Defaults to no buffer.
+# upload_buffer_size: 160
+
+# Number of times to retry a failing backup before giving up. Defaults
+# to 0 (i.e., does not attempt retry).
+retries: 3
+
+# Wait time between retries (in seconds) to allow transient issues
+# to pass. Increases after each retry by that same wait time as a
+# form of backoff. Defaults to 0 (no wait).
+retry_wait: 10
+
+
+
+# Command to use instead of "ssh". This can be used to specify ssh
+# options. Defaults to not set.
+ssh_command: ssh -i /etc/borgmatic/repo_sshkey
+
+
+
+
+
+
+
+
+
+# Maximum seconds to wait for acquiring a repository/cache lock.
+# Defaults to 1.
+lock_wait: 5
+
+
+
+# Additional options to pass directly to particular Borg commands,
+# handy for Borg options that borgmatic does not yet support natively.
+# Note that borgmatic does not perform any validation on these
+# options. Running borgmatic with "--verbosity 2" shows the exact Borg
+# command-line invocation.
+# extra_borg_options:
+    # Extra command-line options to pass to "borg init".
+    # init: --extra-option
+
+    # Extra command-line options to pass to "borg create".
+    # create: --extra-option
+
+    # Extra command-line options to pass to "borg prune".
+    # prune: --extra-option
+
+    # Extra command-line options to pass to "borg compact".
+    # compact: --extra-option
+
+    # Extra command-line options to pass to "borg check".
+    # check: --extra-option
+
+# Keep all archives within this time interval. See "skip_actions" for
+# disabling pruning altogether.
+# keep_within: 3H
+
+# Number of secondly archives to keep.
+# keep_secondly: 60
+
+# Number of minutely archives to keep.
+# keep_minutely: 60
+
+# Number of hourly archives to keep.
+keep_hourly: 14
+
+# Number of daily archives to keep.
+keep_daily: 7
+
+# Number of weekly archives to keep.
+keep_weekly: 4
+
+# Number of monthly archives to keep.
+keep_monthly: 2
+
+# Number of yearly archives to keep.
+keep_yearly:  1
+
+
+
+# List of one or more consistency checks to run on a periodic basis
+# (if "frequency" is set) or every time borgmatic runs checks (if
+# "frequency" is omitted).
+# checks:
+    # Name of the consistency check to run:
+    #  * "repository" checks the consistency of the
+    # repository.
+    #  * "archives" checks all of the archives.
+    #  * "data" verifies the integrity of the data
+    # within the archives and implies the "archives"
+    # check as well.
+    #  * "spot" checks that some percentage of source
+    # files are found in the most recent archive (with
+    # identical contents).
+    #  * "extract" does an extraction dry-run of the
+    # most recent archive.
+    #  * See "skip_actions" for disabling checks
+    # altogether.
+    # - name: spot
+
+      # How frequently to run this type of consistency
+      # check (as a best effort). The value is a number
+      # followed by a unit of time. E.g., "2 weeks" to
+      # run this consistency check no more than every
+      # two weeks for a given repository or "1 month" to
+      # run it no more than monthly. Defaults to
+      # "always": running this check every time checks
+      # are run.
+      # frequency: 2 weeks
+
+      # After the "frequency" duration has elapsed, only
+      # run this check if the current day of the week
+      # matches one of these values (the name of a day of
+      # the week in the current locale). "weekday" and
+      # "weekend" are also accepted. Defaults to running
+      # the check on any day of the week.
+      # only_run_on:
+          # - Saturday
+          # - Sunday
+
+      # The percentage delta between the source
+      # directories file count and the most recent backup
+      # archive file count that is allowed before the
+      # entire consistency check fails. This can catch
+      # problems like incorrect excludes, inadvertent
+      # deletes, etc. Required (and only valid) for the
+      # "spot" check.
+      # count_tolerance_percentage: 10
+
+      # The percentage of total files in the source
+      # directories to randomly sample and compare to
+      # their corresponding files in the most recent
+      # backup archive. Required (and only valid) for the
+      # "spot" check.
+      # data_sample_percentage: 1
+
+      # The percentage of total files in the source
+      # directories that can fail a spot check comparison
+      # without failing the entire consistency check. This
+      # can catch problems like source files that have
+      # been bulk-changed by malware, backups that have
+      # been tampered with, etc. The value must be lower
+      # than or equal to the "contents_sample_percentage".
+      # Required (and only valid) for the "spot" check.
+      # data_tolerance_percentage: 0.5
+
+      # Command to use instead of "xxh64sum" to hash
+      # source files, usually found in an OS package named
+      # "xxhash". Do not substitute with a different hash
+      # type (SHA, MD5, etc.) or the check will never
+      # succeed. Only valid for the "spot" check.
+      # xxh64sum_command: /usr/local/bin/xxh64sum
+
+      # How many seconds to check the repository before
+      # interrupting the check. Useful for splitting a
+      # long-running repository check into multiple
+      # partial checks. Defaults to no interruption. Only
+      # applies to the "repository" check, does not check
+      # the repository index, and is not compatible with a
+      # simultaneous "archives" check or "--repair" flag.
+      # max_duration: 3600
+
+
+
+# List of one or more actions to skip running for this configuration
+# file, even if specified on the command-line (explicitly or
+# implicitly). This is handy for append-only configurations where you
+# never want to run "compact" or checkless configuration where you
+# want to skip "check". Defaults to not skipping any actions.
+# skip_actions:
+    # - compact
+
+# List of one or more shell commands or scripts to execute before all
+# the actions for each repository.
+# before_actions:
+    # - echo Starting actions.
+
+# List of one or more shell commands or scripts to execute before
+# creating a backup, run once per repository.
+# before_backup:
+    # - echo Starting a backup.
+
+# List of one or more shell commands or scripts to execute before
+# pruning, run once per repository.
+# before_prune:
+    # - echo Starting pruning.
+
+# List of one or more shell commands or scripts to execute before
+# compaction, run once per repository.
+# before_compact:
+    # - echo Starting compaction.
+
+# List of one or more shell commands or scripts to execute before
+# consistency checks, run once per repository.
+# before_check:
+    # - echo Starting checks.
+
+# List of one or more shell commands or scripts to execute before
+# extracting a backup, run once per repository.
+# before_extract:
+    # - echo Starting extracting.
+
+# List of one or more shell commands or scripts to execute after
+# creating a backup, run once per repository.
+# after_backup:
+    # - echo Finished a backup.
+
+# List of one or more shell commands or scripts to execute after
+# compaction, run once per repository.
+# after_compact:
+    # - echo Finished compaction.
+
+# List of one or more shell commands or scripts to execute after
+# pruning, run once per repository.
+# after_prune:
+    # - echo Finished pruning.
+
+# List of one or more shell commands or scripts to execute after
+# consistency checks, run once per repository.
+# after_check:
+    # - echo Finished checks.
+
+# List of one or more shell commands or scripts to execute after
+# extracting a backup, run once per repository.
+# after_extract:
+    # - echo Finished extracting.
+
+# List of one or more shell commands or scripts to execute after all
+# actions for each repository.
+# after_actions:
+    # - echo Finished actions.
+
+# List of one or more shell commands or scripts to execute when an
+# exception occurs during a "create", "prune", "compact", or "check"
+# action or an associated before/after hook.
+# on_error:
+    # - echo Error during create/prune/compact/check.
+
+# List of one or more shell commands or scripts to execute before
+# running all actions (if one of them is "create"). These are
+# collected from all configuration files and then run once before all
+# of them (prior to all actions).
+# before_everything:
+    # - echo Starting actions.
+
+# List of one or more shell commands or scripts to execute after
+# running all actions (if one of them is "create"). These are
+# collected from all configuration files and then run once after all
+# of them (after any action).
+# after_everything:
+    # - echo Completed actions.
+
+
