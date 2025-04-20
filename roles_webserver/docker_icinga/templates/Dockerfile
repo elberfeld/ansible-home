@@ -41,7 +41,13 @@ RUN cd /opt/ \
 RUN cd /opt/ \
  && git clone https://github.com/matteocorti/check_rbl.git \
  && cd /opt/check_rbl/ \
- && git checkout v1.5.7
+ && git checkout v1.7.6 \
+ && sed -i '/server=cbl.abuseat.org/d' /opt/check_rbl/check_rbl.ini \
+ && sed -i '/server=pbl.spamhaus.org/d' /opt/check_rbl/check_rbl.ini \
+ && sed -i '/server=xbl.spamhaus.org/d' /opt/check_rbl/check_rbl.ini \
+ && sed -i '/server=sbl.spamhaus.org/d' /opt/check_rbl/check_rbl.ini \
+ && sed -i '/server=sbl-xbl.spamhaus.org/d' /opt/check_rbl/check_rbl.ini \
+ && sed -i '/server=zen.spamhaus.org/d' /opt/check_rbl/check_rbl.ini 
 
 # prom2json -- needed for check_metric_value
 RUN cd /opt/ \
