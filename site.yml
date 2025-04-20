@@ -240,13 +240,6 @@
         domain: vpn.void.ms,
         vpn_port: 51800
       }
-    - {
-        role: roles_webserver/docker_vpnserver_streiner, tags: vpnserver_streiner, 
-        servicename: vpnserver_streiner, 
-        basedir: /srv/vpnserver_streiner, 
-        domain: vpn-streiner.void.ms,
-        vpn_port: 51801
-      }
 
 
 - hosts: webserver2
