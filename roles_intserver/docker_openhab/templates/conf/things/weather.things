@@ -1,6 +1,0 @@
-
-Bridge openweathermap:weather-api:api "OpenWeatherMap" [apikey="{{ openweathermap_apikey }}", refreshInterval=15, language="de"] {
-    Thing weather-and-forecast local "Local Weather And Forecast" [location="{{ location_latitude }},{{ location_longitude }}", forecastHours=0, forecastDays=7]
-}
-
-

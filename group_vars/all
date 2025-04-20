@@ -113,31 +113,6 @@ monitoring:
     - { ip: "1.1.1.1", name: "Cloudflare" }
 
 
-homematic_smoketeam: 
-  id: "T-NEQ0442083"
-  type: "HM-Sec-SD-2-Team"
-  groups: "gWohnzimmer,gSchlafzimmer"
-
-homematic_rauchmelder:
-  - { id: "NEQ0442083", type: "HM-Sec-SD-2", name: "Rauchmelder Wohnzimmer",   groups: "gWohnzimmer",   check_state="OFF" }
-  - { id: "OEQ2615046", type: "HM-Sec-SD-2", name: "Rauchmelder Schlafzimmer", groups: "gSchlafzimmer", check_state="OFF" }
-
-homematic_heizung:
-  - { id: "MEQ0806347", type: "HM-CC-RT-DN", name: "Heizung Schlafzimmer", groups: "gSchlafzimmer", check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
-  - { id: "MEQ0251087", type: "HM-CC-RT-DN", name: "Heizung Wohnzimmer",   groups: "gWohnzimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
-  - { id: "MEQ0250029", type: "HM-CC-RT-DN", name: "Heizung Schreibtisch", groups: "gWohnzimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40" }
-  - { id: "MEQ0805830", type: "HM-CC-RT-DN", name: "Heizung Badezimmer",   groups: "gBadezimmer",   check_controlmode="MANU-MODE", check_temp_low_crit="5", check_temp_low_warn="10", check_temp_high_warn="35", check_temp_high_crit="40"}
-
-homematic_tempsensor:
-  - { id: "OEQ0160159", type: "HM-WDS40-TH-I-2", name: "Sensor Garage",  groups: "gGarage" }
-  - { id: "QEQ1859960", type: "HM-WDS10-TH-O", name: "Sensor Wetter",  groups: "gAussen" }
-
-# homematic_openclosesensor:
-#  - { id: "QEQ0014557", type: "HM-Sec-TiS", name: "Sensor Garagentor" }
-#  - { id: "OEQ1478962", type: "HM-Sec-SC-2", name: "Sensor2 Garagentor",  groups: "gGarage" }
-#  - { id: "MEQ1136898", type: "HM-Sec-SC-2", name: "Fenster unten Badezimmer" }
-#  - { id: "NEQ1833602", type: "HM-Sec-SC-2", name: "Fenster oben Badezimmer" }
-
 rfswitches:
   - { id: "LichtDvdRegal",    name: "DVD Regal",   ha_icon: "mdi:lightbulb",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 A", code_on: "329041", code_off: "329044" }
   - { id: "LampeTetris",      name: "Tetris",      ha_icon: "mdi:lightbulb",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 B", code_on: "332113", code_off: "332116" }
@@ -156,6 +131,3 @@ mqtt_sensors:
   - { id: "schreibtisch", name: "Schreibtisch",  groups: "gWohnzimmer",   temp: yes, pressure: yes, humidity: yes }
   - { id: "technikraum",  name: "Technikraum",   groups: "gTechnikraum",  temp: yes, pressure: yes, humidity: no  }
   - { id: "wohnzimmer",   name: "Wohnzimmer",    groups: "gWohnzimmer",   temp: yes, pressure: yes, humidity: yes }
-
-mqtt_sensors_binary:
-  - { id1: "flur", id2: "tuer", name: "Flur Tür", groups: "gFlur" }

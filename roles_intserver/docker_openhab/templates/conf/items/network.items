@@ -1,5 +1,0 @@
-
-// Netzwerkgeräte für Präsenzinformationen 
-
-Switch HandyPrivat "Handy Privat" <network> (gWohnzimmer) ["Measurement", "Presence"] { channel="network:pingdevice:handy_privat:online" }
-Switch HandyArbeit "Handy Arbeit" <network> (gWohnzimmer) ["Measurement", "Presence"] { channel="network:pingdevice:handy_arbeit:online" }

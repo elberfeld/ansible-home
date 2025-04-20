@@ -1,2 +1,0 @@
-
-astro:sun:home  [ geolocation="{{ location_latitude }},{{ location_longitude }}", interval=60 ]

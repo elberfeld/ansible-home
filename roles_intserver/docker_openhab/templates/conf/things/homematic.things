@@ -1,4 +1,0 @@
-
-// Homematic Hardware Konfiguration 
-
-Bridge homematic:bridge:ccu2 [ gatewayAddress="{{ networks.local.fixed_ip.homematic_ccu }}", callbackHost="{{int_ip4}}", bindAddress="{{int_ip4}}", timeout="240", callbackRegTimeout="240", bufferSize="4096"  ]

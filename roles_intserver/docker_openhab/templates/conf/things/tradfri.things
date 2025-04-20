@@ -1,8 +1,0 @@
-
-// Das Binding muss einmal manuell mit code="{{ tradfri_code }}" und ohne identity / preSharedKey erzeugt werden
-// identity und preSharedKey können dann aus OpenHAB ausgelesen werden (Things > Thing > Configuration > Show Advanced) .. code muss entfernt werden
-// Nach Openhab Updates muss das ggf. wiederholt werden
-
-// Bridge tradfri:gateway:home [ host="{{ networks.local.fixed_ip.tradfri_gateway }}", code="{{ tradfri_code }}" ]
-
-Bridge tradfri:gateway:home [ host="{{ networks.local.fixed_ip.tradfri_gateway }}", identity="{{ tradfri_identity }}", preSharedKey="{{ tradfri_key }}" ]
