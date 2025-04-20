@@ -144,6 +144,7 @@ borgbackup_repos:
 # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
 borgbackup_directories:
   - "/etc/"
+  - "/srv/"
 
 borgbackup:
   compression: "zlib,12"
