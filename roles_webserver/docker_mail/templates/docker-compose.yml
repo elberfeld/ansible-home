@@ -52,7 +52,7 @@ services:
         ipv4_address: 192.168.203.254
 
   front:
-    image: ghcr.io/mailu/nginx:2.0
+    image: ghcr.io/mailu/nginx:2024.06
     restart: always
     depends_on:
       - db
