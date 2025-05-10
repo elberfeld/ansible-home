@@ -84,7 +84,7 @@ services:
       - 192.168.203.254
 
   admin:
-    image: ghcr.io/mailu/admin:2.0
+    image: ghcr.io/mailu/admin:2024.06
     restart: always
     depends_on:
       - db
