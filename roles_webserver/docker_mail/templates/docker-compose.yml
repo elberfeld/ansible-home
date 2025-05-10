@@ -44,7 +44,7 @@ services:
       - "{{ basedir }}/mailu/certs:/output"
 
   resolver:
-    image: ghcr.io/mailu/unbound:2.0
+    image: ghcr.io/mailu/unbound:2024.06
     env_file: mailu.env
     restart: always
     networks:
