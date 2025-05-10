@@ -168,7 +168,7 @@ services:
       - "{{ basedir }}/mailu/overrides/roundcube:/overrides:ro"
 
   fetchmail:
-    image: ghcr.io/mailu/fetchmail:2.0
+    image: ghcr.io/mailu/fetchmail:2024.06
     restart: always
     env_file: mailu.env
     depends_on:
