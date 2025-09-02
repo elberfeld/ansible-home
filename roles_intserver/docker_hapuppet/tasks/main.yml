@@ -1,0 +1,45 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+   - { path: "{{ basedir }}/homeassistant_token", type: prompt } # HA Access Token 
+
+- name: "create folder struct for {{ servicename }}"
+  file: 
+    path: "{{ item }}"
+    state: "directory"
+  with_items:
+    - "{{ basedir }}"
+
+- name: "install git"
+  apt:
+    update_cache: no
+    state: present
+    name: 
+    - git
+
+- name: "checkout git repo"
+  ansible.builtin.git:
+    repo: "https://github.com/balloob/home-assistant-addons.git"
+    dest: "{{ basedir }}/git"
+    version: "e4b24efb3c19dd670df646fc509fc8a6fd02b5cd" # commit from 10.08.2025
+
+- name: "create config files for {{ servicename }}"
+  template: 
+    src: "{{ item }}" 
+    dest: "{{ basedir }}"
+  with_items: 
+    - docker-compose.yml
+    - options-dev.json
+  register: config_files
+
+- name: "stop {{ servicename }} docker"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config_files.changed 
+
+- name: "start {{ servicename }} docker"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: present

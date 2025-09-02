@@ -129,7 +129,15 @@
         role: roles_intserver/docker_esphome, tags: esphome,
         servicename: esphome, 
         basedir: /srv/esphome,
+        hapuppet_url: "http://{{ int_ip4 }}:8124",
         web_port: 6052 
+      }
+    - { 
+        role: roles_intserver/docker_hapuppet, tags: hapuppet,
+        servicename: hapuppet, 
+        basedir: /srv/hapuppet,
+        ha_url: "http://{{ int_ip4 }}:8123",
+        web_port: 8124 
       }
     # - { 
     #     role: roles_intserver/docker_heimdall, tags: heimdall, 

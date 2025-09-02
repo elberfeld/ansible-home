@@ -1,0 +1,14 @@
+
+services:
+
+  app:
+
+    build:
+      context: "{{ basedir }}/git/puppet"
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "{{ web_port }}:10000"
+    volumes:
+      - "{{ basedir }}/options-dev.json:/app/options-dev.json"
+

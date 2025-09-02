@@ -1,0 +1,6 @@
+{
+  "home_assistant_url": "{{ ha_url }}",
+  "access_token": "{{ homeassistant_token }}",
+  "chromium_executable": "/usr/bin/chromium",
+  "keep_browser_open": false
+}

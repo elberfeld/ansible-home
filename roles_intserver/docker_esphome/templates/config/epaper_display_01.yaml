@@ -1,0 +1,52 @@
+
+{% set devicename = "epaper_display_01"  %}
+
+{% include "/config/common.inc.yaml" %}
+
+# ePaper XIAO 7.5" Display
+# https://www.tristans-smartes-heim.de/2025/seeed-xiao-epaper-display/
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+# deep_sleep:
+#   id: deep_sleep_1
+#   run_duration: 1min  
+#   sleep_duration: 15min  
+
+http_request:
+  verify_ssl: false
+  timeout: 30s
+  watchdog_timeout: 15s
+
+online_image:
+  - id: dashboard_image
+    format: BMP
+    type: BINARY
+    buffer_size: 25000
+    url: {{ hapuppet_url }}/epaper-display-01/0?viewport=800x480&eink=2&format=bmp&invert
+    update_interval: 300sec
+    on_download_finished:
+      - delay: 0ms
+      - component.update: main_display
+
+spi:
+  clk_pin: GPIO8
+  mosi_pin: GPIO10
+
+display:
+  - platform: waveshare_epaper
+    id: main_display
+    cs_pin: GPIO3
+    dc_pin: GPIO5
+    busy_pin: 
+      number: GPIO4
+      inverted: true
+    reset_pin: GPIO2
+    model: 7.50inv2
+    update_interval: never
+    lambda: |-
+      it.image(0, 0, id(dashboard_image));
+      ESP_LOGI("main_display", "Display updated");
