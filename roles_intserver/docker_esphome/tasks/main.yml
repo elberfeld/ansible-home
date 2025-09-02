@@ -31,13 +31,13 @@
     - config/technikraum.yaml
   register: config_files
 
-- name: download config includes files 
-  get_url:
-    url: "https://raw.githubusercontent.com/esphome/esphome-docs/current/_static/{{ item }}" 
-    dest: "{{ basedir }}/config/{{ item }}"
-  with_items:
-    - webserver-v1.min.css
-    - webserver-v1.min.js
+# - name: download config includes files 
+#   get_url:
+#     url: "https://raw.githubusercontent.com/esphome/esphome-docs/current/_static/{{ item }}" 
+#     dest: "{{ basedir }}/config/{{ item }}"
+#   with_items:
+#     - webserver-v1.min.css
+#     - webserver-v1.min.js
 
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:

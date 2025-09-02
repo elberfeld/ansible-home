@@ -1,4 +1,7 @@
 
+esphome:
+  name: "{{ devicename }}"
+
 # WiFi settings 
 wifi:
   ssid: "VOID-IoT"
