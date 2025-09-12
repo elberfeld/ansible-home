@@ -79,7 +79,7 @@ services:
       PAPERLESS_SECRET_KEY: {{ paperless_secret_key }}
       PAPERLESS_TASK_WORKERS: 2
       PAPERLESS_OPTIMIZE_THUMBNAILS: 1
-      PAPERLESS_FILENAME_FORMAT: "{correspondent}/{created_year}/{created_year}-{created_month}-{created_day}_{correspondent}_{document_type}_{title}"
+      PAPERLESS_FILENAME_FORMAT: "{% raw %}{{ correspondent }}/{{ created_year }}/{{ created_year }}-{{ created_month }}-{{ created_day }}_{{ correspondent }}_{{ document_type }}_{{ title }}{% endraw %}"
       PAPERLESS_ENABLE_HTTP_REMOTE_USER: "True"
       PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: "HTTP_X_FORWARDED_USER"
       PAPERLESS_LOGOUT_REDIRECT_URL: {{ oauth_global.logout_url }}
