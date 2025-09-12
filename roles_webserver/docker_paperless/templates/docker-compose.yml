@@ -1,5 +1,4 @@
 
-
 services:
 
   broker:
@@ -8,9 +7,10 @@ services:
     networks:
       - default
 
-
+  # Major Version Upgrades: https://github.com/pgautoupgrade/docker-pgautoupgrade
+  # Sample: set Image to: pgautoupgrade/pgautoupgrade:17-alpine
   db:
-    image: postgres:13
+    image: postgres:17
     restart: always
     volumes:
       - "{{ basedir }}/db:/var/lib/postgresql/data"
@@ -25,7 +25,7 @@ services:
   auth:
     image: thomseddon/traefik-forward-auth:2.2
     restart: always
-    environment: 
+    environment:
       LOG_LEVEL: info
       DEFAULT_ACTION: auth
       DEFAULT_PROVIDER: generic-oauth
@@ -64,7 +64,7 @@ services:
       USERMAP_GID: 1000
       PAPERLESS_DEBUG: 0
       PAPERLESS_REDIS: redis://broker:6379
-      PAPERLESS_DBENGINE: postgress
+      PAPERLESS_DBENGINE: postgresql
       PAPERLESS_DBHOST: db
       PAPERLESS_DBNAME: paperless
       PAPERLESS_DBUSER: paperless
