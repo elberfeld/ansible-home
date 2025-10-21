@@ -73,7 +73,7 @@ mqtt:
 # RF433 Switches
 {% for device in rfswitches %}
 
-    - object_id: {{ device.id }}
+    - default_entity_id: {{ device.id }}
       name: {{ device.name }}
       icon: {{ device.ha_icon }}
       command_topic: "home/OpenMQTTGatewayRF433/commands/MQTTto433"
