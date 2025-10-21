@@ -21,7 +21,7 @@ serial:
   # see https://www.zigbee2mqtt.io/guide/adapters/emberznet.html#usb
   rtscts: true
   # see https://github.com/zigbee2mqtt/hassio-zigbee2mqtt/issues/430#issuecomment-1353589514
-  adapter: ezsp
+  adapter: ember
 
 # Web Frontend
 # https://www.zigbee2mqtt.io/guide/configuration/frontend.html
