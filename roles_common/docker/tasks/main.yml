@@ -2,28 +2,33 @@
 
 - name: install deb packages
   apt:
+    name: "{{ packages }}"
     update_cache: yes
     state: present
-    install_recommends: no
-    name:
+  vars:
+    packages:
       - apparmor
       - docker-ce
-      - docker-compose-plugin
-      - gnupg2 
-      - pass 
-      - python3 
-      - python3-docker
+      - docker-compose
+      - python3
       - python3-pip
-      - python3-setuptools
 
 
 - name: daemon config für docker erstellen 
-  template: src=daemon.json dest=/etc/docker/daemon.json
-  notify: restart docker
-
+  template: 
+    src: daemon.json 
+    dest: /etc/docker/daemon.json
+  register: daemon_json
 
 - name: Cronjob to prune unused images  
-  cron: name="docker-prune" weekday="*" hour="5" minute="5" job="/usr/bin/docker system prune --volumes --all -f"  
+  cron: name="docker-prune" weekday="*" hour="5" minute="5" job="/usr/bin/docker system prune --volumes --all -f"
+
+- name: "Create internal Networks: {{ docker.internal_networks }}"
+  docker_network:
+    name: "{{ item }}"
+    internal: yes
+  with_items: "{{ docker.internal_networks }}"
+  when: docker.internal_networks is defined and docker.internal_networks|length > 0
 
 - name: "Set Docker Server Blocker file: {{ docker.service_blocker_file }}"
   ini_file:
@@ -38,13 +43,24 @@
     - /lib/systemd/system/docker.socket
   when: docker.service_blocker_file is defined 
 
-- name: force systemd to reread configs 
-  systemd:
-    daemon_reload: yes
 
-- name: "Create internal Networks: {{ docker.internal_networks }}"
-  docker_network:
-    name: "{{ item }}"
-    internal: yes
-  with_items: "{{ docker.internal_networks }}"
-  when: docker.internal_networks is defined and docker.internal_networks|length > 0
+# Fix dor docker 29 not supporting API Version 1.24 anymore which is required by traefik (at least 3.6.1)
+# see: https://github.com/traefik/traefik/issues/12253#issuecomment-3515555316
+
+- name: "Set systemd dropin for docker to support API 1.24"
+  ini_file:
+    dest: /lib/systemd/system/docker.service.d/api_1_24_support.conf
+    owner: root
+    group: root
+    mode: 0755
+    section: "Service"
+    option: "Environment"
+    value: "DOCKER_MIN_API_VERSION=1.24"
+  register: api_override
+
+- name: "Reload and Restart docker service"
+  ansible.builtin.systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: docker
+  when: daemon_json.changed or api_override.changed or docker.service_blocker_file is defined 

@@ -2,7 +2,7 @@
 services:
 
     app:
-        image: traefik:latest
+        image: traefik:3
         restart: always
         ports:
             - "80:80"
