@@ -292,7 +292,8 @@
         role: roles_webserver/docker_paperless, tags: paperless,
         servicename: paperless, 
         basedir: /srv/paperless,
-        domain: docs.void.ms
+        domain: docs.void.ms,
+        webdav_port: 8081
       }
     - { 
         role: roles_webserver/docker_uffd, tags: uffd, 

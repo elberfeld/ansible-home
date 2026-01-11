@@ -99,6 +99,21 @@ services:
       - default
       - web
 
+  webdav:
+    image: bytemark/webdav
+    restart: always
+    environment:
+        - SERVER_NAMES={{ int_ip4 }}
+        - AUTH_TYPE=Basic
+        - USERNAME=paperless-consume
+        - PASSWORD={{ webdav_user_pass }}
+    ports:
+        - "{{ int_ip4 }}:{{ webdav_port }}:80"
+    volumes:
+        - "{{ basedir }}/consume:/home/user"
+    networks:
+      - default
+
 
 networks:
   web:

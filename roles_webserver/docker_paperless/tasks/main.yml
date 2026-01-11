@@ -5,6 +5,7 @@
    - { path: "{{ basedir }}/paperless_secret_key", type: create, length: 24 }
    - { path: "{{ basedir }}/forward_auth_secret",  type: create, length: 64 }
    - { path: "{{ basedir }}/oauth_client_secret",  type: create, length: 64 }
+   - { path: "{{ basedir }}/webdav_user_pass",     type: create, length: 32 }
 
 
 - name: Setup OAuth Client Info 
