@@ -103,7 +103,14 @@
     - { role: roles_common/cronapt, tags: cronapt }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
     - { role: roles_master/proxmox, tags: proxmox }
-    - { role: roles_master/samba, tags: samba }
+    - { 
+        role: roles_master/samba, tags: samba,
+        servicename: samba
+      }
+    - { 
+        role: roles_master/saned, tags: saned,
+        servicename: saned 
+      }
 
 - hosts: intserver 
   remote_user: root
@@ -176,6 +183,12 @@
         servicename: pihole,
         basedir: /srv/pihole,
         web_port: 82
+      }
+    - { 
+        role: roles_intserver/docker_scanservjs, tags: scanservjs,
+        servicename: scanservjs,
+        basedir: /srv/scanservjs,
+        web_port: 83
       }
     - { 
         role: roles_intserver/docker_zigbee2mqtt, tags: [ zigbee2mqtt, z2m ],

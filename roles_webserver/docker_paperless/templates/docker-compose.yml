@@ -57,7 +57,7 @@ services:
     volumes:
       - "{{ basedir }}/data:/usr/src/paperless/data"
       - "{{ basedir }}/media:/usr/src/paperless/media:z"
-      - "{{ basedir }}/consume:/usr/src/paperless/consume"
+      - "{{ basedir }}/consume:/usr/src/paperless/consume:shared"
       - "{{ basedir }}/export:/usr/src/paperless/export"
     environment:
       USERMAP_UID: 1000
@@ -110,7 +110,7 @@ services:
     ports:
         - "{{ int_ip4 }}:{{ webdav_port }}:80"
     volumes:
-        - "{{ basedir }}/consume:/home/user"
+        - "{{ basedir }}/consume:/var/lib/dav/data:shared"
     networks:
       - default
 

@@ -1,0 +1,45 @@
+---
+
+- name: "Install Packages for {{ servicename }}"
+  apt: 
+    state: present
+    name:
+      - sane-utils
+
+- name: "Config files for {{ servicename }}"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/sane.d/{{ item }}"
+  with_items:
+    - saned.conf
+  register: config
+
+- name: "Add existing user saned to group scanner"
+  ansible.builtin.user:
+    name: 'saned'
+    groups: scanner
+    append: true
+
+# - name: "Unmask service for {{ servicename }}"
+#   systemd:
+#     name: saned
+#     masked: no
+#   register: unmask
+
+# - name: "Reload Systemd {{ servicename }}"
+#   systemd:
+#     daemon_reload: yes
+#   when: unmask.changed
+
+- name: "Enable and start service for {{ servicename }}"
+  systemd:
+    name: saned.socket
+    state: started
+    enabled: yes
+    masked: no
+
+- name: "Restart service for {{ servicename }}"
+  systemd:
+    name: saned.socket
+    state: restarted
+  when: config.changed 

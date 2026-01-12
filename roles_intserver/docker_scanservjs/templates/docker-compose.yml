@@ -1,0 +1,21 @@
+services:
+  
+  # see: https://github.com/sbs20/scanservjs/issues/129#issuecomment-800226184
+  
+  # bessere Lösung: https://github.com/Celedhrim/scantopl
+
+  app:
+
+    build: .
+    restart: always
+    ports:
+      - "{{ web_port }}:8080"
+    volumes:
+      - "{{ basedir }}/config.local.js:/etc/scanservjs/config.local.js:ro"
+      - "{{ basedir }}/upload.sh:/etc/scanservjs/upload.sh:ro"
+      - "{{ basedir }}/output:/usr/lib/scanservjs/data/output:rw"
+    environment:
+      - TZ=Europe/Berlin
+      - SANED_NET_HOSTS={{ hostvars['master'].int_ip4 }}
+    networks:
+      - default
