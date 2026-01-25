@@ -123,7 +123,6 @@ rfswitches:
   - { id: "LichtVitrine",     name: "Vitrine",     ha_icon: "mdi:lightbulb",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11001 E", code_on: "333121", code_off: "333124" }
   - { id: "LichtSideboard",   name: "Sideboard",   ha_icon: "mdi:lightbulb",   icon: "lightbulb",  groups: "gWohnzimmer",  code: "11010 A", code_on: "279903", code_off: "279892" }
   - { id: "PowerAudiosystem", name: "Audiosystem", ha_icon: "mdi:audio-video", icon: "receiver",   groups: "gWohnzimmer",  code: "11010 B", code_on: "282961", code_off: "282964" }
-  - { id: "LampeStehlampe",   name: "Stehlampe",   ha_icon: "mdi:floor-lamp",  icon: "lightbulb",  groups: "gWohnzimmer",  code: "11010 C", code_on: "283729", code_off: "283732" }
 
 mqtt_sensors:
   - { id: "badezimmer",   name: "Badezimmer",    groups: "gBadezimmer",   temp: yes, pressure: yes, humidity: yes }
