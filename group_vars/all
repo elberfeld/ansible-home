@@ -58,6 +58,7 @@ networks:
       open_mqtt_gateway_rf433: 10.5.0.244
       wled_fenster: 10.5.0.243
       hms800_2t: 10.5.0.242
+      shelly_2pm_bad: 10.5.0.241
       hpserver: 10.5.0.200 
       master_kvm: 10.5.0.99
       master: 10.5.0.100
