@@ -10,7 +10,7 @@ services:
   # Major Version Upgrades: https://github.com/pgautoupgrade/docker-pgautoupgrade
   # Sample: set Image to: pgautoupgrade/pgautoupgrade:17-alpine
   db:
-    image: postgres:17
+    image: postgres:18
     restart: always
     volumes:
       - "{{ basedir }}/db:/var/lib/postgresql/data"
