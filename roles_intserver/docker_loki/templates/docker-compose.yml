@@ -3,7 +3,7 @@ services:
 
   app:
 
-    image: grafana/loki:3.0.0
+    image: grafana/loki:3.6.7
     restart: always
     command: -config.file=/etc/loki/local-config.yaml 
     ports:
