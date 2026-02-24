@@ -19,6 +19,10 @@ Configuration ist provided in the config file 'oidc.config.php'
 https://apps.nextcloud.com/apps/oidc_login
 https://github.com/pulsejet/nextcloud-oidc-login
 
+Manual OCC Install:  
+
+- occ app:install oidc_login
+- occ app:enable oidc_login
 
 ## Setup in uffd
 
