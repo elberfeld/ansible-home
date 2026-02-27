@@ -4,7 +4,7 @@
 # Der SSH key aus /srv/borgbackup/repo_sshkey muss vorher auf den Backupserver übertragen werden 
 
 export BORG_PASSPHRASE="{{repo_passphrase}}"
-export BORG_RSH="ssh -i /srv/borgbackup/repo_sshkey"
+export BORG_RSH="ssh -o 'IdentitiesOnly yes' -i /srv/borgbackup/repo_sshkey"
 
 if [ ! -e "/srv/borgbackup/{{ item.key }}/initialized" ]; then
 

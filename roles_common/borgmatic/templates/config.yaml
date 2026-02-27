@@ -123,7 +123,7 @@ retry_wait: 10
 
 # Command to use instead of "ssh". This can be used to specify ssh
 # options. Defaults to not set.
-ssh_command: ssh -i /etc/borgmatic/repo_sshkey
+ssh_command: ssh -o 'IdentitiesOnly yes' -i /etc/borgmatic/repo_sshkey
 
 
 

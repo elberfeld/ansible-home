@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export BORG_PASSPHRASE="{{repo_passphrase}}"
-export BORG_RSH="ssh -i /srv/borgbackup/repo_sshkey"
+export BORG_RSH="ssh -o 'IdentitiesOnly yes' -i /srv/borgbackup/repo_sshkey"
 export BACKUP_DATE=`date +%Y-%m-%d_%H_%M`
 export LAST_BACKUPS_PROM="/var/lib/prometheus/node-exporter/lastbackup.prom"
 
