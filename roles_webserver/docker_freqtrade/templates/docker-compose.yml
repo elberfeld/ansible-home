@@ -2,7 +2,7 @@
 services:
 
   app:
-    image: freqtradeorg/freqtrade:2023.1
+    image: freqtradeorg/freqtrade:2026.2
     restart: always
     command: >
       trade
