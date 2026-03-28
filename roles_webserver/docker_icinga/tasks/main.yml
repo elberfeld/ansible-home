@@ -68,16 +68,19 @@
     state: present
   when: configured.stat.exists == False
 
+
 - name: "wait for {{ servicename }} docker (init)"
   wait_for:
     path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
   when: configured.stat.exists == False
-  
+
+
 - name: "stop {{ servicename }} docker (init)"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: configured.stat.exists == False
+
 
 - name: Script Helper erstellen
   template: 

@@ -6,6 +6,9 @@ services:
     build: .
     restart: always
     hostname: icinga
+    depends_on:
+      - db
+      - graphite
     ports:
       - "{{ api_port }}:5665"
     volumes:
@@ -17,10 +20,8 @@ services:
       - "{{ basedir }}/log/apache2:/var/log/apache2"
       - "{{ basedir }}/log/icinga2:/var/log/icinga2"
       - "{{ basedir }}/log/icingaweb2:/var/log/icingaweb2"
-    depends_on:
-      - db
-      - graphite
     environment:
+      TZ: "Europe/Berlin"
       APACHE2_HTTP: BOTH
       MYSQL_HOST: db
       MYSQL_ROOT_USER: "root"
