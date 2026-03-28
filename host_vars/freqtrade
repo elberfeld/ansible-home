@@ -41,6 +41,7 @@ webserver_domains:
   - "gitlab.void.ms"
   - "gitlab-registry.void.ms"
   - "hackmd.void.ms"
+  - "kasm.void.ms"
   - "matrix.void.ms"
   - "nextcloud.void.ms"
   - "oauth-test.void.ms"
