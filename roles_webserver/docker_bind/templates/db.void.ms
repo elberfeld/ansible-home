@@ -27,6 +27,8 @@ webserver1       IN      AAAA    {{ hostvars['webserver1'].ext_ip6 }}
 webserver2       IN      A       {{ hostvars['webserver2'].ext_ip4 }}
 webserver2       IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 
+; Test wildcard domain 
+*.test           IN      A       {{ hostvars['freqtrade'].ext_ip4 }}
 
 ; Unitimedia Gateway 
 gw-um     IN      A       130.180.13.105
