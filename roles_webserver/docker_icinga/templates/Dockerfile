@@ -1,4 +1,4 @@
-FROM jordan/icinga2:2.14.3
+FROM jordan/icinga2:2.15.2
 
 # Install additional Packages 
 RUN apt-get update \
