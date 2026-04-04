@@ -1,0 +1,23 @@
+
+
+services:
+
+  app:
+
+    image: ghcr.io/twin/gatus:stable
+    restart: always
+    volumes:
+      - "{{ basedir }}/config.yaml:/config/config.yaml"
+      - "{{ basedir }}/data:/data"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8080
+    networks:
+        - default
+        - web
+
+networks:
+  web:
+    external: true

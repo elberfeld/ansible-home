@@ -239,6 +239,12 @@
         domain: grafana.void.ms 
       }
     - { 
+        role: roles_webserver/docker_gatus, tags: gatus, 
+        servicename: gatus, 
+        basedir: /srv/gatus, 
+        domain: status.void.ms 
+      }
+    - { 
         role: roles_webserver/docker_icinga, tags: icinga, 
         servicename: icinga, 
         basedir: /srv/icinga, 

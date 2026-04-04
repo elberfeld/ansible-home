@@ -62,6 +62,7 @@ webserver_domains:
   - "grafana.void.ms"
   - "icinga.void.ms"
   - "prometheus.void.ms"
+  - "status.void.ms"
   - "vpn.void.ms"
   - "vpn-streiner.void.ms"
 

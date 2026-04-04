@@ -1,0 +1,279 @@
+
+# Store date in a SQLite database located at /data/data.db
+storage:
+  type: sqlite
+  path: /data/data.db
+
+# Expose Prometheus metrics at /metrics
+metrics: true
+
+# Maintenance config to silence alerts at night 
+maintenance:
+  start: 00:00
+  duration: 8h
+  timezone: "Europe/Amsterdam"
+
+# Alerting configuration
+alerting:
+  pushover:
+    application-token: "{{ pushover_application_token }}"
+    user-key: "{{ pushover_user_key }}"
+    default-alert:
+      description: "Gatus HealthCheck failed"
+      send-on-resolved: true
+      failure-threshold: 5
+      success-threshold: 5
+
+# Endpoints to monitor
+endpoints:
+
+  # webserver1
+
+  - name: webserver1-ping
+    group: webserver1
+    url: icmp://webserver1.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+
+  - name: grafana
+    group: webserver1
+    url: https://grafana.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: icinga
+    group: webserver1
+    url: https://icinga.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"   
+
+  - name: prometheus
+    group: webserver1
+    url: https://prometheus.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: gatus
+    group: webserver1
+    url: https://status.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: vpnserver
+    group: webserver1
+    url: https://vpn.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  # webserver1 dns 
+
+  - name: webserver1-dns-udp
+    group: webserver1-dns
+    url: udp://webserver1.void.ms:53
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+
+  - name: webserver1-dns-tcp
+    group: webserver1-dns
+    url: tcp://webserver1.void.ms:53
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+
+  # webserver2
+
+  - name: webserver2-ping
+    group: webserver2
+    url: icmp://webserver2.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+
+  - name: nextcloud
+    group: webserver2
+    url: https://cloud.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: collabora
+    group: webserver2
+    url: https://collabora.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: paperless
+    group: webserver2
+    url: https://docs.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: freqtrade
+    group: webserver2
+    url: https://freqtrade.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: mailu
+    group: webserver2
+    url: https://mail.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: uffd
+    group: webserver2
+    url: https://uffd.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: vaultwarden
+    group: webserver2
+    url: https://vault.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: wordpress
+    group: webserver2
+    url: https://www.void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  - name: www-default
+    group: webserver2
+    url: https://void.ms
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] == 200"
+
+  # webserver2 dns 
+
+  - name: webserver2-dns-udp
+    group: webserver2-dns
+    url: udp://webserver2.void.ms:53
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+
+  - name: webserver2-dns-tcp
+    group: webserver2-dns
+    url: tcp://webserver2.void.ms:53
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+
+  # webserver2 mail
+
+  - name: webserver2-mail-smtp
+    group: webserver2-mail
+    url: tcp://mail.void.ms:25
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+
+  - name: webserver2-mail-imap
+    group: webserver2-mail
+    url: tcp://mail.void.ms:143
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+
+  - name: webserver2-mail-smtps
+    group: webserver2-mail
+    url: tls://mail.void.ms:465
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+
+  - name: webserver2-mail-submission
+    group: webserver2-mail
+    url: tcp://mail.void.ms:587
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+
+  - name: webserver2-mail-imaps
+    group: webserver2-mail
+    url: tls://mail.void.ms:993
+    interval: 30s
+    alerts:
+      - type: pushover
+    conditions:
+      - "[CONNECTED] == true"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
