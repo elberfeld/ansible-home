@@ -72,10 +72,6 @@ repositories:
 # omitted from backups.
 # keep_exclude_tags: true
 
-
-
-
-
 # If true, then source directories must exist, otherwise an error is
 # raised. Defaults to false.
 source_directories_must_exist: true
@@ -93,9 +89,6 @@ source_directories_must_exist: true
 # correctly. And backslash any quote or backslash literals as well.
 # Defaults to not set.
 encryption_passphrase: "{{ repo_passphrase }}"
-
-
-
 
 # Type of compression to use when creating archives. (Compression
 # level can be added separated with a comma, like "zstd,7".) See
@@ -119,25 +112,13 @@ retries: 3
 # form of backoff. Defaults to 0 (no wait).
 retry_wait: 10
 
-
-
 # Command to use instead of "ssh". This can be used to specify ssh
 # options. Defaults to not set.
 ssh_command: ssh -o 'IdentitiesOnly yes' -i /etc/borgmatic/repo_sshkey
 
-
-
-
-
-
-
-
-
 # Maximum seconds to wait for acquiring a repository/cache lock.
 # Defaults to 1.
 lock_wait: 5
-
-
 
 # Additional options to pass directly to particular Borg commands,
 # handy for Borg options that borgmatic does not yet support natively.
@@ -160,21 +141,11 @@ lock_wait: 5
     # Extra command-line options to pass to "borg check".
     # check: --extra-option
 
-# Keep all archives within this time interval. See "skip_actions" for
-# disabling pruning altogether.
-# keep_within: 3H
-
-# Number of secondly archives to keep.
-# keep_secondly: 60
-
-# Number of minutely archives to keep.
-# keep_minutely: 60
-
 # Number of hourly archives to keep.
-keep_hourly: 14
+keep_hourly: 8
 
 # Number of daily archives to keep.
-keep_daily: 7
+keep_daily: 8
 
 # Number of weekly archives to keep.
 keep_weekly: 4
@@ -184,8 +155,6 @@ keep_monthly: 2
 
 # Number of yearly archives to keep.
 keep_yearly:  1
-
-
 
 # List of one or more consistency checks to run on a periodic basis
 # (if "frequency" is set) or every time borgmatic runs checks (if
@@ -358,5 +327,4 @@ keep_yearly:  1
 # of them (after any action).
 # after_everything:
     # - echo Completed actions.
-
 

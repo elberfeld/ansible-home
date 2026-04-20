@@ -88,36 +88,46 @@ rsyncbackup:
 
 
 
-# Definition von Borgbackup Repositories 
-borgbackup_repos:
+# # Definition von Borgbackup Repositories 
+# borgbackup_repos:
   
-  borgbase: 
+#   borgbase: 
 
-    # URL des Repos   
-    repo: "j0or89jt@j0or89jt.repo.borgbase.com:repo"
+#     # URL des Repos   
+#     repo: "j0or89jt@j0or89jt.repo.borgbase.com:repo"
     
-    # Repo-spezifische Optionen zum Aufruf von Borgbackup
-    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
-    options: ""
+#     # Repo-spezifische Optionen zum Aufruf von Borgbackup
+#     # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+#     options: ""
 
-    # Compression Options, z,b. "zlib,5, "zstd,5"
-    compression: "zlib,5"
+#     # Compression Options, z,b. "zlib,5, "zstd,5"
+#     compression: "zlib,5"
 
-    # Prune Optionen 
-    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+#     # Prune Optionen 
+#     prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
     
-    # Backup Schedule 
-    weekday: "*"
-    hour: "*/4"
-    minute: "20"
+#     # Backup Schedule 
+#     weekday: "*"
+#     hour: "*/4"
+#     minute: "20"
 
-    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
-    # directories:
+#     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichtert werden sollen 
+#     # directories:
 
 
 
-# Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
-borgbackup_directories:
-  - "/etc/"
-  - "/srv/"
+# # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
+# borgbackup_directories:
+#   - "/etc/"
+#   - "/srv/"
 
+borgbackup:
+
+  compression: "zstd,5"
+
+  repositories:
+    - { label: "borgbase", path: "ssh://pu41t97z@pu41t97z.repo.borgbase.com/./repo" }
+
+  directories: 
+    - "/etc/"
+    - "/srv/"

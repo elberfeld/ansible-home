@@ -1,0 +1,13 @@
+[Unit]
+Description=Run borgmatic backup
+
+[Timer]
+# run every 4 hours
+OnCalendar=00/4:00
+Persistent=true
+# Ausführungen +/- 30 Minuten varriieren
+RandomizedDelaySec=30m
+
+[Install]
+WantedBy=timers.target
+

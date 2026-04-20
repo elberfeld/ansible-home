@@ -105,52 +105,55 @@ rsyncbackup:
 
 
 # Definition von Borgbackup Repositories 
-borgbackup_repos:
+# borgbackup_repos:
 
-  borgbase: 
+#   borgbase: 
 
-    # URL des Repos   
-    repo: "fqseb8ee@fqseb8ee.repo.borgbase.com:repo"
+#     # URL des Repos   
+#     repo: "fqseb8ee@fqseb8ee.repo.borgbase.com:repo"
     
-    # Repo-spezifische Optionen zum Aufruf von Borgbackup
-    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
-    options: ""
+#     # Repo-spezifische Optionen zum Aufruf von Borgbackup
+#     # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+#     options: ""
 
-    # Compression Options, z,b. "zlib,5, "zstd,5"
-    compression: "zlib,5"
+#     # Compression Options, z,b. "zlib,5, "zstd,5"
+#     compression: "zlib,5"
 
-    # Prune Optionen 
-    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+#     # Prune Optionen 
+#     prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
     
-    # Backup Schedule 
-    weekday: "*"
-    hour: "*/4"
-    minute: "50"
+#     # Backup Schedule 
+#     weekday: "*"
+#     hour: "*/4"
+#     minute: "50"
 
-    # Überwachung aktivieren 
-    alert: true
+#     # Überwachung aktivieren 
+#     alert: true
 
-    # Alermlevel für das Backup-Alter in Stunden 
-    warning_age: 6  
-    critical_age: 12
+#     # Alermlevel für das Backup-Alter in Stunden 
+#     warning_age: 6  
+#     critical_age: 12
 
-    # Alermlevel für die Anzahl der Backups 
-    warning_count: 5  
-    critical_count: 1
+#     # Alermlevel für die Anzahl der Backups 
+#     warning_count: 5  
+#     critical_count: 1
 
-    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichert werden sollen 
-    # directories:
+#     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichert werden sollen 
+#     # directories:
 
 
 # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
-borgbackup_directories:
-  - "/etc/"
-  - "/srv/"
+#borgbackup_directories:
+#  - "/etc/"
+#  - "/srv/"
 
 borgbackup:
-  compression: "zlib,12"
+
+  compression: "zstd,5"
+
   repositories:
-    - { label: "bprgbase", path: "ssh://s903yyza@s903yyza.repo.borgbase.com/./repo" }
+    - { label: "borgbase", path: "ssh://s903yyza@s903yyza.repo.borgbase.com/./repo" }
+
   directories: 
     - "/etc/"
     - "/srv/"

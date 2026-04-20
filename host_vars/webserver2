@@ -128,46 +128,56 @@ rsyncbackup:
 
 
 # Definition von Borgbackup Repositories 
-borgbackup_repos:
+# borgbackup_repos:
 
-  borgbase: 
+#   borgbase: 
 
-    # URL des Repos   
-    repo: "kal1cjbz@kal1cjbz.repo.borgbase.com:repo"
+#     # URL des Repos   
+#     repo: "kal1cjbz@kal1cjbz.repo.borgbase.com:repo"
     
-    # Repo-spezifische Optionen zum Aufruf von Borgbackup
-    # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
-    options: ""
+#     # Repo-spezifische Optionen zum Aufruf von Borgbackup
+#     # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
+#     options: ""
 
-    # Compression Options, z,b. "zlib,5, "zstd,5"
-    compression: "zlib,5"
+#     # Compression Options, z,b. "zlib,5, "zstd,5"
+#     compression: "zlib,5"
 
-    # Prune Optionen 
-    prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
+#     # Prune Optionen 
+#     prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
     
-    # Backup Schedule 
-    weekday: "*"
-    hour: "*/4"
-    minute: "20"
+#     # Backup Schedule 
+#     weekday: "*"
+#     hour: "*/4"
+#     minute: "20"
 
-    # Überwachung aktivieren 
-    alert: true
+#     # Überwachung aktivieren 
+#     alert: true
 
-    # Alermlevel für das Backup-Alter in Stunden 
-    warning_age: 6  
-    critical_age: 12
+#     # Alermlevel für das Backup-Alter in Stunden 
+#     warning_age: 6  
+#     critical_age: 12
 
-    # Alermlevel für die Anzahl der Backups 
-    warning_count: 5  
-    critical_count: 1
+#     # Alermlevel für die Anzahl der Backups 
+#     warning_count: 5  
+#     critical_count: 1
 
-    #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichert werden sollen 
-    # directories:
+#     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichert werden sollen 
+#     # directories:
 
 
 
-# Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
-borgbackup_directories:
-  - "/etc/"
-  - "/srv/"
+# # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
+# borgbackup_directories:
+#   - "/etc/"
+#   - "/srv/"
 
+borgbackup:
+
+  compression: "zstd,5"
+
+  repositories:
+    - { label: "borgbase", path: "ssh://pege8l9j@pege8l9j.repo.borgbase.com/./repo" }
+
+  directories: 
+    - "/etc/"
+    - "/srv/"

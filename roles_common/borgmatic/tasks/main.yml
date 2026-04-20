@@ -16,19 +16,66 @@
   when: repo_sshkey.stat.exists == False 
 
 
+- name: generate new repo_sshkey.pub (generate)
+  shell: ssh-keygen -y -f /etc/borgmatic/repo_sshkey > /etc/borgmatic/repo_sshkey.pub
+  when: repo_sshkey.stat.exists == False 
+
+
 - name: pakete installieren
   apt:
     update_cache: yes
     state: present
     name:
       - borgbackup
-      - borgmatic
+      - pipx
 
 
-- name: config files
+- name: borg und borgmatic installieren
+  community.general.pipx:
+    global: yes
+    name: borgmatic
+    state: latest
+
+
+- name: create config files
   template:
     src: "{{ item }}"
     dest: "/etc/borgmatic/{{ item }}"
   with_items:
     - config.yaml
   register: config_files
+
+
+#- name: initialize borg repos
+#  command: borgmatic repo-create --encryption repokey
+#  when: config_files.changed
+
+
+- name: create systemd unit files
+  template:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+  with_items:
+    - borgmatic.service
+    - borgmatic.timer
+  register: systemd_unit_files
+
+
+- name: reload systemd deamon
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  when: systemd_unit_files.changed
+
+
+- name: enable borgmatic.service unit
+  ansible.builtin.systemd_service:
+    state: reloaded
+    enabled: true
+    name: borgmatic.service
+
+
+- name: enable borgmatic.timer units
+  ansible.builtin.systemd_service:
+    state: started
+    enabled: true
+    name: borgmatic.timer
