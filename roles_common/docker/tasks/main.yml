@@ -8,8 +8,10 @@
   vars:
     packages:
       - apparmor
+      - containerd.io
       - docker-ce
-      - docker-compose
+      - docker-ce-cli
+      - docker-compose-plugin
       - python3
       - python3-pip
 

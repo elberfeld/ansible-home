@@ -1,12 +1,12 @@
 
 debian_sources: 
-  - "deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware"
-  - "deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware"
-  - "deb http://security.debian.org bookworm-security main contrib non-free non-free-firmware"
-  - "deb https://download.docker.com/linux/debian bookworm stable"
+  - "deb http://deb.debian.org/debian trixie main contrib non-free non-free-firmware"
+  - "deb http://deb.debian.org/debian trixie-updates main contrib non-free non-free-firmware"
+  - "deb http://security.debian.org trixie-security main contrib non-free non-free-firmware"
+  - "deb [signed-by=/etc/apt/docker.gpg] https://download.docker.com/linux/debian trixie stable"
 
 debian_keys:
-  - "https://download.docker.com/linux/debian/gpg"
+  - { url: "https://download.docker.com/linux/debian/gpg", file: "/etc/apt/docker.gpg" }
 
 
 # Primäre IP Adressen des Hosts 

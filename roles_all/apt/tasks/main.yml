@@ -12,17 +12,10 @@
     - curl
     - gnupg
 
-- name: add debian repo keys 
-  apt_key:
-    url: "{{ item }}"
-    state: present
+- name: get_docker repository keys
+  shell: "curl -fsSL {{ item.url }} | gpg --dearmor --yes -o {{ item.file }}"
   with_items: "{{ debian_keys }}"
   when: debian_keys is defined and debian_keys|length > 0
-
-#- name: get_docker repository key
-#  shell: "curl {{ item }} | apt-key add -"
-#  with_items: "{{ debian_keys }}"
-#  when: debian_keys is defined and debian_keys > 0
 
 - name: set debian repos 
   template: src=sources.list.j2 dest=/etc/apt/sources.list   
