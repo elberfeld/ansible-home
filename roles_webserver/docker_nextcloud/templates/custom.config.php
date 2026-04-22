@@ -44,4 +44,10 @@ $CONFIG = array (
     // Run Maintenance Jobs at any time
     // https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/background_jobs_configuration.html#parameters
     'maintenance_window_start' => 100,
+
+    // Enable Updatechecker
+    // https://docs.nextcloud.com/server/32/admin_manual/configuration_server/config_sample_php_parameters.html#updatechecker
+    'updatechecker' => true,
+
+    
 );
