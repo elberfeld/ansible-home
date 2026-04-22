@@ -1,47 +1,59 @@
 ---
 
 - name: Add hosts file entry 1
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/hosts
     state: present
     regexp: '^(.*)127.0.1.1(.*)$'
     line: "#removed: 127.0.1.1"
 
 - name: Add hosts file entry 2
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/hosts
     state: present
     regexp: '^(.*){{ inventory_hostname }}(.*)$'
     line: "{{ int_ip4 }} {{ inventory_hostname }} pvelocalhost"
+
+- name: Add hosts file entry 3
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    state: present
+    regexp: '^(.*)shop.maurer-it.com(.*)$'
+    line: "127.0.0.1 shop.maurer-it.com"
 
 - name: Remove PVE Enterprise Repos 
   file:
     path: /etc/apt/sources.list.d/pve-enterprise.list
     state: absent
 
-- name: Install Proxmox Packages
-  apt: 
-    state: present
-    name:
-      - proxmox-ve 
-      - nginx-light
-      - ifupdown2
-
 - name: Remove conflicting Packages 
-  apt: 
+  ansible.builtin.apt: 
     state: absent
     name:
       - os-prober 
       - resolvconf 
       - rdnssd
 
+- name: Install Proxmox Packages
+  ansible.builtin.apt: 
+    state: present
+    name:
+      - proxmox-ve 
+      - nginx-light
+      - ifupdown2
+
+- name: Install Proxmox Packages
+  ansible.builtin.apt: 
+    state: present
+    deb: https://github.com/Jamesits/pve-fake-subscription/releases/download/v0.0.11/pve-fake-subscription_0.0.11+git-1_all.deb
+
 - name: Remove PVE Enterprise Repos 
-  file:
+  ansible.builtin.file:
     path: /etc/apt/sources.list.d/pve-enterprise.list
     state: absent
- 
+
 - name: Nginx Config 
-  template:
+  ansible.builtin.template:
     src: "nginx"
     dest: "/etc/nginx/sites-enabled/default"
   notify: restart nginx
