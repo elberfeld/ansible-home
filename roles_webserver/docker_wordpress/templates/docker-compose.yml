@@ -34,6 +34,14 @@ services:
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
       - traefik.http.routers.{{ servicename }}.entrypoints=websecure
       - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80      
+      # domain2 redirect to domain
+      - traefik.http.routers.{{ servicename }}_redirect.rule=Host(`{{ domain2 }}`)
+      - traefik.http.routers.{{ servicename }}_redirect.entrypoints=websecure
+      - traefik.http.routers.{{ servicename }}_redirect.tls.certresolver=letsencrypt
+      - traefik.http.routers.{{ servicename }}_redirect.middlewares={{ servicename }}_redirect_to_www
+      - traefik.http.middlewares.{{ servicename }}_redirect_to_www.redirectregex.regex=^https?://{{ domain2 }}/(.*)
+      - traefik.http.middlewares.{{ servicename }}_redirect_to_www.redirectregex.replacement=https://{{ domain }}/$${1}
+      - traefik.http.middlewares.{{ servicename }}_redirect_to_www.redirectregex.permanent=true
     networks:
       - default
       - web

@@ -276,9 +276,7 @@
     - { 
         role: roles_common/docker_traefik, tags: traefik,
         servicename: traefik, 
-        basedir: /srv/traefik,
-        domain_base: "void.ms",
-        domain_default: "www.void.ms"
+        basedir: /srv/traefik
       }
     - { 
         role: roles_webserver/docker_collabora, tags: collabora,
@@ -331,6 +329,7 @@
         role: roles_webserver/docker_wordpress, tags: wordpress, 
         servicename: wordpress, 
         basedir: /srv/wordpress, 
-        domain: www.void.ms 
+        domain: www.void.ms,
+        domain2: void.ms 
       }
 
