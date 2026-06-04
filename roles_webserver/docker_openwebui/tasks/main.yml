@@ -1,0 +1,47 @@
+---
+
+- include_tasks: ../functions/get_secret.yml
+  with_items:
+    - { path: "{{ basedir }}/oauth_client_secret",  type: create, length: 64 }
+    - { path: "{{ basedir }}/openwebui_secret_key", type: create, length: 64 }
+    - { path: "{{ basedir }}/openrouter_api_key",   type: prompt }
+
+
+- name: Setup OAuth Client Info
+  ansible.builtin.debug:
+    msg: >
+      Client ID: {{ servicename }}
+      // Client Secret: {{ oauth_client_secret }}
+      // Redirect-URI: https://{{ domain }}/oauth/oidc/callback
+
+
+- name: "create folder struct for {{ servicename }}"
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/data"
+
+
+- name: deploy {{ servicename }} config
+  template:
+    dest: "{{ basedir }}/{{ item }}"
+    src: "{{ item }}"
+    mode: 0644
+  with_items:
+    - docker-compose.yml
+  register: config
+
+
+- name: "stop {{ servicename }} docker"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config.changed
+
+
+- name: "start {{ servicename }} docker"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: present

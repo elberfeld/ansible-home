@@ -1,0 +1,43 @@
+
+services:
+
+  app:
+
+    image: ghcr.io/open-webui/open-webui:main
+    restart: always
+    volumes:
+      - "{{ basedir }}/data:/app/backend/data"
+    environment:
+      # Webserver
+      WEBUI_URL: "https://{{ domain }}"
+      WEBUI_SECRET_KEY: "{{ openwebui_secret_key }}"
+      TZ: Europe/Berlin
+
+      # OpenRouter als OpenAI-kompatibler Backend
+      ENABLE_OLLAMA_API: "false"
+      OPENAI_API_BASE_URL: "https://openrouter.ai/api/v1"
+      OPENAI_API_KEY: "{{ openrouter_api_key }}"
+
+      # OIDC Authentifizierung via uffd
+      ENABLE_LOGIN_FORM: "false"
+      ENABLE_OAUTH_SIGNUP: "true"
+      OAUTH_MERGE_ACCOUNTS_BY_EMAIL: "true"
+      OAUTH_CLIENT_ID: "{{ servicename }}"
+      OAUTH_CLIENT_SECRET: "{{ oauth_client_secret }}"
+      OPENID_PROVIDER_URL: "{{ oidc_global.provider_url }}"
+      OAUTH_SCOPES: "openid profile email"
+      OAUTH_PROVIDER_NAME: "uffd"
+      OAUTH_ADMIN_ROLES: "admin"
+      DEFAULT_USER_ROLE: "user"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=8080
+    networks:
+      - web
+      - default
+
+networks:
+  web:
+    external: true

@@ -307,6 +307,12 @@
         domain: cloud.void.ms 
       }
     - { 
+        role: roles_webserver/docker_openwebui, tags: openwebui,
+        servicename: openwebui, 
+        basedir: /srv/openwebui, 
+        domain: openwebui.void.ms 
+      }
+    - { 
         role: roles_webserver/docker_paperless, tags: paperless,
         servicename: paperless, 
         basedir: /srv/paperless,
