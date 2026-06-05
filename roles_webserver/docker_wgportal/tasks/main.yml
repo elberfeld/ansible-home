@@ -1,0 +1,45 @@
+---
+
+- name: "Get secrets for {{ servicename }}"
+  ansible.builtin.include_tasks: ../functions/get_secret.yml
+  with_items:
+    - path: "{{ basedir }}/admin_user_pass"
+      type: create
+      length: 32
+    - path: "{{ basedir }}/oidc_client_secret"
+      type: create
+      length: 64
+
+
+- name: "Create folder struct for {{ servicename }}"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  with_items:
+    - "{{ basedir }}"
+    - "{{ basedir }}/data"
+
+
+- name: "Copy config files for {{ servicename }}"
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
+    mode: "0644"
+  with_items:
+    - config.yml
+    - docker-compose.yml
+  register: config
+
+
+- name: "Stop docker for {{ servicename }}"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: absent
+  when: config.changed
+
+
+- name: "Start docker for {{ servicename }}"
+  community.docker.docker_compose_v2:
+    project_src: "{{ basedir }}"
+    state: present

@@ -261,13 +261,20 @@
         prometheus_port: 9090,
         influxdb_port: 18086
       }
-    - {
-        role: roles_webserver/docker_vpnserver, tags: vpnserver, 
-        servicename: vpnserver, 
-        basedir: /srv/vpnserver, 
-        domain: vpn.void.ms,
-        vpn_port: 51800
-      }
+#    - {
+#        role: roles_webserver/docker_vpnserver, tags: vpnserver, 
+#        servicename: vpnserver, 
+#        basedir: /srv/vpnserver, 
+#        domain: vpn.void.ms,
+#        vpn_port: 51800
+#      }
+#    - {
+#        role: roles_webserver/docker_wgportal, tags: wgportal, 
+#        servicename: wgportal, 
+#        basedir: /srv/wgportal, 
+#        domain: vpn.void.ms,
+#        vpn_port: 51800
+#      }
 
 
 - hosts: webserver2

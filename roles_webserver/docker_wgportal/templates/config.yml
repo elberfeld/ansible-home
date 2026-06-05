@@ -1,0 +1,113 @@
+core:
+  admin_user: admin@wgportal.local
+  admin_password: {{ admin_user_pass}}
+  admin_api_token: ""
+  disable_admin_user: true
+  editable_keys: true
+  create_default_peer: false
+  create_default_peer_on_creation: false
+  re_enable_peer_after_user_enable: true
+  delete_peer_after_user_deleted: false
+  self_provisioning_allowed: false
+  import_existing: true
+  restore_state: true
+
+backend:
+  default: local
+  rekey_timeout_interval: 125s
+  local_resolvconf_prefix: tun.
+
+advanced:
+  log_level: debug
+  log_pretty: false
+  log_json: false
+  start_listen_port: {{ vpn_port }}
+  start_cidr_v4: {{ networks.wgportal.cdir_v4 }}
+  start_cidr_v6: {{ networks.wgportal.cdir_v6 }}
+  use_ip_v6: false
+  config_storage_path: ""
+  expiry_check_interval: 15m
+  rule_prio_offset: 20000
+  route_table_offset: 20000
+  api_admin_only: true
+  limit_additional_user_peers: 0
+
+database:
+  debug: false
+  slow_query_threshold: "0"
+  type: sqlite
+  dsn: data/sqlite.db
+  encryption_passphrase: ""
+
+statistics:
+  use_ping_checks: true
+  ping_check_workers: 10
+  ping_unprivileged: false
+  ping_check_interval: 1m
+  data_collection_interval: 1m
+  collect_interface_data: true
+  collect_peer_data: true
+  collect_audit_data: true
+  listening_address: :8787
+
+mail:
+  host: 127.0.0.1
+  port: 25
+  encryption: none
+  cert_validation: true
+  username: ""
+  password: ""
+  auth_type: plain
+  from: Wireguard Portal <noreply@wireguard.local>
+  link_only: false
+  allow_peer_email: false
+  templates_path: ""
+
+auth:
+  hide_login_form: true
+  oidc: []
+  ldap: []
+  webauthn:
+    enabled: false
+  oauth:
+    - provider_name: uffd
+      display_name: Login with uffd
+      registration_enabled: true
+      log_user_info: true
+      client_id: "wgportal"
+      client_secret: "{{ oidc_client_secret }}"
+      auth_url: {{ oauth_global.authorize_url }}
+      token_url: {{ oauth_global.token_url }}
+      user_info_url: {{ oauth_global.userinfo_url }}
+      extra_scopes:
+        - openid
+        - profile
+        - email
+        - groups
+      field_map:
+        user_identifier: nickname
+        email: email
+        firstname: name
+        user_groups: groups
+      admin_mapping:
+        admin_group_regex: ^wgportal_admin$
+
+web:
+  listening_address: "{{ int_ip4 }}:8888"
+  external_url: "https://{{ domain }}"
+  base_path: ""
+  site_company_name: WireGuard Portal
+  site_title: WireGuard Portal
+  session_identifier: wgPortalSession
+  session_secret: very_secret
+  csrf_secret: extremely_secret
+  request_logging: false
+  expose_host_info: false
+  cert_file: ""
+  key_File: ""
+  frontend_filepath: ""
+
+webhook:
+  url: ""
+  authentication: ""
+  timeout: 10s

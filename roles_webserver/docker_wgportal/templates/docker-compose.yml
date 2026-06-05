@@ -1,0 +1,31 @@
+
+
+services:
+
+  app:
+    image: wgportal/wg-portal:latest
+    restart: always
+    network_mode: "host"
+    cap_add:
+      - NET_ADMIN
+    #sysctls:
+    #  - net.ipv4.conf.all.src_valid_mark=1
+    volumes:
+      - "{{ basedir }}/config.yml:/app/config/config.yml:ro"
+      - "{{ basedir }}/data:/app/data"
+    #ports:
+    #  - "{{ vpn_port }}:{{ vpn_port }}/udp"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
+      - traefik.http.routers.{{ servicename }}.entrypoints=websecure
+      #- traefik.http.services.{{ servicename }}.loadbalancer.server.port=8888
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.url=http://{{ int_ip4 }}:8888
+    #networks:
+    #  - default
+    #  - web
+
+
+networks:
+  web:
+    external: true
