@@ -1,10 +1,9 @@
 ---
-
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
-   - { path: "{{ basedir }}/homeassistant_admin_password", type: create, length: 12 }
-   - { path: "{{ basedir }}/influxdb_password",            type: create, length: 12 }
-   - { path: "{{ basedir }}/influxdb_token",               type: create, length: 32 }
+    - { path: "{{ basedir }}/homeassistant_admin_password", type: create, length: 12 }
+    - { path: "{{ basedir }}/influxdb_password", type: create, length: 12 }
+    - { path: "{{ basedir }}/influxdb_token", type: create, length: 32 }
 
 
 - name: "create folder struct for {{ basedir }}"
@@ -15,7 +14,6 @@
     - "{{ basedir }}"
     - "{{ basedir }}/config/"
 
-
 - name: "copy config files for {{ basedir }}"
   ansible.builtin.template:
     src: "{{ item }}"
@@ -25,13 +23,11 @@
     - config/configuration.yaml
   register: config_files
 
-
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: config_files.changed
-
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

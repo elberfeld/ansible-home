@@ -1,5 +1,4 @@
 ---
-
 - name: create folder struct for promtail
   ansible.builtin.file:
     path: "{{ item }}"

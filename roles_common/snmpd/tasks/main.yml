@@ -2,14 +2,13 @@
 - name: stop snmpd
   ansible.builtin.service: name=snmpd state=stopped
 
-
 # Pakete installieren
 - name: pakete installieren
   ansible.builtin.apt:
     pkg: "{{ item }}"
-    update_cache: yes
+    update_cache: true
     state: absent
-    purge: yes
+    purge: true
   with_items:
     - snmpd
 
@@ -17,4 +16,3 @@
   ansible.builtin.file:
     path: "/etc/snmp/snmpd.conf"
     state: absent
-

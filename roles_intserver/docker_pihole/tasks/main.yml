@@ -1,7 +1,7 @@
-
+---
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
-    - { path: "{{ basedir }}/admin_password",  type: create, length: 24 }
+    - { path: "{{ basedir }}/admin_password", type: create, length: 24 }
 
 - name: "create folder struct for {{ servicename }}"
   ansible.builtin.file:

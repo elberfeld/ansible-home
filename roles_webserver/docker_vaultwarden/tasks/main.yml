@@ -1,9 +1,8 @@
 ---
-
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/vaultwarden_admin_token", type: create, length: 40 }
-    - { path: "{{ basedir }}/smtp_user_token",  type: prompt }
+    - { path: "{{ basedir }}/smtp_user_token", type: prompt }
 
 
 - name: "create folder struct for {{ servicename }}"
@@ -16,22 +15,19 @@
     - "{{ basedir }}/data"
     - "{{ basedir }}/backup"
 
-
 - name: deploy {{ servicename }} config
   ansible.builtin.template:
-    dest:  "{{ basedir }}/{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
     src: "{{ item }}"
   with_items:
     - docker-compose.yml
   register: config
-
 
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: config.changed
-
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

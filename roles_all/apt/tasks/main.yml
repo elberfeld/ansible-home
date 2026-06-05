@@ -1,16 +1,15 @@
 ---
-
 - name: install apt-transport-https packages before adding sources
   ansible.builtin.apt:
-    update_cache: no
+    update_cache: false
     state: present
     name:
-    - aptitude
-    - debian-archive-keyring
-    - apt-transport-https
-    - ca-certificates
-    - curl
-    - gnupg
+      - aptitude
+      - debian-archive-keyring
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
 
 - name: get_docker repository keys
   ansible.builtin.shell: "curl -fsSL {{ item.url }} | gpg --dearmor --yes -o {{ item.file }}"
@@ -22,4 +21,4 @@
 
 - name: update debian repos
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true

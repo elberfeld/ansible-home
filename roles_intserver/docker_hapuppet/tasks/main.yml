@@ -1,8 +1,7 @@
 ---
-
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
-   - { path: "{{ basedir }}/homeassistant_token", type: prompt } # HA Access Token
+    - { path: "{{ basedir }}/homeassistant_token", type: prompt } # HA Access Token
 
 - name: "create folder struct for {{ servicename }}"
   ansible.builtin.file:
@@ -13,10 +12,10 @@
 
 - name: "install git"
   ansible.builtin.apt:
-    update_cache: no
+    update_cache: false
     state: present
     name:
-    - git
+      - git
 
 - name: "checkout git repo"
   ansible.builtin.git:

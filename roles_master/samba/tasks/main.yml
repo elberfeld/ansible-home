@@ -21,7 +21,7 @@
   ansible.builtin.systemd:
     name: smbd
     state: started
-    enabled: yes
+    enabled: true
 
 - name: Restart smbd service for {{ servicename }}
   ansible.builtin.systemd:
@@ -33,7 +33,7 @@
   ansible.builtin.systemd:
     name: nmbd
     state: started
-    enabled: yes
+    enabled: true
 
 - name: Restart nmbd service for {{ servicename }}
   ansible.builtin.systemd:

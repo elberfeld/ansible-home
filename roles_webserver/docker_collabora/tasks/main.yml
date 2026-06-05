@@ -1,5 +1,4 @@
 ---
-
 - name: "create folder struct for {{ servicename }}"
   ansible.builtin.file:
     path: "{{ item }}"

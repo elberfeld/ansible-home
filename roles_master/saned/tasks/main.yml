@@ -1,5 +1,4 @@
 ---
-
 - name: "Install Packages for {{ servicename }}"
   ansible.builtin.apt:
     state: present
@@ -16,7 +15,7 @@
 
 - name: "Add existing user saned to group scanner"
   ansible.builtin.user:
-    name: 'saned'
+    name: "saned"
     groups: scanner
     append: true
 
@@ -35,8 +34,8 @@
   ansible.builtin.systemd:
     name: saned.socket
     state: started
-    enabled: yes
-    masked: no
+    enabled: true
+    masked: false
 
 - name: "Restart service for {{ servicename }}"
   ansible.builtin.systemd:

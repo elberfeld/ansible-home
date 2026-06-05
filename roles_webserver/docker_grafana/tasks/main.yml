@@ -1,5 +1,4 @@
-
-
+---
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/grafana_secret_key", type: create, length: 32 }
@@ -16,7 +15,6 @@
 - name: "homeassistant_influxdb_token (decode)"
   ansible.builtin.set_fact:
     "homeassistant_influxdb_token": "{{ homeassistant_influxdb_token_secretfile.content | b64decode | regex_replace('\\s', '') }}"
-
 
 - name: "create folder struct for {{ servicename }} 1"
   ansible.builtin.file:
@@ -51,7 +49,6 @@
     project_src: "{{ basedir }}"
     state: absent
   when: config_files.changed
-
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

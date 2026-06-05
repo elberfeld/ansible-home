@@ -3,7 +3,7 @@
 - name: pakete installieren
   ansible.builtin.apt:
     pkg: "{{ item }}"
-    update_cache: yes
+    update_cache: true
     state: present
   with_items:
     - rsync
@@ -27,5 +27,3 @@
   ansible.builtin.template:
     src: logrotate
     dest: /etc/logrotate.d/rsyncbackup
-
-

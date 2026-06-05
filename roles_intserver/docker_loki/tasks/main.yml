@@ -1,5 +1,4 @@
 ---
-
 - name: create folder struct for loki
   ansible.builtin.file:
     path: "{{ item }}"

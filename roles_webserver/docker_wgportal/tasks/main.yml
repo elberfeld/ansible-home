@@ -1,5 +1,4 @@
 ---
-
 - name: "Get secrets for {{ servicename }}"
   ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
@@ -10,7 +9,6 @@
       type: create
       length: 64
 
-
 - name: "Create folder struct for {{ servicename }}"
   ansible.builtin.file:
     path: "{{ item }}"
@@ -19,7 +17,6 @@
   with_items:
     - "{{ basedir }}"
     - "{{ basedir }}/data"
-
 
 - name: "Copy config files for {{ servicename }}"
   ansible.builtin.template:
@@ -31,13 +28,11 @@
     - docker-compose.yml
   register: config
 
-
 - name: "Stop docker for {{ servicename }}"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: config.changed
-
 
 - name: "Start docker for {{ servicename }}"
   community.docker.docker_compose_v2:

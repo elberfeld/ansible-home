@@ -2,7 +2,7 @@
 # Pakete installieren
 - name: pakete installieren
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
     state: present
     name:
       - prometheus-node-exporter
@@ -17,7 +17,7 @@
 - name: Configure Node-Exporter
   ansible.builtin.lineinfile:
     path: /etc/default/prometheus-node-exporter
-    regexp: '^ARGS='
+    regexp: "^ARGS="
     line: ARGS="--web.listen-address={{int_ip4}}:9100"
 
 - name: reload systemd and enable service

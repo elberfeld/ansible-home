@@ -1,8 +1,7 @@
 ---
-
 - name: install common packages
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
     state: present
     name:
       - acpid

@@ -1,5 +1,4 @@
-
-
+---
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/pushover_application_token", length: -1 }
@@ -14,7 +13,6 @@
     - "{{ basedir }}"
     - "{{ basedir }}/data"
 
-
 - name: "create config files for {{ servicename }}"
   ansible.builtin.template:
     src: "{{ item }}"
@@ -24,13 +22,11 @@
     - docker-compose.yml
   register: config_files
 
-
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: config_files.changed
-
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

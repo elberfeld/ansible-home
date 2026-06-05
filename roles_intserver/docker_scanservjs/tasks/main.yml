@@ -1,5 +1,4 @@
 ---
-
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/webdav_user_pass", type: prompt }
@@ -13,7 +12,6 @@
     - "{{ basedir }}"
     - "{{ basedir }}/output"
 
-
 - name: "copy config files for {{ basedir }}"
   ansible.builtin.template:
     src: "{{ item }}"
@@ -25,13 +23,11 @@
     - upload.sh
   register: config_files
 
-
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: config_files.changed
-
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

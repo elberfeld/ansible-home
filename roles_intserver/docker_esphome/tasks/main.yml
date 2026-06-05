@@ -1,8 +1,7 @@
 ---
-
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
-  - { path: "{{ basedir }}/wlan_pass", type: prompt }
+    - { path: "{{ basedir }}/wlan_pass", type: prompt }
 
 - name: "create folder struct for {{ servicename }}"
   ansible.builtin.file:

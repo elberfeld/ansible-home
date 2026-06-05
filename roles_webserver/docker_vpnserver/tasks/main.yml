@@ -1,5 +1,4 @@
 ---
-
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/wg_admin_pass", type: create, length: 32 }
@@ -14,7 +13,6 @@
     - "{{ basedir }}"
     - "{{ basedir }}/data"
 
-
 - name: "copy {{ servicename }} config files"
   ansible.builtin.template:
     src: "{{ item }}"
@@ -23,13 +21,11 @@
     - docker-compose.yml
   register: config
 
-
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: config.changed
-
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

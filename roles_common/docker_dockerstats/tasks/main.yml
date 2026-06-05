@@ -1,13 +1,10 @@
 ---
-
-
 - name: create folder struct for {{ servicename }}
   ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
     - "{{ basedir }}"
-
 
 - name: Konfig-Dateien erstellen
   ansible.builtin.template:
@@ -17,13 +14,11 @@
     - docker-compose.yml
   register: config_files
 
-
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: config_files.changed
-
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

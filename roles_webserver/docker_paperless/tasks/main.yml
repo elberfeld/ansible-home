@@ -1,17 +1,16 @@
 ---
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
-   - { path: "{{ basedir }}/postgres_user_pass",   type: create, length: 12 }
-   - { path: "{{ basedir }}/paperless_secret_key", type: create, length: 24 }
-   - { path: "{{ basedir }}/forward_auth_secret",  type: create, length: 64 }
-   - { path: "{{ basedir }}/oauth_client_secret",  type: create, length: 64 }
-   - { path: "{{ basedir }}/webdav_user_pass",     type: create, length: 32 }
+    - { path: "{{ basedir }}/postgres_user_pass", type: create, length: 12 }
+    - { path: "{{ basedir }}/paperless_secret_key", type: create, length: 24 }
+    - { path: "{{ basedir }}/forward_auth_secret", type: create, length: 64 }
+    - { path: "{{ basedir }}/oauth_client_secret", type: create, length: 64 }
+    - { path: "{{ basedir }}/webdav_user_pass", type: create, length: 32 }
 
 
 - name: Setup OAuth Client Info
   ansible.builtin.debug:
     msg: "Client ID: {{ servicename }} // Client Secret: {{ oauth_client_secret }} // Redirect-URI: https://{{ domain }}/_oauth"
-
 
 - name: "create folder struct for {{ servicename }}"
   ansible.builtin.file:
@@ -24,17 +23,15 @@
     - "{{ basedir }}/consume"
     - "{{ basedir }}/export"
 
-
 # Copy config files
 - name: deploy {{ servicename }} config
   ansible.builtin.template:
-    dest:  "{{ basedir }}/{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
     src: "{{ item }}"
-    mode: 0644
+    mode: "0644"
   with_items:
     - docker-compose.yml
   register: config
-
 
 # Start containers
 - name: "stop {{ servicename }} docker"
@@ -43,9 +40,7 @@
     state: absent
   when: config.changed
 
-
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present
-

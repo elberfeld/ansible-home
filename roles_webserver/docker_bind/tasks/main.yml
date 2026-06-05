@@ -8,15 +8,12 @@
     - "/srv/bind/config/"
     - "/srv/bind/cache/"
 
-
 - name: get timestamp of db.void.ms
   local_action: ansible.builtin.stat path="roles_webserver/docker_bind/templates/db.void.ms"
   register: db_void_ms
 
-
 - ansible.builtin.debug:
     msg: "db.void.ms Serial will be set to: {{ ( db_void_ms.stat.mtime | string )[:9] }} equals: {{ '%Y-%m-%d %H:%M' | strftime(db_void_ms.stat.mtime) }} UTC"
-
 
 - name: Konfig-Dateien für bind erstellen
   ansible.builtin.template: src={{ item }} dest=/srv/bind/config/{{ item }}
@@ -36,19 +33,16 @@
     - zones.rfc1918
   register: config
 
-
 - name: Docker Compose Konfig-Datei erstellen
   ansible.builtin.template: src="{{ item }}" dest="/srv/bind/{{ item }}"
   with_items:
     - "docker-compose.yml"
-
 
 - name: stop bind docker
   community.docker.docker_compose_v2:
     project_src: /srv/bind/
     state: absent
   when: config.changed
-
 
 - name: start bind docker
   community.docker.docker_compose_v2:

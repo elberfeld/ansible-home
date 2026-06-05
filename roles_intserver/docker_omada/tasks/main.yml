@@ -1,6 +1,5 @@
 
 ---
-
 - name: "create folder struct for {{ servicename }}"
   ansible.builtin.file:
     path: "{{ basedir }}"
@@ -34,4 +33,3 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present
-

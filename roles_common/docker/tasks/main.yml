@@ -1,9 +1,8 @@
 ---
-
 - name: install deb packages
   ansible.builtin.apt:
     name: "{{ packages }}"
-    update_cache: yes
+    update_cache: true
     state: present
   vars:
     packages:
@@ -14,7 +13,6 @@
       - docker-compose-plugin
       - python3
       - python3-pip
-
 
 - name: daemon config für docker erstellen
   ansible.builtin.template:
@@ -28,7 +26,7 @@
 - name: "Create internal Networks: {{ docker.internal_networks }}"
   community.docker.docker_network:
     name: "{{ item }}"
-    internal: yes
+    internal: true
   with_items: "{{ docker.internal_networks }}"
   when: docker.internal_networks is defined and docker.internal_networks|length > 0
 
@@ -38,13 +36,12 @@
     section: Unit
     option: ConditionFileNotEmpty
     value: "{{ docker.service_blocker_file }}"
-    backup: yes
+    backup: true
   with_items:
     - /lib/systemd/system/containerd.service
     - /lib/systemd/system/docker.service
     - /lib/systemd/system/docker.socket
   when: docker.service_blocker_file is defined
-
 
 # Fix dor docker 29 not supporting API Version 1.24 anymore which is required by traefik (at least 3.6.1)
 # see: https://github.com/traefik/traefik/issues/12253#issuecomment-3515555316
@@ -54,7 +51,7 @@
     dest: /lib/systemd/system/docker.service.d/api_1_24_support.conf
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     section: "Service"
     option: "Environment"
     value: "DOCKER_MIN_API_VERSION=1.24"

@@ -1,4 +1,4 @@
-
+---
 - name: create directory
   ansible.builtin.file:
     path: /srv/rsyncbackup/{{ job.key }}
@@ -9,7 +9,7 @@
     path: /srv/rsyncbackup/{{ job.key }}/rsync_password
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
     state: touch
 
 - name: rsyncbackup Scripte erstellen
@@ -19,5 +19,5 @@
     mode: u+x
 
 - name: Cronjob für rsyncbackup Backup
-  ansible.builtin.cron: name="rsyncbackup-{{ job.key }}" weekday="{{ job.value.weekday }}" hour="{{ job.value.hour }}" minute="{{ job.value.minute }}" job="/srv/rsyncbackup/{{ job.key }}/rsyncbackup-job.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/rsyncbackup/{{ job.key }}.log"
-
+  ansible.builtin.cron: name="rsyncbackup-{{ job.key }}" weekday="{{ job.value.weekday }}" hour="{{ job.value.hour }}" minute="{{ job.value.minute }}"
+    job="/srv/rsyncbackup/{{ job.key }}/rsyncbackup-job.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/rsyncbackup/{{ job.key }}.log"

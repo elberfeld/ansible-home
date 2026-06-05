@@ -1,13 +1,12 @@
 ---
-
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
-   - { path: "{{ basedir }}/secrets/mailu_secret_key",  type: create, length: 32 }
-   - { path: "{{ basedir }}/secrets/mailu_admin_pass",  type: create, length: 32 }
-   - { path: "{{ basedir }}/secrets/mailu_api_token",  type: create, length: 32 }
-   - { path: "{{ basedir }}/secrets/mailu_db_pass",  type: create, length: 28 }
-   - { path: "{{ basedir }}/secrets/roundcube_db_pass",  type: create, length: 28 }
-   - { path: "{{ basedir }}/secrets/mysql_root_pass",  type: create, length: 28 }
+    - { path: "{{ basedir }}/secrets/mailu_secret_key", type: create, length: 32 }
+    - { path: "{{ basedir }}/secrets/mailu_admin_pass", type: create, length: 32 }
+    - { path: "{{ basedir }}/secrets/mailu_api_token", type: create, length: 32 }
+    - { path: "{{ basedir }}/secrets/mailu_db_pass", type: create, length: 28 }
+    - { path: "{{ basedir }}/secrets/roundcube_db_pass", type: create, length: 28 }
+    - { path: "{{ basedir }}/secrets/mysql_root_pass", type: create, length: 28 }
 
 
 - name: "create folder struct for {{ servicename }}"
@@ -21,18 +20,16 @@
     - "{{ basedir }}/db-init"
     - "{{ basedir }}/mailu"
 
-
 - name: "deploy {{ servicename }} config files"
   ansible.builtin.template:
-    dest:  "{{ basedir }}/{{ item }}"
+    dest: "{{ basedir }}/{{ item }}"
     src: "{{ item }}"
-    mode: 0644
+    mode: "0644"
   with_items:
     - docker-compose.yml
     - mailu.env
     - db-init/roundcube.sql
   register: config
-
 
 # Start containers
 - name: "stop {{ servicename }} docker"
@@ -45,4 +42,3 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present
-

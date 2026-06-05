@@ -1,5 +1,4 @@
 ---
-
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "/etc/borgmatic/repo_passphrase", type: create, length: 64 }
@@ -10,32 +9,27 @@
     path: /etc/borgmatic/repo_sshkey
   register: repo_sshkey
 
-
 - name: generate new repo_sshkey (generate)
   ansible.builtin.command: ssh-keygen -N '' -t ed25519 -f /etc/borgmatic/repo_sshkey
   when: repo_sshkey.stat.exists == False
-
 
 - name: generate new repo_sshkey.pub (generate)
   ansible.builtin.shell: ssh-keygen -y -f /etc/borgmatic/repo_sshkey > /etc/borgmatic/repo_sshkey.pub
   when: repo_sshkey.stat.exists == False
 
-
 - name: pakete installieren
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
     state: present
     name:
       - borgbackup
       - pipx
 
-
 - name: borg und borgmatic installieren
   community.general.pipx:
-    global: yes
+    global: true
     name: borgmatic
     state: latest
-
 
 - name: create config files
   ansible.builtin.template:
@@ -45,11 +39,9 @@
     - config.yaml
   register: config_files
 
-
 #- name: initialize borg repos
 #  command: borgmatic repo-create --encryption repokey
 #  when: config_files.changed
-
 
 - name: create systemd unit files
   ansible.builtin.template:
@@ -60,19 +52,16 @@
     - borgmatic.timer
   register: systemd_unit_files
 
-
 - name: reload systemd deamon
   ansible.builtin.systemd_service:
     daemon_reload: true
   when: systemd_unit_files.changed
-
 
 - name: enable borgmatic.service unit
   ansible.builtin.systemd_service:
     state: reloaded
     enabled: true
     name: borgmatic.service
-
 
 - name: enable borgmatic.timer units
   ansible.builtin.systemd_service:

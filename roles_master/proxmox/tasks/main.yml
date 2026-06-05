@@ -1,24 +1,23 @@
 ---
-
 - name: Add hosts file entry 1
   ansible.builtin.lineinfile:
     path: /etc/hosts
     state: present
-    regexp: '^(.*)127.0.1.1(.*)$'
+    regexp: "^(.*)127.0.1.1(.*)$"
     line: "#removed: 127.0.1.1"
 
 - name: Add hosts file entry 2
   ansible.builtin.lineinfile:
     path: /etc/hosts
     state: present
-    regexp: '^(.*){{ inventory_hostname }}(.*)$'
+    regexp: "^(.*){{ inventory_hostname }}(.*)$"
     line: "{{ int_ip4 }} {{ inventory_hostname }} pvelocalhost"
 
 - name: Add hosts file entry 3
   ansible.builtin.lineinfile:
     path: /etc/hosts
     state: present
-    regexp: '^(.*)shop.maurer-it.com(.*)$'
+    regexp: "^(.*)shop.maurer-it.com(.*)$"
     line: "127.0.0.1 shop.maurer-it.com"
 
 - name: Remove PVE Enterprise Repos

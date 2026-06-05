@@ -1,34 +1,30 @@
 ---
-
 - ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/forward_auth_secret", type: create, length: 64 }
     - { path: "{{ basedir }}/oauth_client_secret", type: create, length: 64 }
-    - { path: "{{ basedir }}/icinga_admin_pass",   type: create, length: 12 }
-    - { path: "{{ basedir }}/icinga_api_user",     type: create, length: 8 }
-    - { path: "{{ basedir }}/icinga_api_pass",     type: create, length: 8 }
-    - { path: "{{ basedir }}/mysql_admin_pass",    type: create, length: 12 }
-    - { path: "{{ basedir }}/mysql_user_pass",     type: create, length: 12 }
+    - { path: "{{ basedir }}/icinga_admin_pass", type: create, length: 12 }
+    - { path: "{{ basedir }}/icinga_api_user", type: create, length: 8 }
+    - { path: "{{ basedir }}/icinga_api_pass", type: create, length: 8 }
+    - { path: "{{ basedir }}/mysql_admin_pass", type: create, length: 12 }
+    - { path: "{{ basedir }}/mysql_user_pass", type: create, length: 12 }
 
 
 - name: Setup OAuth Client Info
   ansible.builtin.debug:
     msg: "Client ID: {{ servicename }} // Client Secret: {{ oauth_client_secret }} // Redirect-URI: https://{{ domain }}/_oauth"
 
-
 - name: pakete installieren
   ansible.builtin.apt:
-    update_cache: no
+    update_cache: false
     state: present
     name:
       - logrotate
-
 
 - name: icinga LogRotate config erstellen
   ansible.builtin.template:
     src: logrotate
     dest: /etc/logrotate.d/icinga
-
 
 - name: "create folder struct for {{ servicename }}"
   ansible.builtin.file:
@@ -42,7 +38,6 @@
     - "{{ basedir }}/db/"
     - "{{ basedir }}/graphite-conf/"
     - "{{ basedir }}/graphite-storage/"
-
 
 - name: Konfig-Dateien erstellen (base)
   ansible.builtin.template:
@@ -68,19 +63,16 @@
     state: present
   when: configured.stat.exists == False
 
-
 - name: "wait for {{ servicename }} docker (init)"
   ansible.builtin.wait_for:
     path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
   when: configured.stat.exists == False
-
 
 - name: "stop {{ servicename }} docker (init)"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
   when: configured.stat.exists == False
-
 
 - name: Script Helper erstellen
   ansible.builtin.template:
@@ -90,7 +82,6 @@
   with_items:
     - debuglog_enable.sh
     - debuglog_disable.sh
-
 
 - name: Konfig-Dateien erstellen (icinga,icingaweb2,graphite)
   ansible.builtin.template:
@@ -125,7 +116,6 @@
     - etc/icingaweb2/roles.ini
     - graphite-conf/storage-schemas.conf
   notify: restart icinga docker
-
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:
