@@ -7,7 +7,8 @@
     name:
       - curl
 
-- ansible.builtin.include_tasks: ../functions/get_secret.yml
+- name: "Get secrets for {{servicename}}"
+  ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/nextcloud_admin_pass", type: create, length: 32 }
     - { path: "{{ basedir }}/nextcloud_oidc_secret", type: create, length: 32 }

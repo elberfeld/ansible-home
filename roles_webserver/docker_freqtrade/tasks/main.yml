@@ -1,12 +1,14 @@
 ---
-- ansible.builtin.include_tasks: ../functions/get_secret.yml
+- name: "Get secrets for {{servicename}}"
+  ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/jwt_secret_key", type: create, length: 32 }
     - { path: "{{ basedir }}/freqtrade_admin_pass", type: create, length: 24 }
     - { path: "{{ basedir }}/kraken_api_key", type: prompt }
     - { path: "{{ basedir }}/kraken_api_secret", type: prompt }
 
-- ansible.builtin.include_tasks: ../functions/get_secret.yml
+- name: "Get telegram secrets for {{servicename}}"
+  ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/telegram_bot_token", type: prompt }
     - { path: "{{ basedir }}/telegram_chat_id", type: prompt }

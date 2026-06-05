@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.include_tasks: ../functions/get_secret.yml
+- name: "Get secrets for {{servicename}}"
+  ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/forward_auth_secret", type: create, length: 64 }
     - { path: "{{ basedir }}/oauth_client_secret", type: create, length: 64 }
@@ -53,7 +54,8 @@
   notify: restart icinga docker
   register: dockerconfig
 
-- ansible.builtin.stat:
+- name: "check if {{ servicename }} docker is already configured"
+  ansible.builtin.stat:
     path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
   register: configured
 

@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.include_tasks: ../functions/get_secret.yml
+- name: "Get secrets for {{servicename}}"
+  ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/vaultwarden_admin_token", type: create, length: 40 }
     - { path: "{{ basedir }}/smtp_user_token", type: prompt }

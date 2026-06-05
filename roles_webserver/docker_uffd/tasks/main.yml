@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.include_tasks: ../functions/get_secret.yml
+- name: "Get secrets for {{servicename}}"
+  ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/mysql_admin_pass", type: create, length: 24 }
     - { path: "{{ basedir }}/mysql_user_pass", type: create, length: 24 }

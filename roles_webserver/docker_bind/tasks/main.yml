@@ -12,7 +12,8 @@
   local_action: ansible.builtin.stat path="roles_webserver/docker_bind/templates/db.void.ms"
   register: db_void_ms
 
-- ansible.builtin.debug:
+- name: Show db.void.ms serial info
+  ansible.builtin.debug:
     msg: "db.void.ms Serial will be set to: {{ ( db_void_ms.stat.mtime | string )[:9] }} equals: {{ '%Y-%m-%d %H:%M' | strftime(db_void_ms.stat.mtime) }} UTC"
 
 - name: Konfig-Dateien für bind erstellen
