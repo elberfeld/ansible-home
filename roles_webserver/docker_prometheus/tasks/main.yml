@@ -1,6 +1,6 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/influxdb_password",    type: create, length: 12 }
     - { path: "{{ basedir }}/influxdb_token",       type: create, length: 32 }
@@ -8,14 +8,14 @@
     - { path: "{{ basedir }}/oauth_client_secret",  type: create, length: 64 }
 
 - name: "create folder struct for {{ servicename }} 1"
-  file:
+  ansible.builtin.file:
     path: "{{ basedir }}"
     state: "directory"
   with_items:
     - "{{ basedir }}"
 
 - name: "create folder struct for {{ servicename }} 2"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
     owner: 65534
@@ -24,7 +24,7 @@
     - "{{ basedir }}/data"
 
 - name: "create config files for {{ servicename }}"
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

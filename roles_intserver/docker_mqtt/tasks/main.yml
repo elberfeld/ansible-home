@@ -1,7 +1,7 @@
 ---
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -11,7 +11,7 @@
     - "{{ basedir }}/log/"
 
 - name: "create config files for {{ servicename }}"
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}"
   with_items:

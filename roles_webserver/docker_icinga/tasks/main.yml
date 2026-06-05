@@ -1,6 +1,6 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/forward_auth_secret", type: create, length: 64 }
     - { path: "{{ basedir }}/oauth_client_secret", type: create, length: 64 }
@@ -17,7 +17,7 @@
 
 
 - name: pakete installieren
-  apt:
+  ansible.builtin.apt:
     update_cache: no
     state: present
     name:
@@ -25,13 +25,13 @@
 
 
 - name: icinga LogRotate config erstellen
-  template:
+  ansible.builtin.template:
     src: logrotate
     dest: /etc/logrotate.d/icinga
 
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -45,7 +45,7 @@
 
 
 - name: Konfig-Dateien erstellen (base)
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
@@ -58,7 +58,7 @@
   notify: restart icinga docker
   register: dockerconfig
 
-- stat:
+- ansible.builtin.stat:
     path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
   register: configured
 
@@ -70,7 +70,7 @@
 
 
 - name: "wait for {{ servicename }} docker (init)"
-  wait_for:
+  ansible.builtin.wait_for:
     path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
   when: configured.stat.exists == False
 
@@ -83,7 +83,7 @@
 
 
 - name: Script Helper erstellen
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
     mode: u+x
@@ -93,7 +93,7 @@
 
 
 - name: Konfig-Dateien erstellen (icinga,icingaweb2,graphite)
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

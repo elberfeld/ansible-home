@@ -1,6 +1,6 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
    - { path: "{{ basedir }}/homeassistant_admin_password", type: create, length: 12 }
    - { path: "{{ basedir }}/influxdb_password",            type: create, length: 12 }
@@ -8,7 +8,7 @@
 
 
 - name: "create folder struct for {{ basedir }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -17,7 +17,7 @@
 
 
 - name: "copy config files for {{ basedir }}"
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

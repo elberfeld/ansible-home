@@ -22,7 +22,7 @@
     line: "127.0.0.1 shop.maurer-it.com"
 
 - name: Remove PVE Enterprise Repos
-  file:
+  ansible.builtin.file:
     path: /etc/apt/sources.list.d/pve-enterprise.list
     state: absent
 

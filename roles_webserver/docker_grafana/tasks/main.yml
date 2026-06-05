@@ -1,6 +1,6 @@
 
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/grafana_secret_key", type: create, length: 32 }
     - { path: "{{ basedir }}/grafana_admin_pass", type: create, length: 12 }
@@ -9,24 +9,24 @@
 
 - name: "homeassistant_influxdb_token (slurp) @ intserver"
   delegate_to: intserver
-  slurp:
+  ansible.builtin.slurp:
     src: /srv/homeassistant/influxdb_token
   register: homeassistant_influxdb_token_secretfile
 
 - name: "homeassistant_influxdb_token (decode)"
-  set_fact:
+  ansible.builtin.set_fact:
     "homeassistant_influxdb_token": "{{ homeassistant_influxdb_token_secretfile.content | b64decode | regex_replace('\\s', '') }}"
 
 
 - name: "create folder struct for {{ servicename }} 1"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
     - "{{ basedir }}"
 
 - name: "create folder struct for {{ servicename }} 2"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
     owner: 472
@@ -37,7 +37,7 @@
     - "{{ basedir }}/provisioning/datasources/"
 
 - name: "create config files for {{ servicename }}"
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

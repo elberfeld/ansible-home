@@ -1,7 +1,7 @@
 ---
 
 - name: create folder struct for loki
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -9,14 +9,14 @@
     - /srv/loki/data/
 
 - name: create config files
-  template: src={{ item }} dest=/srv/loki/{{ item }}
+  ansible.builtin.template: src={{ item }} dest=/srv/loki/{{ item }}
   with_items:
     - local-config.yaml
     - vector.toml
   register: config
 
 - name: Docker Compose Konfig-Datei erstellen
-  template:
+  ansible.builtin.template:
     src: "docker-compose.yml"
     dest: "/srv/loki/docker-compose.yml"
 

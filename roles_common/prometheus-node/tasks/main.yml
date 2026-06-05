@@ -1,29 +1,29 @@
 ---
 # Pakete installieren
 - name: pakete installieren
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     state: present
     name:
       - prometheus-node-exporter
 
 - name: remove old directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "absent"
   with_items:
     - /srv/prometheus-node-exporter
 
 - name: Configure Node-Exporter
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/default/prometheus-node-exporter
     regexp: '^ARGS='
     line: ARGS="--web.listen-address={{int_ip4}}:9100"
 
 - name: reload systemd and enable service
-  command: systemctl enable prometheus-node-exporter
+  ansible.builtin.command: systemctl enable prometheus-node-exporter
 
 - name: restart prometheus-node-exporter
-  service:
+  ansible.builtin.service:
     name: prometheus-node-exporter
     state: restarted

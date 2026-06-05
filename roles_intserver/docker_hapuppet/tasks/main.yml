@@ -1,18 +1,18 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
    - { path: "{{ basedir }}/homeassistant_token", type: prompt } # HA Access Token
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
     - "{{ basedir }}"
 
 - name: "install git"
-  apt:
+  ansible.builtin.apt:
     update_cache: no
     state: present
     name:
@@ -25,7 +25,7 @@
     version: "e4b24efb3c19dd670df646fc509fc8a6fd02b5cd" # commit from 10.08.2025
 
 - name: "create config files for {{ servicename }}"
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}"
   with_items:

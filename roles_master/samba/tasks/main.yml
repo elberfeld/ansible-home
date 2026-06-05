@@ -3,14 +3,14 @@
 # Password for local users must be set locally with 'smbpasswd -a <username>' to be accessible by samba'
 
 - name: Install Packages for {{ servicename }}
-  apt:
+  ansible.builtin.apt:
     state: present
     name:
       - samba
       - logrotate
 
 - name: Konfig-Dateien erstellen
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/samba/{{ item }}"
   with_items:
@@ -18,25 +18,25 @@
   register: config
 
 - name: Enable and start smbd service for {{ servicename }}
-  systemd:
+  ansible.builtin.systemd:
     name: smbd
     state: started
     enabled: yes
 
 - name: Restart smbd service for {{ servicename }}
-  systemd:
+  ansible.builtin.systemd:
     name: smbd
     state: restarted
   when: config.changed
 
 - name: Enable and start nmbd service for {{ servicename }}
-  systemd:
+  ansible.builtin.systemd:
     name: nmbd
     state: started
     enabled: yes
 
 - name: Restart nmbd service for {{ servicename }}
-  systemd:
+  ansible.builtin.systemd:
     name: nmbd
     state: restarted
   when: config.changed

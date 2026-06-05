@@ -1,7 +1,7 @@
 ---
 
 - name: "create folder struct for {{ basedir }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -10,7 +10,7 @@
 
 
 - name: "copy config files for {{ basedir }}"
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

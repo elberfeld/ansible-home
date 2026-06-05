@@ -1,11 +1,11 @@
 ---
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/mysql_admin_pass", type: create, length: 24 }
     - { path: "{{ basedir }}/mysql_user_pass", type: create, length: 12 }
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
     owner: www-data
@@ -16,7 +16,7 @@
     - "{{ basedir }}/db/"
 
 - name: create config files
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

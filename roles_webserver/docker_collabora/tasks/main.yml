@@ -1,7 +1,7 @@
 ---
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
     owner: www-data
@@ -10,7 +10,7 @@
     - "{{ basedir }}"
 
 - name: Docker Compose Konfig-Datei erstellen
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

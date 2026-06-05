@@ -1,5 +1,5 @@
 ---
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
    - { path: "{{ basedir }}/postgres_user_pass",   type: create, length: 12 }
    - { path: "{{ basedir }}/paperless_secret_key", type: create, length: 24 }
@@ -14,7 +14,7 @@
 
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -27,7 +27,7 @@
 
 # Copy config files
 - name: deploy {{ servicename }} config
-  template:
+  ansible.builtin.template:
     dest:  "{{ basedir }}/{{ item }}"
     src: "{{ item }}"
     mode: 0644

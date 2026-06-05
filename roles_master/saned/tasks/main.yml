@@ -1,13 +1,13 @@
 ---
 
 - name: "Install Packages for {{ servicename }}"
-  apt:
+  ansible.builtin.apt:
     state: present
     name:
       - sane-utils
 
 - name: "Config files for {{ servicename }}"
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/sane.d/{{ item }}"
   with_items:
@@ -32,14 +32,14 @@
 #   when: unmask.changed
 
 - name: "Enable and start service for {{ servicename }}"
-  systemd:
+  ansible.builtin.systemd:
     name: saned.socket
     state: started
     enabled: yes
     masked: no
 
 - name: "Restart service for {{ servicename }}"
-  systemd:
+  ansible.builtin.systemd:
     name: saned.socket
     state: restarted
   when: config.changed

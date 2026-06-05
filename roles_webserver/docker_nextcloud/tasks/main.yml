@@ -1,14 +1,14 @@
 ---
 # Pakete installieren
 - name: pakete installieren
-  apt:
+  ansible.builtin.apt:
     update_cache: no
     state: present
     name:
       - curl
 
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/nextcloud_admin_pass",  type: create, length: 32 }
     - { path: "{{ basedir }}/nextcloud_oidc_secret",  type: create, length: 32 }
@@ -18,7 +18,7 @@
 
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
     owner: www-data
@@ -31,7 +31,7 @@
 
 
 - name: "create folder struct for {{ servicename }} (db)"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
     owner: 999
@@ -41,7 +41,7 @@
 
 
 - name: "create folder struct for {{ servicename }} (paperless)"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
     owner: 1000
@@ -54,7 +54,7 @@
 
 
 - name: Docker Compose Konfig-Datei erstellen
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
@@ -63,7 +63,7 @@
 
 
 - name: Nextcloud Konfig-Dateien erstellen
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/data/config/{{ item }}"
   with_items:
@@ -72,7 +72,7 @@
 
 
 - name: Script Helper erstellen
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
     mode: u+x

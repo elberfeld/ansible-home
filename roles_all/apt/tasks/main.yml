@@ -1,7 +1,7 @@
 ---
 
 - name: install apt-transport-https packages before adding sources
-  apt:
+  ansible.builtin.apt:
     update_cache: no
     state: present
     name:
@@ -13,13 +13,13 @@
     - gnupg
 
 - name: get_docker repository keys
-  shell: "curl -fsSL {{ item.url }} | gpg --dearmor --yes -o {{ item.file }}"
+  ansible.builtin.shell: "curl -fsSL {{ item.url }} | gpg --dearmor --yes -o {{ item.file }}"
   with_items: "{{ debian_keys }}"
   when: debian_keys is defined and debian_keys|length > 0
 
 - name: set debian repos
-  template: src=sources.list.j2 dest=/etc/apt/sources.list
+  ansible.builtin.template: src=sources.list.j2 dest=/etc/apt/sources.list
 
 - name: update debian repos
-  apt:
+  ansible.builtin.apt:
     update_cache: yes

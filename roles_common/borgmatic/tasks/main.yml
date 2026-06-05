@@ -1,28 +1,28 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "/etc/borgmatic/repo_passphrase", type: create, length: 64 }
 
 
 - name: generate new repo_sshkey (check)
-  stat:
+  ansible.builtin.stat:
     path: /etc/borgmatic/repo_sshkey
   register: repo_sshkey
 
 
 - name: generate new repo_sshkey (generate)
-  command: ssh-keygen -N '' -t ed25519 -f /etc/borgmatic/repo_sshkey
+  ansible.builtin.command: ssh-keygen -N '' -t ed25519 -f /etc/borgmatic/repo_sshkey
   when: repo_sshkey.stat.exists == False
 
 
 - name: generate new repo_sshkey.pub (generate)
-  shell: ssh-keygen -y -f /etc/borgmatic/repo_sshkey > /etc/borgmatic/repo_sshkey.pub
+  ansible.builtin.shell: ssh-keygen -y -f /etc/borgmatic/repo_sshkey > /etc/borgmatic/repo_sshkey.pub
   when: repo_sshkey.stat.exists == False
 
 
 - name: pakete installieren
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     state: present
     name:
@@ -38,7 +38,7 @@
 
 
 - name: create config files
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/borgmatic/{{ item }}"
   with_items:
@@ -52,7 +52,7 @@
 
 
 - name: create systemd unit files
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/systemd/system/{{ item }}"
   with_items:

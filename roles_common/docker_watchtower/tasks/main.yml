@@ -1,13 +1,13 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/pushover_user_token", type: prompt }
     - { path: "{{ basedir }}/pushover_token",  type: prompt }
 
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -15,7 +15,7 @@
 
 
 - name: Konfig-Dateien erstellen (base,graphite)
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

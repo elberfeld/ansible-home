@@ -1,7 +1,7 @@
 ---
 # Pakete installieren
 - name: pakete installieren
-  apt:
+  ansible.builtin.apt:
     pkg: "{{ item }}"
     update_cache: yes
     state: present
@@ -12,7 +12,7 @@
     - openssl
 
 - name: create directories 1
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -20,111 +20,111 @@
     - /var/log/borgbackup
 
 - name: create directories 2
-  file:
+  ansible.builtin.file:
     path: "/srv/borgbackup/{{ item.key }}"
     state: "directory"
   with_dict: "{{ borgbackup_repos }}"
 
 - name: generate new repo_passphrase (check)
-  stat:
+  ansible.builtin.stat:
     path: /srv/borgbackup/repo_passphrase
   register: repo_passphrase
 
 - name: generate new repo_passphrase (generate)
-  command: openssl rand -base64 -out /srv/borgbackup/repo_passphrase 24
+  ansible.builtin.command: openssl rand -base64 -out /srv/borgbackup/repo_passphrase 24
   when: repo_passphrase.stat.exists == False
 
 - name: generate new repo_sshkey (check)
-  stat:
+  ansible.builtin.stat:
     path: /srv/borgbackup/repo_sshkey
   register: repo_sshkey
 
 - name: generate new repo_sshkey (generate)
-  command: ssh-keygen -N '' -t ed25519 -f /srv/borgbackup/repo_sshkey
+  ansible.builtin.command: ssh-keygen -N '' -t ed25519 -f /srv/borgbackup/repo_sshkey
   when: repo_sshkey.stat.exists == False
 
 - name: get secrets from server 1
-  slurp: src={{ item }}
+  ansible.builtin.slurp: src={{ item }}
   with_items:
     - /srv/borgbackup/repo_passphrase
   register: borgbackup_secrets
 
 - name: get secrets from server 2
-  set_fact:
+  ansible.builtin.set_fact:
     repo_passphrase: "{{ borgbackup_secrets.results | selectattr('item', 'equalto', '/srv/borgbackup/repo_passphrase') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}"
 
 
 # BorgBackup Scripte erstellen
 
 - name: BorgBackup Scripte erstellen (check)
-  template:
+  ansible.builtin.template:
     src: borgbackup-check.sh
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-check.sh
     mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (create)
-  template:
+  ansible.builtin.template:
     src: borgbackup-create.sh
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-create.sh
     mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (delete)
-  template:
+  ansible.builtin.template:
     src: borgbackup-delete.sh
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-delete.sh
     mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (init)
-  template:
+  ansible.builtin.template:
     src: borgbackup-init.sh
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-init.sh
     mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (info)
-  template:
+  ansible.builtin.template:
     src: borgbackup-info.sh
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-info.sh
     mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (list)
-  template:
+  ansible.builtin.template:
     src: borgbackup-list.sh
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-list.sh
     mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (mount)
-  template:
+  ansible.builtin.template:
     src: borgbackup-mount.sh
     dest: /srv/borgbackup/{{ item.key }}/borgbackup-mount.sh
     mode: u+x
   with_dict: "{{ borgbackup_repos }}"
 
 - name: BorgBackup Scripte erstellen (prometheus)
-  template:
+  ansible.builtin.template:
     src: borgbackup-prometheus.sh
     dest: /srv/borgbackup/borgbackup-prometheus.sh
     mode: u+x
 
 - name: BorgBackup LogRotate config erstellen
-  template:
+  ansible.builtin.template:
     src: logrotate
     dest: /etc/logrotate.d/borgbackup
 
 - name: Alten cronjob entfernen falls vorhanden
-  cron:
+  ansible.builtin.cron:
     name: "borgbackup"
     state: absent
 
 - name: Cronjob für BorgBackup Backup
-  cron: name="borgbackup-{{ item.key }}" weekday="{{ item.value.weekday }}" hour="{{ item.value.hour }}" minute="{{ item.value.minute }}" job="/srv/borgbackup/{{ item.key }}/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/{{ item.key }}.log"
+  ansible.builtin.cron: name="borgbackup-{{ item.key }}" weekday="{{ item.value.weekday }}" hour="{{ item.value.hour }}" minute="{{ item.value.minute }}" job="/srv/borgbackup/{{ item.key }}/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/{{ item.key }}.log"
   with_dict: "{{ borgbackup_repos }}"
 
 - name: Cronjob für BorgBackup Prometheus export
-  cron: name="borgbackup-prom" weekday="*" hour="*" minute="0" job="/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup-prometheus.log"
+  ansible.builtin.cron: name="borgbackup-prom" weekday="*" hour="*" minute="0" job="/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup-prometheus.log"
 

@@ -2,12 +2,12 @@
 ---
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ basedir }}"
     state: "directory"
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ basedir }}/{{ item }}"
     state: "directory"
     owner: 508
@@ -17,7 +17,7 @@
     - "logs"
 
 - name: "create config files for {{ servicename }}"
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

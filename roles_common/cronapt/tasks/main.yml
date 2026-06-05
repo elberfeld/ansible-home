@@ -1,7 +1,7 @@
 ---
 # Pakete installieren
 - name: pakete installieren
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     state: present
     name:
@@ -12,6 +12,6 @@
 # Daily update at 4am
 
 - name: add upgrade step
-  template:
+  ansible.builtin.template:
     src: 5-upgrade
     dest: /etc/cron-apt/action.d/5-upgrade

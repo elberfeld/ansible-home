@@ -1,20 +1,20 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
    - { path: "{{ basedir }}/jwt_secret_key", type: create, length: 32 }
    - { path: "{{ basedir }}/freqtrade_admin_pass", type: create, length: 24 }
    - { path: "{{ basedir }}/kraken_api_key",       type: prompt }
    - { path: "{{ basedir }}/kraken_api_secret",    type: prompt }
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
    - { path: "{{ basedir }}/telegram_bot_token",   type: prompt }
    - { path: "{{ basedir }}/telegram_chat_id",     type: prompt }
   when: not freqtrade_dry_run
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
     owner: 1000
@@ -32,7 +32,7 @@
 
 
 - name: "deploy {{ servicename }} config"
-  template:
+  ansible.builtin.template:
     dest:  "{{ basedir }}/{{ item }}"
     src: "{{ item }}"
     mode: 0644
@@ -47,7 +47,7 @@
 
 
 - name: "download {{ servicename }} strategy files "
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ basedir }}/data/strategies/{{ item.file }}"
     mode: 0644
@@ -58,7 +58,7 @@
     - { file: "Slope-is-dope-files.7z",      url: "https://www.dutchalgotrading.com/wp-content/uploads/2022/12/Slope-is-dope-files.7z" }
 
 - name: "install p7zip "
-  apt:
+  ansible.builtin.apt:
     update_cache: no
     state: present
     install_recommends: no

@@ -1,13 +1,13 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/wg_admin_pass", type: create, length: 32 }
     - { path: "{{ basedir }}/wg_private_key", type: wireguard }
 
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -16,7 +16,7 @@
 
 
 - name: "copy {{ servicename }} config files"
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

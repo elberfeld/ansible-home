@@ -1,13 +1,13 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/vaultwarden_admin_token", type: create, length: 40 }
     - { path: "{{ basedir }}/smtp_user_token",  type: prompt }
 
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -18,7 +18,7 @@
 
 
 - name: deploy {{ servicename }} config
-  template:
+  ansible.builtin.template:
     dest:  "{{ basedir }}/{{ item }}"
     src: "{{ item }}"
   with_items:

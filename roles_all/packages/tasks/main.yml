@@ -1,7 +1,7 @@
 ---
 
 - name: install common packages
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     state: present
     name:

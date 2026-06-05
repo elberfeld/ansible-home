@@ -1,7 +1,7 @@
 ---
 # Pakete installieren
 - name: pakete installieren
-  apt:
+  ansible.builtin.apt:
     pkg: "{{ item }}"
     update_cache: yes
     state: present
@@ -10,7 +10,7 @@
     - logrotate
 
 - name: create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -18,13 +18,13 @@
     - /var/log/rsyncbackup
 
 - name: create jobs
-  include_tasks: job.yml
+  ansible.builtin.include_tasks: job.yml
   loop: "{{ rsyncbackup|dict2items }}"
   loop_control:
     loop_var: job
 
 - name: rsyncbackup LogRotate config erstellen
-  template:
+  ansible.builtin.template:
     src: logrotate
     dest: /etc/logrotate.d/rsyncbackup
 

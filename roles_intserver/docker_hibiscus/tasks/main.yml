@@ -1,19 +1,19 @@
 ---
 # Pakete installieren
 - name: get secrets from server 1
-  slurp: src={{ item }}
+  ansible.builtin.slurp: src={{ item }}
   with_items:
     - /srv/hibiscus/mysql_admin_pass
     - /srv/hibiscus/mysql_user_pass
   register: hibiscus_secrets
 
 - name: get secrets from server 2
-  set_fact:
+  ansible.builtin.set_fact:
     mysql_admin_pass: "{{ hibiscus_secrets.results | selectattr('item', 'equalto', '/srv/hibiscus/mysql_admin_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}"
     mysql_user_pass: "{{ hibiscus_secrets.results | selectattr('item', 'equalto', '/srv/hibiscus/mysql_user_pass') | map(attribute='content') | list | first | b64decode | regex_replace('\\s', '') }}"
 
 - name: create folder struct for hibiscus
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -21,7 +21,7 @@
     - "/srv/hibiscus/db/"
 
 - name: Docker Compose Konfig-Datei erstellen
-  template:
+  ansible.builtin.template:
     src: "docker-compose.yml"
     dest: "/srv/hibiscus/docker-compose.yml"
 

@@ -1,20 +1,20 @@
 ---
 
 - name: create folder struct for promtail
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
     - /srv/promtail/
 
 - name: create config files
-  template: src={{ item }} dest=/srv/promtail/{{ item }}
+  ansible.builtin.template: src={{ item }} dest=/srv/promtail/{{ item }}
   with_items:
     - docker-config.yaml
   register: config
 
 - name: Docker Compose Konfig-Datei erstellen
-  template:
+  ansible.builtin.template:
     src: "docker-compose.yml"
     dest: "/srv/promtail/docker-compose.yml"
   register: config_files

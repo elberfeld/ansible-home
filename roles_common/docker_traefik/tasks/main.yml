@@ -1,10 +1,10 @@
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/letsencrypt_notification_email", type: prompt }
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -12,7 +12,7 @@
     - "{{ basedir }}/dynamic"
 
 - name: "Create CertStore if needed and set permissions {{ basedir }}/acme.json"
-  file:
+  ansible.builtin.file:
     path: "{{ basedir }}/acme.json"
     owner: root
     group: root
@@ -20,7 +20,7 @@
     state: touch
 
 - name: Docker Compose Konfig-Datei erstellen
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:

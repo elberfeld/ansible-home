@@ -1,6 +1,6 @@
 ---
 
-- include_tasks: ../functions/get_secret.yml
+- ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
    - { path: "{{ basedir }}/secrets/mailu_secret_key",  type: create, length: 32 }
    - { path: "{{ basedir }}/secrets/mailu_admin_pass",  type: create, length: 32 }
@@ -11,7 +11,7 @@
 
 
 - name: "create folder struct for {{ servicename }}"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -23,7 +23,7 @@
 
 
 - name: "deploy {{ servicename }} config files"
-  template:
+  ansible.builtin.template:
     dest:  "{{ basedir }}/{{ item }}"
     src: "{{ item }}"
     mode: 0644

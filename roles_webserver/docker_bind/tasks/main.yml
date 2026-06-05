@@ -1,6 +1,6 @@
 ---
 - name: create folder struct for bind container
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -10,16 +10,16 @@
 
 
 - name: get timestamp of db.void.ms
-  local_action: stat path="roles_webserver/docker_bind/templates/db.void.ms"
+  local_action: ansible.builtin.stat path="roles_webserver/docker_bind/templates/db.void.ms"
   register: db_void_ms
 
 
-- debug:
+- ansible.builtin.debug:
     msg: "db.void.ms Serial will be set to: {{ ( db_void_ms.stat.mtime | string )[:9] }} equals: {{ '%Y-%m-%d %H:%M' | strftime(db_void_ms.stat.mtime) }} UTC"
 
 
 - name: Konfig-Dateien für bind erstellen
-  template: src={{ item }} dest=/srv/bind/config/{{ item }}
+  ansible.builtin.template: src={{ item }} dest=/srv/bind/config/{{ item }}
   with_items:
     - bind.keys
     - db.0
@@ -38,7 +38,7 @@
 
 
 - name: Docker Compose Konfig-Datei erstellen
-  template: src="{{ item }}" dest="/srv/bind/{{ item }}"
+  ansible.builtin.template: src="{{ item }}" dest="/srv/bind/{{ item }}"
   with_items:
     - "docker-compose.yml"
 

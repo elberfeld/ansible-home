@@ -1,7 +1,7 @@
 ---
 
 - name: URL-Datei erstellen
-  template:
+  ansible.builtin.template:
     src: "urls.json"
     dest: "/var/www/html/FullPageDashboard/urls.json"
   notify: reboot system
