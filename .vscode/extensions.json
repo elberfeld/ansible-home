@@ -1,8 +1,8 @@
 {
     "recommendations": [
-        "redhat.ansible",
         "oderwat.indent-rainbow",
         "redhat.vscode-yaml",
-        "ms-azuretools.vscode-docker"
+        "usernamehw.errorlens",
+        "redhat.ansible"
     ]
 }
