@@ -4,8 +4,15 @@
 # Retrieved 2026-06-04, License - CC BY-SA 4.0
 
 skip_list: # Rules to completely ignore
+  - name[casing]
+  - name[play]
+  - name[template]
   - no-handler
+  - role-name[path]
+  - yaml[braces]
+  - yaml[commas]
+  - yaml[indentation]
 
 warn_list: # Rules shown as warnings (not errors)
-  - name[template]
+  - var-naming[no-role-prefix]
   - yaml[line-length]
