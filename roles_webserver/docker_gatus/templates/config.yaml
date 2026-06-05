@@ -86,7 +86,7 @@ endpoints:
       - type: pushover
     conditions:
       - "[CERTIFICATE_EXPIRATION] > 48h"
-      - "[STATUS] == 200"
+      - "[STATUS] != 200"
 
   # webserver1 dns 
 
@@ -207,7 +207,7 @@ endpoints:
       - type: pushover
     conditions:
       - "[CERTIFICATE_EXPIRATION] > 48h"
-      - "[STATUS] == 200"
+      - "[STATUS] != 200"
 
   # webserver2 dns 
 
