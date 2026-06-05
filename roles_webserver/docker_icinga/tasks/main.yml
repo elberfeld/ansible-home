@@ -63,18 +63,18 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present
-  when: configured.stat.exists == False
+  when: not configured.stat.exists
 
 - name: "wait for {{ servicename }} docker (init)"
   ansible.builtin.wait_for:
     path: "{{ basedir }}/etc/icingaweb2/CONFIGURED"
-  when: configured.stat.exists == False
+  when: not configured.stat.exists
 
 - name: "stop {{ servicename }} docker (init)"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: configured.stat.exists == False
+  when: not configured.stat.exists
 
 - name: Script Helper erstellen
   ansible.builtin.template:

@@ -12,11 +12,11 @@
 
 - name: generate new repo_sshkey (generate)
   ansible.builtin.command: ssh-keygen -N '' -t ed25519 -f /etc/borgmatic/repo_sshkey
-  when: repo_sshkey.stat.exists == False
+  when: not repo_sshkey.stat.exists
 
 - name: generate new repo_sshkey.pub (generate)
   ansible.builtin.shell: ssh-keygen -y -f /etc/borgmatic/repo_sshkey > /etc/borgmatic/repo_sshkey.pub
-  when: repo_sshkey.stat.exists == False
+  when: not repo_sshkey.stat.exists
 
 - name: pakete installieren
   ansible.builtin.apt:

@@ -32,7 +32,7 @@
 
 - name: generate new repo_passphrase (generate)
   ansible.builtin.command: openssl rand -base64 -out /srv/borgbackup/repo_passphrase 24
-  when: repo_passphrase.stat.exists == False
+  when: not repo_passphrase.stat.exists
 
 - name: generate new repo_sshkey (check)
   ansible.builtin.stat:
@@ -41,7 +41,7 @@
 
 - name: generate new repo_sshkey (generate)
   ansible.builtin.command: ssh-keygen -N '' -t ed25519 -f /srv/borgbackup/repo_sshkey
-  when: repo_sshkey.stat.exists == False
+  when: not repo_sshkey.stat.exists
 
 - name: get secrets from server 1
   ansible.builtin.slurp: src={{ item }}
