@@ -1,3 +1,5 @@
 ---
 - name: create motd file
-  ansible.builtin.template: src=motd.j2 dest=/etc/motd
+  ansible.builtin.template:
+    src: motd.j2
+    dest: /etc/motd

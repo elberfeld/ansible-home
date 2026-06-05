@@ -19,7 +19,7 @@
 
 - name: create jobs
   ansible.builtin.include_tasks: job.yml
-  loop: "{{ rsyncbackup|dict2items }}"
+  loop: "{{ rsyncbackup | dict2items }}"
   loop_control:
     loop_var: job
 

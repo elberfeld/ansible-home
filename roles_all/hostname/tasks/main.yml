@@ -2,4 +2,6 @@
 # Set Hostname fron hostname in inventory
 
 - name: deploy etc_hostname
-  ansible.builtin.template: src=hostname.j2 dest=/etc/hostname
+  ansible.builtin.template:
+    src: hostname.j2
+    dest: /etc/hostname

@@ -17,7 +17,9 @@
   when: debian_keys is defined and debian_keys|length > 0
 
 - name: set debian repos
-  ansible.builtin.template: src=sources.list.j2 dest=/etc/apt/sources.list
+  ansible.builtin.template:
+    src: sources.list.j2
+    dest: /etc/apt/sources.list
 
 - name: update debian repos
   ansible.builtin.apt:

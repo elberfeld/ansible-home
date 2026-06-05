@@ -137,4 +137,4 @@
     weekday: "*"
     hour: "*"
     minute: "0"
-    job: "/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d\\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup-prometheus.log"
+    job: "/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d\\%H:\\%M:\\%S]' >> /var/log/borgbackup/borgbackup-prometheus.log"
