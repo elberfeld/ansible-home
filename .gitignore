@@ -4,3 +4,4 @@
 /.ssh
 /site.retry
 site.retry
+.ansible/.lock
