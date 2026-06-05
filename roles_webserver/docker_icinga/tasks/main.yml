@@ -1,5 +1,5 @@
 ---
-- name: "Get secrets for {{servicename}}"
+- name: "Get secrets for {{ servicename }}"
   ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/forward_auth_secret", type: create, length: 64 }

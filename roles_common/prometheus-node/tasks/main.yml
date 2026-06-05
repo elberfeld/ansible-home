@@ -18,7 +18,7 @@
   ansible.builtin.lineinfile:
     path: /etc/default/prometheus-node-exporter
     regexp: "^ARGS="
-    line: ARGS="--web.listen-address={{int_ip4}}:9100"
+    line: ARGS="--web.listen-address={{ int_ip4 }}:9100"
 
 - name: reload systemd and enable service
   ansible.builtin.command: systemctl enable prometheus-node-exporter

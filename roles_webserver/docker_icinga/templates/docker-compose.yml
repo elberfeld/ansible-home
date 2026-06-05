@@ -82,7 +82,7 @@ services:
     image: mariadb:11
     restart: always
     ports:
-      - "{{ int_ip4 }}:{{mysql_port}}:3306"
+      - "{{ int_ip4 }}:{{ mysql_port }}:3306"
     volumes:
       - "{{ basedir }}/db:/var/lib/mysql"
     environment:

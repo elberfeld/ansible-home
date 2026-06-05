@@ -17,7 +17,7 @@ services:
       DONT_GEN_SSL_CERT: "yes"
       VIRTUAL_PROTO: "http"
       VIRTUAL_PORT: "9980"
-      VIRTUAL_HOST: "{{domain}}"
+      VIRTUAL_HOST: "{{ domain }}"
     labels:
       - traefik.enable=true
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)

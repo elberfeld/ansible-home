@@ -1,5 +1,5 @@
 ; zonefile for void.ms.1200
-; TTL min. 300 
+; TTL min. 300
 $TTL     300
 @        IN      SOA     ns1.void.ms. webmaster.void.ms. (
                          {{ ( db_void_ms.stat.mtime | string )[:9] }}         ; Serial
@@ -20,28 +20,28 @@ ns2       IN      A       {{ hostvars['webserver2'].ext_ip4 }}
 ns2       IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 
 
-; Server 
+; Server
 webserver1       IN      A       {{ hostvars['webserver1'].ext_ip4 }}
 webserver1       IN      AAAA    {{ hostvars['webserver1'].ext_ip6 }}
 
 webserver2       IN      A       {{ hostvars['webserver2'].ext_ip4 }}
 webserver2       IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 
-; Test wildcard domain 
+; Test wildcard domain
 *.test           IN      A       {{ hostvars['freqtrade'].ext_ip4 }}
 
-; Unitimedia Gateway 
+; Unitimedia Gateway
 gw-um     IN      A       130.180.13.105
 
 
 {% for host in groups['all'] %}
 {% if hostvars[host].webserver_domains is defined %}
 
-; Domains on Server {{ host }} 
+; Domains on Server {{ host }}
 
 {% for domain in hostvars[host].webserver_domains %}
 {% if domain.endswith('void.ms') %}
-{{ domain | replace('.void.ms','') }}    IN   A       {{ hostvars[host].ext_ip4 }}    
+{{ domain | replace('.void.ms','') }}    IN   A       {{ hostvars[host].ext_ip4 }}
 {{ domain | replace('.void.ms','') }}    IN   AAAA    {{ hostvars[host].ext_ip6 }}
 {% endif %}
 {% endfor %}
@@ -50,11 +50,11 @@ gw-um     IN      A       130.180.13.105
 {% endfor %}
 
 
-; Zertifikats-Authoriaet festlegen 
+; Zertifikats-Authoriaet festlegen
 @         IN      CAA     0 issue "letsencrypt.org"
 
 
-; E-Mail Konfiguration 
+; E-Mail Konfiguration
 @         IN      MX      10 {{ mail_domains.voidms.mxserver }}.
 @         IN      TXT     "{{ mail_domains.voidms.spf }}"
 @         IN      TXT     "{{ mail_domains.voidms.mailconf }}"
@@ -65,7 +65,7 @@ _pop3s._tcp             SRV 0 1 995     {{ mail_domains.voidms.mxserver }}.
 _smtps._tcp             SRV 0 1 465     {{ mail_domains.voidms.mxserver }}.
 _submission._tcp        SRV 0 1 587     {{ mail_domains.voidms.mxserver }}.
 
-_dmarc.void.ms.             IN TXT "{{ mail_domains.voidms.dmarc }}"  
+_dmarc.void.ms.             IN TXT "{{ mail_domains.voidms.dmarc }}"
 _domainkey.void.ms.         IN TXT "{{ mail_domains.voidms.domainkey }}"
 
 {% for entry in mail_domains.voidms.dkim %}

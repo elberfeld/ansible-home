@@ -1,5 +1,5 @@
 ---
-- name: "Get secrets for {{servicename}}"
+- name: "Get secrets for {{ servicename }}"
   ansible.builtin.include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/mysql_admin_pass", type: create, length: 24 }
@@ -8,7 +8,7 @@
     - { path: "{{ basedir }}/uffd_secret_key", type: create, length: 64 }
     - { path: "{{ basedir }}/uffd_mail_pass", type: prompt }
 
-- name: create folder struct for {{servicename}}
+- name: create folder struct for {{ servicename }}
   ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"

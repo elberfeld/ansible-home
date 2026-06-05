@@ -35,16 +35,16 @@ scrape_configs:
 
 {% for job in ['apt', 'borgbackup', 'cron-apt', 'letsencrypt', 'nginx', 'rsyncbackup' ] %}
 
-  - job_name: system_{{job}}
+  - job_name: system_{{ job }}
     pipeline_stages:
     - docker:
     static_configs:
     - targets:
         - localhost
       labels:
-        job: {{job}}
+        job: {{ job }}
         host: {{ inventory_hostname }}
-        __path__: /var/log/{{job}}/*log
+        __path__: /var/log/{{ job }}/*log
 
 {% endfor %}
 
