@@ -8,7 +8,9 @@
     - /srv/loki/data/
 
 - name: create config files
-  ansible.builtin.template: src={{ item }} dest=/srv/loki/{{ item }}
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/srv/loki/{{ item }}"
   with_items:
     - local-config.yaml
     - vector.toml

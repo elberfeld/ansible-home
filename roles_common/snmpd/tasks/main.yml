@@ -1,6 +1,8 @@
 ---
 - name: stop snmpd
-  ansible.builtin.service: name=snmpd state=stopped
+  ansible.builtin.service:
+    name: snmpd
+    state: stopped
 
 # Pakete installieren
 - name: pakete installieren

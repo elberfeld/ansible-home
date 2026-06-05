@@ -44,7 +44,8 @@
   when: not repo_sshkey.stat.exists
 
 - name: get secrets from server 1
-  ansible.builtin.slurp: src={{ item }}
+  ansible.builtin.slurp:
+    src: "{{ item }}"
   with_items:
     - /srv/borgbackup/repo_passphrase
   register: borgbackup_secrets
@@ -122,10 +123,18 @@
     state: absent
 
 - name: Cronjob für BorgBackup Backup
-  ansible.builtin.cron: name="borgbackup-{{ item.key }}" weekday="{{ item.value.weekday }}" hour="{{ item.value.hour }}" minute="{{ item.value.minute }}"
-    job="/srv/borgbackup/{{ item.key }}/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/{{ item.key }}.log"
+  ansible.builtin.cron:
+    name: "borgbackup-{{ item.key }}"
+    weekday: "{{ item.value.weekday }}"
+    hour: "{{ item.value.hour }}"
+    minute: "{{ item.value.minute }}"
+    job: "/srv/borgbackup/{{ item.key }}/borgbackup-create.sh 2>&1 | ts '[\\%Y-\\%m-\\%d \\%H:\\%M:\\%S]' >> /var/log/borgbackup/{{ item.key }}.log"
   with_dict: "{{ borgbackup_repos }}"
 
 - name: Cronjob für BorgBackup Prometheus export
-  ansible.builtin.cron: name="borgbackup-prom" weekday="*" hour="*" minute="0" job="/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d
-    \\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup-prometheus.log"
+  ansible.builtin.cron:
+    name: "borgbackup-prom"
+    weekday: "*"
+    hour: "*"
+    minute: "0"
+    job: "/srv/borgbackup/borgbackup-prometheus.sh 2>&1 | ts '[\\%Y-\\%m-\\%d\\%H:\%M:\\%S]' >> /var/log/borgbackup/borgbackup-prometheus.log"

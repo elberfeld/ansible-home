@@ -7,7 +7,9 @@
     - /srv/promtail/
 
 - name: create config files
-  ansible.builtin.template: src={{ item }} dest=/srv/promtail/{{ item }}
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/srv/promtail/{{ item }}"
   with_items:
     - docker-config.yaml
   register: config

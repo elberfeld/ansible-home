@@ -17,7 +17,9 @@
     msg: "db.void.ms Serial will be set to: {{ ( db_void_ms.stat.mtime | string )[:9] }} equals: {{ '%Y-%m-%d %H:%M' | strftime(db_void_ms.stat.mtime) }} UTC"
 
 - name: Konfig-Dateien für bind erstellen
-  ansible.builtin.template: src={{ item }} dest=/srv/bind/config/{{ item }}
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/srv/bind/config/{{ item }}"
   with_items:
     - bind.keys
     - db.0
@@ -35,7 +37,9 @@
   register: config
 
 - name: Docker Compose Konfig-Datei erstellen
-  ansible.builtin.template: src="{{ item }}" dest="/srv/bind/{{ item }}"
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/srv/bind/{{ item }}"
   with_items:
     - "docker-compose.yml"
 

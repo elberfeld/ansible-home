@@ -1,7 +1,8 @@
 ---
 # Pakete installieren
 - name: get secrets from server 1
-  ansible.builtin.slurp: src={{ item }}
+  ansible.builtin.slurp:
+    src: "{{ item }}"
   with_items:
     - /srv/hibiscus/mysql_admin_pass
     - /srv/hibiscus/mysql_user_pass
