@@ -9,13 +9,13 @@
     - rsync
     - logrotate
 
-- name: create directories 
-  file: 
+- name: create directories
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
-    - /srv/rsyncbackup 
-    - /var/log/rsyncbackup 
+    - /srv/rsyncbackup
+    - /var/log/rsyncbackup
 
 - name: create jobs
   include_tasks: job.yml
@@ -23,9 +23,9 @@
   loop_control:
     loop_var: job
 
-- name: rsyncbackup LogRotate config erstellen 
-  template: 
-    src: logrotate 
+- name: rsyncbackup LogRotate config erstellen
+  template:
+    src: logrotate
     dest: /etc/logrotate.d/rsyncbackup
 
 

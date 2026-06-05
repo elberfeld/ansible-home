@@ -1,6 +1,6 @@
 ---
 
-- hosts: all 
+- hosts: all
   remote_user: root
   roles:
     - { role: roles_all/hostname, tags: hostname }
@@ -17,48 +17,48 @@
     - { role: roles_infoscreen/infoscreen, tags: infoscreen }
 
 
-- hosts: freqtrade 
+- hosts: freqtrade
   remote_user: root
   roles:
     - { role: roles_common/docker, tags: docker }
-    - { 
+    - {
         role: roles_common/docker_traefik, tags: traefik,
-        servicename: traefik, 
+        servicename: traefik,
         basedir: /srv/traefik,
         domain_base: "void.ms",
         domain_default: "www.void.ms"
       }
-    - { 
+    - {
         role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade2, 
-        basedir: /srv/freqtrade2, 
+        servicename: freqtrade2,
+        basedir: /srv/freqtrade2,
         domain: freqtrade2.void.ms,
         freqtrade_strategy: Supertrend,
         freqtrade_timeframe: 4h,
         freqtrade_dry_run: true
       }
-    - { 
+    - {
         role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade4, 
-        basedir: /srv/freqtrade4, 
+        servicename: freqtrade4,
+        basedir: /srv/freqtrade4,
         domain: freqtrade4.void.ms,
         freqtrade_strategy: keltnerhopt,
         freqtrade_timeframe: 1d,
         freqtrade_dry_run: true
       }
-    - { 
+    - {
         role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade5, 
-        basedir: /srv/freqtrade5, 
+        servicename: freqtrade5,
+        basedir: /srv/freqtrade5,
         domain: freqtrade5.void.ms,
         freqtrade_strategy: slope_is_dope2,
         freqtrade_timeframe: 4h,
         freqtrade_dry_run: true
       }
-    - { 
+    - {
         role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade10, 
-        basedir: /srv/freqtrade10, 
+        servicename: freqtrade10,
+        basedir: /srv/freqtrade10,
         domain: freqtrade10.void.ms,
         freqtrade_strategy: Strategy005,
         freqtrade_timeframe: 15m,
@@ -66,53 +66,53 @@
       }
 
 
-# - hosts: hpserver 
+# - hosts: hpserver
 #   remote_user: root
 #   roles:
 #     - { role: roles_common/docker, tags: docker }
 #     - { role: roles_common/cronapt, tags: cronapt }
-#     - { 
-#         role: roles_common/docker_dockerstats, tags: dockerstats, 
-#         servicename: dockerstats, 
+#     - {
+#         role: roles_common/docker_dockerstats, tags: dockerstats,
+#         servicename: dockerstats,
 #         basedir: /srv/dockerstats,
-#         metrics_port: 9487 
+#         metrics_port: 9487
 #       }
 # #    - { role: roles_common/docker_promtail, tags: promtail }
 #     - { role: roles_common/prometheus-node, tags: prometheus-node }
-#     - { 
+#     - {
 #         role: roles_common/docker_watchtower, tags: watchtower,
 #         servicename: watchtower,
 #         basedir: /srv/watchtower
 #       }
 #     - { role: roles_hpserver/proxmox, tags: proxmox }
-#     - { 
-#         role: roles_hpserver/samba, tags: samba, 
+#     - {
+#         role: roles_hpserver/samba, tags: samba,
 #         servicename: samba,
-#         basedir: /srv/samba 
+#         basedir: /srv/samba
 #       }
-#     - { 
-#         role: roles_hpserver/rsyncd, tags: rsyncd, 
+#     - {
+#         role: roles_hpserver/rsyncd, tags: rsyncd,
 #         servicename: rsyncd,
-#         basedir: /srv/rsyncd, 
+#         basedir: /srv/rsyncd,
 #         datadir: /data/disk1/rsyncd-backup
 #       }
 
-- hosts: master 
+- hosts: master
   remote_user: root
   roles:
     - { role: roles_common/cronapt, tags: cronapt }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
     - { role: roles_master/proxmox, tags: proxmox }
-    - { 
+    - {
         role: roles_master/samba, tags: samba,
         servicename: samba
       }
-    - { 
+    - {
         role: roles_master/saned, tags: saned,
-        servicename: saned 
+        servicename: saned
       }
 
-- hosts: intserver 
+- hosts: intserver
   remote_user: root
   roles:
 #    - { role: roles_common/borgbackup, tags: borgbackup }
@@ -120,58 +120,58 @@
     - { role: roles_common/cronapt, tags: cronapt }
     - { role: roles_common/docker, tags: docker }
     - { role: roles_common/rsyncbackup, tags: rsyncbackup }
-    - { 
-        role: roles_common/docker_dockerstats, tags: dockerstats, 
-        servicename: dockerstats, 
-        basedir: /srv/dockerstats, 
-        metrics_port: 9487 
+    - {
+        role: roles_common/docker_dockerstats, tags: dockerstats,
+        servicename: dockerstats,
+        basedir: /srv/dockerstats,
+        metrics_port: 9487
       }
 #    - { role: roles_common/docker_promtail, tags: promtail }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
-    - { 
+    - {
         role: roles_common/docker_watchtower, tags: watchtower,
         servicename: watchtower,
         basedir: /srv/watchtower,
-      }   
-    - { 
+      }
+    - {
         role: roles_intserver/docker_esphome, tags: esphome,
-        servicename: esphome, 
+        servicename: esphome,
         basedir: /srv/esphome,
         hapuppet_url: "http://{{ int_ip4 }}:8124",
-        web_port: 6052 
+        web_port: 6052
       }
-    - { 
+    - {
         role: roles_intserver/docker_hapuppet, tags: hapuppet,
-        servicename: hapuppet, 
+        servicename: hapuppet,
         basedir: /srv/hapuppet,
         ha_url: "http://{{ int_ip4 }}:8123",
-        web_port: 8124 
+        web_port: 8124
       }
-    # - { 
-    #     role: roles_intserver/docker_heimdall, tags: heimdall, 
-    #     servicename: heimdall, 
+    # - {
+    #     role: roles_intserver/docker_heimdall, tags: heimdall,
+    #     servicename: heimdall,
     #     basedir: /srv/heimdall,
-    #     heimdall_port: 81 
+    #     heimdall_port: 81
     #   }
     - { role: roles_intserver/docker_hibiscus, tags: hibiscus }
 #    - { role: roles_intserver/docker_loki, tags: loki }
     - {
         role: roles_intserver/docker_homeassistant, tags: homeassistant,
-        servicename: homeassistant, 
+        servicename: homeassistant,
         basedir: /srv/homeassistant,
         domain: "TBD", # Web-Port: 8123
         homematic_callback_port: 12001,
         influxdb_port: 18086
       }
-    - { 
+    - {
         role: roles_intserver/docker_mqtt, tags: mqtt,
         servicename: mqtt,
         basedir: /srv/mqtt,
         mqtt_port: 1883,
         explorer_port: 4000
       }
-    - { 
-        role: roles_intserver/docker_omada, tags: omada, 
+    - {
+        role: roles_intserver/docker_omada, tags: omada,
         servicename: omada,
         basedir: /srv/omada/,
         domain: "omada.void.lan",
@@ -179,19 +179,19 @@
         omada_port_https: 8043,
         omada_portal_https: 8843
       }
-    - { 
+    - {
         role: roles_intserver/docker_pihole, tags: pihole,
         servicename: pihole,
         basedir: /srv/pihole,
         web_port: 82
       }
-    - { 
+    - {
         role: roles_intserver/docker_scanservjs, tags: scanservjs,
         servicename: scanservjs,
         basedir: /srv/scanservjs,
         web_port: 83
       }
-    - { 
+    - {
         role: roles_intserver/docker_zigbee2mqtt, tags: [ zigbee2mqtt, z2m ],
         servicename: zigbee2mqtt,
         basedir: /srv/zigbee2mqtt,
@@ -199,7 +199,7 @@
       }
 
 
-- hosts: webserver1,webserver2 
+- hosts: webserver1,webserver2
   remote_user: root
   roles:
 #    - { role: roles_common/borgbackup, tags: borgbackup }
@@ -210,68 +210,68 @@
     - { role: roles_common/rsyncbackup, tags: rsyncbackup }
     - { role: roles_common/prometheus-node, tags: prometheus-node }
     - { role: roles_webserver/docker_bind, tags: bind }
-    - { 
-        role: roles_common/docker_dockerstats, tags: dockerstats, 
-        servicename: dockerstats, 
-        basedir: /srv/dockerstats, 
-        metrics_port: 9487 
+    - {
+        role: roles_common/docker_dockerstats, tags: dockerstats,
+        servicename: dockerstats,
+        basedir: /srv/dockerstats,
+        metrics_port: 9487
       }
-    - { 
+    - {
         role: roles_common/docker_watchtower, tags: watchtower,
         servicename: watchtower,
         basedir: /srv/watchtower,
-      }   
+      }
 
 
-- hosts: webserver1 
+- hosts: webserver1
   remote_user: root
   roles:
-    - { 
+    - {
         role: roles_common/docker_traefik, tags: traefik,
-        servicename: traefik, 
+        servicename: traefik,
         basedir: /srv/traefik,
         domain_base: "void.ms",
         domain_default: "www.void.ms"
       }
-    - { 
-        role: roles_webserver/docker_grafana, tags: grafana, 
-        servicename: grafana, 
-        basedir: /srv/grafana, 
-        domain: grafana.void.ms 
+    - {
+        role: roles_webserver/docker_grafana, tags: grafana,
+        servicename: grafana,
+        basedir: /srv/grafana,
+        domain: grafana.void.ms
       }
-    - { 
-        role: roles_webserver/docker_gatus, tags: gatus, 
-        servicename: gatus, 
-        basedir: /srv/gatus, 
-        domain: status.void.ms 
+    - {
+        role: roles_webserver/docker_gatus, tags: gatus,
+        servicename: gatus,
+        basedir: /srv/gatus,
+        domain: status.void.ms
       }
-    - { 
-        role: roles_webserver/docker_icinga, tags: icinga, 
-        servicename: icinga, 
-        basedir: /srv/icinga, 
+    - {
+        role: roles_webserver/docker_icinga, tags: icinga,
+        servicename: icinga,
+        basedir: /srv/icinga,
         domain: icinga.void.ms,
         api_port: 5665,
-        mysql_port: 13306, 
+        mysql_port: 13306,
       }
     - {
         role: roles_webserver/docker_prometheus, tags: prometheus,
-        servicename: prometheus, 
+        servicename: prometheus,
         basedir: /srv/prometheus,
         domain: prometheus.void.ms,
         prometheus_port: 9090,
         influxdb_port: 18086
       }
 #    - {
-#        role: roles_webserver/docker_vpnserver, tags: vpnserver, 
-#        servicename: vpnserver, 
-#        basedir: /srv/vpnserver, 
+#        role: roles_webserver/docker_vpnserver, tags: vpnserver,
+#        servicename: vpnserver,
+#        basedir: /srv/vpnserver,
 #        domain: vpn.void.ms,
 #        vpn_port: 51800
 #      }
 #    - {
-#        role: roles_webserver/docker_wgportal, tags: wgportal, 
-#        servicename: wgportal, 
-#        basedir: /srv/wgportal, 
+#        role: roles_webserver/docker_wgportal, tags: wgportal,
+#        servicename: wgportal,
+#        basedir: /srv/wgportal,
 #        domain: vpn.void.ms,
 #        vpn_port: 51800
 #      }
@@ -280,69 +280,69 @@
 - hosts: webserver2
   remote_user: root
   roles:
-    - { 
+    - {
         role: roles_common/docker_traefik, tags: traefik,
-        servicename: traefik, 
+        servicename: traefik,
         basedir: /srv/traefik
       }
-    - { 
+    - {
         role: roles_webserver/docker_collabora, tags: collabora,
-        servicename: collabora, 
-        basedir: /srv/collabora, 
-        domain: collabora.void.ms 
+        servicename: collabora,
+        basedir: /srv/collabora,
+        domain: collabora.void.ms
       }
-    - { 
+    - {
         role: roles_webserver/docker_freqtrade, tags: freqtrade,
-        servicename: freqtrade, 
-        basedir: /srv/freqtrade, 
+        servicename: freqtrade,
+        basedir: /srv/freqtrade,
         domain: freqtrade.void.ms,
         freqtrade_strategy: keltnerhopt,
         freqtrade_timeframe: 1d,
         freqtrade_dry_run: false
       }
-    - { 
+    - {
         role: roles_webserver/docker_mail, tags: mail,
-        servicename: mail, 
-        basedir: /srv/mail, 
-        domain: void.ms, 
-        mailserver: mail.void.ms, 
+        servicename: mail,
+        basedir: /srv/mail,
+        domain: void.ms,
+        mailserver: mail.void.ms,
       }
-    - { 
+    - {
         role: roles_webserver/docker_nextcloud, tags: nextcloud,
-        servicename: nextcloud, 
-        basedir: /srv/nextcloud, 
-        domain: cloud.void.ms 
+        servicename: nextcloud,
+        basedir: /srv/nextcloud,
+        domain: cloud.void.ms
       }
-    - { 
+    - {
         role: roles_webserver/docker_openwebui, tags: openwebui,
-        servicename: openwebui, 
-        basedir: /srv/openwebui, 
-        domain: openwebui.void.ms 
+        servicename: openwebui,
+        basedir: /srv/openwebui,
+        domain: openwebui.void.ms
       }
-    - { 
+    - {
         role: roles_webserver/docker_paperless, tags: paperless,
-        servicename: paperless, 
+        servicename: paperless,
         basedir: /srv/paperless,
         domain: docs.void.ms,
         webdav_port: 8081
       }
-    - { 
-        role: roles_webserver/docker_uffd, tags: uffd, 
-        servicename: uffd, 
-        basedir: /srv/uffd, 
+    - {
+        role: roles_webserver/docker_uffd, tags: uffd,
+        servicename: uffd,
+        basedir: /srv/uffd,
         domain: uffd.void.ms
       }
-    - { 
-        role: roles_webserver/docker_vaultwarden, tags: vaultwarden, 
-        servicename: vaultwarden, 
-        basedir: /srv/vaultwarden, 
+    - {
+        role: roles_webserver/docker_vaultwarden, tags: vaultwarden,
+        servicename: vaultwarden,
+        basedir: /srv/vaultwarden,
         domain: vault.void.ms
       }
-    - { 
-        role: roles_webserver/docker_wordpress, tags: wordpress, 
-        servicename: wordpress, 
-        basedir: /srv/wordpress, 
+    - {
+        role: roles_webserver/docker_wordpress, tags: wordpress,
+        servicename: wordpress,
+        basedir: /srv/wordpress,
         domain: www.void.ms,
-        domain2: void.ms 
+        domain2: void.ms
       }
 

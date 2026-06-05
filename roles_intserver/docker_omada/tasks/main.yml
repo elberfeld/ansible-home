@@ -2,13 +2,13 @@
 ---
 
 - name: "create folder struct for {{ servicename }}"
-  file: 
-    path: "{{ basedir }}" 
+  file:
+    path: "{{ basedir }}"
     state: "directory"
 
 - name: "create folder struct for {{ servicename }}"
-  file: 
-    path: "{{ basedir }}/{{ item }}" 
+  file:
+    path: "{{ basedir }}/{{ item }}"
     state: "directory"
     owner: 508
     group: 508
@@ -17,18 +17,18 @@
     - "logs"
 
 - name: "create config files for {{ servicename }}"
-  template: 
+  template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
-    - docker-compose.yml 
+    - docker-compose.yml
   register: config_files
 
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

@@ -1,7 +1,7 @@
 ---
 
 - name: "create folder struct for {{ servicename }}"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -11,10 +11,10 @@
     - "{{ basedir }}/log/"
 
 - name: "create config files for {{ servicename }}"
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}"
-  with_items: 
+  with_items:
     - mosquitto.conf
     - docker-compose.yml
     - settings.json
@@ -24,7 +24,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

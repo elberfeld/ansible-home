@@ -8,9 +8,9 @@
    - { path: "{{ basedir }}/webdav_user_pass",     type: create, length: 32 }
 
 
-- name: Setup OAuth Client Info 
+- name: Setup OAuth Client Info
   ansible.builtin.debug:
-    msg: "Client ID: {{ servicename }} // Client Secret: {{ oauth_client_secret }} // Redirect-URI: https://{{ domain }}/_oauth" 
+    msg: "Client ID: {{ servicename }} // Client Secret: {{ oauth_client_secret }} // Redirect-URI: https://{{ domain }}/_oauth"
 
 
 - name: "create folder struct for {{ servicename }}"

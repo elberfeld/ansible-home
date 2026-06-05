@@ -21,38 +21,38 @@
     regexp: '^(.*)shop.maurer-it.com(.*)$'
     line: "127.0.0.1 shop.maurer-it.com"
 
-- name: Remove PVE Enterprise Repos 
+- name: Remove PVE Enterprise Repos
   file:
     path: /etc/apt/sources.list.d/pve-enterprise.list
     state: absent
 
-- name: Remove conflicting Packages 
-  ansible.builtin.apt: 
+- name: Remove conflicting Packages
+  ansible.builtin.apt:
     state: absent
     name:
-      - os-prober 
-      - resolvconf 
+      - os-prober
+      - resolvconf
       - rdnssd
 
 - name: Install Proxmox Packages
-  ansible.builtin.apt: 
+  ansible.builtin.apt:
     state: present
     name:
-      - proxmox-ve 
+      - proxmox-ve
       - nginx-light
       - ifupdown2
 
 - name: Install Proxmox Packages
-  ansible.builtin.apt: 
+  ansible.builtin.apt:
     state: present
     deb: https://github.com/Jamesits/pve-fake-subscription/releases/download/v0.0.11/pve-fake-subscription_0.0.11+git-1_all.deb
 
-- name: Remove PVE Enterprise Repos 
+- name: Remove PVE Enterprise Repos
   ansible.builtin.file:
     path: /etc/apt/sources.list.d/pve-enterprise.list
     state: absent
 
-- name: Nginx Config 
+- name: Nginx Config
   ansible.builtin.template:
     src: "nginx"
     dest: "/etc/nginx/sites-enabled/default"

@@ -1,10 +1,10 @@
 ---
 
-- name: install apt-transport-https packages before adding sources 
+- name: install apt-transport-https packages before adding sources
   apt:
     update_cache: no
     state: present
-    name: 
+    name:
     - aptitude
     - debian-archive-keyring
     - apt-transport-https
@@ -17,8 +17,8 @@
   with_items: "{{ debian_keys }}"
   when: debian_keys is defined and debian_keys|length > 0
 
-- name: set debian repos 
-  template: src=sources.list.j2 dest=/etc/apt/sources.list   
+- name: set debian repos
+  template: src=sources.list.j2 dest=/etc/apt/sources.list
 
 - name: update debian repos
   apt:

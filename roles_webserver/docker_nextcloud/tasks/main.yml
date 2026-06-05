@@ -18,7 +18,7 @@
 
 
 - name: "create folder struct for {{ servicename }}"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
     owner: www-data
@@ -31,7 +31,7 @@
 
 
 - name: "create folder struct for {{ servicename }} (db)"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
     owner: 999
@@ -41,7 +41,7 @@
 
 
 - name: "create folder struct for {{ servicename }} (paperless)"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
     owner: 1000
@@ -54,8 +54,8 @@
 
 
 - name: Docker Compose Konfig-Datei erstellen
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - "docker-compose.yml"
@@ -63,8 +63,8 @@
 
 
 - name: Nextcloud Konfig-Dateien erstellen
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}/data/config/{{ item }}"
   with_items:
     - "custom.config.php"
@@ -72,8 +72,8 @@
 
 
 - name: Script Helper erstellen
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
     mode: u+x
   with_items:
@@ -84,7 +84,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 
 - name: "start {{ servicename }} docker"

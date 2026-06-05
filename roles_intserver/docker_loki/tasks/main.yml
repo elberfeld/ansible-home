@@ -1,7 +1,7 @@
 ---
- 
+
 - name: create folder struct for loki
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -10,7 +10,7 @@
 
 - name: create config files
   template: src={{ item }} dest=/srv/loki/{{ item }}
-  with_items: 
+  with_items:
     - local-config.yaml
     - vector.toml
   register: config

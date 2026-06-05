@@ -1,7 +1,7 @@
 ---
 
 - name: "Install Packages for {{ servicename }}"
-  apt: 
+  apt:
     state: present
     name:
       - sane-utils
@@ -42,4 +42,4 @@
   systemd:
     name: saned.socket
     state: restarted
-  when: config.changed 
+  when: config.changed

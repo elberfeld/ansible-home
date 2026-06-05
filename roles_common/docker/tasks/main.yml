@@ -16,13 +16,13 @@
       - python3-pip
 
 
-- name: daemon config für docker erstellen 
-  template: 
-    src: daemon.json 
+- name: daemon config für docker erstellen
+  template:
+    src: daemon.json
     dest: /etc/docker/daemon.json
   register: daemon_json
 
-- name: Cronjob to prune unused images  
+- name: Cronjob to prune unused images
   cron: name="docker-prune" weekday="*" hour="5" minute="5" job="/usr/bin/docker system prune --volumes --all -f"
 
 - name: "Create internal Networks: {{ docker.internal_networks }}"
@@ -39,11 +39,11 @@
     option: ConditionFileNotEmpty
     value: "{{ docker.service_blocker_file }}"
     backup: yes
-  with_items: 
-    - /lib/systemd/system/containerd.service 
-    - /lib/systemd/system/docker.service 
+  with_items:
+    - /lib/systemd/system/containerd.service
+    - /lib/systemd/system/docker.service
     - /lib/systemd/system/docker.socket
-  when: docker.service_blocker_file is defined 
+  when: docker.service_blocker_file is defined
 
 
 # Fix dor docker 29 not supporting API Version 1.24 anymore which is required by traefik (at least 3.6.1)
@@ -65,4 +65,4 @@
     state: restarted
     daemon_reload: true
     name: docker
-  when: daemon_json.changed or api_override.changed or docker.service_blocker_file is defined 
+  when: daemon_json.changed or api_override.changed or docker.service_blocker_file is defined

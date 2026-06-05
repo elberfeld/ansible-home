@@ -5,7 +5,7 @@
     - { path: "{{ basedir }}/mysql_user_pass", type: create, length: 12 }
 
 - name: "create folder struct for {{ servicename }}"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
     owner: www-data
@@ -16,13 +16,13 @@
     - "{{ basedir }}/db/"
 
 - name: create config files
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
-  with_items: 
+  with_items:
     - docker-compose.yml
     - uploads.ini
-  register: config 
+  register: config
 
 - name: "stop {{ servicename }} docker"
   community.docker.docker_compose_v2:

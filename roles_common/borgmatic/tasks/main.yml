@@ -8,17 +8,17 @@
 - name: generate new repo_sshkey (check)
   stat:
     path: /etc/borgmatic/repo_sshkey
-  register: repo_sshkey 
+  register: repo_sshkey
 
 
 - name: generate new repo_sshkey (generate)
   command: ssh-keygen -N '' -t ed25519 -f /etc/borgmatic/repo_sshkey
-  when: repo_sshkey.stat.exists == False 
+  when: repo_sshkey.stat.exists == False
 
 
 - name: generate new repo_sshkey.pub (generate)
   shell: ssh-keygen -y -f /etc/borgmatic/repo_sshkey > /etc/borgmatic/repo_sshkey.pub
-  when: repo_sshkey.stat.exists == False 
+  when: repo_sshkey.stat.exists == False
 
 
 - name: pakete installieren

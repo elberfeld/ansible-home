@@ -11,7 +11,7 @@
 
 - name: copy config files for {{ servicename }}
   ansible.builtin.template:
-    src: "{{ item }}" 
+    src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
     mode: '0755'
   with_items:
@@ -23,7 +23,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 
 - name: "start {{ servicename }} docker"

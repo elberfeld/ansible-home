@@ -3,7 +3,7 @@
 - include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/wg_admin_pass", type: create, length: 32 }
-    - { path: "{{ basedir }}/wg_private_key", type: wireguard } 
+    - { path: "{{ basedir }}/wg_private_key", type: wireguard }
 
 
 - name: "create folder struct for {{ servicename }}"

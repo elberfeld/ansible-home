@@ -5,8 +5,8 @@
     update_cache: yes
     state: present
     name:
-      - acpid 
-      - dnsutils 
+      - acpid
+      - dnsutils
       - psmisc
       - tree
       - vim

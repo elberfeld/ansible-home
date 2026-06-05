@@ -8,7 +8,7 @@
 
 
 - name: "create folder struct for {{ basedir }}"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -30,7 +30,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 
 - name: "start {{ servicename }} docker"

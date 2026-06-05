@@ -14,7 +14,7 @@
     - snmpd
 
 - name: delete config file
-  file: 
+  file:
     path: "/etc/snmp/snmpd.conf"
     state: absent
 

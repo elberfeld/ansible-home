@@ -9,16 +9,16 @@
     - { path: "{{ basedir }}/uffd_mail_pass",   type: prompt }
 
 - name: create folder struct for {{servicename}}
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
     - "{{ basedir }}"
-    - "{{ basedir }}/db/"   
+    - "{{ basedir }}/db/"
 
 - name: create config files
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - "docker-compose.yml"
@@ -31,7 +31,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

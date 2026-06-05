@@ -2,10 +2,10 @@
 
 - include_tasks: ../functions/get_secret.yml
   with_items:
-   - { path: "{{ basedir }}/homeassistant_token", type: prompt } # HA Access Token 
+   - { path: "{{ basedir }}/homeassistant_token", type: prompt } # HA Access Token
 
 - name: "create folder struct for {{ servicename }}"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -15,7 +15,7 @@
   apt:
     update_cache: no
     state: present
-    name: 
+    name:
     - git
 
 - name: "checkout git repo"
@@ -25,10 +25,10 @@
     version: "e4b24efb3c19dd670df646fc509fc8a6fd02b5cd" # commit from 10.08.2025
 
 - name: "create config files for {{ servicename }}"
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}"
-  with_items: 
+  with_items:
     - docker-compose.yml
     - options-dev.json
   register: config_files
@@ -37,7 +37,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

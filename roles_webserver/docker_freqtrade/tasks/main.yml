@@ -19,7 +19,7 @@
     state: "directory"
     owner: 1000
     group: 1000
-    mode: 0700 
+    mode: 0700
   with_items:
     - "{{ basedir }}/data"
     - "{{ basedir }}/data/backtest_results"
@@ -52,7 +52,7 @@
     dest: "{{ basedir }}/data/strategies/{{ item.file }}"
     mode: 0644
   with_items:
-    - { file: "Strategy005.py",              url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/Strategy005.py" }    
+    - { file: "Strategy005.py",              url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/Strategy005.py" }
     - { file: "Supertrend.py",               url: "https://raw.githubusercontent.com/freqtrade/freqtrade-strategies/main/user_data/strategies/Supertrend.py"  }
     - { file: "keltnerchannel-rsi-files.7z", url: "https://www.dutchalgotrading.com/wp-content/uploads/2022/12/keltnerchannel-rsi-files.7z" }
     - { file: "Slope-is-dope-files.7z",      url: "https://www.dutchalgotrading.com/wp-content/uploads/2022/12/Slope-is-dope-files.7z" }
@@ -69,7 +69,7 @@
   ansible.builtin.command:
     cmd: "/usr/bin/7z e -y {{ item }}"
     chdir: "{{ basedir }}/data/strategies/"
-  with_items: 
+  with_items:
     - "keltnerchannel-rsi-files.7z"
     - "Slope-is-dope-files.7z"
 

@@ -11,27 +11,27 @@
     - { path: "{{ basedir }}/mysql_user_pass",     type: create, length: 12 }
 
 
-- name: Setup OAuth Client Info 
+- name: Setup OAuth Client Info
   ansible.builtin.debug:
-    msg: "Client ID: {{ servicename }} // Client Secret: {{ oauth_client_secret }} // Redirect-URI: https://{{ domain }}/_oauth" 
+    msg: "Client ID: {{ servicename }} // Client Secret: {{ oauth_client_secret }} // Redirect-URI: https://{{ domain }}/_oauth"
 
 
 - name: pakete installieren
   apt:
     update_cache: no
     state: present
-    name: 
+    name:
       - logrotate
 
 
-- name: icinga LogRotate config erstellen 
-  template: 
-    src: logrotate 
+- name: icinga LogRotate config erstellen
+  template:
+    src: logrotate
     dest: /etc/logrotate.d/icinga
 
 
 - name: "create folder struct for {{ servicename }}"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -83,8 +83,8 @@
 
 
 - name: Script Helper erstellen
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
     mode: u+x
   with_items:
@@ -126,7 +126,7 @@
     - graphite-conf/storage-schemas.conf
   notify: restart icinga docker
 
-  
+
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"

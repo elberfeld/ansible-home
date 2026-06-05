@@ -5,7 +5,7 @@
   - { path: "{{ basedir }}/wlan_pass", type: prompt }
 
 - name: "create folder struct for {{ servicename }}"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -13,10 +13,10 @@
     - "{{ basedir }}/config/"
 
 - name: "create config files for {{ servicename }}"
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
-  with_items: 
+  with_items:
     - docker-compose.yml
     - compile.sh
     - config/badezimmer.yaml
@@ -31,9 +31,9 @@
     - config/technikraum.yaml
   register: config_files
 
-# - name: download config includes files 
+# - name: download config includes files
 #   get_url:
-#     url: "https://raw.githubusercontent.com/esphome/esphome-docs/current/_static/{{ item }}" 
+#     url: "https://raw.githubusercontent.com/esphome/esphome-docs/current/_static/{{ item }}"
 #     dest: "{{ basedir }}/config/{{ item }}"
 #   with_items:
 #     - webserver-v1.min.css
@@ -43,7 +43,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

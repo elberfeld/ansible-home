@@ -1,7 +1,7 @@
 ---
 
 - name: create folder struct for promtail
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -9,7 +9,7 @@
 
 - name: create config files
   template: src={{ item }} dest=/srv/promtail/{{ item }}
-  with_items: 
+  with_items:
     - docker-config.yaml
   register: config
 
@@ -23,7 +23,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:

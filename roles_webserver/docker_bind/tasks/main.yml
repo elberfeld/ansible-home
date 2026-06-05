@@ -1,7 +1,7 @@
 ---
 - name: create folder struct for bind container
-  file: 
-    path: "{{ item }}" 
+  file:
+    path: "{{ item }}"
     state: "directory"
   with_items:
     - "/srv/bind/"
@@ -14,13 +14,13 @@
   register: db_void_ms
 
 
-- debug: 
+- debug:
     msg: "db.void.ms Serial will be set to: {{ ( db_void_ms.stat.mtime | string )[:9] }} equals: {{ '%Y-%m-%d %H:%M' | strftime(db_void_ms.stat.mtime) }} UTC"
 
 
-- name: Konfig-Dateien für bind erstellen 
+- name: Konfig-Dateien für bind erstellen
   template: src={{ item }} dest=/srv/bind/config/{{ item }}
-  with_items: 
+  with_items:
     - bind.keys
     - db.0
     - db.127
@@ -33,8 +33,8 @@
     - named.conf.default-zones
     - named.conf.local
     - named.conf.options
-    - zones.rfc1918       
-  register: config 
+    - zones.rfc1918
+  register: config
 
 
 - name: Docker Compose Konfig-Datei erstellen

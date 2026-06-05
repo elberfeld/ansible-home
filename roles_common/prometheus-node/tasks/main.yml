@@ -7,14 +7,14 @@
     name:
       - prometheus-node-exporter
 
-- name: remove old directories 
-  file: 
+- name: remove old directories
+  file:
     path: "{{ item }}"
     state: "absent"
   with_items:
-    - /srv/prometheus-node-exporter 
+    - /srv/prometheus-node-exporter
 
-- name: Configure Node-Exporter 
+- name: Configure Node-Exporter
   lineinfile:
     path: /etc/default/prometheus-node-exporter
     regexp: '^ARGS='
@@ -24,6 +24,6 @@
   command: systemctl enable prometheus-node-exporter
 
 - name: restart prometheus-node-exporter
-  service: 
-    name: prometheus-node-exporter 
+  service:
+    name: prometheus-node-exporter
     state: restarted

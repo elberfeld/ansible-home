@@ -9,17 +9,17 @@
 
 - name: "homeassistant_influxdb_token (slurp) @ intserver"
   delegate_to: intserver
-  slurp: 
+  slurp:
     src: /srv/homeassistant/influxdb_token
   register: homeassistant_influxdb_token_secretfile
 
 - name: "homeassistant_influxdb_token (decode)"
-  set_fact: 
-    "homeassistant_influxdb_token": "{{ homeassistant_influxdb_token_secretfile.content | b64decode | regex_replace('\\s', '') }}" 
+  set_fact:
+    "homeassistant_influxdb_token": "{{ homeassistant_influxdb_token_secretfile.content | b64decode | regex_replace('\\s', '') }}"
 
 
 - name: "create folder struct for {{ servicename }} 1"
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -32,13 +32,13 @@
     owner: 472
     group: 0
   with_items:
-    - "{{ basedir }}/data/"   
+    - "{{ basedir }}/data/"
     - "{{ basedir }}/provisioning/"
     - "{{ basedir }}/provisioning/datasources/"
 
 - name: "create config files for {{ servicename }}"
-  template: 
-    src: "{{ item }}" 
+  template:
+    src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - docker-compose.yml
@@ -50,7 +50,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 
 - name: "start {{ servicename }} docker"

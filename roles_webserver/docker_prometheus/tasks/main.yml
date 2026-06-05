@@ -8,8 +8,8 @@
     - { path: "{{ basedir }}/oauth_client_secret",  type: create, length: 64 }
 
 - name: "create folder struct for {{ servicename }} 1"
-  file: 
-    path: "{{ basedir }}" 
+  file:
+    path: "{{ basedir }}"
     state: "directory"
   with_items:
     - "{{ basedir }}"
@@ -24,12 +24,12 @@
     - "{{ basedir }}/data"
 
 - name: "create config files for {{ servicename }}"
-  template: 
+  template:
     src: "{{ item }}"
     dest: "{{ basedir }}/{{ item }}"
   with_items:
-    - docker-compose.yml 
-    - prometheus.yml 
+    - docker-compose.yml
+    - prometheus.yml
   register: config_files
 
 
@@ -37,7 +37,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 
 - name: "start {{ servicename }} docker"

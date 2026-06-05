@@ -1,4 +1,4 @@
-       
+
 - include_tasks: ../functions/get_secret.yml
   with_items:
     - { path: "{{ basedir }}/letsencrypt_notification_email", type: prompt }
@@ -25,7 +25,7 @@
     dest: "{{ basedir }}/{{ item }}"
   with_items:
     - docker-compose.yml
-    - traefik.yml 
+    - traefik.yml
     - dynamic/tls.yml
   register: config_files
 
@@ -33,10 +33,9 @@
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: absent
-  when: config_files.changed 
+  when: config_files.changed
 
 - name: "start {{ servicename }} docker"
   community.docker.docker_compose_v2:
     project_src: "{{ basedir }}"
     state: present
-    

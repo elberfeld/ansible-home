@@ -5,14 +5,14 @@
     - { path: "{{ basedir }}/rsyncbackup_user_pass", type: create, length: 12 }
 
 - name: Install Packages for {{ servicename }}
-  apt: 
+  apt:
     state: present
     name:
       - rsync
       - logrotate
 
 - name: create folder struct for {{ servicename }}
-  file: 
+  file:
     path: "{{ item }}"
     state: "directory"
   with_items:
@@ -32,9 +32,9 @@
 
 - name: set rsyncd.secrets file permissions
   file:
-    path: /etc/rsyncd.secrets 
+    path: /etc/rsyncd.secrets
     owner: root
-    group: root 
+    group: root
     mode: 0400
 
 - name: Enable and start systemd service for {{ servicename }}
@@ -47,7 +47,7 @@
   systemd:
     name: rsync
     state: restarted
-  when: config.changed 
+  when: config.changed
 
 
 #- name: start {{ servicename }} docker
