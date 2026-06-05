@@ -1,0 +1,10 @@
+# Source - https://stackoverflow.com/a/79576749
+# Posted by Farzad Zarasvand, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-06-04, License - CC BY-SA 4.0
+
+skip_list: # Rules to completely ignore
+  - no-handler
+
+warn_list: # Rules shown as warnings (not errors)
+  - name[template]
+  - yaml[line-length]

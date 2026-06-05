@@ -1,7 +1,7 @@
 {
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1,
+    "files.trimTrailingWhitespace": true,
     "git.autofetch": true,
     "git.rebaseWhenSync": true,
-    "ansible.python.interpreterPath": "/bin/python3"
 }
