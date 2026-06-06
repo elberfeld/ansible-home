@@ -7,7 +7,7 @@ storage:
 # Expose Prometheus metrics at /metrics
 metrics: true
 
-# Maintenance config to silence alerts at night 
+# Maintenance config to silence alerts at night
 maintenance:
   start: 00:00
   duration: 8h
@@ -56,7 +56,7 @@ endpoints:
       - type: pushover
     conditions:
       - "[CERTIFICATE_EXPIRATION] > 48h"
-      - "[STATUS] == 200"   
+      - "[STATUS] == 200"
 
   - name: prometheus
     group: webserver1
@@ -86,9 +86,9 @@ endpoints:
       - type: pushover
     conditions:
       - "[CERTIFICATE_EXPIRATION] > 48h"
-      - "[STATUS] != 200"
+      - "[STATUS] == 200"
 
-  # webserver1 dns 
+  # webserver1 dns
 
   - name: webserver1-dns-udp
     group: webserver1-dns
@@ -207,9 +207,9 @@ endpoints:
       - type: pushover
     conditions:
       - "[CERTIFICATE_EXPIRATION] > 48h"
-      - "[STATUS] != 200"
+      - "[STATUS] == 200"
 
-  # webserver2 dns 
+  # webserver2 dns
 
   - name: webserver2-dns-udp
     group: webserver2-dns

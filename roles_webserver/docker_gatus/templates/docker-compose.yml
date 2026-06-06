@@ -9,6 +9,9 @@ services:
     volumes:
       - "{{ basedir }}/config.yaml:/config/config.yaml"
       - "{{ basedir }}/data:/data"
+    environment:
+      - TZ=Europe/Berlin
+      - GATUS_LOG_LEVEL=INFO
     labels:
       - traefik.enable=true
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
