@@ -8,8 +8,8 @@ $TTL     300
                          604800        ; Expire 604800 - 2419200
                          3600 )       ; Negative Cache TTL 3600 - 86400
 
-@         IN      A       {{ hostvars['webserver1'].ext_ip4 }}
-@         IN      AAAA    {{ hostvars['webserver1'].ext_ip6 }}
+@         IN      A       {{ hostvars['webserver2'].ext_ip4 }}
+@         IN      AAAA    {{ hostvars['webserver2'].ext_ip6 }}
 
 ; Nameserver
 @         IN      NS      ns1.void.ms.

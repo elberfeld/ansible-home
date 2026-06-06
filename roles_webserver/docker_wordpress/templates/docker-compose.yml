@@ -15,12 +15,12 @@ services:
       MYSQL_USER: "wordpress"
     networks:
         - default
-  
+
   app:
 
     image: wordpress:apache
     restart: always
-    depends_on: 
+    depends_on:
       - db
     volumes:
       - "{{ basedir }}/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
@@ -33,7 +33,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.{{ servicename }}.rule=Host(`{{ domain }}`)
       - traefik.http.routers.{{ servicename }}.entrypoints=websecure
-      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80      
+      - traefik.http.services.{{ servicename }}.loadbalancer.server.port=80
       # domain2 redirect to domain
       - traefik.http.routers.{{ servicename }}_redirect.rule=Host(`{{ domain2 }}`)
       - traefik.http.routers.{{ servicename }}_redirect.entrypoints=websecure

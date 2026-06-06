@@ -73,7 +73,7 @@ services:
       - "traefik.http.routers.{{ servicename }}.rule=Host(`{{ mailserver }}`)"
       - "traefik.http.routers.{{ servicename }}.tls"
       - "traefik.http.routers.{{ servicename }}.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.{{ servicename }}.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.{{ servicename }}.tls.domains[0].main={{ mailserver }}"
       - "traefik.http.routers.{{ servicename }}.tls.domains[0].sans={{ mailserver }}"
       - "traefik.http.routers.{{ servicename }}.service={{ servicename }}"
       - "traefik.http.services.{{ servicename }}.loadbalancer.server.port=80"
