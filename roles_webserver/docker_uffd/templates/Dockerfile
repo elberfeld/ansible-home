@@ -1,4 +1,4 @@
-FROM debian:bookworm AS build-stage
+FROM debian:trixie AS build-stage
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYBUILD_INSTALL_ARGS="--install-lib=/usr/share/uffd/ --install-scripts=/usr/share/uffd/"
@@ -53,7 +53,7 @@ RUN set -x && \
     dpkg-deb -c /*.deb && \
     mv /*.deb /uffd/uffd.deb
 
-FROM debian:bookworm as app-stage
+FROM debian:trixie as app-stage
 
 COPY --from=build-stage /uffd/uffd.deb /uffd.deb
 
