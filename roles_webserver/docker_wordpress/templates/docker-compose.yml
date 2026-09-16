@@ -4,7 +4,7 @@ services:
 
   db:
 
-    image: mariadb:11
+    image: mariadb:13
     restart: always
     volumes:
       - "{{ basedir }}/db/:/var/lib/mysql"
