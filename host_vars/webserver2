@@ -1,5 +1,5 @@
 
-debian_sources: 
+debian_sources:
   - "deb http://deb.debian.org/debian trixie main contrib non-free non-free-firmware"
   - "deb http://deb.debian.org/debian trixie-updates main contrib non-free non-free-firmware"
   - "deb http://security.debian.org trixie-security main contrib non-free non-free-firmware"
@@ -9,12 +9,14 @@ debian_keys:
   - { url: "https://download.docker.com/linux/debian/gpg", file: "/etc/apt/docker.gpg" }
 
 
-# Monitoring aktivieren 
-alert:  
+# Monitoring aktivieren
+alert:
   load:
     warn: 4
     crit: 8
-  containers: 
+  containers:
+    - { name: "alerta-app-1" }
+    - { name: "alerta-db-1" }
     - { name: "bind-app-1" }
     - { name: "collabora-app-1" }
     - { name: "dockerstats-app-1" }
@@ -49,33 +51,33 @@ alert:
     - { name: "watchtower-app-1" }
     - { name: "wordpress-app-1" }
     - { name: "wordpress-db-1" }
-  disks: 
+  disks:
     - { mountpoint: "/", warn: "3 GB", crit: "1 GB" }
     - { mountpoint: "/srv", warn: "3 GB", crit: "1 GB" }
 
 
-# Primäre IP Adressen des Hosts 
+# Primäre IP Adressen des Hosts
 ext_ip4: 116.203.41.76
 ext_ip6: 2a01:4f8:1c1c:393c::1
 int_ip4: 10.100.1.2
 
-# Lokale LDAP Settings   
+# Lokale LDAP Settings
 ldap_local:
   use_host: "{{ int_ip4 }}"
   prometheus_metrics: yes
 
-# Docker konfigurationen 
+# Docker konfigurationen
 docker:
-  # Interne Docker-Netzwerke 
+  # Interne Docker-Netzwerke
   internal_networks:
     - ldap
     - mail
     - web
-  # Prometheus Metriken aktivieren 
+  # Prometheus Metriken aktivieren
   prometheus_metrics: yes
   # Prometheus Stats aktivieren
   prometheus_stats: yes
-  # Docker Start unterbinden fals diese Datei nicht existiert 
+  # Docker Start unterbinden fals diese Datei nicht existiert
   service_blocker_file: /srv/cryptdisk_mounted
 
 
@@ -91,52 +93,52 @@ webserver_domains:
   - "www.void.ms"
 
 
-# Definition von RSync Backup Jobs 
+# Definition von RSync Backup Jobs
 rsyncbackup:
 
-  hpserver: 
+  hpserver:
 
-    # URL des Repos   
+    # URL des Repos
     target: "rsync://rsyncbackup@{{ hostvars['hpserver'].int_ip4 }}/backup/{{ inventory_hostname }}/"
-    
+
     # zusätzliche RSync Optionen
     options: "--compress"
-    
+
     # Base Directory
     basedir: "/"
 
-    # Includes 
+    # Includes
     includes:
       - "etc**"
       - "srv**"
       - "var/log**"
 
-    # Includes 
+    # Includes
     excludes:
       - "*"
 
-    # Backup Schedule 
+    # Backup Schedule
     weekday: "*"
     hour: "*"
     minute: "00"
 
-    # Überwachung aktivieren 
+    # Überwachung aktivieren
     alert: true
 
-    # Alermlevel für das Backup-Alter in Stunden 
-    warning_age: 6  
+    # Alermlevel für das Backup-Alter in Stunden
+    warning_age: 6
     critical_age: 12
-    
 
 
-# Definition von Borgbackup Repositories 
+
+# Definition von Borgbackup Repositories
 # borgbackup_repos:
 
-#   borgbase: 
+#   borgbase:
 
-#     # URL des Repos   
+#     # URL des Repos
 #     repo: "kal1cjbz@kal1cjbz.repo.borgbase.com:repo"
-    
+
 #     # Repo-spezifische Optionen zum Aufruf von Borgbackup
 #     # z.B. bei Sicherungen zu rsync.net ist --remote-path=borg1 erforderlich
 #     options: ""
@@ -144,31 +146,31 @@ rsyncbackup:
 #     # Compression Options, z,b. "zlib,5, "zstd,5"
 #     compression: "zlib,5"
 
-#     # Prune Optionen 
+#     # Prune Optionen
 #     prune: "--keep-within=2d --keep-daily=7 --keep-weekly=4 --keep-monthly=6"
-    
-#     # Backup Schedule 
+
+#     # Backup Schedule
 #     weekday: "*"
 #     hour: "*/4"
 #     minute: "20"
 
-#     # Überwachung aktivieren 
+#     # Überwachung aktivieren
 #     alert: true
 
-#     # Alermlevel für das Backup-Alter in Stunden 
-#     warning_age: 6  
+#     # Alermlevel für das Backup-Alter in Stunden
+#     warning_age: 6
 #     critical_age: 12
 
-#     # Alermlevel für die Anzahl der Backups 
-#     warning_count: 5  
+#     # Alermlevel für die Anzahl der Backups
+#     warning_count: 5
 #     critical_count: 1
 
-#     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichert werden sollen 
+#     #  Zusätzliche Verzeichnisse, die nur in diesem Backup gesichert werden sollen
 #     # directories:
 
 
 
-# # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen 
+# # Definition der Verzeichnisse, die in allen Borgbackup Repos gesichert werden sollen
 # borgbackup_directories:
 #   - "/etc/"
 #   - "/srv/"
@@ -180,6 +182,6 @@ borgbackup:
   repositories:
     - { label: "borgbase", path: "ssh://pege8l9j@pege8l9j.repo.borgbase.com/./repo" }
 
-  directories: 
+  directories:
     - "/etc/"
     - "/srv/"

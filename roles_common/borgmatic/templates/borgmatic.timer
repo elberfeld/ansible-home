@@ -9,5 +9,6 @@ Persistent=true
 RandomizedDelaySec=30m
 
 [Install]
-WantedBy=timers.target
+WantedBy=multi-user.target
+WantedBy=network-online.target
 
